@@ -8,9 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		251175461D10EB6B00C3CE91 /* UserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 251175451D10EB6B00C3CE91 /* UserView.m */; };
+		2512A1C41D111B3E00ED884B /* ServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2512A1C31D111B3E00ED884B /* ServerManager.m */; };
+		2512A1C91D112FDE00ED884B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2512A1C81D112FDE00ED884B /* LoginViewController.m */; };
+		2512A1CD1D1130B100ED884B /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2512A1CC1D1130B100ED884B /* LoginView.m */; };
+		2512A1D01D113C6200ED884B /* HomepageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2512A1CF1D113C6200ED884B /* HomepageViewController.m */; };
 		253BF5801D0D49F40006086D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF57F1D0D49F40006086D /* main.m */; };
 		253BF5831D0D49F40006086D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5821D0D49F40006086D /* AppDelegate.m */; };
-		253BF5861D0D49F40006086D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5851D0D49F40006086D /* ViewController.m */; };
 		253BF58B1D0D49F40006086D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 253BF58A1D0D49F40006086D /* Assets.xcassets */; };
 		253BF58E1D0D49F40006086D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 253BF58C1D0D49F40006086D /* LaunchScreen.storyboard */; };
 		253BF5991D0D49F40006086D /* mckfcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5981D0D49F40006086D /* mckfcTests.m */; };
@@ -45,12 +48,18 @@
 		251175451D10EB6B00C3CE91 /* UserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserView.m; sourceTree = "<group>"; };
 		251175481D10FA0100C3CE91 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		251175491D10FC8900C3CE91 /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
+		2512A1C21D111B3E00ED884B /* ServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerManager.h; sourceTree = "<group>"; };
+		2512A1C31D111B3E00ED884B /* ServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerManager.m; sourceTree = "<group>"; };
+		2512A1C71D112FDE00ED884B /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		2512A1C81D112FDE00ED884B /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		2512A1CB1D1130B100ED884B /* LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
+		2512A1CC1D1130B100ED884B /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
+		2512A1CE1D113C6200ED884B /* HomepageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomepageViewController.h; sourceTree = "<group>"; };
+		2512A1CF1D113C6200ED884B /* HomepageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomepageViewController.m; sourceTree = "<group>"; };
 		253BF57B1D0D49F40006086D /* mckfc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mckfc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		253BF57F1D0D49F40006086D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		253BF5811D0D49F40006086D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		253BF5821D0D49F40006086D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		253BF5841D0D49F40006086D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		253BF5851D0D49F40006086D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		253BF58A1D0D49F40006086D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		253BF58D1D0D49F40006086D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		253BF58F1D0D49F40006086D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -117,6 +126,33 @@
 			name = Constant;
 			sourceTree = "<group>";
 		};
+		2512A1C51D112F9900ED884B /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				2512A1CA1D11305400ED884B /* View */,
+				2512A1C61D112FBA00ED884B /* Controller */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		2512A1C61D112FBA00ED884B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2512A1C71D112FDE00ED884B /* LoginViewController.h */,
+				2512A1C81D112FDE00ED884B /* LoginViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		2512A1CA1D11305400ED884B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2512A1CB1D1130B100ED884B /* LoginView.h */,
+				2512A1CC1D1130B100ED884B /* LoginView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		253BF5721D0D49F40006086D = {
 			isa = PBXGroup;
 			children = (
@@ -144,11 +180,14 @@
 			children = (
 				253BF5811D0D49F40006086D /* AppDelegate.h */,
 				253BF5821D0D49F40006086D /* AppDelegate.m */,
-				253BF5841D0D49F40006086D /* ViewController.h */,
-				253BF5851D0D49F40006086D /* ViewController.m */,
 				253BF58A1D0D49F40006086D /* Assets.xcassets */,
 				253BF58C1D0D49F40006086D /* LaunchScreen.storyboard */,
 				253BF58F1D0D49F40006086D /* Info.plist */,
+				2512A1C21D111B3E00ED884B /* ServerManager.h */,
+				2512A1C31D111B3E00ED884B /* ServerManager.m */,
+				2512A1CE1D113C6200ED884B /* HomepageViewController.h */,
+				2512A1CF1D113C6200ED884B /* HomepageViewController.m */,
+				2512A1C51D112F9900ED884B /* Login */,
 				251175471D10EB7500C3CE91 /* View */,
 				25EDD78C1D0E848A00AFB6F3 /* Model */,
 				253BF57E1D0D49F40006086D /* Supporting Files */,
@@ -477,9 +516,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2512A1C41D111B3E00ED884B /* ServerManager.m in Sources */,
 				25EDD78B1D0E847800AFB6F3 /* User.m in Sources */,
-				253BF5861D0D49F40006086D /* ViewController.m in Sources */,
+				2512A1CD1D1130B100ED884B /* LoginView.m in Sources */,
 				253BF5831D0D49F40006086D /* AppDelegate.m in Sources */,
+				2512A1C91D112FDE00ED884B /* LoginViewController.m in Sources */,
+				2512A1D01D113C6200ED884B /* HomepageViewController.m in Sources */,
 				251175461D10EB6B00C3CE91 /* UserView.m in Sources */,
 				253BF5801D0D49F40006086D /* main.m in Sources */,
 			);
@@ -651,7 +693,7 @@
 			baseConfigurationReference = AEAD28CECD14E9496644CF81 /* Pods-mckfcTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				GCC_PREFIX_HEADER = PrefixHeader.pch;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/mckfc/PrefixHeader.pch";
 				INFOPLIST_FILE = mckfcTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfcTests;
@@ -666,7 +708,7 @@
 			baseConfigurationReference = 4D4A0E75E7FA1CE3164F5BCC /* Pods-mckfcTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				GCC_PREFIX_HEADER = PrefixHeader.pch;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/mckfc/PrefixHeader.pch";
 				INFOPLIST_FILE = mckfcTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfcTests;

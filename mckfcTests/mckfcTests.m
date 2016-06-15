@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "User.h"
+#import "ServerManager.h"
 
 @interface mckfcTests : XCTestCase
 
@@ -43,6 +44,16 @@
     // This is an example of a performance test case.
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
+        ServerManager* servermanager = [ServerManager sharedInstance];
+        [servermanager AnimatedPOST:@"register"
+                         parameters:@{@"mobile":@"13816279958",
+                                      @"password":@"1232",
+                                      @"captcha":@"6666"}
+                            success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+                                                                
+                                                            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                                                
+                                                            }];
     }];
 }
 
