@@ -7,16 +7,20 @@
 //
 
 #import "ViewController.h"
+#import "UserView.h"
 
 @interface ViewController ()
-
+@property (nonatomic, strong) UserView* userview;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    _userview = [[UserView alloc] init];
+    self.view = _userview;
 }
 
 - (void)didReceiveMemoryWarning {

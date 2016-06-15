@@ -7,8 +7,11 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "User.h"
 
 @interface mckfcTests : XCTestCase
+
+@property (nonatomic, strong) User* user;
 
 @end
 
@@ -27,6 +30,13 @@
 - (void)testExample {
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
+    NSDictionary *JSONDictionary = @{
+                                     @"driverName": @"john",
+                                     @"mobile": @"13816279957"
+                                     };
+    _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:JSONDictionary error:nil];
+    NSLog(@"%@",[_user description]);
+    XCTAssertNotNil(_user, @"loginVC should contain a view");
 }
 
 - (void)testPerformanceExample {

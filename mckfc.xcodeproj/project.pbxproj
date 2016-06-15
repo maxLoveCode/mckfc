@@ -7,14 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		251175461D10EB6B00C3CE91 /* UserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 251175451D10EB6B00C3CE91 /* UserView.m */; };
 		253BF5801D0D49F40006086D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF57F1D0D49F40006086D /* main.m */; };
 		253BF5831D0D49F40006086D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5821D0D49F40006086D /* AppDelegate.m */; };
 		253BF5861D0D49F40006086D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5851D0D49F40006086D /* ViewController.m */; };
-		253BF5891D0D49F40006086D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 253BF5871D0D49F40006086D /* Main.storyboard */; };
 		253BF58B1D0D49F40006086D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 253BF58A1D0D49F40006086D /* Assets.xcassets */; };
 		253BF58E1D0D49F40006086D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 253BF58C1D0D49F40006086D /* LaunchScreen.storyboard */; };
 		253BF5991D0D49F40006086D /* mckfcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5981D0D49F40006086D /* mckfcTests.m */; };
 		253BF5A41D0D49F40006086D /* mckfcUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5A31D0D49F40006086D /* mckfcUITests.m */; };
+		25EDD78B1D0E847800AFB6F3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EDD78A1D0E847800AFB6F3 /* User.m */; };
+		2A383734F83D247A6E52A42F /* libPods-mckfcUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */; };
+		8A1A7A1E4129ACE6AA293190 /* libPods-mckfcTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B79285101850F79921E443BA /* libPods-mckfcTests.a */; };
+		A5C8BB96088FE4611120D108 /* libPods-mckfc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 129CF618CF2B96D1FCEA2F02 /* libPods-mckfc.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,13 +39,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		129CF618CF2B96D1FCEA2F02 /* libPods-mckfc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfc.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FF49D163B3C6B0B1628572B /* Pods-mckfcUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfcUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mckfcUITests/Pods-mckfcUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		251175441D10EB6B00C3CE91 /* UserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserView.h; sourceTree = "<group>"; };
+		251175451D10EB6B00C3CE91 /* UserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserView.m; sourceTree = "<group>"; };
+		251175481D10FA0100C3CE91 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		251175491D10FC8900C3CE91 /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		253BF57B1D0D49F40006086D /* mckfc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mckfc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		253BF57F1D0D49F40006086D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		253BF5811D0D49F40006086D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		253BF5821D0D49F40006086D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		253BF5841D0D49F40006086D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		253BF5851D0D49F40006086D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		253BF5881D0D49F40006086D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		253BF58A1D0D49F40006086D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		253BF58D1D0D49F40006086D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		253BF58F1D0D49F40006086D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -51,6 +60,15 @@
 		253BF59F1D0D49F40006086D /* mckfcUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mckfcUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		253BF5A31D0D49F40006086D /* mckfcUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mckfcUITests.m; sourceTree = "<group>"; };
 		253BF5A51D0D49F40006086D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25EDD7891D0E847800AFB6F3 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		25EDD78A1D0E847800AFB6F3 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfcUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C0EE5CD14F1FFCF59A0F5C5 /* Pods-mckfc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfc.release.xcconfig"; path = "Pods/Target Support Files/Pods-mckfc/Pods-mckfc.release.xcconfig"; sourceTree = "<group>"; };
+		33E4AD97041C7CA6DB6332A6 /* Pods-mckfcUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfcUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mckfcUITests/Pods-mckfcUITests.release.xcconfig"; sourceTree = "<group>"; };
+		4D4A0E75E7FA1CE3164F5BCC /* Pods-mckfcTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfcTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mckfcTests/Pods-mckfcTests.release.xcconfig"; sourceTree = "<group>"; };
+		AEAD28CECD14E9496644CF81 /* Pods-mckfcTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfcTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mckfcTests/Pods-mckfcTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B79285101850F79921E443BA /* libPods-mckfcTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfcTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC2D64BC3C296980EB6B04FB /* Pods-mckfc.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfc.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mckfc/Pods-mckfc.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5C8BB96088FE4611120D108 /* libPods-mckfc.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A1A7A1E4129ACE6AA293190 /* libPods-mckfcTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,12 +92,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A383734F83D247A6E52A42F /* libPods-mckfcUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		251175471D10EB7500C3CE91 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				251175441D10EB6B00C3CE91 /* UserView.h */,
+				251175451D10EB6B00C3CE91 /* UserView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		2511754A1D10FD6700C3CE91 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				251175481D10FA0100C3CE91 /* PrefixHeader.pch */,
+				251175491D10FC8900C3CE91 /* Constant.h */,
+			);
+			name = Constant;
+			sourceTree = "<group>";
+		};
 		253BF5721D0D49F40006086D = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +124,8 @@
 				253BF5971D0D49F40006086D /* mckfcTests */,
 				253BF5A21D0D49F40006086D /* mckfcUITests */,
 				253BF57C1D0D49F40006086D /* Products */,
+				A63FCE96A22AEE0765795ED2 /* Pods */,
+				6D34ADC7180CE478E4CDD7FE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,11 +146,13 @@
 				253BF5821D0D49F40006086D /* AppDelegate.m */,
 				253BF5841D0D49F40006086D /* ViewController.h */,
 				253BF5851D0D49F40006086D /* ViewController.m */,
-				253BF5871D0D49F40006086D /* Main.storyboard */,
 				253BF58A1D0D49F40006086D /* Assets.xcassets */,
 				253BF58C1D0D49F40006086D /* LaunchScreen.storyboard */,
 				253BF58F1D0D49F40006086D /* Info.plist */,
+				251175471D10EB7500C3CE91 /* View */,
+				25EDD78C1D0E848A00AFB6F3 /* Model */,
 				253BF57E1D0D49F40006086D /* Supporting Files */,
+				2511754A1D10FD6700C3CE91 /* Constant */,
 			);
 			path = mckfc;
 			sourceTree = "<group>";
@@ -140,6 +183,38 @@
 			path = mckfcUITests;
 			sourceTree = "<group>";
 		};
+		25EDD78C1D0E848A00AFB6F3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				25EDD7891D0E847800AFB6F3 /* User.h */,
+				25EDD78A1D0E847800AFB6F3 /* User.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		6D34ADC7180CE478E4CDD7FE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				129CF618CF2B96D1FCEA2F02 /* libPods-mckfc.a */,
+				B79285101850F79921E443BA /* libPods-mckfcTests.a */,
+				2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A63FCE96A22AEE0765795ED2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BC2D64BC3C296980EB6B04FB /* Pods-mckfc.debug.xcconfig */,
+				2C0EE5CD14F1FFCF59A0F5C5 /* Pods-mckfc.release.xcconfig */,
+				AEAD28CECD14E9496644CF81 /* Pods-mckfcTests.debug.xcconfig */,
+				4D4A0E75E7FA1CE3164F5BCC /* Pods-mckfcTests.release.xcconfig */,
+				1FF49D163B3C6B0B1628572B /* Pods-mckfcUITests.debug.xcconfig */,
+				33E4AD97041C7CA6DB6332A6 /* Pods-mckfcUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -147,9 +222,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 253BF5A81D0D49F40006086D /* Build configuration list for PBXNativeTarget "mckfc" */;
 			buildPhases = (
+				8FBC40CC7678E1AF1EA23BA5 /* Check Pods Manifest.lock */,
 				253BF5771D0D49F40006086D /* Sources */,
 				253BF5781D0D49F40006086D /* Frameworks */,
 				253BF5791D0D49F40006086D /* Resources */,
+				9D2FEFB3585F653B20751F5B /* Embed Pods Frameworks */,
+				148EFF63A0F5F0F8BE506A1D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -164,9 +242,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 253BF5AB1D0D49F40006086D /* Build configuration list for PBXNativeTarget "mckfcTests" */;
 			buildPhases = (
+				F156D84EBF8814327E86B3CC /* Check Pods Manifest.lock */,
 				253BF5901D0D49F40006086D /* Sources */,
 				253BF5911D0D49F40006086D /* Frameworks */,
 				253BF5921D0D49F40006086D /* Resources */,
+				9BFAF3591F8DAE2A3610AFFA /* Embed Pods Frameworks */,
+				FB28DCE907A2DFF55BDF5A36 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -182,9 +263,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 253BF5AE1D0D49F40006086D /* Build configuration list for PBXNativeTarget "mckfcUITests" */;
 			buildPhases = (
+				DB824BBE174FADAD50D8517F /* Check Pods Manifest.lock */,
 				253BF59B1D0D49F40006086D /* Sources */,
 				253BF59C1D0D49F40006086D /* Frameworks */,
 				253BF59D1D0D49F40006086D /* Resources */,
+				7A20F13372E789F0B180F445 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -215,6 +298,7 @@
 					};
 					253BF59E1D0D49F40006086D = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 8WV7FK6JAM;
 						TestTargetID = 253BF57A1D0D49F40006086D;
 					};
 				};
@@ -246,7 +330,6 @@
 			files = (
 				253BF58E1D0D49F40006086D /* LaunchScreen.storyboard in Resources */,
 				253BF58B1D0D49F40006086D /* Assets.xcassets in Resources */,
-				253BF5891D0D49F40006086D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,13 +349,138 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		148EFF63A0F5F0F8BE506A1D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mckfc/Pods-mckfc-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7A20F13372E789F0B180F445 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mckfcUITests/Pods-mckfcUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8FBC40CC7678E1AF1EA23BA5 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9BFAF3591F8DAE2A3610AFFA /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mckfcTests/Pods-mckfcTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9D2FEFB3585F653B20751F5B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mckfc/Pods-mckfc-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DB824BBE174FADAD50D8517F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F156D84EBF8814327E86B3CC /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FB28DCE907A2DFF55BDF5A36 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mckfcTests/Pods-mckfcTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		253BF5771D0D49F40006086D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25EDD78B1D0E847800AFB6F3 /* User.m in Sources */,
 				253BF5861D0D49F40006086D /* ViewController.m in Sources */,
 				253BF5831D0D49F40006086D /* AppDelegate.m in Sources */,
+				251175461D10EB6B00C3CE91 /* UserView.m in Sources */,
 				253BF5801D0D49F40006086D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,14 +517,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		253BF5871D0D49F40006086D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				253BF5881D0D49F40006086D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		253BF58C1D0D49F40006086D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -346,6 +546,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -355,6 +556,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/mckfc/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -365,9 +567,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "d3d9fee5-c5e0-42d4-afd0-6fd0e8703a58";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -390,6 +593,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -397,14 +601,16 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/mckfc/PrefixHeader.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "d3d9fee5-c5e0-42d4-afd0-6fd0e8703a58";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -412,70 +618,90 @@
 		};
 		253BF5A91D0D49F40006086D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC2D64BC3C296980EB6B04FB /* Pods-mckfc.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = mckfc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		253BF5AA1D0D49F40006086D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C0EE5CD14F1FFCF59A0F5C5 /* Pods-mckfc.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = mckfc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
 		253BF5AC1D0D49F40006086D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AEAD28CECD14E9496644CF81 /* Pods-mckfcTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				GCC_PREFIX_HEADER = PrefixHeader.pch;
 				INFOPLIST_FILE = mckfcTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfcTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mckfc.app/mckfc";
 			};
 			name = Debug;
 		};
 		253BF5AD1D0D49F40006086D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D4A0E75E7FA1CE3164F5BCC /* Pods-mckfcTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				GCC_PREFIX_HEADER = PrefixHeader.pch;
 				INFOPLIST_FILE = mckfcTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfcTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mckfc.app/mckfc";
 			};
 			name = Release;
 		};
 		253BF5AF1D0D49F40006086D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FF49D163B3C6B0B1628572B /* Pods-mckfcUITests.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = mckfcUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfcUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_TARGET_NAME = mckfc;
 			};
 			name = Debug;
 		};
 		253BF5B01D0D49F40006086D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 33E4AD97041C7CA6DB6332A6 /* Pods-mckfcUITests.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = mckfcUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfcUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_TARGET_NAME = mckfc;
 			};
 			name = Release;
@@ -499,6 +725,7 @@
 				253BF5AA1D0D49F40006086D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		253BF5AB1D0D49F40006086D /* Build configuration list for PBXNativeTarget "mckfcTests" */ = {
 			isa = XCConfigurationList;
@@ -507,6 +734,7 @@
 				253BF5AD1D0D49F40006086D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		253BF5AE1D0D49F40006086D /* Build configuration list for PBXNativeTarget "mckfcUITests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +743,7 @@
 				253BF5B01D0D49F40006086D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
