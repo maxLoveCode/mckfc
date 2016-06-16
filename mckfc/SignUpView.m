@@ -19,15 +19,12 @@
 
 @end
 
-
-
 @implementation SignUpView
 
 -(instancetype)init
 {
     if (self = [super init]) {
         textFieldColor = [UIColor colorWithWhite:1 alpha:0.33];
-        
         
         [self addSubview:self.mobile];
         [self addSubview:self.confirm];
@@ -43,7 +40,6 @@
         [_mobile setBackgroundColor:textFieldColor];
         _mobile.layer.cornerRadius = 3;
         _mobile.layer.masksToBounds = YES;
-        _mobile.tag = 1;
         _mobile.textColor = [UIColor whiteColor];
         _mobile.textAlignment = NSTextAlignmentCenter;
         _mobile.keyboardType = UIKeyboardTypePhonePad;

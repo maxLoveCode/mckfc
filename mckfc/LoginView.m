@@ -25,7 +25,6 @@
     if (self = [super init]) {
         textFieldColor = [UIColor colorWithWhite:1 alpha:0.33];
         
-        
         [self addSubview:self.mobile];
         [self addSubview:self.password];
         [self addSubview:self.login];
@@ -134,13 +133,6 @@
     
     [self.label setFrame:CGRectMake(CGRectGetMaxX(self.signUp.frame)+9, CGRectGetMinY(self.signUp.frame), 1, CGRectGetHeight(self.signUp.frame))];
     
-}
-
-#pragma mark gesture
--(void)dismissKeyboard
-{
-    [self.mobile resignFirstResponder];
-    [self.password resignFirstResponder];
 }
 
 #pragma mark button selectors
