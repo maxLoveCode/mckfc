@@ -19,15 +19,17 @@ extern NSString  * _Nonnull const version;
 + (_Nonnull id)sharedInstance;
 - (NSString* _Nonnull)appendedURL:(NSString* _Nonnull)url;
 
-- (void)AnimatedPOST:(NSString * _Nonnull)URLString
+- (void)POST:(NSString * _Nonnull)URLString
           parameters:(nullable id)parameters
+            animated:(BOOL)animated
              success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
              failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error))failure;
 
-- (void)AnimatedGET:(NSString * _Nonnull)URLString
-         parameters:(nullable id)parameters
-            success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
-            failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error))failure;
+- (void)GET:(NSString * _Nonnull)URLString
+ parameters:(nullable id)parameters
+   animated:(BOOL)animated
+    success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
+    failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error))failure;
 
 @end
 

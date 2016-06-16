@@ -18,6 +18,12 @@
 		253BF58E1D0D49F40006086D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 253BF58C1D0D49F40006086D /* LaunchScreen.storyboard */; };
 		253BF5991D0D49F40006086D /* mckfcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5981D0D49F40006086D /* mckfcTests.m */; };
 		253BF5A41D0D49F40006086D /* mckfcUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5A31D0D49F40006086D /* mckfcUITests.m */; };
+		256F397B1D123E3900175E5A /* LoginNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F397A1D123E3900175E5A /* LoginNav.m */; };
+		256F397E1D125BB000175E5A /* GifLoadingHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F397D1D125BB000175E5A /* GifLoadingHUD.m */; };
+		256F39811D12836900175E5A /* SignUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39801D12836900175E5A /* SignUpView.m */; };
+		256F39841D12847D00175E5A /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39831D12847D00175E5A /* SignUpViewController.m */; };
+		256F39871D12885B00175E5A /* VerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39861D12885B00175E5A /* VerifyViewController.m */; };
+		256F398A1D12887D00175E5A /* VerifyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39891D12887D00175E5A /* VerifyView.m */; };
 		25EDD78B1D0E847800AFB6F3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EDD78A1D0E847800AFB6F3 /* User.m */; };
 		2A383734F83D247A6E52A42F /* libPods-mckfcUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */; };
 		8A1A7A1E4129ACE6AA293190 /* libPods-mckfcTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B79285101850F79921E443BA /* libPods-mckfcTests.a */; };
@@ -69,6 +75,18 @@
 		253BF59F1D0D49F40006086D /* mckfcUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mckfcUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		253BF5A31D0D49F40006086D /* mckfcUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mckfcUITests.m; sourceTree = "<group>"; };
 		253BF5A51D0D49F40006086D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		256F39791D123E3900175E5A /* LoginNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginNav.h; sourceTree = "<group>"; };
+		256F397A1D123E3900175E5A /* LoginNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginNav.m; sourceTree = "<group>"; };
+		256F397C1D125BB000175E5A /* GifLoadingHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifLoadingHUD.h; sourceTree = "<group>"; };
+		256F397D1D125BB000175E5A /* GifLoadingHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifLoadingHUD.m; sourceTree = "<group>"; };
+		256F397F1D12836900175E5A /* SignUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpView.h; sourceTree = "<group>"; };
+		256F39801D12836900175E5A /* SignUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpView.m; sourceTree = "<group>"; };
+		256F39821D12847D00175E5A /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
+		256F39831D12847D00175E5A /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
+		256F39851D12885B00175E5A /* VerifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyViewController.h; sourceTree = "<group>"; };
+		256F39861D12885B00175E5A /* VerifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyViewController.m; sourceTree = "<group>"; };
+		256F39881D12887D00175E5A /* VerifyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyView.h; sourceTree = "<group>"; };
+		256F39891D12887D00175E5A /* VerifyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyView.m; sourceTree = "<group>"; };
 		25EDD7891D0E847800AFB6F3 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		25EDD78A1D0E847800AFB6F3 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfcUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +131,8 @@
 			children = (
 				251175441D10EB6B00C3CE91 /* UserView.h */,
 				251175451D10EB6B00C3CE91 /* UserView.m */,
+				256F397C1D125BB000175E5A /* GifLoadingHUD.h */,
+				256F397D1D125BB000175E5A /* GifLoadingHUD.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -138,8 +158,14 @@
 		2512A1C61D112FBA00ED884B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				256F39851D12885B00175E5A /* VerifyViewController.h */,
+				256F39861D12885B00175E5A /* VerifyViewController.m */,
 				2512A1C71D112FDE00ED884B /* LoginViewController.h */,
 				2512A1C81D112FDE00ED884B /* LoginViewController.m */,
+				256F39791D123E3900175E5A /* LoginNav.h */,
+				256F397A1D123E3900175E5A /* LoginNav.m */,
+				256F39821D12847D00175E5A /* SignUpViewController.h */,
+				256F39831D12847D00175E5A /* SignUpViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -147,8 +173,12 @@
 		2512A1CA1D11305400ED884B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				256F397F1D12836900175E5A /* SignUpView.h */,
+				256F39801D12836900175E5A /* SignUpView.m */,
 				2512A1CB1D1130B100ED884B /* LoginView.h */,
 				2512A1CC1D1130B100ED884B /* LoginView.m */,
+				256F39881D12887D00175E5A /* VerifyView.h */,
+				256F39891D12887D00175E5A /* VerifyView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -516,14 +546,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				256F397B1D123E3900175E5A /* LoginNav.m in Sources */,
+				256F398A1D12887D00175E5A /* VerifyView.m in Sources */,
 				2512A1C41D111B3E00ED884B /* ServerManager.m in Sources */,
+				256F39841D12847D00175E5A /* SignUpViewController.m in Sources */,
 				25EDD78B1D0E847800AFB6F3 /* User.m in Sources */,
+				256F39811D12836900175E5A /* SignUpView.m in Sources */,
 				2512A1CD1D1130B100ED884B /* LoginView.m in Sources */,
 				253BF5831D0D49F40006086D /* AppDelegate.m in Sources */,
+				256F397E1D125BB000175E5A /* GifLoadingHUD.m in Sources */,
 				2512A1C91D112FDE00ED884B /* LoginViewController.m in Sources */,
 				2512A1D01D113C6200ED884B /* HomepageViewController.m in Sources */,
 				251175461D10EB6B00C3CE91 /* UserView.m in Sources */,
 				253BF5801D0D49F40006086D /* main.m in Sources */,
+				256F39871D12885B00175E5A /* VerifyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,7 +648,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "d3d9fee5-c5e0-42d4-afd0-6fd0e8703a58";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -652,7 +688,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "d3d9fee5-c5e0-42d4-afd0-6fd0e8703a58";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

@@ -7,6 +7,7 @@
 //
 
 #import "ServerManager.h"
+#import "GifLoadingHUD.h"
 
 #ifdef DEBUG
 #define _BASE_URL @"http://120.26.41.98/"
@@ -23,8 +24,8 @@ NSString *const version = @"v1_0";
     static dispatch_once_t once;
     static ServerManager *sharedInstance;
     dispatch_once(&once, ^{
-        
         sharedInstance = [[self alloc] initWithBaseURL: [NSURL URLWithString:b_URL]];
+        [GifLoadingHUD setGifWithImages:@[[UIImage imageNamed:@"gifloading_0"],[UIImage imageNamed:@"gifloading_1"],[UIImage imageNamed:@"gifloading_2"]]];
     });
     
     return sharedInstance;
@@ -35,37 +36,65 @@ NSString *const version = @"v1_0";
     return [NSString stringWithFormat:@"%@/%@", version, url];
 }
 
-- (void)AnimatedGET:(NSString *)URLString
-         parameters:(id)parameters
-            success:(void (^)(NSURLSessionDataTask * _Nonnull, id _Nullable))success
-            failure:(void (^)(NSURLSessionDataTask * _Nullable, NSError * _Nonnull))failure
+#pragma mark http GET
+- (void)GET:(NSString *)URLString
+ parameters:(id)parameters
+   animated:(BOOL)animated
+    success:(void (^)(NSURLSessionDataTask * _Nonnull, id _Nullable))success
+    failure:(void (^)(NSURLSessionDataTask * _Nullable, NSError * _Nonnull))failure
 {
-    if ([self accessibility]) {
-        [self GET:[self appendedURL:URLString] parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            success(task, responseObject);
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            failure(task, error);
-            
-        }];
+    if (ServerDebugLog) {
+        NSLog(@"GET: %@", [self appendedURL:URLString]);
     }
+    if (animated) {
+        [GifLoadingHUD showWithOverlay];
+    }
+    [self GET:[self appendedURL:URLString] parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        success(task, responseObject);
+        if (ServerDebugLog) {
+            NSLog(@"code:%@  info:%@",responseObject[@"code"],responseObject[@"msg"]);
+        }
+        if (animated) {
+            [GifLoadingHUD dismiss];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failure(task, error);
+        if (ServerDebugLog) {
+            NSLog(@"%@",error);
+        }
+    }];
 }
 
-- (void)AnimatedPOST:(NSString *)URLString
-          parameters:(id)parameters
-             success:(void (^)(NSURLSessionDataTask * _Nonnull, id _Nullable))success
-             failure:(void (^)(NSURLSessionDataTask * _Nullable, NSError * _Nonnull))failure
+#pragma mark http POST
+- (void)POST:(NSString * _Nonnull)URLString
+  parameters:(nullable id)parameters
+    animated:(BOOL)animated
+     success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
+     failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error))failure
 {
-    if ([self accessibility]) {
-        [self POST:[self appendedURL:URLString] parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
-            //show animates
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            success(task, responseObject);
-            
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            failure(task, error);
-        }];
+    if (ServerDebugLog) {
+        NSLog(@"POST: %@", [self appendedURL:URLString]);
     }
+    if (animated) {
+        [GifLoadingHUD showWithOverlay];
+    }
+    [self POST:[self appendedURL:URLString] parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+    //show animates
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        success(task, responseObject);
+        if (ServerDebugLog) {
+            NSLog(@"code:%@  info:%@",responseObject[@"code"],responseObject[@"msg"]);
+        }
+        if (animated) {
+            [GifLoadingHUD dismiss];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failure(task, error);
+        if (ServerDebugLog) {
+            NSLog(@"%@",error);
+        }
+    }];
 }
 
 -(BOOL)accessibility

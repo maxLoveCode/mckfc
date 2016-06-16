@@ -7,6 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+@class LoginView;
+
+@protocol LoginViewDelegate <NSObject>
+
+-(void)didSelectLoginWithMobile:(NSString* )mobile Password:(NSString* )password;
+-(void)didSelectSignUp;
+-(void)didSelectReclaimPassword;
+
+@end
+
 
 @interface LoginView : UIView
 
@@ -16,6 +26,7 @@
 @property (strong, nonatomic) UIButton* signUp;
 @property (strong, nonatomic) UIButton* fogetPassword;
 
-@property (strong, nonatomic) UIImageView* bgView;
+@property (strong, nonatomic) UILabel* label;
 
+@property (nonatomic, weak) id <LoginViewDelegate> delegate;
 @end

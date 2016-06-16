@@ -9,7 +9,7 @@
 #import "HomepageViewController.h"
 #import "UserView.h"
 #import "ServerManager.h"
-#import "LoginViewController.h"
+#import "LoginNav.h"
 
 @interface HomepageViewController ()
 
@@ -31,7 +31,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     if (!_serverManager.accessToken) {
-        LoginViewController* loginVC = [[LoginViewController alloc] init];
+        LoginNav* loginVC = [[LoginNav alloc] init];
         [self presentViewController:loginVC animated:NO completion:^{
             
         }];
