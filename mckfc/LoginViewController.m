@@ -31,6 +31,18 @@
     _server = [ServerManager sharedInstance];
     
     self.view = self.loginView;
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.view setAlpha:0];
+}
+
+- (void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.view setAlpha:1];
 }
 
 #pragma mark setter
@@ -103,5 +115,14 @@
 {
     
 }
+
+
+#pragma mark gesture
+-(void)dismissKeyboard
+{
+    [_loginView.mobile resignFirstResponder];
+    [_loginView.password resignFirstResponder];
+}
+
 
 @end

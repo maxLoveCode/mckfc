@@ -29,6 +29,7 @@
         [self addSubview:self.code];
         [self addSubview:self.resend];
         [self addSubview:self.password];
+        [self addSubview:self.label];
     }
     return self;
 }
@@ -44,6 +45,7 @@
         _code.textColor = [UIColor whiteColor];
         _code.textAlignment = NSTextAlignmentCenter;
         _code.keyboardType = UIKeyboardTypePhonePad;
+        _code.tag = 1;
     }
     return _code;
 }
@@ -58,14 +60,45 @@
         _password.textColor = [UIColor whiteColor];
         _password.textAlignment = NSTextAlignmentCenter;
         _password.keyboardType = UIKeyboardTypeASCIICapable;
+        _password.tag = 2;
     }
-    return _code;
+    return _password;
 }
 
+-(UIButton *)resend
+{
+    if (!_resend) {
+        _resend = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_resend setTitle:@"重新获取" forState:UIControlStateNormal];
+        [_resend setBackgroundColor:COLOR_THEME];
+        [_resend setTitleColor:COLOR_THEME_CONTRAST forState:UIControlStateNormal];
+        _resend.layer.cornerRadius = 3;
+        _resend.layer.masksToBounds = YES;
+    }
+    return _resend;
+}
+
+-(UILabel *)label
+{
+    if (!_label) {
+        _label = [[UILabel alloc] init];
+        _label.textColor = [UIColor whiteColor];
+        _label.textAlignment = NSTextAlignmentCenter;
+        _label.font = [UIFont systemFontOfSize:15];
+    }
+    return _label;
+}
+
+#pragma mark layouts
 -(void)layoutSubviews
 {
     CGRect frame = CGRectMake((kScreen_Width - buttonWidth)/2, topMargin, buttonWidth, buttonHeight);
     [self.code setFrame:frame];
     [self.password setFrame:CGRectOffset(self.code.frame, 0, buttonHeight*2)];
+    [self.code setFrame:CGRectMake((kScreen_Width - buttonWidth)/2, topMargin, buttonWidth-130, buttonHeight)];
+    [self.resend setFrame:CGRectMake(CGRectGetMaxX(self.code.frame)+20, CGRectGetMinY(self.code.frame), 110, buttonHeight)];
+    
+    [self.label setFrame:CGRectMake(0, 0, kScreen_Width, topMargin)];
 }
+
 @end

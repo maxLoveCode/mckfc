@@ -10,4 +10,6 @@
 
 @interface VerifyViewController : UIViewController
 
+-(void)setText:(NSString*)text;
+
 @end

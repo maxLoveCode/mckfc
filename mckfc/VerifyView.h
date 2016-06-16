@@ -14,5 +14,6 @@
 @property (nonatomic, strong) UITextField* password;
 
 @property (nonatomic, strong) UIButton* resend;
+@property (nonatomic, strong) UILabel* label;
 
 @end

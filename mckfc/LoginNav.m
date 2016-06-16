@@ -29,16 +29,11 @@
         @{NSForegroundColorAttributeName:COLOR_WithHex(0x878787)}];
         _imageView  = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height)];
         _imageView.image = [UIImage imageNamed:@"login_bg"];
+       
         [self.view insertSubview:_imageView  atIndex:0];
+
     }
     return self;
-}
-
-
-#pragma mark gesture
--(void)dismissKeyboard
-{
-    
 }
 
 @end

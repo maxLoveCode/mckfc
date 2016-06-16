@@ -29,7 +29,19 @@
     _server = [ServerManager sharedInstance];
     
     self.view = self.signUpView;
+    
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+}
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.view setAlpha:0];
+}
+
+- (void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.view setAlpha:1];
 }
 
 #pragma mark setter
@@ -53,6 +65,7 @@
         if([responseObject[@"code"] integerValue] == 10010)
         {
             VerifyViewController* verifyVC = [[VerifyViewController alloc] init];
+            [verifyVC setText:[NSString stringWithFormat:@"验证码已发送至手机号： %@", _signUpView.mobile.text]];
             [self.navigationController pushViewController:verifyVC animated:YES];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -79,5 +92,12 @@
         textField.text = defaultText;
     }
 }
+
+#pragma mark gesture
+-(void)dismissKeyboard
+{
+    [_signUpView.mobile resignFirstResponder];
+}
+
 
 @end
