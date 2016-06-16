@@ -18,7 +18,7 @@
 @property (nonatomic, strong) VerifyView* verifyView;
 @property (strong, nonatomic) ServerManager* server;
 @property (strong, nonatomic) NSTimer* timer;
-@property (strong, nonatomic) NSDate* date;
+@property (strong, nonatomic) NSDate* startDate;
 
 @end
 
@@ -124,7 +124,15 @@
 
 -(void)fireTimer
 {
-    
+    NSLog(@"fire");
+    if (!_startDate) {
+        _startDate = [NSDate date];
+    }
+    else
+    {
+        NSTimeInterval timeInterval = -[_startDate timeIntervalSinceNow];
+        NSLog(@"%lf", timeInterval);
+    }
 }
 
 @end
