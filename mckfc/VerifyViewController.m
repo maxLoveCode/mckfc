@@ -9,7 +9,7 @@
 #import "VerifyViewController.h"
 #import "ServerManager.h"
 #import "VerifyView.h"
-#import "DriverDetailEditorController.h"
+#import "EditorNav.h"
 
 @interface VerifyViewController()<UITextFieldDelegate>
 {
@@ -37,10 +37,11 @@
 {
     self.title = @"输入验证码";
     
-    NSLog(@"%@",defaultText);
     _server = [ServerManager sharedInstance];
     
     self.view = self.verifyView;
+    
+    
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
 }
@@ -60,11 +61,8 @@
 {
     if (!_verifyView) {
         _verifyView = [[VerifyView alloc] init];
-        NSLog(@"here %@", defaultText);
         for (int i=0; i<defaultText.count; i++) {
-            NSLog(@"asdf");
             UIView* view = [_verifyView viewWithTag:i+1];
-            NSLog(@"%@",view);
             if ([view isKindOfClass:[UITextField class]]) {
                 UITextField* textField = (UITextField*)view;
                 textField.text = defaultText[i];
@@ -80,7 +78,7 @@
 
 -(void)setText:(NSString *)text
 {
-    self.verifyView.label.text = text;
+    self.verifyView.label.text = [NSString stringWithFormat:@"验证码已发送至手机号： %@", text];;
 }
 
 #pragma mark textField delegate
@@ -119,28 +117,55 @@
 #pragma mark buttons
 -(void)resend
 {
+    NSLog(@"resend");
     if (!_timer) {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(fireTimer) userInfo:nil repeats:NO];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(fireTimer) userInfo:nil repeats:YES];
     }
 }
 
 -(void)fireTimer
 {
-    NSLog(@"fire");
     if (!_startDate) {
         _startDate = [NSDate date];
     }
+    
+    NSTimeInterval timeInterval = -[_startDate timeIntervalSinceNow];
+    NSLog(@"%i", (int)timeInterval);
+    if (timeInterval>60) {
+        [_timer invalidate];
+        _timer = nil;
+        _startDate = nil;
+        _verifyView.resend.enabled = YES;
+        [_verifyView.resend setBackgroundColor:COLOR_THEME];
+        _verifyView.resend.titleLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+    }
     else
     {
-        NSTimeInterval timeInterval = -[_startDate timeIntervalSinceNow];
-        NSLog(@"%lf", timeInterval);
+        _verifyView.resend.enabled = NO;
+        [_verifyView.resend setTitle:[NSString stringWithFormat:@"%i秒后可重新发送", (int)((60-timeInterval)*100000)/100000] forState: UIControlStateDisabled];
+        _verifyView.resend.titleLabel.font = [UIFont systemFontOfSize:12];
+        [_verifyView.resend setBackgroundColor:[UIColor grayColor]];
+        [_verifyView.resend setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
     }
+
 }
 
+
+#pragma mark submit
 -(void)confirm
 {
-    DriverDetailEditorController* driverDetailVC = [[DriverDetailEditorController alloc] init];
-    [self.navigationController pushViewController:driverDetailVC animated:YES];
+//    NSDictionary* params = @{@"mobile":_mobile,
+//                          @"password":_verifyView.password.text,
+//                          @"captcha":_verifyView.code.text};
+//    [_server POST:@"register" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+//        NSLog(@"%@", responseObject);
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        
+//    }];
+    EditorNav* EditorVC = [[EditorNav alloc] init];
+    [self.navigationController presentViewController:EditorVC animated:YES completion:^{
+        
+    }];
 }
 
 @end

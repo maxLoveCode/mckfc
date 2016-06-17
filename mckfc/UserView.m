@@ -7,6 +7,7 @@
 //
 
 #import "UserView.h"
+#import "StatsView.h"
 
 #pragma mark constant
 //first section
@@ -73,6 +74,14 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"mainTable" forIndexPath:indexPath];
     if (indexPath.section ==0) {
         [self firstSection:cell];
+    }
+    else if (indexPath.section == 1){
+        StatsView* stats = [[StatsView alloc] initWithStats:nil];
+        [cell.contentView addSubview:stats];
+    }
+    else
+    {
+        
     }
     return cell;
 }

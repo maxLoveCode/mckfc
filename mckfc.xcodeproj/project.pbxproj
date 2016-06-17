@@ -26,6 +26,9 @@
 		256F398A1D12887D00175E5A /* VerifyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39891D12887D00175E5A /* VerifyView.m */; };
 		256F39961D12B2A000175E5A /* DriverDetailEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39951D12B2A000175E5A /* DriverDetailEditorController.m */; };
 		256F39991D12B34D00175E5A /* DriverDetailEditorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39981D12B34D00175E5A /* DriverDetailEditorCell.m */; };
+		256F399C1D13A32000175E5A /* StatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F399B1D13A32000175E5A /* StatsView.m */; };
+		256F39A21D13D83200175E5A /* EditorNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A11D13D83200175E5A /* EditorNav.m */; };
+		256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A41D13E8A900175E5A /* AlertHUDView.m */; };
 		25EDD78B1D0E847800AFB6F3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EDD78A1D0E847800AFB6F3 /* User.m */; };
 		2A383734F83D247A6E52A42F /* libPods-mckfcUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */; };
 		8A1A7A1E4129ACE6AA293190 /* libPods-mckfcTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B79285101850F79921E443BA /* libPods-mckfcTests.a */; };
@@ -93,6 +96,12 @@
 		256F39951D12B2A000175E5A /* DriverDetailEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DriverDetailEditorController.m; sourceTree = "<group>"; };
 		256F39971D12B34D00175E5A /* DriverDetailEditorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriverDetailEditorCell.h; sourceTree = "<group>"; };
 		256F39981D12B34D00175E5A /* DriverDetailEditorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DriverDetailEditorCell.m; sourceTree = "<group>"; };
+		256F399A1D13A32000175E5A /* StatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsView.h; sourceTree = "<group>"; };
+		256F399B1D13A32000175E5A /* StatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsView.m; sourceTree = "<group>"; };
+		256F39A01D13D83200175E5A /* EditorNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorNav.h; sourceTree = "<group>"; };
+		256F39A11D13D83200175E5A /* EditorNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorNav.m; sourceTree = "<group>"; };
+		256F39A31D13E8A900175E5A /* AlertHUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertHUDView.h; sourceTree = "<group>"; };
+		256F39A41D13E8A900175E5A /* AlertHUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertHUDView.m; sourceTree = "<group>"; };
 		25EDD7891D0E847800AFB6F3 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		25EDD78A1D0E847800AFB6F3 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfcUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,6 +148,10 @@
 				251175451D10EB6B00C3CE91 /* UserView.m */,
 				256F397C1D125BB000175E5A /* GifLoadingHUD.h */,
 				256F397D1D125BB000175E5A /* GifLoadingHUD.m */,
+				256F399A1D13A32000175E5A /* StatsView.h */,
+				256F399B1D13A32000175E5A /* StatsView.m */,
+				256F39A31D13E8A900175E5A /* AlertHUDView.h */,
+				256F39A41D13E8A900175E5A /* AlertHUDView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -172,8 +185,6 @@
 				256F397A1D123E3900175E5A /* LoginNav.m */,
 				256F39821D12847D00175E5A /* SignUpViewController.h */,
 				256F39831D12847D00175E5A /* SignUpViewController.m */,
-				256F39941D12B2A000175E5A /* DriverDetailEditorController.h */,
-				256F39951D12B2A000175E5A /* DriverDetailEditorController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -187,8 +198,6 @@
 				2512A1CC1D1130B100ED884B /* LoginView.m */,
 				256F39881D12887D00175E5A /* VerifyView.h */,
 				256F39891D12887D00175E5A /* VerifyView.m */,
-				256F39971D12B34D00175E5A /* DriverDetailEditorCell.h */,
-				256F39981D12B34D00175E5A /* DriverDetailEditorCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -227,6 +236,7 @@
 				2512A1C31D111B3E00ED884B /* ServerManager.m */,
 				2512A1CE1D113C6200ED884B /* HomepageViewController.h */,
 				2512A1CF1D113C6200ED884B /* HomepageViewController.m */,
+				256F399D1D13D7DF00175E5A /* DetailEditor */,
 				2512A1C51D112F9900ED884B /* Login */,
 				251175471D10EB7500C3CE91 /* View */,
 				25EDD78C1D0E848A00AFB6F3 /* Model */,
@@ -260,6 +270,35 @@
 				253BF5A51D0D49F40006086D /* Info.plist */,
 			);
 			path = mckfcUITests;
+			sourceTree = "<group>";
+		};
+		256F399D1D13D7DF00175E5A /* DetailEditor */ = {
+			isa = PBXGroup;
+			children = (
+				256F399F1D13D7FA00175E5A /* View */,
+				256F399E1D13D7F400175E5A /* Controller */,
+			);
+			name = DetailEditor;
+			sourceTree = "<group>";
+		};
+		256F399E1D13D7F400175E5A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				256F39941D12B2A000175E5A /* DriverDetailEditorController.h */,
+				256F39951D12B2A000175E5A /* DriverDetailEditorController.m */,
+				256F39A01D13D83200175E5A /* EditorNav.h */,
+				256F39A11D13D83200175E5A /* EditorNav.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		256F399F1D13D7FA00175E5A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				256F39971D12B34D00175E5A /* DriverDetailEditorCell.h */,
+				256F39981D12B34D00175E5A /* DriverDetailEditorCell.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		25EDD78C1D0E848A00AFB6F3 /* Model */ = {
@@ -563,8 +602,11 @@
 				25EDD78B1D0E847800AFB6F3 /* User.m in Sources */,
 				256F39811D12836900175E5A /* SignUpView.m in Sources */,
 				2512A1CD1D1130B100ED884B /* LoginView.m in Sources */,
+				256F399C1D13A32000175E5A /* StatsView.m in Sources */,
 				253BF5831D0D49F40006086D /* AppDelegate.m in Sources */,
+				256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */,
 				256F39961D12B2A000175E5A /* DriverDetailEditorController.m in Sources */,
+				256F39A21D13D83200175E5A /* EditorNav.m in Sources */,
 				256F39991D12B34D00175E5A /* DriverDetailEditorCell.m in Sources */,
 				256F397E1D125BB000175E5A /* GifLoadingHUD.m in Sources */,
 				2512A1C91D112FDE00ED884B /* LoginViewController.m in Sources */,

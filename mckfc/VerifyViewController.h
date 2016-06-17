@@ -12,4 +12,6 @@
 
 -(void)setText:(NSString*)text;
 
+@property (nonatomic, strong) NSString* mobile;
+
 @end

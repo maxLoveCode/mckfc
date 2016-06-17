@@ -73,6 +73,7 @@
         [_resend setTitle:@"重新获取" forState:UIControlStateNormal];
         [_resend setBackgroundColor:COLOR_THEME];
         [_resend setTitleColor:COLOR_THEME_CONTRAST forState:UIControlStateNormal];
+        
         _resend.layer.cornerRadius = 3;
         _resend.layer.masksToBounds = YES;
     }
@@ -100,7 +101,7 @@
         _confirm.layer.cornerRadius = 3;
         _confirm.layer.masksToBounds = YES;
     }
-    return _resend;
+    return _confirm;
 }
 
 #pragma mark layouts

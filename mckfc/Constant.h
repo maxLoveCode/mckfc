@@ -27,8 +27,10 @@
 
 #define COLOR_THEME  COLOR_WithHex(0xf3ce1e)
 #define COLOR_THEME_CONTRAST COLOR_WithHex(0x794f0d)
+#define COLOR_TEXT_GRAY COLOR_WithHex(0xa5a5a5)
 
-#define k_Margin 16
+#define k_Margin 18
+
 
 //debug serverManager
 #define ServerDebugLog YES

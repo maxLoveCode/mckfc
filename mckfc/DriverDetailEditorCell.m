@@ -18,20 +18,25 @@
 
 -(instancetype)initWithStyle:(DriverDetailCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+    self = [super initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
     self.style = style;
     
     
-    [self.contentView addSubview:_titleLabel];
+    [self.contentView addSubview:self.titleLabel];
     if (self.style == DriverDetailCellStylePlain) {
-        [self.contentView addSubview:_detailLabel];
+        [self.contentView addSubview:self.detailLabel];
     }
     else if (self.style == DriverDetailCellStyleAvatar){
-        [self.contentView addSubview:_avatar];
+        [self.contentView addSubview:self.avatar];
     }
     else if (self.style == DriverDetailCellStyleCarNumber){
-        [self.contentView addSubview:_detailLabel];
+        [self.contentView addSubview:self.detailLabel];
     }
+    
+    self.layoutMargins = UIEdgeInsetsZero;
+    self.preservesSuperviewLayoutMargins = NO;
+
+    self.separatorInset = UIEdgeInsetsMake(0, 0, 0, -100);
     
     return self;
 }
@@ -41,6 +46,7 @@
 {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
+        _titleLabel.textColor = [UIColor darkTextColor];
     }
     return _titleLabel;
 }
@@ -49,6 +55,7 @@
 {
     if (!_detailLabel) {
         _detailLabel = [[UITextField alloc] init];
+        _detailLabel.textColor = COLOR_TEXT_GRAY;
     }
     return _detailLabel;
 }
@@ -64,8 +71,8 @@
 #pragma mark layouts
 -(void)layoutSubviews
 {
+    [self.titleLabel setFrame:CGRectMake(k_Margin, 0 ,100, itemHeight)];
     CGFloat detailX = CGRectGetMaxX(_titleLabel.frame)+20;
-    [self.titleLabel setFrame:CGRectMake(0, k_Margin, 100, itemHeight)];
     if (self.style == DriverDetailCellStylePlain) {
         [self.detailLabel setFrame:
             CGRectMake(detailX, 0, kScreen_Width-detailX, itemHeight)];

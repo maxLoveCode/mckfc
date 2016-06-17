@@ -147,7 +147,7 @@ static UIImage *animatedImageWithAnimatedGIFReleasingImageSource(CGImageSourceRe
 
 + (instancetype)instance;
 
-@property (nonatomic, strong) UIImageView *overlayView;
+@property (nonatomic, strong) UIView *overlayView;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, assign) BOOL shown;
 
@@ -183,7 +183,9 @@ static GifLoadingHUD *instance;
         [self.layer setMasksToBounds:YES];
         
         self.imageView = [[UIImageView alloc] initWithFrame:CGRectInset(self.bounds, 0, 0)];
-        [self addSubview:self.imageView];
+        
+        [self.overlayView addSubview:self.imageView];
+        [self addSubview:self.overlayView];
         
         [APPDELEGATE.window addSubview:self];
     }
@@ -195,13 +197,10 @@ static GifLoadingHUD *instance;
 #pragma mark HUD
 
 + (void)showWithOverlay {
-//    [self dismiss:^{
-//        [APPDELEGATE.window addSubview:[[self instance] overlay]];
-//        [self show];
-//    }];
-        [APPDELEGATE.window addSubview:[[self instance] overlay]];
-    [UIApplication sharedApplication].keyWindow.userInteractionEnabled = NO;
+    [self dismiss:^{
+        [UIApplication sharedApplication].keyWindow.userInteractionEnabled = NO;
         [self show];
+    }];
 }
 
 + (void)show {
@@ -220,8 +219,9 @@ static GifLoadingHUD *instance;
     
     [[self instance] fadeOutComplate:^{
         NSLog(@"removed");
+        [APPDELEGATE.window sendSubviewToBack:[self instance]];
         [UIApplication sharedApplication].keyWindow.userInteractionEnabled = YES;
-        [[[self instance] overlay] removeFromSuperview];
+        
     }];
 }
 
@@ -230,7 +230,7 @@ static GifLoadingHUD *instance;
         return complated ();
     
     [[self instance] fadeOutComplate:^{
-        [[[self instance] overlay] removeFromSuperview];
+        
         complated ();
     }];
 }
@@ -266,19 +266,15 @@ static GifLoadingHUD *instance;
 }
 
 
-- (UIImageView *)overlay {
-    
-    if (!self.overlayView) {
-        self.overlayView = [[UIImageView alloc] initWithFrame:APPDELEGATE.window.frame];
-        [self.overlayView setBackgroundColor:[UIColor clearColor]];
-        [self.overlayView setAlpha:1];
+- (UIView *)overlayView {
+    if (!_overlayView) {
+        _overlayView = [[UIView alloc] initWithFrame:APPDELEGATE.window.frame];
+        [_overlayView setBackgroundColor:[UIColor clearColor]];
+        [_overlayView setAlpha:1];
         
-        /*[UIView animateWithDuration:FadeDuration animations:^{
-            [self.overlayView setAlpha:0.3];
-        }];*/
+        _overlayView.userInteractionEnabled = NO;
     }
-    self.overlayView.userInteractionEnabled = NO;
-    return self.overlayView;
+    return _overlayView;
 }
 
 

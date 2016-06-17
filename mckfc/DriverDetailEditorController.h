@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DriverDetailEditorController : UITableViewController
+@interface DriverDetailEditorController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @end

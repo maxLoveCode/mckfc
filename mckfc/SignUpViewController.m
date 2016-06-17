@@ -60,17 +60,20 @@
 -(void)confirmBtn
 {
     [_signUpView.mobile resignFirstResponder];
-    NSDictionary* params = @{@"mobile":_signUpView.mobile.text};
-    [_server POST:@"sendCaptcha" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        if([responseObject[@"code"] integerValue] == 10010)
-        {
-            VerifyViewController* verifyVC = [[VerifyViewController alloc] init];
-            [verifyVC setText:[NSString stringWithFormat:@"验证码已发送至手机号： %@", _signUpView.mobile.text]];
-            [self.navigationController pushViewController:verifyVC animated:YES];
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
+//    NSDictionary* params = @{@"mobile":_signUpView.mobile.text};
+//    [_server POST:@"sendCaptcha" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+//        if([responseObject[@"code"] integerValue] == 10010)
+//        {
+//            
+//        }
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        
+//    }];
+    
+    VerifyViewController* verifyVC = [[VerifyViewController alloc] init];
+    verifyVC.mobile = _signUpView.mobile.text;
+    [verifyVC setText:_signUpView.mobile.text];
+    [self.navigationController pushViewController:verifyVC animated:YES];
 }
 
 #pragma mark textField delegate
