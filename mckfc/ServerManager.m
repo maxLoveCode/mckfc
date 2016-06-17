@@ -8,6 +8,7 @@
 
 #import "ServerManager.h"
 #import "GifLoadingHUD.h"
+#import "AlertHUDView.h"
 
 #ifdef DEBUG
 #define _BASE_URL @"http://120.26.41.98/"
@@ -18,6 +19,12 @@
 NSString *const b_URL = _BASE_URL;
 NSString *const version = @"v1_0";
 
+@interface ServerManager ()
+
+@property AlertHUDView *alert;
+
+@end
+
 @implementation ServerManager
 
 + (id)sharedInstance {
@@ -25,7 +32,7 @@ NSString *const version = @"v1_0";
     static ServerManager *sharedInstance;
     dispatch_once(&once, ^{
         sharedInstance = [[self alloc] initWithBaseURL: [NSURL URLWithString:b_URL]];
-        [GifLoadingHUD setGifWithImages:@[[UIImage imageNamed:@"gifloading_0"],[UIImage imageNamed:@"gifloading_1"],[UIImage imageNamed:@"gifloading_2"]]];
+        //[GifLoadingHUD setGifWithImages:@[[UIImage imageNamed:@"gifloading_0"],[UIImage imageNamed:@"gifloading_1"],[UIImage imageNamed:@"gifloading_2"]]];
     });
     
     return sharedInstance;
@@ -47,7 +54,8 @@ NSString *const version = @"v1_0";
         NSLog(@"GET: %@", [self appendedURL:URLString]);
     }
     if (animated) {
-        [GifLoadingHUD showWithOverlay];
+        _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStyleNetworking];
+        [_alert show:_alert];
     }
     [self GET:[self appendedURL:URLString] parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -56,7 +64,7 @@ NSString *const version = @"v1_0";
             NSLog(@"code:%@  info:%@",responseObject[@"code"],responseObject[@"msg"]);
         }
         if (animated) {
-            [GifLoadingHUD dismiss];
+            [_alert dismiss:_alert];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         failure(task, error);
@@ -77,7 +85,8 @@ NSString *const version = @"v1_0";
         NSLog(@"POST: %@", [self appendedURL:URLString]);
     }
     if (animated) {
-        [GifLoadingHUD showWithOverlay];
+        _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStyleNetworking];
+        [_alert show:_alert];
     }
     [self POST:[self appendedURL:URLString] parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
     //show animates
@@ -87,7 +96,7 @@ NSString *const version = @"v1_0";
             NSLog(@"code:%@  info:%@",responseObject[@"code"],responseObject[@"msg"]);
         }
         if (animated) {
-            [GifLoadingHUD dismiss];
+            [_alert dismiss:_alert];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         failure(task, error);

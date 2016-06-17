@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, HUDAlertStyle) {
+    HUDAlertStyleNetworking,
+    HUDAlertStylePlain
+};
+
 @class AlertHUDView;
 
 @interface AlertHUDView : UIView
@@ -18,5 +23,14 @@
 
 @property (nonatomic, strong) UILabel* title;
 @property (nonatomic, strong) UILabel* detail;
+
+@property (nonatomic, assign) HUDAlertStyle style;
+
+@property (nonatomic, strong) UIImageView* HUDimage;
+
+-(instancetype)initWithStyle:(HUDAlertStyle)style;
+
+-(void)show:(AlertHUDView*)alert;
+-(void)dismiss:(AlertHUDView*)alert;
 
 @end
