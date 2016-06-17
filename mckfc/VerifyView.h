@@ -16,4 +16,6 @@
 @property (nonatomic, strong) UIButton* resend;
 @property (nonatomic, strong) UILabel* label;
 
+@property (nonatomic, strong) UIButton* confirm;
+
 @end

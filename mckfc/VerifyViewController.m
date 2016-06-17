@@ -9,6 +9,7 @@
 #import "VerifyViewController.h"
 #import "ServerManager.h"
 #import "VerifyView.h"
+#import "DriverDetailEditorController.h"
 
 @interface VerifyViewController()<UITextFieldDelegate>
 {
@@ -72,6 +73,7 @@
         }
         
         [_verifyView.resend addTarget:self action:@selector(resend) forControlEvents:UIControlEventTouchUpInside];
+        [_verifyView.confirm addTarget:self action:@selector(confirm) forControlEvents:UIControlEventTouchUpInside];
     }
     return _verifyView;
 }
@@ -133,6 +135,12 @@
         NSTimeInterval timeInterval = -[_startDate timeIntervalSinceNow];
         NSLog(@"%lf", timeInterval);
     }
+}
+
+-(void)confirm
+{
+    DriverDetailEditorController* driverDetailVC = [[DriverDetailEditorController alloc] init];
+    [self.navigationController pushViewController:driverDetailVC animated:YES];
 }
 
 @end

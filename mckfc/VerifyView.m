@@ -30,6 +30,7 @@
         [self addSubview:self.resend];
         [self addSubview:self.password];
         [self addSubview:self.label];
+        [self addSubview:self.confirm];
     }
     return self;
 }
@@ -89,6 +90,19 @@
     return _label;
 }
 
+-(UIButton *)confirm
+{
+    if (!_confirm) {
+        _confirm = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_confirm setTitle:@"下一步" forState:UIControlStateNormal];
+        [_confirm setBackgroundColor:COLOR_THEME];
+        [_confirm setTitleColor:COLOR_THEME_CONTRAST forState:UIControlStateNormal];
+        _confirm.layer.cornerRadius = 3;
+        _confirm.layer.masksToBounds = YES;
+    }
+    return _resend;
+}
+
 #pragma mark layouts
 -(void)layoutSubviews
 {
@@ -98,6 +112,7 @@
     [self.code setFrame:CGRectMake((kScreen_Width - buttonWidth)/2, topMargin, buttonWidth-130, buttonHeight)];
     [self.resend setFrame:CGRectMake(CGRectGetMaxX(self.code.frame)+20, CGRectGetMinY(self.code.frame), 110, buttonHeight)];
     
+    [self.confirm setFrame:CGRectOffset(self.password.frame, 0, buttonHeight*2)];
     [self.label setFrame:CGRectMake(0, 0, kScreen_Width, topMargin)];
 }
 

@@ -8,6 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, DriverDetailCellStyle) {
+    DriverDetailCellStylePlain,
+    DriverDetailCellStyleAvatar,
+    DriverDetailCellStyleCarNumber
+};
+
 @interface DriverDetailEditorCell : UITableViewCell
+
+-(instancetype)initWithStyle:(DriverDetailCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+
+@property (nonatomic, assign) DriverDetailCellStyle style;
+
+@property (nonatomic, strong) UILabel* titleLabel;
+@property (nonatomic, strong) UIImageView* avatar;
+@property (nonatomic, strong) UITextField* detailLabel;
+
++(CGFloat)heightForCell;
 
 @end
