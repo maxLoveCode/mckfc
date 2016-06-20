@@ -50,7 +50,9 @@
 -(void)layoutSubviews
 {
     CGRect imageframe = CGRectMake(k_Margin, 0, itemHeight, itemHeight);
-    
+    [self.leftImageView setFrame:imageframe];
+    [self.titleLabel setFrame:CGRectMake(CGRectGetMaxX(imageframe), 0, 100, itemHeight)];
+    [self.detailLabel setFrame:CGRectMake(CGRectGetMaxX(self.titleLabel.frame), 0, kScreen_Width-CGRectGetMaxX(self.titleLabel.frame)-50, itemHeight)];
 }
 
 
