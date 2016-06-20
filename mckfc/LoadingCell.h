@@ -7,11 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+@class LoadingCell;
+
+typedef NS_ENUM(NSUInteger, LoadingCellStyle) {
+    LoadingCellStyleSelection,
+    LoadingCellStyleTextField,
+    LoadingCellStyleImagePicker,
+};
 
 @interface LoadingCell : UITableViewCell
 
 @property (nonatomic, strong) UIImageView* leftImageView;
 @property (nonatomic, strong) UILabel* titleLabel;
 @property (nonatomic, strong) UILabel* detailLabel;
+
+@property (nonatomic, assign) LoadingCellStyle style;
+
+-(instancetype)initWithStyle:(LoadingCellStyle)style;
 
 @end

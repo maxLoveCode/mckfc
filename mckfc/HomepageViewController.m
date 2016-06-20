@@ -10,6 +10,7 @@
 #import "UserView.h"
 #import "ServerManager.h"
 #import "LoginNav.h"
+#import "LoadingStatsViewController.h"
 
 @interface HomepageViewController ()<UserViewDelegate>
 
@@ -48,7 +49,8 @@
 
 -(void)didClickConfirm
 {
-    
+    LoadingStatsViewController *loadingStats = [[LoadingStatsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:loadingStats animated:YES];
 }
 
 @end

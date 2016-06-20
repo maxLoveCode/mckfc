@@ -35,4 +35,7 @@
 //debug serverManager
 #define ServerDebugLog YES
 
+//mapkey
+#define MapKey @"52b19ff48d586b5f8f3022b336f3ab02"
+
 #endif /* Constant_h */

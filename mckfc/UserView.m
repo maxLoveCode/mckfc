@@ -112,6 +112,9 @@
 #pragma mark firstSection
 -(void)firstSection:(UITableViewCell*)cell
 {
+    UIImageView* bgView = [[UIImageView alloc] initWithFrame:cell.contentView.frame];
+    bgView.image = [UIImage imageNamed:@"home_bg"];
+    
     UIImageView* avatar = [[UIImageView alloc] initWithFrame:
                            CGRectMake((kScreen_Width-avatarHeight)/2, topMargin, avatarHeight, avatarHeight)];
     avatar.layer.borderColor = (__bridge CGColorRef _Nullable)([UIColor whiteColor]);
@@ -141,10 +144,11 @@
     [starView setFrame:CGRectMake((kScreen_Width-framesize.width)/2, CGRectGetMaxY(carLabel.frame)+itemGap, framesize.width, framesize.height )];
     [starView setStarValue:2];
     
-    [cell.contentView addSubview:avatar];
-    [cell.contentView addSubview:nameLabel];
-    [cell.contentView addSubview:carLabel];
-    [cell.contentView addSubview:starView];
+    [bgView addSubview:avatar];
+    [bgView addSubview:nameLabel];
+    [bgView addSubview:carLabel];
+    [bgView addSubview:starView];
+    [cell.contentView addSubview:bgView];
 }
 
 -(void)confirmBtn

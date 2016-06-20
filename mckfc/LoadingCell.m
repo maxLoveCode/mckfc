@@ -8,7 +8,16 @@
 
 #import "LoadingCell.h"
 
+#define itemHeight 44
+
 @implementation LoadingCell
+
+-(instancetype)initWithStyle:(LoadingCellStyle)style
+{
+    self = [super initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"loadingStats"];
+    self.style = style;
+    return self;
+}
 
 #pragma mark setter
 -(UILabel *)titleLabel
@@ -27,6 +36,21 @@
         _detailLabel.textColor = COLOR_TEXT_GRAY;
     }
     return _detailLabel;
+}
+
+-(UIImageView *)leftImageView
+{
+    if (!_leftImageView) {
+        _leftImageView = [[UIImageView alloc] init];
+    }
+    return _leftImageView;
+}
+
+#pragma mark layouts
+-(void)layoutSubviews
+{
+    CGRect imageframe = CGRectMake(k_Margin, 0, itemHeight, itemHeight);
+    
 }
 
 
