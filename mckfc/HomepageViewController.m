@@ -11,7 +11,7 @@
 #import "ServerManager.h"
 #import "LoginNav.h"
 
-@interface HomepageViewController ()
+@interface HomepageViewController ()<UserViewDelegate>
 
 @property (nonatomic, strong) UserView* userview;
 @property (nonatomic, strong) ServerManager* serverManager;
@@ -22,23 +22,31 @@
 
 -(void)viewDidLoad
 {
+    self.title = @"首页";
     _userview = [[UserView alloc] init];
     _serverManager = [ServerManager sharedInstance];
+    
+    _userview.delegate = self;
     
     self.view = _userview;
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    if (!_serverManager.accessToken) {
-        LoginNav* loginVC = [[LoginNav alloc] init];
-        [self presentViewController:loginVC animated:NO completion:^{
-            
-        }];
-    }
+//    if (!_serverManager.accessToken) {
+//        LoginNav* loginVC = [[LoginNav alloc] init];
+//        [self presentViewController:loginVC animated:NO completion:^{
+//            
+//        }];
+//    }
 }
 
 -(void)requestUserInfo
+{
+    
+}
+
+-(void)didClickConfirm
 {
     
 }

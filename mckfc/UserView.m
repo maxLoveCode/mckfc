@@ -8,6 +8,7 @@
 
 #import "UserView.h"
 #import "StatsView.h"
+#import "MCStarView.h"
 
 #pragma mark constant
 //first section
@@ -22,7 +23,7 @@
 
 //third section
 #define buttonHeight 40
-
+#define buttonWidth 340
 
 @interface UserView()<UITableViewDelegate, UITableViewDataSource>
 
@@ -65,7 +66,8 @@
         return secondSection;
     }
     else{
-        return buttonHeight+topMargin+itemGap;
+        return kScreen_Height-[self firstSectionHeight]- secondSection
+            - tableView.sectionFooterHeight*2-tableView.sectionHeaderHeight*2;
     }
 }
 
@@ -81,7 +83,16 @@
     }
     else
     {
-        
+        UIButton* confirm;
+        confirm = [UIButton buttonWithType:UIButtonTypeCustom];
+        [confirm setTitle:@"进行装载" forState:UIControlStateNormal];
+        [confirm setBackgroundColor:COLOR_THEME];
+        [confirm setTitleColor:COLOR_THEME_CONTRAST forState:UIControlStateNormal];
+        confirm.layer.cornerRadius = 3;
+        confirm.layer.masksToBounds = YES;
+        [confirm setFrame:CGRectMake((kScreen_Width-buttonWidth)/2, topMargin,buttonWidth , buttonHeight)];
+        [confirm addTarget:self action:@selector(confirmBtn) forControlEvents:UIControlEventTouchUpInside];
+        [cell.contentView addSubview:confirm];
     }
     return cell;
 }
@@ -95,7 +106,7 @@
 #pragma mark total itemHeight
 -(CGFloat)firstSectionHeight
 {
-    return topMargin+avatarHeight+3*itemGap+2*titleFont+starHeight;
+    return topMargin+avatarHeight+4*itemGap+2*titleFont+starHeight;
 }
 
 #pragma mark firstSection
@@ -103,6 +114,10 @@
 {
     UIImageView* avatar = [[UIImageView alloc] initWithFrame:
                            CGRectMake((kScreen_Width-avatarHeight)/2, topMargin, avatarHeight, avatarHeight)];
+    avatar.layer.borderColor = (__bridge CGColorRef _Nullable)([UIColor whiteColor]);
+    avatar.layer.borderWidth = 1.5;
+    avatar.layer.cornerRadius = avatarHeight/2;
+    avatar.layer.masksToBounds = YES;
     
     UILabel* nameLabel = [[UILabel alloc] initWithFrame:
                           CGRectMake(0, CGRectGetMaxY(avatar.frame)+itemGap, kScreen_Width, titleFont)];
@@ -111,18 +126,30 @@
     
     
     UILabel* carLabel = [[UILabel alloc] initWithFrame:
-                         CGRectOffset(nameLabel.frame, 0, itemGap)];
+                         CGRectOffset(nameLabel.frame, 0, itemGap+CGRectGetHeight(nameLabel.frame))];
     carLabel.textAlignment = NSTextAlignmentCenter;
     carLabel.font = [UIFont systemFontOfSize:titleFont];
     
 #ifdef DEBUG
     nameLabel.text= @"车主姓名";
     carLabel.text = @"车牌号";
+    avatar.image = [UIImage imageNamed:@"star"];
 #endif
+    
+    MCStarView* starView = [[MCStarView alloc] initWithCount:5];
+    CGSize framesize = [starView sizeOfView];
+    [starView setFrame:CGRectMake((kScreen_Width-framesize.width)/2, CGRectGetMaxY(carLabel.frame)+itemGap, framesize.width, framesize.height )];
+    [starView setStarValue:2];
     
     [cell.contentView addSubview:avatar];
     [cell.contentView addSubview:nameLabel];
     [cell.contentView addSubview:carLabel];
+    [cell.contentView addSubview:starView];
+}
+
+-(void)confirmBtn
+{
+    [self.delegate didClickConfirm];
 }
 
 @end

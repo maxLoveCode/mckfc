@@ -1,26 +1,26 @@
 //
-//  EditorNav.m
+//  LoadingNav.m
 //  mckfc
 //
-//  Created by 华印mac-001 on 16/6/17.
+//  Created by 华印mac-001 on 16/6/20.
 //  Copyright © 2016年 Shanghai Impression Culture Communication Co.,Ltd. All rights reserved.
 //
 
-#import "EditorNav.h"
-#import "DriverDetailEditorController.h"
+#import "LoadingNav.h"
+#import "HomepageViewController.h"
 
-@interface EditorNav()<UINavigationControllerDelegate>
+@interface LoadingNav()<UINavigationControllerDelegate>
 
-@property (nonatomic, strong) DriverDetailEditorController* EditorVC;
+@property (nonatomic, strong) HomepageViewController* loadVC;
 
 @end
 
-@implementation EditorNav
+@implementation LoadingNav
 
 -(instancetype)init
 {
-    _EditorVC = [[DriverDetailEditorController alloc] init];
-    if (self = [super initWithRootViewController: self.EditorVC]) {
+    _loadVC = [[HomepageViewController alloc] init];
+    if (self = [super initWithRootViewController: self.loadVC]) {
         self.delegate = self;
         self.navigationBar.translucent = NO;
         self.navigationBar.barTintColor = COLOR_WithHex(0xf3f3f3);
@@ -32,6 +32,5 @@
     }
     return self;
 }
-
 
 @end

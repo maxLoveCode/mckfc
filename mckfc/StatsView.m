@@ -26,6 +26,15 @@
     frame = CGRectMake(0, 0, kScreen_Width, height);
     self = [super initWithFrame:frame collectionViewLayout:layout];
     [self registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"stats"];
+    
+    _stats = @{@"运输次数":@"10",
+               @"总里程数":@"100km",
+               @"运输总重数":@"300"};
+    self.backgroundColor = [UIColor whiteColor];
+    self.scrollEnabled = NO;
+    
+    self.delegate = self;
+    self.dataSource = self;
     return self;
 }
 
@@ -34,12 +43,42 @@
     return 3;
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(kScreen_Width/3, height) ;
+}
+
+#pragma mark collection view cell paddings
+- (UIEdgeInsets)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(0, 0, 0, 0); // top, left, bottom, right
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    
+    return 0.0;
+}
+
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"stats" forIndexPath:indexPath];
     
+    UILabel* title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width/3, height/2)];
+    UILabel* detailLabel = [[UILabel alloc] initWithFrame:CGRectOffset(title.frame, 0, height/2)];
+    title.textColor = COLOR_TEXT_GRAY;
+    title.font = [UIFont systemFontOfSize:13];
     
     
+    detailLabel.textColor = [UIColor darkTextColor];
+    detailLabel.font = [UIFont systemFontOfSize:14];
+    
+    title.text = @"title";
+    detailLabel.text = @"detail";
+    
+    title.textAlignment = NSTextAlignmentCenter;
+    detailLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [cell.contentView addSubview:title];
+    [cell.contentView addSubview:detailLabel];
     return cell;
 }
 

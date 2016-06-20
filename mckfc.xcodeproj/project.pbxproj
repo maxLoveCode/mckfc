@@ -29,6 +29,10 @@
 		256F399C1D13A32000175E5A /* StatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F399B1D13A32000175E5A /* StatsView.m */; };
 		256F39A21D13D83200175E5A /* EditorNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A11D13D83200175E5A /* EditorNav.m */; };
 		256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A41D13E8A900175E5A /* AlertHUDView.m */; };
+		256F39A81D17891A00175E5A /* MCStarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A71D17891A00175E5A /* MCStarView.m */; };
+		25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFC1D17A53500C9CCBE /* LoadingNav.m */; };
+		25CECB001D17A9D700C9CCBE /* LoadingStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFF1D17A9D700C9CCBE /* LoadingStatsViewController.m */; };
+		25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECB021D17ACF900C9CCBE /* LoadingCell.m */; };
 		25EDD78B1D0E847800AFB6F3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EDD78A1D0E847800AFB6F3 /* User.m */; };
 		2A383734F83D247A6E52A42F /* libPods-mckfcUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */; };
 		8A1A7A1E4129ACE6AA293190 /* libPods-mckfcTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B79285101850F79921E443BA /* libPods-mckfcTests.a */; };
@@ -102,6 +106,14 @@
 		256F39A11D13D83200175E5A /* EditorNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorNav.m; sourceTree = "<group>"; };
 		256F39A31D13E8A900175E5A /* AlertHUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertHUDView.h; sourceTree = "<group>"; };
 		256F39A41D13E8A900175E5A /* AlertHUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertHUDView.m; sourceTree = "<group>"; };
+		256F39A61D17891A00175E5A /* MCStarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCStarView.h; sourceTree = "<group>"; };
+		256F39A71D17891A00175E5A /* MCStarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCStarView.m; sourceTree = "<group>"; };
+		25CECAFB1D17A53500C9CCBE /* LoadingNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingNav.h; sourceTree = "<group>"; };
+		25CECAFC1D17A53500C9CCBE /* LoadingNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingNav.m; sourceTree = "<group>"; };
+		25CECAFE1D17A9D700C9CCBE /* LoadingStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingStatsViewController.h; sourceTree = "<group>"; };
+		25CECAFF1D17A9D700C9CCBE /* LoadingStatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingStatsViewController.m; sourceTree = "<group>"; };
+		25CECB011D17ACF900C9CCBE /* LoadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingCell.h; sourceTree = "<group>"; };
+		25CECB021D17ACF900C9CCBE /* LoadingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingCell.m; sourceTree = "<group>"; };
 		25EDD7891D0E847800AFB6F3 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		25EDD78A1D0E847800AFB6F3 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfcUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,14 +156,12 @@
 		251175471D10EB7500C3CE91 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				251175441D10EB6B00C3CE91 /* UserView.h */,
-				251175451D10EB6B00C3CE91 /* UserView.m */,
 				256F397C1D125BB000175E5A /* GifLoadingHUD.h */,
 				256F397D1D125BB000175E5A /* GifLoadingHUD.m */,
-				256F399A1D13A32000175E5A /* StatsView.h */,
-				256F399B1D13A32000175E5A /* StatsView.m */,
 				256F39A31D13E8A900175E5A /* AlertHUDView.h */,
 				256F39A41D13E8A900175E5A /* AlertHUDView.m */,
+				256F39A61D17891A00175E5A /* MCStarView.h */,
+				256F39A71D17891A00175E5A /* MCStarView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -234,10 +244,9 @@
 				253BF58F1D0D49F40006086D /* Info.plist */,
 				2512A1C21D111B3E00ED884B /* ServerManager.h */,
 				2512A1C31D111B3E00ED884B /* ServerManager.m */,
-				2512A1CE1D113C6200ED884B /* HomepageViewController.h */,
-				2512A1CF1D113C6200ED884B /* HomepageViewController.m */,
-				256F399D1D13D7DF00175E5A /* DetailEditor */,
 				2512A1C51D112F9900ED884B /* Login */,
+				25CECAF81D17A43700C9CCBE /* Loading */,
+				256F399D1D13D7DF00175E5A /* DetailEditor */,
 				251175471D10EB7500C3CE91 /* View */,
 				25EDD78C1D0E848A00AFB6F3 /* Model */,
 				253BF57E1D0D49F40006086D /* Supporting Files */,
@@ -299,6 +308,41 @@
 				256F39981D12B34D00175E5A /* DriverDetailEditorCell.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		25CECAF81D17A43700C9CCBE /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				25CECAFA1D17A45900C9CCBE /* ViewController */,
+				25CECAF91D17A44800C9CCBE /* View */,
+			);
+			name = Loading;
+			sourceTree = "<group>";
+		};
+		25CECAF91D17A44800C9CCBE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				251175441D10EB6B00C3CE91 /* UserView.h */,
+				251175451D10EB6B00C3CE91 /* UserView.m */,
+				256F399A1D13A32000175E5A /* StatsView.h */,
+				256F399B1D13A32000175E5A /* StatsView.m */,
+				25CECB011D17ACF900C9CCBE /* LoadingCell.h */,
+				25CECB021D17ACF900C9CCBE /* LoadingCell.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		25CECAFA1D17A45900C9CCBE /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				25CECAFB1D17A53500C9CCBE /* LoadingNav.h */,
+				25CECAFC1D17A53500C9CCBE /* LoadingNav.m */,
+				2512A1CE1D113C6200ED884B /* HomepageViewController.h */,
+				2512A1CF1D113C6200ED884B /* HomepageViewController.m */,
+				25CECAFE1D17A9D700C9CCBE /* LoadingStatsViewController.h */,
+				25CECAFF1D17A9D700C9CCBE /* LoadingStatsViewController.m */,
+			);
+			name = ViewController;
 			sourceTree = "<group>";
 		};
 		25EDD78C1D0E848A00AFB6F3 /* Model */ = {
@@ -598,7 +642,9 @@
 				256F397B1D123E3900175E5A /* LoginNav.m in Sources */,
 				256F398A1D12887D00175E5A /* VerifyView.m in Sources */,
 				2512A1C41D111B3E00ED884B /* ServerManager.m in Sources */,
+				25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */,
 				256F39841D12847D00175E5A /* SignUpViewController.m in Sources */,
+				256F39A81D17891A00175E5A /* MCStarView.m in Sources */,
 				25EDD78B1D0E847800AFB6F3 /* User.m in Sources */,
 				256F39811D12836900175E5A /* SignUpView.m in Sources */,
 				2512A1CD1D1130B100ED884B /* LoginView.m in Sources */,
@@ -607,9 +653,11 @@
 				256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */,
 				256F39961D12B2A000175E5A /* DriverDetailEditorController.m in Sources */,
 				256F39A21D13D83200175E5A /* EditorNav.m in Sources */,
+				25CECB001D17A9D700C9CCBE /* LoadingStatsViewController.m in Sources */,
 				256F39991D12B34D00175E5A /* DriverDetailEditorCell.m in Sources */,
 				256F397E1D125BB000175E5A /* GifLoadingHUD.m in Sources */,
 				2512A1C91D112FDE00ED884B /* LoginViewController.m in Sources */,
+				25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */,
 				2512A1D01D113C6200ED884B /* HomepageViewController.m in Sources */,
 				251175461D10EB6B00C3CE91 /* UserView.m in Sources */,
 				253BF5801D0D49F40006086D /* main.m in Sources */,

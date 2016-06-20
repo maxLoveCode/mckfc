@@ -7,11 +7,11 @@
 //
 
 #import "AppDelegate.h"
-#import "HomepageViewController.h"
+#import "LoadingNav.h"
 
 @interface AppDelegate ()
 
-@property (nonatomic, strong) HomepageViewController* viewController;
+@property (nonatomic, strong) LoadingNav* loadingNav;
 
 @end
 
@@ -24,9 +24,9 @@
     [self.window makeKeyAndVisible];
     self.window.frame = [[UIScreen mainScreen] bounds];
     
-    self.viewController = [[HomepageViewController alloc] init];
+    self.loadingNav = [[LoadingNav alloc] init];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = self.viewController;
+    self.window.rootViewController = self.loadingNav;
     
     return YES;
 }

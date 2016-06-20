@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+@class UserView;
+
+@protocol UserViewDelegate <NSObject>
+
+-(void)didClickConfirm;
+
+@end
 
 @interface UserView : UIView
+
+@property (weak, nonatomic) id <UserViewDelegate> delegate;
 
 @end
