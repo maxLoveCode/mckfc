@@ -32,7 +32,6 @@ NSString *const version = @"v1_0";
     static ServerManager *sharedInstance;
     dispatch_once(&once, ^{
         sharedInstance = [[self alloc] initWithBaseURL: [NSURL URLWithString:b_URL]];
-        //[GifLoadingHUD setGifWithImages:@[[UIImage imageNamed:@"gifloading_0"],[UIImage imageNamed:@"gifloading_1"],[UIImage imageNamed:@"gifloading_2"]]];
     });
     
     return sharedInstance;

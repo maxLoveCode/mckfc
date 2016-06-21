@@ -7,6 +7,7 @@ def default_pods
 	pod 'Mantle', '~> 2.0.7'
 	pod 'AFNetworking', '~> 3.0'
 	pod 'AMap2DMap'
+	pod 'GDQrCode', '~> 1.0.0'
 end
 
 target 'mckfc' do

@@ -59,6 +59,7 @@
 #pragma mark layouts
 -(void)layoutSubviews
 {
+    [super layoutSubviews];
     CGRect imageframe = CGRectMake(k_Margin, 0, itemHeight, itemHeight);
     [self.leftImageView setFrame:imageframe];
     [self.titleLabel setFrame:CGRectMake(CGRectGetMaxX(imageframe), 0, 100, itemHeight)];

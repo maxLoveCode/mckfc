@@ -30,6 +30,8 @@
 		256F39A21D13D83200175E5A /* EditorNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A11D13D83200175E5A /* EditorNav.m */; };
 		256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A41D13E8A900175E5A /* AlertHUDView.m */; };
 		256F39A81D17891A00175E5A /* MCStarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A71D17891A00175E5A /* MCStarView.m */; };
+		25B004931D1920E00018EEB1 /* QueueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004921D1920E00018EEB1 /* QueueViewController.m */; };
+		25B004991D1922970018EEB1 /* QRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004981D1922970018EEB1 /* QRCodeView.m */; };
 		25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFC1D17A53500C9CCBE /* LoadingNav.m */; };
 		25CECB001D17A9D700C9CCBE /* LoadingStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFF1D17A9D700C9CCBE /* LoadingStatsViewController.m */; };
 		25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECB021D17ACF900C9CCBE /* LoadingCell.m */; };
@@ -111,6 +113,10 @@
 		256F39A41D13E8A900175E5A /* AlertHUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertHUDView.m; sourceTree = "<group>"; };
 		256F39A61D17891A00175E5A /* MCStarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCStarView.h; sourceTree = "<group>"; };
 		256F39A71D17891A00175E5A /* MCStarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCStarView.m; sourceTree = "<group>"; };
+		25B004911D1920E00018EEB1 /* QueueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueViewController.h; sourceTree = "<group>"; };
+		25B004921D1920E00018EEB1 /* QueueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueViewController.m; sourceTree = "<group>"; };
+		25B004971D1922970018EEB1 /* QRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeView.h; sourceTree = "<group>"; };
+		25B004981D1922970018EEB1 /* QRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeView.m; sourceTree = "<group>"; };
 		25CECAFB1D17A53500C9CCBE /* LoadingNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingNav.h; sourceTree = "<group>"; };
 		25CECAFC1D17A53500C9CCBE /* LoadingNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingNav.m; sourceTree = "<group>"; };
 		25CECAFE1D17A9D700C9CCBE /* LoadingStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingStatsViewController.h; sourceTree = "<group>"; };
@@ -255,6 +261,7 @@
 				2512A1C31D111B3E00ED884B /* ServerManager.m */,
 				2512A1C51D112F9900ED884B /* Login */,
 				25CECAF81D17A43700C9CCBE /* Loading */,
+				25B004901D191ECC0018EEB1 /* Queue */,
 				256F399D1D13D7DF00175E5A /* DetailEditor */,
 				251175471D10EB7500C3CE91 /* View */,
 				25EDD78C1D0E848A00AFB6F3 /* Model */,
@@ -317,6 +324,17 @@
 				256F39981D12B34D00175E5A /* DriverDetailEditorCell.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		25B004901D191ECC0018EEB1 /* Queue */ = {
+			isa = PBXGroup;
+			children = (
+				25B004911D1920E00018EEB1 /* QueueViewController.h */,
+				25B004921D1920E00018EEB1 /* QueueViewController.m */,
+				25B004971D1922970018EEB1 /* QRCodeView.h */,
+				25B004981D1922970018EEB1 /* QRCodeView.m */,
+			);
+			name = Queue;
 			sourceTree = "<group>";
 		};
 		25CECAF81D17A43700C9CCBE /* Loading */ = {
@@ -660,6 +678,7 @@
 				25CECB061D17BFC600C9CCBE /* MapViewController.m in Sources */,
 				25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */,
 				25CECB091D18DE7C00C9CCBE /* TranspotationPlanViewController.m in Sources */,
+				25B004931D1920E00018EEB1 /* QueueViewController.m in Sources */,
 				256F39841D12847D00175E5A /* SignUpViewController.m in Sources */,
 				256F39A81D17891A00175E5A /* MCStarView.m in Sources */,
 				25EDD78B1D0E847800AFB6F3 /* User.m in Sources */,
@@ -669,6 +688,7 @@
 				253BF5831D0D49F40006086D /* AppDelegate.m in Sources */,
 				256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */,
 				256F39961D12B2A000175E5A /* DriverDetailEditorController.m in Sources */,
+				25B004991D1922970018EEB1 /* QRCodeView.m in Sources */,
 				256F39A21D13D83200175E5A /* EditorNav.m in Sources */,
 				25CECB001D17A9D700C9CCBE /* LoadingStatsViewController.m in Sources */,
 				256F39991D12B34D00175E5A /* DriverDetailEditorCell.m in Sources */,

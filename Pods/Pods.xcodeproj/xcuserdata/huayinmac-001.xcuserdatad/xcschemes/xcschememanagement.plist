@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>GDQrCode.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Mantle.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,17 +37,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2ADFB11A9065785FA49EE2C974BB62FD</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>426BC4549A625B5E1E4200D5261A98BF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4E5D7D3474D5BA1EA92AF47F75F2C319</key>
+		<key>661C893A94382AB449B3329D41A448A3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -52,7 +52,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A63B6293DEDD32717E34254212A24673</key>
+		<key>A6F4B2F3E60E3F3108CE7FFB6C79BF19</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A8F188C5DDBEBF260320CD0E7201BB4C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F247DB7FF54092F72F82C83EF9D1481B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -33,11 +33,6 @@
         [self.contentView addSubview:self.detailLabel];
     }
     
-    self.layoutMargins = UIEdgeInsetsZero;
-    self.preservesSuperviewLayoutMargins = NO;
-
-    self.separatorInset = UIEdgeInsetsMake(0, 0, 0, -100);
-    
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return self;
@@ -73,6 +68,7 @@
 #pragma mark layouts
 -(void)layoutSubviews
 {
+    [super layoutSubviews];
     [self.titleLabel setFrame:CGRectMake(k_Margin, 0 ,100, itemHeight)];
     CGFloat detailX = CGRectGetMaxX(_titleLabel.frame)+20;
     if (self.style == DriverDetailCellStylePlain) {

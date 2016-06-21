@@ -109,6 +109,7 @@
 #pragma mark layoutSubviews
 -(void)layoutSubviews
 {
+    [super layoutSubviews];
     [self addSubview:self.mainTableView];
 }
 

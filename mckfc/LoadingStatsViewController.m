@@ -46,6 +46,7 @@
         return kScreen_Height-itemHeight*6-80;
     }
 }
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 2;
@@ -147,7 +148,7 @@
 
 -(void)confirmBtn
 {
-    TranspotationPlanViewController *plan = [[TranspotationPlanViewController alloc] init];
+    TranspotationPlanViewController *plan = [[TranspotationPlanViewController alloc] initWithStyle:UITableViewStylePlain];
     [self.navigationController pushViewController:plan animated:YES];
 }
 

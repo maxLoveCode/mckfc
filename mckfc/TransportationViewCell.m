@@ -8,17 +8,19 @@
 
 #import "TransportationViewCell.h"
 
+#define itemHeight 44
+
 @implementation TransportationViewCell
 
 -(instancetype)init
 {
-    if (!self) {
-        self = [super initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"plan"];
+    self = [super initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"plan"];
         
-        [self.contentView addSubview:self.titleLabel];
-        [self.contentView addSubview:self.detailLabel];
-        
-    }
+    [self.contentView addSubview:self.titleLabel];
+    [self.contentView addSubview:self.detailLabel];
+    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return self;
 }
 
@@ -28,7 +30,7 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = COLOR_TEXT_GRAY;
-        _titleLabel.font = [UIFont systemFontOfSize:13];
+        _titleLabel.font = [UIFont systemFontOfSize:14];
     }
     return _titleLabel;
 }
@@ -42,4 +44,13 @@
     return _detailLabel;
 }
 
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    [self.titleLabel setFrame:CGRectMake(k_Margin, 0 ,100, itemHeight)];
+    CGFloat detailX = CGRectGetMaxX(_titleLabel.frame)+20;
+    [self.detailLabel setFrame:
+     CGRectMake(detailX, 0, kScreen_Width-detailX, itemHeight)];
+}
 @end
