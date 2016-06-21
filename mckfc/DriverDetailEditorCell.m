@@ -38,6 +38,8 @@
 
     self.separatorInset = UIEdgeInsetsMake(0, 0, 0, -100);
     
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return self;
 }
 

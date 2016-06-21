@@ -16,15 +16,25 @@
 {
     self = [super initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"loadingStats"];
     self.style = style;
+    
+    [self.contentView addSubview:self.titleLabel];
+    [self.contentView addSubview:self.leftImageView];
+    
+    if (self.style == LoadingCellStyleSelection) {
+    }
+    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return self;
 }
 
-#pragma mark setter
+#pragma mark property setter
 -(UILabel *)titleLabel
 {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.textColor = [UIColor darkTextColor];
+        _titleLabel.textColor = COLOR_TEXT_GRAY;
+        _titleLabel.font = [UIFont systemFontOfSize:13];
     }
     return _titleLabel;
 }
@@ -41,7 +51,7 @@
 -(UIImageView *)leftImageView
 {
     if (!_leftImageView) {
-        _leftImageView = [[UIImageView alloc] init];
+        _leftImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star"]];
     }
     return _leftImageView;
 }
