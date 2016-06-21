@@ -34,6 +34,8 @@
 		25CECB001D17A9D700C9CCBE /* LoadingStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFF1D17A9D700C9CCBE /* LoadingStatsViewController.m */; };
 		25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECB021D17ACF900C9CCBE /* LoadingCell.m */; };
 		25CECB061D17BFC600C9CCBE /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECB051D17BFC600C9CCBE /* MapViewController.m */; };
+		25CECB091D18DE7C00C9CCBE /* TranspotationPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECB081D18DE7C00C9CCBE /* TranspotationPlanViewController.m */; };
+		25CECB0F1D18E28B00C9CCBE /* TransportationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECB0E1D18E28B00C9CCBE /* TransportationViewCell.m */; };
 		25EDD78B1D0E847800AFB6F3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EDD78A1D0E847800AFB6F3 /* User.m */; };
 		2A383734F83D247A6E52A42F /* libPods-mckfcUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */; };
 		8A1A7A1E4129ACE6AA293190 /* libPods-mckfcTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B79285101850F79921E443BA /* libPods-mckfcTests.a */; };
@@ -117,6 +119,10 @@
 		25CECB021D17ACF900C9CCBE /* LoadingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingCell.m; sourceTree = "<group>"; };
 		25CECB041D17BFC600C9CCBE /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		25CECB051D17BFC600C9CCBE /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		25CECB071D18DE7C00C9CCBE /* TranspotationPlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranspotationPlanViewController.h; sourceTree = "<group>"; };
+		25CECB081D18DE7C00C9CCBE /* TranspotationPlanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranspotationPlanViewController.m; sourceTree = "<group>"; };
+		25CECB0D1D18E28B00C9CCBE /* TransportationViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransportationViewCell.h; sourceTree = "<group>"; };
+		25CECB0E1D18E28B00C9CCBE /* TransportationViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransportationViewCell.m; sourceTree = "<group>"; };
 		25EDD7891D0E847800AFB6F3 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		25EDD78A1D0E847800AFB6F3 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfcUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -331,6 +337,8 @@
 				256F399B1D13A32000175E5A /* StatsView.m */,
 				25CECB011D17ACF900C9CCBE /* LoadingCell.h */,
 				25CECB021D17ACF900C9CCBE /* LoadingCell.m */,
+				25CECB0D1D18E28B00C9CCBE /* TransportationViewCell.h */,
+				25CECB0E1D18E28B00C9CCBE /* TransportationViewCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -346,6 +354,8 @@
 				25CECAFF1D17A9D700C9CCBE /* LoadingStatsViewController.m */,
 				25CECB041D17BFC600C9CCBE /* MapViewController.h */,
 				25CECB051D17BFC600C9CCBE /* MapViewController.m */,
+				25CECB071D18DE7C00C9CCBE /* TranspotationPlanViewController.h */,
+				25CECB081D18DE7C00C9CCBE /* TranspotationPlanViewController.m */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -649,6 +659,7 @@
 				2512A1C41D111B3E00ED884B /* ServerManager.m in Sources */,
 				25CECB061D17BFC600C9CCBE /* MapViewController.m in Sources */,
 				25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */,
+				25CECB091D18DE7C00C9CCBE /* TranspotationPlanViewController.m in Sources */,
 				256F39841D12847D00175E5A /* SignUpViewController.m in Sources */,
 				256F39A81D17891A00175E5A /* MCStarView.m in Sources */,
 				25EDD78B1D0E847800AFB6F3 /* User.m in Sources */,
@@ -661,6 +672,7 @@
 				256F39A21D13D83200175E5A /* EditorNav.m in Sources */,
 				25CECB001D17A9D700C9CCBE /* LoadingStatsViewController.m in Sources */,
 				256F39991D12B34D00175E5A /* DriverDetailEditorCell.m in Sources */,
+				25CECB0F1D18E28B00C9CCBE /* TransportationViewCell.m in Sources */,
 				256F397E1D125BB000175E5A /* GifLoadingHUD.m in Sources */,
 				2512A1C91D112FDE00ED884B /* LoginViewController.m in Sources */,
 				25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */,

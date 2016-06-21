@@ -7,7 +7,7 @@
 //
 
 #import "LoadingStatsViewController.h"
-#import "MapViewController.h"
+#import "TranspotationPlanViewController.h"
 #import "LoadingCell.h"
 
 #define itemHeight 44
@@ -147,8 +147,8 @@
 
 -(void)confirmBtn
 {
-    MapViewController* map = [[MapViewController alloc] init];
-    [self.navigationController pushViewController:map animated:YES];
+    TranspotationPlanViewController *plan = [[TranspotationPlanViewController alloc] init];
+    [self.navigationController pushViewController:plan animated:YES];
 }
 
 @end
