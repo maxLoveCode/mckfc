@@ -9,6 +9,7 @@
 #import "TranspotationPlanViewController.h"
 #import "TransportationViewCell.h"
 #import "MapViewController.h"
+#import "QueueViewController.h"
 
 #define itemHeight 44
 
@@ -94,6 +95,7 @@
 #pragma selector
 -(void)confirmBtn
 {
-    
+    QueueViewController* queueVC = [[QueueViewController alloc] init];
+    [self.navigationController pushViewController:queueVC animated:YES];
 }
 @end

@@ -34,12 +34,12 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-//    if (!_serverManager.accessToken) {
-//        LoginNav* loginVC = [[LoginNav alloc] init];
-//        [self presentViewController:loginVC animated:NO completion:^{
-//            
-//        }];
-//    }
+    if (!_serverManager.accessToken) {
+        LoginNav* loginVC = [[LoginNav alloc] init];
+        [self presentViewController:loginVC animated:NO completion:^{
+            
+        }];
+    }
 }
 
 -(void)requestUserInfo

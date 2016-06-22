@@ -10,4 +10,8 @@
 
 @interface QRCodeView : UIView
 
+@property (nonatomic, strong) UIImageView* imageView;
+
+-(void)setQRCode:(NSString*)msg;
+
 @end
