@@ -62,7 +62,7 @@
     [_signUpView.mobile resignFirstResponder];
     NSDictionary* params = @{@"mobile":_signUpView.mobile.text};
     [_server POST:@"sendCaptcha" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        if([responseObject[@"code"] integerValue] == 10010)
+        if([responseObject[@"code"] integerValue] == 10000)
         {
             VerifyViewController* verifyVC = [[VerifyViewController alloc] init];
             verifyVC.mobile = _signUpView.mobile.text;

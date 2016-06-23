@@ -15,6 +15,11 @@ typedef NS_ENUM(NSInteger, HUDAlertStyle) {
 
 @class AlertHUDView;
 
+@protocol HUDViewDelegate <NSObject>
+
+-(void)didSelectConfirm;
+
+@end
 
 @interface AlertHUDView : UIView
 
@@ -30,6 +35,8 @@ typedef NS_ENUM(NSInteger, HUDAlertStyle) {
 @property (nonatomic, strong) UIImageView* HUDimage;
 
 @property (nonatomic, strong) UIButton* confirm;
+
+@property (nonatomic, weak) id <HUDViewDelegate>delegate;
 
 -(instancetype)initWithStyle:(HUDAlertStyle)style;
 

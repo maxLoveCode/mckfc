@@ -35,4 +35,10 @@
     return self;
 }
 
+-(void)dismissAllModalViews
+{
+    [self dismissViewControllerAnimated:NO completion:nil];
+    [self popToRootViewControllerAnimated:NO];
+}
+
 @end

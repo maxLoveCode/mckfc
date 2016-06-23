@@ -154,16 +154,19 @@
 #pragma mark submit
 -(void)confirm
 {
-//    NSDictionary* params = @{@"mobile":_mobile,
-//                          @"password":_verifyView.password.text,
-//                          @"captcha":_verifyView.code.text};
-//    [_server POST:@"register" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-//        NSLog(@"%@", responseObject);
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        
-//    }];
-    EditorNav* EditorVC = [[EditorNav alloc] init];
-    [self.navigationController presentViewController:EditorVC animated:YES completion:^{
+    [self dismissKeyboard];
+    NSDictionary* params = @{@"mobile":_mobile,
+                          @"password":_verifyView.password.text,
+                          @"captcha":_verifyView.code.text};
+    [_server POST:@"register" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSLog(@"%@", responseObject);
+        if ([[responseObject objectForKey:@"code"] integerValue] == 10000) {
+            EditorNav* EditorVC = [[EditorNav alloc] init];
+            [self.navigationController presentViewController:EditorVC animated:YES completion:^{
+                
+            }];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
 }

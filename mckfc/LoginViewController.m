@@ -92,6 +92,7 @@
 #pragma mark loginView delegate
 -(void)didSelectLoginWithMobile:(NSString *)mobile Password:(NSString *)password
 {
+    [self dismissKeyboard];
     NSDictionary* params = @{@"username":mobile,
                           @"password":password};
     [_server POST:@"login" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {

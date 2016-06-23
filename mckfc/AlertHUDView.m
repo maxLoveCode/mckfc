@@ -109,7 +109,7 @@
         [_confirm setTitle:@"OK" forState:UIControlStateNormal];
         [_confirm setFrame:CGRectMake(0, CGRectGetMaxY(self.detail.frame), CGRectGetWidth(self.wrapperView.frame), titleHeight)];
         [_confirm setTitleColor:COLOR_THEME_CONTRAST forState:UIControlStateNormal];
-        [_confirm addTarget:self action:@selector(confirmBtn) forControlEvents:UIControlEventTouchUpInside];
+        [_confirm addTarget:self action:@selector(HUDDidConfirm) forControlEvents:UIControlEventTouchUpInside];
     }
     return _confirm;
 }
@@ -142,7 +142,8 @@
     
     [alert.mask addSubview:alert.wrapperView];
     [window addSubview:alert];
-    
+    [alert setFrame:window.bounds];
+
     if(_style == HUDAlertStyleNetworking)
     {
         self.title.text = @"网络加载中";
@@ -166,13 +167,17 @@
     [alert.HUDimage removeFromSuperview];
     
     alert.detail.text = msg;
-    [alert.wrapperView addSubview:self.confirm];
+    [alert.wrapperView addSubview:alert.confirm];
+    
+    alert.mask.userInteractionEnabled = YES;
 }
 
 #pragma mark btn selector
--(void)confirmBtn
+-(void)HUDDidConfirm
 {
     NSLog(@"confirmBtn");
+    [self.delegate didSelectConfirm];
 }
+
 
 @end

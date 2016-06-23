@@ -19,7 +19,7 @@
 NSString *const b_URL = _BASE_URL;
 NSString *const version = @"v1_0";
 
-@interface ServerManager ()
+@interface ServerManager ()<HUDViewDelegate>
 
 @property AlertHUDView *alert;
 
@@ -56,6 +56,7 @@ NSString *const version = @"v1_0";
     }
     if (animated) {
         _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStyleNetworking];
+        _alert.delegate = self;
         [_alert show:_alert];
     }
     [self GET:[self appendedURL:URLString] parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
@@ -95,6 +96,7 @@ NSString *const version = @"v1_0";
     }
     if (animated) {
         _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStyleNetworking];
+        _alert.delegate = self;
         [_alert show:_alert];
     }
     [self POST:[self appendedURL:URLString] parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -128,6 +130,13 @@ NSString *const version = @"v1_0";
     }
     else
         return YES;
+}
+
+-(void)didSelectConfirm
+{
+    if (self.alert) {
+        [self.alert removeFromSuperview];
+    }
 }
 @end
 

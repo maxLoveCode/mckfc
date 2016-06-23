@@ -9,6 +9,7 @@
 #import "DriverDetailEditorController.h"
 #import "DriverDetailEditorCell.h"
 #import "ServerManager.h"
+#import "LoadingNav.h"
 
 @interface DriverDetailEditorController()
 {
@@ -177,7 +178,7 @@
 //                             @"carID":carID,
 //                             @"driverNo":driverNo,
 //                             @"licenseNo":licenseNo};
-    [self dismissViewControllerAnimated:YES completion:^{
+    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:^{
         
     }];
 }

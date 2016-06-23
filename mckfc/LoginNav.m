@@ -25,11 +25,17 @@
         self.delegate = self;
         self.navigationBar.translucent = NO;
         self.navigationBar.barTintColor = COLOR_WithHex(0xf3f3f3);
+        
+        [[UINavigationBar appearance] setTintColor:COLOR_WithHex(0x878787)];
+        
         [self.navigationBar setTitleTextAttributes:
         @{NSForegroundColorAttributeName:COLOR_WithHex(0x878787)}];
+        
         _imageView  = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height)];
         _imageView.image = [UIImage imageNamed:@"login_bg"];
-       
+        
+        [self.navigationItem.backBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName:COLOR_WithHex(0x878787)} forState:UIControlStateNormal];
+        
         [self.view insertSubview:_imageView  atIndex:0];
 
     }
