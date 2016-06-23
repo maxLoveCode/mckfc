@@ -48,6 +48,7 @@
         
         _wrapperView.layer.cornerRadius = 4;
         _wrapperView.layer.masksToBounds = YES;
+        [_wrapperView.layer setBackgroundColor:[UIColor whiteColor].CGColor];
     }
     return _wrapperView;
 }
@@ -69,6 +70,7 @@
     if (!_detail) {
         _detail = [[UILabel alloc] init];
         [_detail setBackgroundColor:[UIColor whiteColor]];
+        _detail.textAlignment = NSTextAlignmentCenter;
     }
     return _detail;
 }
@@ -99,21 +101,37 @@
     return _HUDimage;
 }
 
+-(UIButton *)confirm
+{
+    if (!_confirm) {
+        _confirm = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_confirm setBackgroundColor:COLOR_THEME];
+        [_confirm setTitle:@"OK" forState:UIControlStateNormal];
+        [_confirm setFrame:CGRectMake(0, CGRectGetMaxY(self.detail.frame), CGRectGetWidth(self.wrapperView.frame), titleHeight)];
+        [_confirm setTitleColor:COLOR_THEME_CONTRAST forState:UIControlStateNormal];
+        [_confirm addTarget:self action:@selector(confirmBtn) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _confirm;
+}
+
+#pragma mark layouts
 -(void)layoutSubviews
 {
-    NSLog(@"layouts");
+    [super layoutSubviews];
+    
     [self.mask setFrame:[UIApplication sharedApplication].keyWindow.bounds];
     [self.wrapperView setFrame:CGRectMake(0, 0, width, height)];
     [self.wrapperView setCenter:_mask.center];
     
     [self.title setFrame:CGRectMake(0, 0, width, titleHeight)];
-    [self.detail setFrame:CGRectMake(0, titleHeight, width, height-titleHeight)];
+    [self.detail setFrame:CGRectMake(0, titleHeight, width, height-titleHeight*2)];
     
     if(_style == HUDAlertStyleNetworking)
     {
         [self.HUDimage setFrame:CGRectMake(0, 0, height-titleHeight+20, height-titleHeight+20)];
         self.HUDimage.center = self.detail.center;
     }
+    
     [self addSubview:self.mask];
 }
 
@@ -142,5 +160,19 @@
     }];
 }
 
+-(void)failureWithMsg:(AlertHUDView *)alert msg:(NSString*)msg
+{
+    [alert.HUDimage stopAnimating];
+    [alert.HUDimage removeFromSuperview];
+    
+    alert.detail.text = msg;
+    [alert.wrapperView addSubview:self.confirm];
+}
+
+#pragma mark btn selector
+-(void)confirmBtn
+{
+    NSLog(@"confirmBtn");
+}
 
 @end

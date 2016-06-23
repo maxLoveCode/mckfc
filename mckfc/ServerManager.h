@@ -12,6 +12,8 @@
 @interface ServerManager : AFHTTPSessionManager
 
 @property (nonatomic, copy)  NSString* _Nonnull accessToken;
+@property (nonatomic, assign) NSUInteger successCode;
+
 
 extern NSString  * _Nonnull const b_URL;
 extern NSString  * _Nonnull const version;

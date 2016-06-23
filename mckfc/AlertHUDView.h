@@ -15,6 +15,7 @@ typedef NS_ENUM(NSInteger, HUDAlertStyle) {
 
 @class AlertHUDView;
 
+
 @interface AlertHUDView : UIView
 
 @property (nonatomic, strong) UIView* mask;
@@ -28,9 +29,12 @@ typedef NS_ENUM(NSInteger, HUDAlertStyle) {
 
 @property (nonatomic, strong) UIImageView* HUDimage;
 
+@property (nonatomic, strong) UIButton* confirm;
+
 -(instancetype)initWithStyle:(HUDAlertStyle)style;
 
 -(void)show:(AlertHUDView*)alert;
 -(void)dismiss:(AlertHUDView*)alert;
+-(void)failureWithMsg:(AlertHUDView *)alert msg:(NSString*)msg;
 
 @end
