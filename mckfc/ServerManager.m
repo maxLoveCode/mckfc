@@ -32,6 +32,7 @@ NSString *const version = @"v1_0";
     static ServerManager *sharedInstance;
     dispatch_once(&once, ^{
         sharedInstance = [[self alloc] initWithBaseURL: [NSURL URLWithString:b_URL]];
+        sharedInstance.accessToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"];
     });
 
     return sharedInstance;

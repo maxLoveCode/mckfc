@@ -10,4 +10,6 @@
 
 @interface EditorNav : UINavigationController
 
+@property(nonatomic,copy)void(^onDismissed)();
+
 @end

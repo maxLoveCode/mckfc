@@ -161,14 +161,31 @@
     [_server POST:@"register" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSLog(@"%@", responseObject);
         if ([[responseObject objectForKey:@"code"] integerValue] == 10000) {
+            
+            NSString* token = [[responseObject objectForKey:@"data"] objectForKey:@"token"];
+            [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"access_token"];
+            _server.accessToken = token;
             EditorNav* EditorVC = [[EditorNav alloc] init];
             [self.navigationController presentViewController:EditorVC animated:YES completion:^{
                 
+            }];
+            [EditorVC setOnDismissed:^{
+                NSLog(@"dismiss");
+                [self.navigationController dismissViewControllerAnimated:NO completion:nil];
             }];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
+    
+//    EditorNav* EditorVC = [[EditorNav alloc] init];
+//    [self.navigationController presentViewController:EditorVC animated:YES completion:^{
+//        
+//    }];
+//    [EditorVC setOnDismissed:^{
+//        NSLog(@"dismiss");
+//        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+//    }];
 }
 
 @end

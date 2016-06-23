@@ -38,6 +38,7 @@
     _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:JSONDictionary error:nil];
     NSLog(@"%@",[_user description]);
     XCTAssertNotNil(_user, @"loginVC should contain a view");
+    XCTAssertTrue(YES);
 }
 
 - (void)testPerformanceExample {

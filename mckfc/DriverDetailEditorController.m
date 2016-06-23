@@ -11,6 +11,8 @@
 #import "ServerManager.h"
 #import "LoadingNav.h"
 
+#import "EditorNav.h"
+
 @interface DriverDetailEditorController()
 {
     NSArray* titleText;
@@ -178,8 +180,12 @@
 //                             @"carID":carID,
 //                             @"driverNo":driverNo,
 //                             @"licenseNo":licenseNo};
-    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:^{
-        
+    EditorNav* editorNav = (EditorNav* )self.navigationController;
+    
+    [self dismissViewControllerAnimated:NO completion:^{
+        if (editorNav.onDismissed) {
+            editorNav.onDismissed();
+        }
     }];
 }
 @end

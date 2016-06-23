@@ -10,4 +10,7 @@
 
 @interface HomepageViewController : UIViewController
 
+@property (assign, nonatomic) BOOL didLogin;
+@property (assign, nonatomic) BOOL didEditProfile;
+
 @end

@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
+
 @class UserView;
 
 @protocol UserViewDelegate <NSObject>
@@ -19,4 +21,5 @@
 
 @property (weak, nonatomic) id <UserViewDelegate> delegate;
 
+-(void)setContentByUser:(User* )user;
 @end

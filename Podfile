@@ -8,6 +8,7 @@ def default_pods
 	pod 'AFNetworking', '~> 3.0'
 	pod 'AMap2DMap'
 	pod 'GDQrCode', '~> 1.0.0'
+	pod 'SDWebImage', '~> 3.8.1'
 end
 
 target 'mckfc' do

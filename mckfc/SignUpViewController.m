@@ -72,7 +72,11 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
-    
+//    VerifyViewController* verifyVC = [[VerifyViewController alloc] init];
+//    verifyVC.mobile = _signUpView.mobile.text;
+//    [verifyVC setText:_signUpView.mobile.text];
+//    _server.accessToken = @"test";
+//    [self.navigationController pushViewController:verifyVC animated:YES];
 }
 
 #pragma mark textField delegate

@@ -18,4 +18,9 @@
 @property (nonatomic, copy) NSString *driverNo; //驾驶证号
 @property (nonatomic, copy) NSString *licenseNo; //行驶证号
 
+@property (nonatomic, copy) NSString *avatar; //头像
+@property (nonatomic, assign) NSUInteger star;
+
+-(BOOL)validation;
+
 @end

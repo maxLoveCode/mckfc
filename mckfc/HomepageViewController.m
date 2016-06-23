@@ -12,10 +12,13 @@
 #import "LoginNav.h"
 #import "LoadingStatsViewController.h"
 
+#import "User.h"
+
 @interface HomepageViewController ()<UserViewDelegate>
 
 @property (nonatomic, strong) UserView* userview;
 @property (nonatomic, strong) ServerManager* serverManager;
+@property (nonatomic, strong) User* user;
 
 @end
 
@@ -30,21 +33,33 @@
     _userview.delegate = self;
     
     self.view = _userview;
+
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    if (!_serverManager.accessToken) {
-        LoginNav* loginVC = [[LoginNav alloc] init];
-        [self presentViewController:loginVC animated:NO completion:^{
-            
-        }];
-    }
+    [self requestUserInfo];
 }
 
 -(void)requestUserInfo
 {
-    
+    if (_serverManager.accessToken) {
+        NSDictionary* params = @{@"token": _serverManager.accessToken};
+        [_serverManager GET:@"getUserInfo" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+            NSLog(@"%@",responseObject);
+            _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:responseObject[@"data"] error:nil];
+            NSLog(@"%@",_user);
+            [_userview setContentByUser:_user];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+        }];
+    }
+    else{
+        LoginNav* loginVC = [[LoginNav alloc] init];
+        [self presentViewController:loginVC animated:NO completion:^{
+            }];
+        }
 }
 
 -(void)didClickConfirm

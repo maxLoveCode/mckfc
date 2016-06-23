@@ -21,12 +21,16 @@ PODS:
   - Mantle (2.0.7):
     - Mantle/extobjc (= 2.0.7)
   - Mantle/extobjc (2.0.7)
+  - SDWebImage (3.8.1):
+    - SDWebImage/Core (= 3.8.1)
+  - SDWebImage/Core (3.8.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
   - AMap2DMap
   - GDQrCode (~> 1.0.0)
   - Mantle (~> 2.0.7)
+  - SDWebImage (~> 3.8.1)
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -34,5 +38,6 @@ SPEC CHECKSUMS:
   AMapFoundation: af861f5d299a4f17a1a8b50fd91242933bb352f3
   GDQrCode: 5ad1f6dbfbb7f6932660559d319c0fd1ae6902d9
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
+  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
 
 COCOAPODS: 0.39.0

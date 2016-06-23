@@ -9,6 +9,7 @@
 #import "UserView.h"
 #import "StatsView.h"
 #import "MCStarView.h"
+#import "UIImageView+WebCache.h"
 
 #pragma mark constant
 //first section
@@ -74,8 +75,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section ==0) {
-        return 0.01;
-    }
+        return 0.01;     }
     else
         return tableView.sectionHeaderHeight;
 }
@@ -131,29 +131,30 @@
     avatar.layer.borderWidth = 1.5;
     avatar.layer.cornerRadius = avatarHeight/2;
     avatar.layer.masksToBounds = YES;
+    avatar.tag = 1000;
     
     UILabel* nameLabel = [[UILabel alloc] initWithFrame:
                           CGRectMake(0, CGRectGetMaxY(avatar.frame)+itemGap, kScreen_Width, titleFont)];
     nameLabel.textAlignment = NSTextAlignmentCenter;
     nameLabel.font = [UIFont systemFontOfSize:titleFont];
-    
+    nameLabel.tag = 1001;
     
     UILabel* carLabel = [[UILabel alloc] initWithFrame:
                          CGRectOffset(nameLabel.frame, 0, itemGap+CGRectGetHeight(nameLabel.frame))];
     carLabel.textAlignment = NSTextAlignmentCenter;
     carLabel.font = [UIFont systemFontOfSize:titleFont];
-    
+    carLabel.tag = 1002;
 #ifdef DEBUG
     nameLabel.text= @"车主姓名";
     carLabel.text = @"车牌号";
-    avatar.image = [UIImage imageNamed:@"star"];
+    //avatar.image = [UIImage imageNamed:@"star"];
 #endif
     
     MCStarView* starView = [[MCStarView alloc] initWithCount:5];
     CGSize framesize = [starView sizeOfView];
     [starView setFrame:CGRectMake((kScreen_Width-framesize.width)/2, CGRectGetMaxY(carLabel.frame)+itemGap, framesize.width, framesize.height )];
     [starView setStarValue:2];
-    
+    starView.tag = 1005;
     [bgView addSubview:avatar];
     [bgView addSubview:nameLabel];
     [bgView addSubview:carLabel];
@@ -164,6 +165,27 @@
 -(void)confirmBtn
 {
     [self.delegate didClickConfirm];
+}
+
+#pragma mark set content
+-(void)setContentByUser:(User *)user
+{
+    UITableViewCell* firstCell = [self.mainTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    UIView* content = firstCell.contentView;
+    UILabel* nameLabel = [content viewWithTag:1001];
+    nameLabel.text = user.driverName;
+    if ([user.driverName isEqualToString:@""]) {
+        nameLabel.text = @"未命名司机";
+    }
+    
+    MCStarView* star = [content viewWithTag:1005];
+    [star setStarValue:user.star];
+    
+    UILabel* carlabel = [content viewWithTag:1002];
+    carlabel.text = user.cardID;
+    
+    UIImageView* avatar = [content viewWithTag:1000];
+    [avatar sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
 }
 
 @end

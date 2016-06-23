@@ -16,15 +16,20 @@
              @"mobile":@"mobile",
              @"carNo":@"carNo",
              @"driverName":@"driverName",
-             @"cardID":@"cardID",
+             @"cardID":@"cardId",
              @"driverNo":@"driverNo",
-             @"licenseNo":@"licenseNo"
-             };
+             @"licenseNo":@"licenseNo",
+             @"star":@"star"};
 }
 
 -(NSString *)description
 {
     return [NSString stringWithFormat:@"User: %@", [MTLJSONAdapter JSONArrayFromModels:@[self] error:nil]];
+}
+
+-(BOOL)validation
+{
+    return YES;
 }
 
 @end
