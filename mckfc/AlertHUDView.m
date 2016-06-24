@@ -128,7 +128,7 @@
     
     if(_style == HUDAlertStyleNetworking)
     {
-        [self.HUDimage setFrame:CGRectMake(0, 0, height-titleHeight+20, height-titleHeight+20)];
+        [self.HUDimage setFrame:CGRectMake(0, 0, height-titleHeight+60, height-titleHeight+60)];
         self.HUDimage.center = self.detail.center;
     }
     

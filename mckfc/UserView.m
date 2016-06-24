@@ -29,6 +29,7 @@
 @interface UserView()<UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) UITableView* mainTableView;
+@property (strong, nonatomic) StatsView* stats;
 
 @end
 
@@ -68,7 +69,8 @@
     }
     else{
         return kScreen_Height-[self firstSectionHeight]- secondSection
-            - tableView.sectionFooterHeight*2-tableView.sectionHeaderHeight*2;
+            - tableView.sectionFooterHeight*2-tableView.sectionHeaderHeight*2
+            - 64 - 75;
     }
 }
 
@@ -87,8 +89,8 @@
         [self firstSection:cell];
     }
     else if (indexPath.section == 1){
-        StatsView* stats = [[StatsView alloc] initWithStats:nil];
-        [cell.contentView addSubview:stats];
+        _stats = [[StatsView alloc] initWithStats:nil];
+        [cell.contentView addSubview:_stats];
     }
     else
     {
@@ -147,8 +149,12 @@
 #ifdef DEBUG
     nameLabel.text= @"车主姓名";
     carLabel.text = @"车牌号";
-    //avatar.image = [UIImage imageNamed:@"star"];
 #endif
+    
+    UIView* leftView = [[UIView alloc] initWithFrame:CGRectMake(k_Margin, CGRectGetMidY(carLabel.frame), 94, 0.5)];
+    [leftView setBackgroundColor:COLOR_WithHex(0xdddddd)];
+    UIView* rightView = [[UIView alloc] initWithFrame:CGRectMake(kScreen_Width- k_Margin- 94, CGRectGetMidY(carLabel.frame), 94, 0.5)];
+    [rightView setBackgroundColor:COLOR_WithHex(0xdddddd)];
     
     MCStarView* starView = [[MCStarView alloc] initWithCount:5];
     CGSize framesize = [starView sizeOfView];
@@ -159,6 +165,8 @@
     [bgView addSubview:nameLabel];
     [bgView addSubview:carLabel];
     [bgView addSubview:starView];
+    [bgView addSubview:leftView];
+    [bgView addSubview:rightView];
     [cell.contentView addSubview:bgView];
 }
 
@@ -183,9 +191,15 @@
     
     UILabel* carlabel = [content viewWithTag:1002];
     carlabel.text = user.cardID;
+    if ([carlabel.text isEqualToString:@""]) {
+        carlabel.text = @"未填写车牌号";
+    }
+    
     
     UIImageView* avatar = [content viewWithTag:1000];
     [avatar sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+    
+    [_stats setStatsFromDictionary:user.stats];
 }
 
 @end

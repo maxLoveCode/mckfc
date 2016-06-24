@@ -19,7 +19,8 @@
              @"cardID":@"cardId",
              @"driverNo":@"driverNo",
              @"licenseNo":@"licenseNo",
-             @"star":@"star"};
+             @"star":@"star",
+             @"stats":@[@"totalMile",@"totalWeight",@"transportTime"]};
 }
 
 -(NSString *)description

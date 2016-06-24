@@ -9,6 +9,7 @@ def default_pods
 	pod 'AMap2DMap'
 	pod 'GDQrCode', '~> 1.0.0'
 	pod 'SDWebImage', '~> 3.8.1'
+	pod 'MMPickerView', '~> 0.0.1'
 end
 
 target 'mckfc' do

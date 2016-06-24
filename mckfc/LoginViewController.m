@@ -10,6 +10,8 @@
 #import "ServerManager.h"
 #import "SignUpViewController.h"
 
+#import "NSString+MD5.h"
+
 @interface LoginViewController()<UITextFieldDelegate, LoginViewDelegate>
 {
     NSArray* defaultText;
@@ -94,9 +96,13 @@
 {
     [self dismissKeyboard];
     NSDictionary* params = @{@"username":mobile,
-                          @"password":password};
+                          @"password":[password MD5]};
     [_server POST:@"login" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         if ([responseObject[@"code"] integerValue] == 10000) {
+            NSLog(@"%@",responseObject);
+            [[NSUserDefaults standardUserDefaults] setObject:[responseObject[@"data"] objectForKey:@"token"] forKey:@"access_token"];
+            _server.accessToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"];
+            NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]);
             [self dismissViewControllerAnimated:YES completion:^{
                 
             }];

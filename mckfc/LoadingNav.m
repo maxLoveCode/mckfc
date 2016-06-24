@@ -30,7 +30,8 @@
          @{NSForegroundColorAttributeName:COLOR_WithHex(0x878787)}];
         
         self.view.backgroundColor = [UIColor whiteColor];
-        
+        [[UINavigationBar appearance] setTintColor:COLOR_WithHex(0x878787)];
+
     }
     return self;
 }

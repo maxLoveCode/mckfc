@@ -21,6 +21,7 @@
     [self.contentView addSubview:self.leftImageView];
     
     if (self.style == LoadingCellStyleSelection) {
+        [self.contentView addSubview:self.detailLabel];
     }
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;

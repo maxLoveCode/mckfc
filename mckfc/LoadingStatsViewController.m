@@ -9,11 +9,18 @@
 #import "LoadingStatsViewController.h"
 #import "TranspotationPlanViewController.h"
 #import "LoadingCell.h"
+#import "MCPickerView.h"
 
 #define itemHeight 44
 #define topMargin 60
 #define buttonHeight 40
 #define buttonWidth 340
+
+@interface LoadingStatsViewController ()
+
+@property (nonatomic, strong) MCPickerView* pickerView;
+
+@end
 
 @implementation LoadingStatsViewController
 {
@@ -29,6 +36,7 @@
     self.tableView.dataSource = self;
     
     titleText = @[@"豆农",@"土豆重量",@"土豆品质",@"篷布",@"排风系统",@"发车时间"];
+    
 }
 
 #pragma mark tableViewDelegate
@@ -117,6 +125,19 @@
         
         
         return cell;
+    }
+}
+
+#pragma mark UITableview selection delegate
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        LoadingCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+        if (cell.style == LoadingCellStyleSelection) {
+            NSArray *strings = @[@"This", @"is", @"just", @"an array", @"of strings."];
+            _pickerView = [[MCPickerView alloc] initWithArray:strings];
+            [_pickerView show];
+        }
     }
 }
 

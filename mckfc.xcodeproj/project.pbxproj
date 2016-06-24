@@ -12,6 +12,7 @@
 		2512A1C91D112FDE00ED884B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2512A1C81D112FDE00ED884B /* LoginViewController.m */; };
 		2512A1CD1D1130B100ED884B /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2512A1CC1D1130B100ED884B /* LoginView.m */; };
 		2512A1D01D113C6200ED884B /* HomepageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2512A1CF1D113C6200ED884B /* HomepageViewController.m */; };
+		252B63261D1CDC7700C108C0 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 252B63251D1CDC7700C108C0 /* NSString+MD5.m */; };
 		253BF5801D0D49F40006086D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF57F1D0D49F40006086D /* main.m */; };
 		253BF5831D0D49F40006086D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5821D0D49F40006086D /* AppDelegate.m */; };
 		253BF58B1D0D49F40006086D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 253BF58A1D0D49F40006086D /* Assets.xcassets */; };
@@ -19,7 +20,6 @@
 		253BF5991D0D49F40006086D /* mckfcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5981D0D49F40006086D /* mckfcTests.m */; };
 		253BF5A41D0D49F40006086D /* mckfcUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5A31D0D49F40006086D /* mckfcUITests.m */; };
 		256F397B1D123E3900175E5A /* LoginNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F397A1D123E3900175E5A /* LoginNav.m */; };
-		256F397E1D125BB000175E5A /* GifLoadingHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F397D1D125BB000175E5A /* GifLoadingHUD.m */; };
 		256F39811D12836900175E5A /* SignUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39801D12836900175E5A /* SignUpView.m */; };
 		256F39841D12847D00175E5A /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39831D12847D00175E5A /* SignUpViewController.m */; };
 		256F39871D12885B00175E5A /* VerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39861D12885B00175E5A /* VerifyViewController.m */; };
@@ -39,6 +39,7 @@
 		25CECB091D18DE7C00C9CCBE /* TranspotationPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECB081D18DE7C00C9CCBE /* TranspotationPlanViewController.m */; };
 		25CECB0F1D18E28B00C9CCBE /* TransportationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECB0E1D18E28B00C9CCBE /* TransportationViewCell.m */; };
 		25EDD78B1D0E847800AFB6F3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EDD78A1D0E847800AFB6F3 /* User.m */; };
+		25F0DF141D1D2C5E007CEF17 /* MCPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F0DF131D1D2C5E007CEF17 /* MCPickerView.m */; };
 		2A383734F83D247A6E52A42F /* libPods-mckfcUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */; };
 		8A1A7A1E4129ACE6AA293190 /* libPods-mckfcTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B79285101850F79921E443BA /* libPods-mckfcTests.a */; };
 		A5C8BB96088FE4611120D108 /* libPods-mckfc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 129CF618CF2B96D1FCEA2F02 /* libPods-mckfc.a */; };
@@ -76,6 +77,8 @@
 		2512A1CC1D1130B100ED884B /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		2512A1CE1D113C6200ED884B /* HomepageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomepageViewController.h; sourceTree = "<group>"; };
 		2512A1CF1D113C6200ED884B /* HomepageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomepageViewController.m; sourceTree = "<group>"; };
+		252B63241D1CDC7700C108C0 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		252B63251D1CDC7700C108C0 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		253BF57B1D0D49F40006086D /* mckfc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mckfc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		253BF57F1D0D49F40006086D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		253BF5811D0D49F40006086D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -91,8 +94,6 @@
 		253BF5A51D0D49F40006086D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		256F39791D123E3900175E5A /* LoginNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginNav.h; sourceTree = "<group>"; };
 		256F397A1D123E3900175E5A /* LoginNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginNav.m; sourceTree = "<group>"; };
-		256F397C1D125BB000175E5A /* GifLoadingHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifLoadingHUD.h; sourceTree = "<group>"; };
-		256F397D1D125BB000175E5A /* GifLoadingHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifLoadingHUD.m; sourceTree = "<group>"; };
 		256F397F1D12836900175E5A /* SignUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpView.h; sourceTree = "<group>"; };
 		256F39801D12836900175E5A /* SignUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpView.m; sourceTree = "<group>"; };
 		256F39821D12847D00175E5A /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
@@ -131,6 +132,8 @@
 		25CECB0E1D18E28B00C9CCBE /* TransportationViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransportationViewCell.m; sourceTree = "<group>"; };
 		25EDD7891D0E847800AFB6F3 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		25EDD78A1D0E847800AFB6F3 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		25F0DF121D1D2C5E007CEF17 /* MCPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPickerView.h; sourceTree = "<group>"; };
+		25F0DF131D1D2C5E007CEF17 /* MCPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPickerView.m; sourceTree = "<group>"; };
 		2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfcUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C0EE5CD14F1FFCF59A0F5C5 /* Pods-mckfc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfc.release.xcconfig"; path = "Pods/Target Support Files/Pods-mckfc/Pods-mckfc.release.xcconfig"; sourceTree = "<group>"; };
 		33E4AD97041C7CA6DB6332A6 /* Pods-mckfcUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfcUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mckfcUITests/Pods-mckfcUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -171,12 +174,12 @@
 		251175471D10EB7500C3CE91 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				256F397C1D125BB000175E5A /* GifLoadingHUD.h */,
-				256F397D1D125BB000175E5A /* GifLoadingHUD.m */,
 				256F39A31D13E8A900175E5A /* AlertHUDView.h */,
 				256F39A41D13E8A900175E5A /* AlertHUDView.m */,
 				256F39A61D17891A00175E5A /* MCStarView.h */,
 				256F39A71D17891A00175E5A /* MCStarView.m */,
+				25F0DF121D1D2C5E007CEF17 /* MCPickerView.h */,
+				25F0DF131D1D2C5E007CEF17 /* MCPickerView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -227,10 +230,21 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		252B63231D1CDC0A00C108C0 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				252B63241D1CDC7700C108C0 /* NSString+MD5.h */,
+				252B63251D1CDC7700C108C0 /* NSString+MD5.m */,
+			);
+			name = Category;
+			path = mckfc;
+			sourceTree = "<group>";
+		};
 		253BF5721D0D49F40006086D = {
 			isa = PBXGroup;
 			children = (
 				253BF57D1D0D49F40006086D /* mckfc */,
+				252B63231D1CDC0A00C108C0 /* Category */,
 				253BF5971D0D49F40006086D /* mckfcTests */,
 				253BF5A21D0D49F40006086D /* mckfcUITests */,
 				253BF57C1D0D49F40006086D /* Products */,
@@ -674,6 +688,7 @@
 			files = (
 				256F397B1D123E3900175E5A /* LoginNav.m in Sources */,
 				256F398A1D12887D00175E5A /* VerifyView.m in Sources */,
+				25F0DF141D1D2C5E007CEF17 /* MCPickerView.m in Sources */,
 				2512A1C41D111B3E00ED884B /* ServerManager.m in Sources */,
 				25CECB061D17BFC600C9CCBE /* MapViewController.m in Sources */,
 				25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */,
@@ -693,7 +708,7 @@
 				25CECB001D17A9D700C9CCBE /* LoadingStatsViewController.m in Sources */,
 				256F39991D12B34D00175E5A /* DriverDetailEditorCell.m in Sources */,
 				25CECB0F1D18E28B00C9CCBE /* TransportationViewCell.m in Sources */,
-				256F397E1D125BB000175E5A /* GifLoadingHUD.m in Sources */,
+				252B63261D1CDC7700C108C0 /* NSString+MD5.m in Sources */,
 				2512A1C91D112FDE00ED884B /* LoginViewController.m in Sources */,
 				25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */,
 				2512A1D01D113C6200ED884B /* HomepageViewController.m in Sources */,

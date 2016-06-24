@@ -49,7 +49,7 @@
         [_serverManager GET:@"getUserInfo" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
             NSLog(@"%@",responseObject);
             _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:responseObject[@"data"] error:nil];
-            NSLog(@"%@",_user);
+            NSLog(@"user: %@",_user);
             [_userview setContentByUser:_user];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             

@@ -17,9 +17,11 @@
 @property (nonatomic, copy) NSString *cardID;  //身份证
 @property (nonatomic, copy) NSString *driverNo; //驾驶证号
 @property (nonatomic, copy) NSString *licenseNo; //行驶证号
+@property (nonatomic, copy) NSDictionary* stats;
+
 
 @property (nonatomic, copy) NSString *avatar; //头像
-@property (nonatomic, assign) NSUInteger star;
+@property (nonatomic, assign) NSUInteger star; //评星
 
 -(BOOL)validation;
 

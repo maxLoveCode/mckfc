@@ -12,4 +12,6 @@
 
 -(instancetype)initWithStats:(NSDictionary*)Stats;
 
+-(void)setStatsFromDictionary:(NSDictionary* )stats;
+
 @end

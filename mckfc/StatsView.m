@@ -62,6 +62,10 @@
 {
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"stats" forIndexPath:indexPath];
     
+    for (UIView* view in [cell.contentView subviews]) {
+        [view removeFromSuperview];
+    }
+    
     UILabel* title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width/3, height/2)];
     UILabel* detailLabel = [[UILabel alloc] initWithFrame:CGRectOffset(title.frame, 0, height/2)];
     title.textColor = COLOR_TEXT_GRAY;
@@ -71,15 +75,32 @@
     detailLabel.textColor = [UIColor darkTextColor];
     detailLabel.font = [UIFont systemFontOfSize:14];
     
-    title.text = @"title";
-    detailLabel.text = @"detail";
-    
     title.textAlignment = NSTextAlignmentCenter;
     detailLabel.textAlignment = NSTextAlignmentCenter;
     
     [cell.contentView addSubview:title];
     [cell.contentView addSubview:detailLabel];
+    
+    if (indexPath.item == 0) {
+        title.text = @"运输次数";
+        detailLabel.text = [NSString stringWithFormat:@"%@", _stats[@"transportTime"]];
+    }
+    else if (indexPath.item == 1){
+        title.text = @"总里程数";
+        detailLabel.text = [NSString stringWithFormat:@"%@", _stats[@"totalMile"]];
+    }
+    else if (indexPath.item == 2){
+        title.text = @"总里程数";
+        detailLabel.text = [NSString stringWithFormat:@"%@", _stats[@"totalWeight"]];
+    }
     return cell;
+}
+
+-(void)setStatsFromDictionary:(NSDictionary *)stats
+{
+    NSLog(@"%@",stats);
+    self.stats = stats;
+    [self reloadData];
 }
 
 @end
