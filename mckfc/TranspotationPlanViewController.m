@@ -32,6 +32,7 @@
     [self.tableView registerClass:[TransportationViewCell class] forCellReuseIdentifier:@"plan"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.bounces = NO;
     
     _mapVC = [[MapViewController alloc] init];
     [self addChildViewController:_mapVC];

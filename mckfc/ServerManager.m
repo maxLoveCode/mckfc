@@ -124,6 +124,32 @@ NSString *const version = @"v1_0";
     }];
 }
 
+#pragma mark formData
+-(void)upLoadImageData:(UIImage *)image forSize:(CGSize)size success:(void (^)(NSURLSessionDataTask * _Nullable, id _Nullable))success failure:(void (^)(NSURLSessionDataTask * _Nullable, NSError * _Nonnull))failure
+{
+    NSString *urlStr = [self appendedURL:@"upload"];
+    NSDictionary *parameters = @{@"token":self.accessToken,
+                                  @"file":image,
+                                 @"width":[NSString stringWithFormat:@"%f", size.width],
+                                @"height":[NSString stringWithFormat:@"%f", size.height]};
+    
+    NSData* data = UIImageJPEGRepresentation(image, 1.0);
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+        [formData appendPartWithFileData:data name:@"upload_file" fileName:@"somefilename.png" mimeType:@"image/png"];// you file to upload
+        
+    } error:nil];
+    NSURLSessionUploadTask *uploadTask;
+    uploadTask = [self uploadTaskWithStreamedRequest:request progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        NSLog(@"%@",response);
+        NSLog(@"%@",responseObject);
+    }];
+    [uploadTask resume];
+}
+
+
 -(BOOL)accessibility
 {
     if (!self.accessToken) {

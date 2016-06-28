@@ -9,17 +9,22 @@
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import "MapViewController.h"
 #import <MAMapKit/MAMapKit.h>
+#import <AMapSearchKit/AMapSearchKit.h>
 
-@interface MapViewController ()<MAMapViewDelegate>
+@interface MapViewController ()<MAMapViewDelegate, AMapSearchDelegate>
 {
     MAMapView *_mapView;
+    MAMapPoint termination;
+    AMapSearchAPI *_search;
 }
+@property (nonatomic,strong) AMapPath* path;
+@property (nonatomic,strong) MAUserLocation* userLocation;
 
 @end
 
 @implementation MapViewController
 
--(void) viewDidAppear:(BOOL)animated
+-(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     // Do any additional setup after loading the view, typically from a nib.
@@ -28,8 +33,148 @@
     
     _mapView = [[MAMapView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
     _mapView.delegate = self;
-    
+    _mapView.showsUserLocation = YES;
+    [_mapView setUserTrackingMode: MAUserTrackingModeFollow animated:YES];
+    [self terminateHarBin];
     [self.view addSubview:_mapView];
+}
+
+-(void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation
+updatingLocation:(BOOL)updatingLocation
+{
+    if(updatingLocation)
+    {
+        //取出当前位置的坐标
+        _userLocation = userLocation;
+        
+        if (!_path &&userLocation) {
+            [_mapView selectAnnotation:userLocation animated:YES];
+            [self initSearchInstanceWithStartPoint:userLocation.coordinate];
+        }
+    }
+}
+
+-(void)terminateHarBin
+{
+    termination = MAMapPointForCoordinate(CLLocationCoordinate2DMake(44.04, 125.42));
+}
+
+-(void)initSearchInstanceWithStartPoint:(CLLocationCoordinate2D)startPoint;
+{
+    //初始化检索对象
+    if (!_search) {
+        _search = [[AMapSearchAPI alloc] init];
+        _search.delegate = self;
+    }
+    
+    //构造AMapDrivingRouteSearchRequest对象，设置驾车路径规划请求参数
+    AMapDrivingRouteSearchRequest *request = [[AMapDrivingRouteSearchRequest alloc] init];
+    request.origin = [AMapGeoPoint locationWithLatitude:startPoint.latitude longitude:startPoint.longitude];
+    request.destination = [AMapGeoPoint locationWithLatitude:44.04 longitude:125.42];
+    request.strategy = 2;//距离优先
+    request.requireExtension = YES;
+    
+    //发起路径搜索
+    
+    [_search AMapDrivingRouteSearch: request];
+}
+
+//实现路径搜索的回调函数
+- (void)onRouteSearchDone:(AMapRouteSearchBaseRequest *)request response:(AMapRouteSearchResponse *)response
+{
+    if(response.route == nil)
+    {
+        return;
+    }
+    //通过AMapNavigationSearchResponse对象处理搜索结果
+    _userLocation.title = [NSString stringWithFormat:@"距离目的地还有%.2ld公里", _path.distance/1000];
+    _userLocation.subtitle = [NSString stringWithFormat:@"预计%ld小时到达",_path.distance/80000];
+    
+    NSMutableArray* polys = [[NSMutableArray alloc] init];
+    _path = [response.route.paths objectAtIndex:0];
+    [_path.steps enumerateObjectsUsingBlock:^(AMapStep *step, NSUInteger idx, BOOL *stop) {
+        if (step!=nil) {
+            MAPolyline* line = [MapViewController polylineForStep:step];
+            [polys addObject:line];
+        }
+    }];
+    [_mapView addOverlays:polys];
+}
+
+- (MAOverlayView *)mapView:(MAMapView *)mapView viewForOverlay:(id <MAOverlay>)overlay
+{
+    if ([overlay isKindOfClass:[MAPolyline class]])
+    {
+        MAPolylineView *polylineView = [[MAPolylineView alloc] initWithPolyline:overlay];
+        
+        polylineView.lineWidth = 10.f;
+        polylineView.strokeColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:0.6];
+        return polylineView;
+    }
+    return nil;
+}
+
+#pragma mark common ultility
++ (CLLocationCoordinate2D *)coordinatesForString:(NSString *)string
+                                 coordinateCount:(NSUInteger *)coordinateCount
+                                      parseToken:(NSString *)token
+{
+    if (string == nil) {
+        return NULL;
+    }
+    if (token == nil) {
+        token = @",";
+    }
+    NSString *str = @"";
+    if (![token isEqualToString:@","]) {
+        str = [string stringByReplacingOccurrencesOfString:token withString:@","];
+    }
+    else {
+        str = [NSString stringWithString:string];
+    }
+    NSArray *components = [str componentsSeparatedByString:@","];
+    NSUInteger count = [components count] / 2;
+    if (coordinateCount != NULL) {
+        *coordinateCount = count;
+    }
+    CLLocationCoordinate2D *coordinates = (CLLocationCoordinate2D*)malloc(count * sizeof(CLLocationCoordinate2D));
+    
+    for (int i = 0; i < count; i++) {
+        coordinates[i].longitude = [[components objectAtIndex:2 * i]     doubleValue];
+        coordinates[i].latitude  = [[components objectAtIndex:2 * i + 1] doubleValue];
+    }
+    
+    return coordinates;
+}
+
++ (MAPolyline *)polylineForCoordinateString:(NSString *)coordinateString
+{
+    if (coordinateString.length == 0)
+    {
+        return nil;
+    }
+    
+    NSUInteger count = 0;
+    
+    CLLocationCoordinate2D *coordinates = [self coordinatesForString:coordinateString
+                                                     coordinateCount:&count
+                                                          parseToken:@";"];
+    
+    MAPolyline *polyline = [MAPolyline polylineWithCoordinates:coordinates count:count];
+    
+    free(coordinates), coordinates = NULL;
+    
+    return polyline;
+}
+
++ (MAPolyline *)polylineForStep:(AMapStep *)step
+{
+    if (step == nil)
+    {
+        return nil;
+    }
+    
+    return [self polylineForCoordinateString:step.polyline];
 }
 
 @end

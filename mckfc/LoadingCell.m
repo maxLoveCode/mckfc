@@ -44,7 +44,8 @@
 {
     if (!_detailLabel) {
         _detailLabel = [[UILabel alloc] init];
-        _detailLabel.textColor = COLOR_TEXT_GRAY;
+        _detailLabel.textColor = COLOR_WithHex(0x565656);
+        _detailLabel.font = [UIFont systemFontOfSize:14];
     }
     return _detailLabel;
 }

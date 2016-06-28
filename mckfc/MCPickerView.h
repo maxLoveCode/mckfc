@@ -11,7 +11,7 @@
 
 @protocol MCPickerViewDelegate <NSObject>
 
-
+-(void)didSelectString:(NSString*)string fromPickerView:(MCPickerView*)pickerView;
 
 @end
 

@@ -16,7 +16,7 @@
 #define buttonHeight 40
 #define buttonWidth 340
 
-@interface LoadingStatsViewController ()
+@interface LoadingStatsViewController ()<MCPickerViewDelegate>
 
 @property (nonatomic, strong) MCPickerView* pickerView;
 
@@ -134,8 +134,10 @@
     if (indexPath.section == 0) {
         LoadingCell* cell = [tableView cellForRowAtIndexPath:indexPath];
         if (cell.style == LoadingCellStyleSelection) {
-            NSArray *strings = @[@"This", @"is", @"just", @"an array", @"of strings."];
+            NSArray *strings = @[@"A", @"B", @"C", @"an D", @"E"];
             _pickerView = [[MCPickerView alloc] initWithArray:strings];
+            _pickerView.delegate = self;
+            _pickerView.tag = indexPath.row;
             [_pickerView show];
         }
     }
@@ -167,10 +169,18 @@
         return tableView.sectionHeaderHeight;
 }
 
+#pragma mark selectors
 -(void)confirmBtn
 {
     TranspotationPlanViewController *plan = [[TranspotationPlanViewController alloc] initWithStyle:UITableViewStylePlain];
     [self.navigationController pushViewController:plan animated:YES];
+}
+
+#pragma mark MCPickerView delegate
+-(void)didSelectString:(NSString *)string fromPickerView:(MCPickerView *)pickerView
+{
+    LoadingCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:pickerView.tag inSection:0]];
+    cell.detailLabel.text = string;
 }
 
 @end

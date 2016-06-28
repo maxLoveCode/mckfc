@@ -13,7 +13,7 @@
 
 #import "EditorNav.h"
 
-@interface DriverDetailEditorController()
+@interface DriverDetailEditorController()<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
     NSArray* titleText;
     NSArray* detailText;
@@ -114,6 +114,14 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DriverDetailEditorCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (cell.style == DriverDetailCellStyleAvatar) {
+        [self didPickImage];
+    }
+}
+
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Remove seperator inset
@@ -187,5 +195,41 @@
             editorNav.onDismissed();
         }
     }];
+}
+
+#pragma mark pick image
+-(void)didPickImage
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"请选择图片来源" message: nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"照相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction *UIAlertAction){
+        imagePicker.delegate = self;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"从相册中选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction *UIAlertAction){
+        imagePicker.delegate = self;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(__bridge NSString *)kUTTypeImage]) {
+        UIImage *img = [info objectForKey:UIImagePickerControllerEditedImage];
+        [_server upLoadImageData:img forSize:CGSizeMake(100, 100) success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+        }];
+    }
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 @end

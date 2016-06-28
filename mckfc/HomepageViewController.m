@@ -12,6 +12,8 @@
 #import "LoginNav.h"
 #import "LoadingStatsViewController.h"
 
+#import "EditorNav.h"
+
 #import "User.h"
 
 @interface HomepageViewController ()<UserViewDelegate>
@@ -44,6 +46,7 @@
 
 -(void)requestUserInfo
 {
+    //根据 access token 判断第一次
     if (_serverManager.accessToken) {
         NSDictionary* params = @{@"token": _serverManager.accessToken};
         [_serverManager GET:@"getUserInfo" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
@@ -51,6 +54,19 @@
             _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:responseObject[@"data"] error:nil];
             NSLog(@"user: %@",_user);
             [_userview setContentByUser:_user];
+            
+            if(![_user validation]){
+                EditorNav* editVC = [[EditorNav alloc] init];
+                [self presentViewController:editVC animated:YES completion:^{
+                    
+                }];
+                if ([editVC onDismissed]) {
+                    [editVC setOnDismissed:^{
+                        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+                    }];
+                }
+            }
+                
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
         }];
@@ -59,7 +75,7 @@
         LoginNav* loginVC = [[LoginNav alloc] init];
         [self presentViewController:loginVC animated:NO completion:^{
             }];
-        }
+    }
 }
 
 -(void)didClickConfirm
