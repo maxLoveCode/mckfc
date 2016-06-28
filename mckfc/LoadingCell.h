@@ -23,6 +23,7 @@ typedef NS_ENUM(NSUInteger, LoadingCellStyle) {
 
 @property (nonatomic, assign) LoadingCellStyle style;
 
+-(instancetype)init;
 -(instancetype)initWithStyle:(LoadingCellStyle)style;
 
 @end

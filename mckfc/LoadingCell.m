@@ -12,6 +12,13 @@
 
 @implementation LoadingCell
 
+-(instancetype)init
+{
+    self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"loadingStats"];
+    
+    return self;
+}
+
 -(instancetype)initWithStyle:(LoadingCellStyle)style
 {
     self = [super initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"loadingStats"];

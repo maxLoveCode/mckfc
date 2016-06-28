@@ -25,6 +25,8 @@
 @implementation LoadingStatsViewController
 {
     NSArray* titleText;
+    NSArray* secondSectionTitle;
+    NSArray* thirdSectionTitle;
 }
 
 -(void)viewDidLoad
@@ -36,7 +38,8 @@
     self.tableView.dataSource = self;
     
     titleText = @[@"豆农",@"土豆重量",@"土豆品质",@"篷布",@"排风系统",@"发车时间"];
-    
+    secondSectionTitle = @[@"装车前车辆检查",@"异物",@"油",@"化学物品",@"异味",@"篷布"];
+    thirdSectionTitle =@[@"发车时间",@"其他情况说明"];
 }
 
 #pragma mark tableViewDelegate
@@ -57,13 +60,19 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 4;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
+        return 2;
+    }
+    else if (section == 1){
         return 6;
+    }
+    else if (section == 2){
+        return 2;
     }
     else
         return 1;
@@ -109,6 +118,12 @@
         }
         
     }
+    else if(indexPath.section == 1){
+        
+    }
+    else if(indexPath.section == 2){
+        
+    }
     else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"loadingStats" forIndexPath:indexPath];
         
@@ -126,6 +141,7 @@
         
         return cell;
     }
+    return nil;
 }
 
 #pragma mark UITableview selection delegate
