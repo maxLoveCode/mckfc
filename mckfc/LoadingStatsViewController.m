@@ -27,6 +27,9 @@
     NSArray* titleText;
     NSArray* secondSectionTitle;
     NSArray* thirdSectionTitle;
+    NSArray* forthSectionTitle;
+    
+    NSMutableArray* checkMarks;
 }
 
 -(void)viewDidLoad
@@ -37,30 +40,37 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    titleText = @[@"豆农",@"土豆重量",@"土豆品质",@"篷布",@"排风系统",@"发车时间"];
+    [self initTitlesAndImages];
+}
+
+#pragma mark titles and images
+-(void)initTitlesAndImages
+{
+    titleText = @[@"供应商名称",@"地块编号"];
     secondSectionTitle = @[@"装车前车辆检查",@"异物",@"油",@"化学物品",@"异味",@"篷布"];
-    thirdSectionTitle =@[@"发车时间",@"其他情况说明"];
+    thirdSectionTitle =@[@"发车时间"];
+    forthSectionTitle =@[@"其他情况说明"];
+    
+    checkMarks = [[NSMutableArray alloc] initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
 }
 
 #pragma mark tableViewDelegate
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section ==0) {
-        if (indexPath.row != 5) {
-            return itemHeight;
-        }
-        else
-            return itemHeight*2;
+    if (indexPath.section == 4) {
+        return kScreen_Height-itemHeight*12-40;
+    }
+    else if(indexPath.section == 3)
+    {
+        return itemHeight*2;
     }
     else
-    {
-        return kScreen_Height-itemHeight*6-80;
-    }
+        return itemHeight;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return 5;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -71,9 +81,6 @@
     else if (section == 1){
         return 6;
     }
-    else if (section == 2){
-        return 2;
-    }
     else
         return 1;
 }
@@ -81,51 +88,60 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if (indexPath.section ==0) {
-        if (indexPath.row == 0) {
-            LoadingCell* cell = [[LoadingCell alloc] initWithStyle:LoadingCellStyleSelection];
+    if (indexPath.section !=4) {
+        LoadingCell* cell = [[LoadingCell alloc] init];
+        if (indexPath.section == 0) {
+            cell.style = LoadingCellStyleSelection;
+        }
+        else if (indexPath.section ==1){
+            if (indexPath.row ==0) {
+                [cell setStyle:LoadingCellStylePlain];
+                cell.leftImageView.image = [UIImage imageNamed:secondSectionTitle[indexPath.row]];
+            }
+            else{
+                cell.style = LoadingCellStyleBoolean;
+                cell.leftImageView.image = nil;
+                cell.titleLabel.textColor = COLOR_TEXT_GRAY;
+            }
+        }
+        else if (indexPath.section ==2){
+            cell.style = LoadingCellStyleSelection;
+        }
+        else if (indexPath.section ==3){
+            cell.style = LoadingCellStyleTextField;
+        }
+
+        //titles and left imageview
+        if (indexPath.section == 0) {
             cell.titleLabel.text = titleText[indexPath.row];
-            return cell;
-        }else if(indexPath.row ==1){
-            LoadingCell* cell = [[LoadingCell alloc] initWithStyle:LoadingCellStyleTextField];
-            cell.titleLabel.text = titleText[indexPath.row];
-            return cell;
-        }else if (indexPath.row ==2){
-            LoadingCell* cell = [[LoadingCell alloc] initWithStyle:LoadingCellStyleSelection];
-            cell.titleLabel.text = titleText[indexPath.row];
-            return cell;
-        }else if (indexPath.row ==3){
-            LoadingCell* cell = [[LoadingCell alloc] initWithStyle:LoadingCellStyleTextField];
-            cell.titleLabel.text = titleText[indexPath.row];
-            return cell;
-        }else if (indexPath.row ==4){
-            LoadingCell* cell = [[LoadingCell alloc] initWithStyle:LoadingCellStyleImagePicker];
-            cell.titleLabel.text = titleText[indexPath.row];
-            return cell;
-        }else{
-            LoadingCell* cell = [[LoadingCell alloc] initWithStyle:LoadingCellStyleSelection];
-            cell.titleLabel.text = titleText[indexPath.row];
-            
-            UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(k_Margin, itemHeight, kScreen_Width-2* k_Margin, itemHeight)];
-            label.text = @"发车时间直接影响运输计划的时间和安排，时间填写错误可能导致无法正常卸货，请仔细填写!";
-            label.textColor = [UIColor redColor];
-            label.font = [UIFont systemFontOfSize:12];
-            label.numberOfLines = 0;
-            
-            [cell.contentView addSubview:label];
-            return cell;
+            cell.leftImageView.image = [UIImage imageNamed:titleText[indexPath.row]];
+        }
+        else if(indexPath.section == 1) {
+            cell.titleLabel.text = secondSectionTitle[indexPath.row];
+        }
+        else if (indexPath.section ==2){
+            cell.titleLabel.text = thirdSectionTitle[indexPath.row];
+            cell.leftImageView.image = [UIImage imageNamed:thirdSectionTitle[indexPath.row]];
+        }
+        else{
+            cell.titleLabel.text = forthSectionTitle[indexPath.row];
+            cell.leftImageView.image = [UIImage imageNamed:forthSectionTitle[indexPath.row]];
         }
         
+        //chechimages
+        if(cell.style == LoadingCellStyleBoolean){
+            if ([[checkMarks objectAtIndex:(indexPath.row-1)]integerValue] == 0) {
+                cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"uncheck"]];
+            }
+            else
+            {
+                cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"check"]];
+            }
+        }
+        return cell;
     }
-    else if(indexPath.section == 1){
-        
-    }
-    else if(indexPath.section == 2){
-        
-    }
-    else {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"loadingStats" forIndexPath:indexPath];
+    else{
+        UITableViewCell *cell = [[UITableViewCell alloc] init];
         
         UIButton* confirm;
         confirm = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -141,22 +157,32 @@
         
         return cell;
     }
-    return nil;
 }
 
 #pragma mark UITableview selection delegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        LoadingCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-        if (cell.style == LoadingCellStyleSelection) {
-            NSArray *strings = @[@"A", @"B", @"C", @"an D", @"E"];
-            _pickerView = [[MCPickerView alloc] initWithArray:strings];
-            _pickerView.delegate = self;
-            _pickerView.tag = indexPath.row;
-            [_pickerView show];
+    
+    LoadingCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+//    if (indexPath.section == 0) {
+//        if (cell.style == LoadingCellStyleSelection) {
+//            NSArray *strings = @[@"A", @"B", @"C", @"an D", @"E"];
+//            _pickerView = [[MCPickerView alloc] initWithArray:strings];
+//            _pickerView.delegate = self;
+//            _pickerView.tag = indexPath.row;
+//            [_pickerView show];
+//        }
+//    }
+    if (cell.style == LoadingCellStyleBoolean) {
+        if ([[checkMarks objectAtIndex:(indexPath.row-1)]integerValue] == 0) {
+            [checkMarks setObject:@"1" atIndexedSubscript:(indexPath.row-1)];
+        }
+        else
+        {
+            [checkMarks setObject:@"0" atIndexedSubscript:(indexPath.row-1)];
         }
     }
+    [tableView reloadData];
 }
 
 #pragma mark headerview

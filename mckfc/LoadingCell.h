@@ -10,9 +10,11 @@
 @class LoadingCell;
 
 typedef NS_ENUM(NSUInteger, LoadingCellStyle) {
+    LoadingCellStylePlain,
     LoadingCellStyleSelection,
     LoadingCellStyleTextField,
     LoadingCellStyleImagePicker,
+    LoadingCellStyleBoolean,
 };
 
 @interface LoadingCell : UITableViewCell

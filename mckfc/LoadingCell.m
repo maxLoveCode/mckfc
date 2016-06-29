@@ -15,7 +15,7 @@
 -(instancetype)init
 {
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"loadingStats"];
-    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     return self;
 }
 
@@ -31,7 +31,7 @@
         [self.contentView addSubview:self.detailLabel];
     }
     
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.selectionStyle = UITableViewCellSelectionStyleDefault;
     
     return self;
 }
@@ -41,7 +41,7 @@
 {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.textColor = COLOR_TEXT_GRAY;
+        _titleLabel.textColor = COLOR_WithHex(0x565656);
         _titleLabel.font = [UIFont systemFontOfSize:13];
     }
     return _titleLabel;
@@ -65,11 +65,25 @@
     return _leftImageView;
 }
 
+-(void)setStyle:(LoadingCellStyle)style
+{
+    self->_style = style;
+    [self.contentView addSubview:self.titleLabel];
+    [self.contentView addSubview:self.leftImageView];
+    if(style == LoadingCellStyleSelection){
+        [self.contentView addSubview:self.detailLabel];
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    else if (style == LoadingCellStyleBoolean){
+        self.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"star"]];
+    }
+}
+
 #pragma mark layouts
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    CGRect imageframe = CGRectMake(k_Margin, 0, itemHeight, itemHeight);
+    CGRect imageframe = CGRectMake(10, 0, itemHeight, itemHeight);
     [self.leftImageView setFrame:imageframe];
     [self.titleLabel setFrame:CGRectMake(CGRectGetMaxX(imageframe), 0, 100, itemHeight)];
     [self.detailLabel setFrame:CGRectMake(CGRectGetMaxX(self.titleLabel.frame), 0, kScreen_Width-CGRectGetMaxX(self.titleLabel.frame)-50, itemHeight)];
