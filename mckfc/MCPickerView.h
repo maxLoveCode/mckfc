@@ -24,6 +24,8 @@
 
 @property (nonatomic, weak) id <MCPickerViewDelegate> delegate;
 
+@property (nonatomic, assign) NSIndexPath* index;
+@property (nonatomic, copy) NSString* key;
 
 -(instancetype)initWithArray:(NSArray*)data;
 -(void)show;

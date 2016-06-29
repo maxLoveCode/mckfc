@@ -11,6 +11,8 @@
 #import "LoadingCell.h"
 #import "MCPickerView.h"
 
+#import "LoadingStats.h"
+
 #define itemHeight 44
 #define topMargin 60
 #define buttonHeight 40
@@ -19,15 +21,16 @@
 @interface LoadingStatsViewController ()<MCPickerViewDelegate>
 
 @property (nonatomic, strong) MCPickerView* pickerView;
+@property (nonatomic, strong) LoadingStats* stats;
 
 @end
 
 @implementation LoadingStatsViewController
 {
-    NSArray* titleText;
-    NSArray* secondSectionTitle;
-    NSArray* thirdSectionTitle;
-    NSArray* forthSectionTitle;
+    NSDictionary* titleText;
+    NSDictionary* secondSectionTitle;
+    NSDictionary* thirdSectionTitle;
+    NSDictionary* forthSectionTitle;
     
     NSMutableArray* checkMarks;
 }
@@ -40,16 +43,28 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
+    _stats = [[LoadingStats alloc] init];
     [self initTitlesAndImages];
 }
 
 #pragma mark titles and images
 -(void)initTitlesAndImages
 {
-    titleText = @[@"供应商名称",@"地块编号"];
-    secondSectionTitle = @[@"装车前车辆检查",@"异物",@"油",@"化学物品",@"异味",@"篷布"];
-    thirdSectionTitle =@[@"发车时间"];
-    forthSectionTitle =@[@"其他情况说明"];
+    titleText = @{@"supplier":@"供应商名称",
+                  @"placeNo":@"地块编号"};
+    
+    secondSectionTitle = @{@"":@"装车前车辆检查",
+                           @"inspections":
+                               @{
+                                 @"异物":@"0",
+                                 @"油":@"0",
+                                 @"化学物品":@"0",
+                                 @"异味":@"0",
+                                 @"篷布":@"0"}};
+    
+    thirdSectionTitle =@{@"startTime":@"发车时间"};
+    
+    forthSectionTitle =@{@"extraInfo":@"其他情况说明"};
     
     checkMarks = [[NSMutableArray alloc] initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
 }
@@ -96,11 +111,9 @@
         else if (indexPath.section ==1){
             if (indexPath.row ==0) {
                 [cell setStyle:LoadingCellStylePlain];
-                cell.leftImageView.image = [UIImage imageNamed:secondSectionTitle[indexPath.row]];
             }
             else{
                 cell.style = LoadingCellStyleBoolean;
-                cell.leftImageView.image = nil;
                 cell.titleLabel.textColor = COLOR_TEXT_GRAY;
             }
         }
@@ -112,24 +125,45 @@
         }
 
         //titles and left imageview
+        NSArray* keys;
+        NSString* imageName;
         if (indexPath.section == 0) {
-            cell.titleLabel.text = titleText[indexPath.row];
-            cell.leftImageView.image = [UIImage imageNamed:titleText[indexPath.row]];
+            keys = [titleText allKeys];
+            imageName = titleText[[keys objectAtIndex:indexPath.row]];
         }
         else if(indexPath.section == 1) {
-            cell.titleLabel.text = secondSectionTitle[indexPath.row];
+            if (indexPath.row ==0) {
+                keys = [secondSectionTitle allKeys];
+                imageName = secondSectionTitle[[keys objectAtIndex:indexPath.row]];
+            }
+            else{
+                keys = [[secondSectionTitle objectForKey:@"inspections"] allKeys];
+                imageName = [keys objectAtIndex:indexPath.row-1];
+            }
+            
         }
         else if (indexPath.section ==2){
-            cell.titleLabel.text = thirdSectionTitle[indexPath.row];
-            cell.leftImageView.image = [UIImage imageNamed:thirdSectionTitle[indexPath.row]];
+            keys = [thirdSectionTitle allKeys];
+            imageName = thirdSectionTitle[[keys objectAtIndex:indexPath.row]];
         }
         else{
-            cell.titleLabel.text = forthSectionTitle[indexPath.row];
-            cell.leftImageView.image = [UIImage imageNamed:forthSectionTitle[indexPath.row]];
+            keys = [forthSectionTitle allKeys];
+            imageName = forthSectionTitle[[keys objectAtIndex:indexPath.row]];
+        }
+        
+#pragma mark set properties
+        cell.titleLabel.text = imageName;
+        if ( indexPath.section ==1 && indexPath.row != 0) {
+            cell.leftImageView.image = nil;
+        }
+        else{
+            cell.leftImageView.image = [UIImage imageNamed:imageName];
         }
         
         //chechimages
+        NSDictionary* dic = [MTLJSONAdapter JSONDictionaryFromModel:_stats error:nil];
         if(cell.style == LoadingCellStyleBoolean){
+            NSLog(@"dic%@",dic);
             if ([[checkMarks objectAtIndex:(indexPath.row-1)]integerValue] == 0) {
                 cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"uncheck"]];
             }
@@ -137,6 +171,11 @@
             {
                 cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"check"]];
             }
+        }
+        else if (cell.style == LoadingCellStyleSelection)
+        {
+            if(indexPath.section != 2)
+                cell.detailLabel.text = dic[[keys objectAtIndex:indexPath.row]];
         }
         return cell;
     }
@@ -164,15 +203,6 @@
 {
     
     LoadingCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-//    if (indexPath.section == 0) {
-//        if (cell.style == LoadingCellStyleSelection) {
-//            NSArray *strings = @[@"A", @"B", @"C", @"an D", @"E"];
-//            _pickerView = [[MCPickerView alloc] initWithArray:strings];
-//            _pickerView.delegate = self;
-//            _pickerView.tag = indexPath.row;
-//            [_pickerView show];
-//        }
-//    }
     if (cell.style == LoadingCellStyleBoolean) {
         if ([[checkMarks objectAtIndex:(indexPath.row-1)]integerValue] == 0) {
             [checkMarks setObject:@"1" atIndexedSubscript:(indexPath.row-1)];
@@ -181,7 +211,26 @@
         {
             [checkMarks setObject:@"0" atIndexedSubscript:(indexPath.row-1)];
         }
+        
     }
+    if (cell.style == LoadingCellStyleSelection){
+        NSArray* offer = @[@"张三",@"李四",@"其他豆农"];
+        NSArray* placeNo = @[@"A区", @"B区"];
+        NSArray* timer = @[@"16:30", @"16:40", @"16:50"];
+        NSArray* data;
+        if (indexPath.section == 0 && indexPath.row ==0) {
+            data = offer;
+        }else if(indexPath.section == 0 && indexPath.row ==1){
+            data = placeNo;
+        }else{
+            data = timer;
+        }
+        MCPickerView *pickerView = [[MCPickerView alloc] initWithArray:data];
+        pickerView.delegate = self;
+        pickerView.index = indexPath;
+        [pickerView show];
+    }
+    
     [tableView reloadData];
 }
 
@@ -221,8 +270,17 @@
 #pragma mark MCPickerView delegate
 -(void)didSelectString:(NSString *)string fromPickerView:(MCPickerView *)pickerView
 {
-    LoadingCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:pickerView.tag inSection:0]];
-    cell.detailLabel.text = string;
+    LoadingCell* cell = [self.tableView cellForRowAtIndexPath:pickerView.index];
+    NSIndexPath *indexPath = pickerView.index;
+    if (indexPath.section == 0) {
+        if (indexPath.row ==0) {
+            _stats.supplier = string;
+        }
+        else{
+            _stats.placeNo = string;
+        }
+    }
+    [self.tableView reloadData];
 }
 
 @end

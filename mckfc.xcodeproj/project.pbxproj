@@ -13,6 +13,7 @@
 		2512A1CD1D1130B100ED884B /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2512A1CC1D1130B100ED884B /* LoginView.m */; };
 		2512A1D01D113C6200ED884B /* HomepageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2512A1CF1D113C6200ED884B /* HomepageViewController.m */; };
 		252B63261D1CDC7700C108C0 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 252B63251D1CDC7700C108C0 /* NSString+MD5.m */; };
+		2534B9951D23993400A82E0A /* LoadingStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 2534B9941D23993400A82E0A /* LoadingStats.m */; };
 		253BF5801D0D49F40006086D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF57F1D0D49F40006086D /* main.m */; };
 		253BF5831D0D49F40006086D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5821D0D49F40006086D /* AppDelegate.m */; };
 		253BF58B1D0D49F40006086D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 253BF58A1D0D49F40006086D /* Assets.xcassets */; };
@@ -80,6 +81,8 @@
 		2512A1CF1D113C6200ED884B /* HomepageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomepageViewController.m; sourceTree = "<group>"; };
 		252B63241D1CDC7700C108C0 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		252B63251D1CDC7700C108C0 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		2534B9931D23993400A82E0A /* LoadingStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingStats.h; sourceTree = "<group>"; };
+		2534B9941D23993400A82E0A /* LoadingStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingStats.m; sourceTree = "<group>"; };
 		253BF57B1D0D49F40006086D /* mckfc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mckfc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		253BF57F1D0D49F40006086D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		253BF5811D0D49F40006086D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -243,6 +246,22 @@
 			path = mckfc;
 			sourceTree = "<group>";
 		};
+		2534B9911D2398F900A82E0A /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
+		2534B9921D23990800A82E0A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2534B9931D23993400A82E0A /* LoadingStats.h */,
+				2534B9941D23993400A82E0A /* LoadingStats.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		253BF5721D0D49F40006086D = {
 			isa = PBXGroup;
 			children = (
@@ -359,6 +378,7 @@
 			children = (
 				25CECAFA1D17A45900C9CCBE /* ViewController */,
 				25CECAF91D17A44800C9CCBE /* View */,
+				2534B9921D23990800A82E0A /* Model */,
 			);
 			name = Loading;
 			sourceTree = "<group>";
@@ -381,6 +401,7 @@
 		25CECAFA1D17A45900C9CCBE /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				2534B9911D2398F900A82E0A /* New Group */,
 				25CECAFB1D17A53500C9CCBE /* LoadingNav.h */,
 				25CECAFC1D17A53500C9CCBE /* LoadingNav.m */,
 				2512A1CE1D113C6200ED884B /* HomepageViewController.h */,
@@ -701,6 +722,7 @@
 				25CECB091D18DE7C00C9CCBE /* TranspotationPlanViewController.m in Sources */,
 				25B004931D1920E00018EEB1 /* QueueViewController.m in Sources */,
 				256F39841D12847D00175E5A /* SignUpViewController.m in Sources */,
+				2534B9951D23993400A82E0A /* LoadingStats.m in Sources */,
 				256F39A81D17891A00175E5A /* MCStarView.m in Sources */,
 				25EDD78B1D0E847800AFB6F3 /* User.m in Sources */,
 				256F39811D12836900175E5A /* SignUpView.m in Sources */,

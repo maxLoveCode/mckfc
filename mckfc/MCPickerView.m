@@ -80,7 +80,6 @@
 
 -(void)tapSelect
 {
-    NSLog(@"select");
     [self.picker.delegate pickerView:self.picker didSelectRow:[_picker selectedRowInComponent:0] inComponent:0];
 }
 
