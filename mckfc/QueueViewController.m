@@ -9,6 +9,8 @@
 #import "QueueViewController.h"
 #import "QRCodeView.h"
 
+#import "ReportViewController.h"
+
 #define itemHeight 44
 #define topMargin 60
 
@@ -117,6 +119,17 @@
         [cell.contentView addSubview:self.QRCode];
         return cell;
     }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self generateReport];
+}
+
+-(void)generateReport
+{
+    ReportViewController* reportVC = [[ReportViewController alloc] init];
+    [self.navigationController pushViewController:reportVC animated:YES];
 }
 
 @end

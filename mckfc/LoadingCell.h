@@ -23,6 +23,8 @@ typedef NS_ENUM(NSUInteger, LoadingCellStyle) {
 @property (nonatomic, strong) UILabel* titleLabel;
 @property (nonatomic, strong) UILabel* detailLabel;
 
+@property (nonatomic, strong) UITextView* textField;
+
 @property (nonatomic, assign) LoadingCellStyle style;
 
 -(instancetype)init;

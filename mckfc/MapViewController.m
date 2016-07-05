@@ -19,6 +19,7 @@
 }
 @property (nonatomic,strong) AMapPath* path;
 @property (nonatomic,strong) MAUserLocation* userLocation;
+@property (nonatomic,strong) NSTimer* timer;
 
 @end
 
@@ -50,6 +51,10 @@ updatingLocation:(BOOL)updatingLocation
         if (!_path &&userLocation) {
             [_mapView selectAnnotation:userLocation animated:YES];
             [self initSearchInstanceWithStartPoint:userLocation.coordinate];
+        }
+        
+        if (!_timer) {
+            _timer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(repeatTimer) userInfo:nil repeats:YES];
         }
     }
 }
@@ -154,9 +159,7 @@ updatingLocation:(BOOL)updatingLocation
         return nil;
     }
     
-    NSUInteger count = 0;
-    
-    CLLocationCoordinate2D *coordinates = [self coordinatesForString:coordinateString
+    NSUInteger count = 0;     CLLocationCoordinate2D *coordinates = [self coordinatesForString:coordinateString
                                                      coordinateCount:&count
                                                           parseToken:@";"];
     
@@ -177,4 +180,9 @@ updatingLocation:(BOOL)updatingLocation
     return [self polylineForCoordinateString:step.polyline];
 }
 
+#pragma mark timer
+-(void)repeatTimer
+{
+    //NSLog(@"10 secs");
+}
 @end

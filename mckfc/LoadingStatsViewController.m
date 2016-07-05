@@ -18,7 +18,7 @@
 #define buttonHeight 40
 #define buttonWidth 340
 
-@interface LoadingStatsViewController ()<MCPickerViewDelegate>
+@interface LoadingStatsViewController ()<MCPickerViewDelegate, UITextViewDelegate>
 
 @property (nonatomic, strong) MCPickerView* pickerView;
 @property (nonatomic, strong) LoadingStats* stats;
@@ -122,6 +122,8 @@
         }
         else if (indexPath.section ==3){
             cell.style = LoadingCellStyleTextField;
+            cell.textField.delegate = self;
+            cell.textField.text = _stats.extraInfo;
         }
 
         //titles and left imageview
@@ -163,7 +165,7 @@
         //chechimages
         NSDictionary* dic = [MTLJSONAdapter JSONDictionaryFromModel:_stats error:nil];
         if(cell.style == LoadingCellStyleBoolean){
-            NSLog(@"dic%@",dic);
+            //NSLog(@"dic%@",dic);
             if ([[checkMarks objectAtIndex:(indexPath.row-1)]integerValue] == 0) {
                 cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"uncheck"]];
             }
@@ -270,7 +272,6 @@
 #pragma mark MCPickerView delegate
 -(void)didSelectString:(NSString *)string fromPickerView:(MCPickerView *)pickerView
 {
-    LoadingCell* cell = [self.tableView cellForRowAtIndexPath:pickerView.index];
     NSIndexPath *indexPath = pickerView.index;
     if (indexPath.section == 0) {
         if (indexPath.row ==0) {
@@ -281,6 +282,27 @@
         }
     }
     [self.tableView reloadData];
+}
+
+#pragma mark uitextview delegate
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    if([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        _stats.extraInfo = textView.text;
+        return NO;
+    }
+    return YES;
+}
+
+-(void)textViewDidChange:(UITextView *)textView
+{
+    
+}
+
+-(void)textViewDidEndEditing:(UITextView *)textView
+{
+    [_stats setExtraInfo:textView.text];
 }
 
 @end
