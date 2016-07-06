@@ -22,17 +22,16 @@
 -(instancetype)init
 {
     _loadVC = [[HomepageViewController alloc] init];
-    if (self = [super initWithRootViewController: self.loadVC]) {
-        self.delegate = self;
-        self.navigationBar.translucent = NO;
-        self.navigationBar.barTintColor = COLOR_WithHex(0xf3f3f3);
-        [self.navigationBar setTitleTextAttributes:
-         @{NSForegroundColorAttributeName:COLOR_WithHex(0x878787)}];
-        
-        self.view.backgroundColor = [UIColor whiteColor];
-        [[UINavigationBar appearance] setTintColor:COLOR_WithHex(0x878787)];
+    self = [super initWithRootViewController: self.loadVC];
 
-    }
+    self.navigationBar.translucent = NO;
+    self.navigationBar.barTintColor = COLOR_WithHex(0xf3f3f3);
+    [self.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:COLOR_WithHex(0x878787)}];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    [[UINavigationBar appearance] setTintColor:COLOR_WithHex(0x878787)];
+    
     return self;
 }
 

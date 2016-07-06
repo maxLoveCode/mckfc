@@ -25,6 +25,7 @@
     [self.contentView addSubview:self.titleLabel];
     if (self.style == DriverDetailCellStylePlain) {
         [self.contentView addSubview:self.detailLabel];
+        
     }
     else if (self.style == DriverDetailCellStyleAvatar){
         [self.contentView addSubview:self.avatar];

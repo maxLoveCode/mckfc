@@ -38,4 +38,7 @@
 //mapkey
 #define MapKey @"52b19ff48d586b5f8f3022b336f3ab02"
 
+//user type
+#define MKUSER_TYPE_DRIVER @"1"
+
 #endif /* Constant_h */

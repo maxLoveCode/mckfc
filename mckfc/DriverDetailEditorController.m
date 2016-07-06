@@ -10,10 +10,13 @@
 #import "DriverDetailEditorCell.h"
 #import "ServerManager.h"
 #import "LoadingNav.h"
+#import "UIImageView+WebCache.h"
 
 #import "EditorNav.h"
 
-@interface DriverDetailEditorController()<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+#import "User.h"
+
+@interface DriverDetailEditorController()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 {
     NSArray* titleText;
     NSArray* detailText;
@@ -22,6 +25,7 @@
 
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) ServerManager* server;
+@property (nonatomic, strong) User* driver;
 
 @end
 
@@ -52,6 +56,7 @@
     
 #pragma mark gestures
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [tap setCancelsTouchesInView:NO];
     [self.view addGestureRecognizer:tap];
 
 #pragma mark navigationItem
@@ -59,6 +64,8 @@
     self.navigationItem.rightBarButtonItem = save;
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    _driver = [[User alloc] init];
 }
 
 -(UITableView *)tableView
@@ -93,6 +100,8 @@
     DriverDetailEditorCell* cell;
     if (indexPath.row ==0 ) {
         cell = [[DriverDetailEditorCell alloc] initWithStyle: DriverDetailCellStyleAvatar reuseIdentifier:@"editor"];
+        [cell.avatar sd_setImageWithURL:[NSURL URLWithString:_driver.avatar] placeholderImage:
+         [UIImage imageNamed:@"default_avatar"]];
     }
     else if(indexPath.row ==1){
         cell = [[DriverDetailEditorCell alloc] initWithStyle: DriverDetailCellStyleCarNumber reuseIdentifier:@"editor"];
@@ -117,7 +126,9 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DriverDetailEditorCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    NSLog(@"tap");
     if (cell.style == DriverDetailCellStyleAvatar) {
+        NSLog(@"did pick image");
         [self didPickImage];
     }
 }
@@ -161,11 +172,13 @@
     if ([textField.text isEqualToString:@""]) {
         textField.text = detail;
     }
+    NSLog(@"%lu", textField.tag);
 }
 
 #pragma mark gesture
 -(void)dismissKeyboard
 {
+    NSLog(@"dismiss");
     if (index!=0) {
         DriverDetailEditorCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
         [cell.detailLabel resignFirstResponder];
@@ -175,25 +188,24 @@
 #pragma mark save info
 -(void)save
 {
-//    NSString* token;
-//    NSString* carNo;
-//    NSString* driverName;
-//    NSString* carID;
-//    NSString* driverNo;
-//    NSString* licenseNo;
-//    NSDictionary* params = @{
-//                             @"token":token,
-//                             @"carNo":carNo,
-//                             @"driverName":driverName,
-//                             @"carID":carID,
-//                             @"driverNo":driverNo,
-//                             @"licenseNo":licenseNo};
-    EditorNav* editorNav = (EditorNav* )self.navigationController;
-    
-    [self dismissViewControllerAnimated:NO completion:^{
-        if (editorNav.onDismissed) {
-            editorNav.onDismissed();
-        }
+
+    NSMutableDictionary* params = [[NSMutableDictionary alloc]initWithDictionary: @{@"token":_server.accessToken}];
+    NSDictionary* dic = @{@"carNo":_driver.carNo,
+                          @"driverName":_driver.driverName,
+                          @"cardId":_driver.cardID,
+                          @"driverNo":_driver.driverNo,
+                          @"licenseNo":_driver.licenseNo};
+    [params addEntriesFromDictionary:dic];
+    NSLog(@"params%@", params);
+    [_server POST:@"registerComplete" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        EditorNav* editorNav = (EditorNav* )self.navigationController;
+        [self dismissViewControllerAnimated:NO completion:^{
+            if (editorNav.onDismissed) {
+                editorNav.onDismissed();
+            }
+        }];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
     }];
 }
 
@@ -223,13 +235,21 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(__bridge NSString *)kUTTypeImage]) {
-        UIImage *img = [info objectForKey:UIImagePickerControllerEditedImage];
+        UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
         [_server upLoadImageData:img forSize:CGSizeMake(100, 100) success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+            [_driver setAvatar:responseObject[@"data"]];
+            [_server POST:@"updateUserInfo" parameters:@{@"token":_server.accessToken,
+                                                        @"avatar":_driver.avatar} animated:NO
+                  success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject){
+                      [self.tableView reloadData];
+                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
+                  }];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
         }];
     }
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
+
 @end

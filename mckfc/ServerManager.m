@@ -68,11 +68,12 @@ NSString *const version = @"v1_0";
         }
         if (animated) {
             if ([responseObject[@"code"] integerValue] == self.successCode) {
+                success(task, responseObject);
                 [_alert dismiss:_alert];
             }
             else
             {
-                
+                 [_alert failureWithMsg:_alert msg:responseObject[@"msg"]];
             }
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -80,6 +81,7 @@ NSString *const version = @"v1_0";
         if (ServerDebugLog) {
             NSLog(@"%@",error);
         }
+        [_alert failureWithMsg:_alert msg:@"网络连接失败"];
     }];
 }
 
@@ -110,6 +112,7 @@ NSString *const version = @"v1_0";
         if (animated) {
             if ([responseObject[@"code"] integerValue] == self.successCode) {
                 [_alert dismiss:_alert];
+                success(task, responseObject);
             }
             else
             {
@@ -121,6 +124,7 @@ NSString *const version = @"v1_0";
         if (ServerDebugLog) {
             NSLog(@"%@",error);
         }
+        [_alert failureWithMsg:_alert msg:@"网络连接失败"];
     }];
 }
 
@@ -128,23 +132,42 @@ NSString *const version = @"v1_0";
 -(void)upLoadImageData:(UIImage *)image forSize:(CGSize)size success:(void (^)(NSURLSessionDataTask * _Nullable, id _Nullable))success failure:(void (^)(NSURLSessionDataTask * _Nullable, NSError * _Nonnull))failure
 {
     NSString *urlStr = [self appendedURL:@"upload"];
-    NSDictionary *parameters = @{@"token":self.accessToken,
-                                  @"file":image,
-                                 @"width":[NSString stringWithFormat:@"%f", size.width],
-                                @"height":[NSString stringWithFormat:@"%f", size.height]};
     
     NSData* data = UIImageJPEGRepresentation(image, 1.0);
-    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    
+    NSDictionary *parameters = @{@"token":self.accessToken,
+                                 @"width":[NSNumber numberWithFloat:size.width],
+                                 @"height":[NSNumber numberWithFloat:size.height],
+                                 };
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:[NSString stringWithFormat:@"%@%@",self.baseURL, urlStr] parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
-        [formData appendPartWithFileData:data name:@"upload_file" fileName:@"somefilename.png" mimeType:@"image/png"];// you file to upload
+        [formData appendPartWithFileData:data name:@"file" fileName:@"somefilename.png" mimeType:@"image/png"];// you file to upload
         
     } error:nil];
+    NSLog(@"%@",parameters);
     NSURLSessionUploadTask *uploadTask;
+    
+    _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStyleNetworking];
+    _alert.delegate = self;
+    [_alert show:_alert];
+    
     uploadTask = [self uploadTaskWithStreamedRequest:request progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-        NSLog(@"%@",response);
-        NSLog(@"%@",responseObject);
+//get results
+        if ([responseObject[@"code"] integerValue] == self.successCode) {
+            [_alert dismiss:_alert];
+            success(uploadTask,responseObject);
+        }
+        else if(error)
+        {
+            failure(uploadTask, error);
+            [_alert failureWithMsg:_alert msg:@"头像上传失败"];
+        }
+        else
+        {
+            [_alert failureWithMsg:_alert msg:responseObject[@"msg"]];
+        }
     }];
     [uploadTask resume];
 }

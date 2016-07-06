@@ -24,9 +24,15 @@
     [self.window makeKeyAndVisible];
     self.window.frame = [[UIScreen mainScreen] bounds];
     
-    self.loadingNav = [[LoadingNav alloc] init];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = self.loadingNav;
+
+    NSString* user_type = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"];
+    
+    if (!user_type || [user_type isEqualToString:MKUSER_TYPE_DRIVER] ) {
+//装载导视图（default）
+        self.loadingNav = [[LoadingNav alloc] init];
+        self.window.rootViewController = self.loadingNav;
+    }
     
     return YES;
 }

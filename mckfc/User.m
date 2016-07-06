@@ -23,6 +23,21 @@
              @"stats":@[@"totalMile",@"totalWeight",@"transportTime"]};
 }
 
+-(instancetype)init
+{
+    self = [super init];
+    self.mobile = @"";
+    self.carNo = @"";
+    self.driverNo = @"";
+    self.cardID = @"";
+    self.driverName = @"";
+    self.licenseNo = @"";
+    self.star = 0;
+    self.stats = nil;
+    
+    return self;
+}
+
 -(NSString *)description
 {
     return [NSString stringWithFormat:@"User: %@", [MTLJSONAdapter JSONArrayFromModels:@[self] error:nil]];

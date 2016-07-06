@@ -23,6 +23,8 @@
 @property (nonatomic, copy) NSString *avatar; //头像
 @property (nonatomic, assign) NSUInteger star; //评星
 
+-(instancetype)init;
+
 -(BOOL)validation;
 
 @end

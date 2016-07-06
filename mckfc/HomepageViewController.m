@@ -41,7 +41,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    //[self requestUserInfo];
+    [self requestUserInfo];
 }
 
 -(void)requestUserInfo
