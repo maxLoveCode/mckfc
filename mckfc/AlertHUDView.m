@@ -34,7 +34,6 @@
         [self.wrapperView addSubview:self.HUDimage];
     }
     
-    
     return self;
 }
 
@@ -149,6 +148,12 @@
         self.title.text = @"网络加载中";
         [self.HUDimage startAnimating];
     }
+    else
+    {
+        
+        alert.mask.userInteractionEnabled = YES;
+        [alert.wrapperView addSubview:alert.confirm];
+    }
 }
 
 -(void)dismiss:(AlertHUDView *)alert
@@ -175,7 +180,6 @@
 #pragma mark btn selector
 -(void)HUDDidConfirm
 {
-    NSLog(@"confirmBtn");
     [self.delegate didSelectConfirm];
 }
 

@@ -11,12 +11,13 @@
 #import "ServerManager.h"
 #import "LoadingNav.h"
 #import "UIImageView+WebCache.h"
+#import "AlertHUDView.h"
 
 #import "EditorNav.h"
 
 #import "User.h"
 
-@interface DriverDetailEditorController()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate>
+@interface DriverDetailEditorController()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate,HUDViewDelegate>
 {
     NSArray* titleText;
     NSArray* detailText;
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) ServerManager* server;
 @property (nonatomic, strong) User* driver;
+@property AlertHUDView *alert;
 
 @end
 
@@ -178,35 +180,72 @@
 #pragma mark gesture
 -(void)dismissKeyboard
 {
-    NSLog(@"dismiss");
     if (index!=0) {
         DriverDetailEditorCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
         [cell.detailLabel resignFirstResponder];
     }
+   
 }
 
 #pragma mark save info
 -(void)save
 {
+    [self dismissKeyboard];
+    
+    DriverDetailEditorCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+    NSString* result = cell.detailLabel.text;
+    NSString* detail = [detailText objectAtIndex:index];
+    
+    if ([result isEqualToString:detail]) {
+        _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
+        _alert.title.text = @"出错啦";
+        _alert.detail.text = @"请填写完整信息";
+        _alert.delegate = self;
+        [_alert show:_alert];
+    }
+    else
+    {
+        if(index == 1) //car no
+        {
+            _driver.carNo = result;
+        }
+        else if(index ==2)
+        {
+            _driver.driverName = result;
+        }
+        else if(index ==3)
+        {
+            _driver.cardID = result;
+        }
+        else if(index ==4)
+        {
+            _driver.driverNo = result;
+        }
+        else
+        {
+            _driver.licenseNo = result;
+        }
+        
+        NSMutableDictionary* params = [[NSMutableDictionary alloc]initWithDictionary: @{@"token":_server.accessToken}];
+        NSDictionary* dic = @{@"carNo":_driver.carNo,
+                              @"driverName":_driver.driverName,
+                              @"cardId":_driver.cardID,
+                              @"driverNo":_driver.driverNo,
+                              @"licenseNo":_driver.licenseNo};
+        [params addEntriesFromDictionary:dic];
+        NSLog(@"params%@", params);
+        [_server POST:@"registerComplete" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+            EditorNav* editorNav = (EditorNav* )self.navigationController;
 
-    NSMutableDictionary* params = [[NSMutableDictionary alloc]initWithDictionary: @{@"token":_server.accessToken}];
-    NSDictionary* dic = @{@"carNo":_driver.carNo,
-                          @"driverName":_driver.driverName,
-                          @"cardId":_driver.cardID,
-                          @"driverNo":_driver.driverNo,
-                          @"licenseNo":_driver.licenseNo};
-    [params addEntriesFromDictionary:dic];
-    NSLog(@"params%@", params);
-    [_server POST:@"registerComplete" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        EditorNav* editorNav = (EditorNav* )self.navigationController;
-        [self dismissViewControllerAnimated:NO completion:^{
             if (editorNav.onDismissed) {
                 editorNav.onDismissed();
             }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
         }];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
+
+    }
+    
 }
 
 #pragma mark pick image
@@ -250,6 +289,13 @@
         }];
     }
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)didSelectConfirm
+{
+    if (self.alert) {
+        [self.alert removeFromSuperview];
+    }
 }
 
 @end

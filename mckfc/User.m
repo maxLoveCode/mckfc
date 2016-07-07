@@ -45,7 +45,13 @@
 
 -(BOOL)validation
 {
-    return NO;
+    if ([self.mobile isEqualToString:@""] || [self.carNo isEqualToString:@""]
+        ||[self.driverNo isEqualToString:@""] || [self.licenseNo isEqualToString:@""]
+        ||[self.cardID isEqualToString:@""]) {
+        return NO;
+    }
+    else
+        return YES;
 }
 
 @end

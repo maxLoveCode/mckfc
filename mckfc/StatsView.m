@@ -98,7 +98,6 @@
 
 -(void)setStatsFromDictionary:(NSDictionary *)stats
 {
-    NSLog(@"%@",stats);
     self.stats = stats;
     [self reloadData];
 }

@@ -35,8 +35,6 @@
     _userview.delegate = self;
     
     self.view = _userview;
-
-    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -50,21 +48,22 @@
     if (_serverManager.accessToken) {
         NSDictionary* params = @{@"token": _serverManager.accessToken};
         [_serverManager GET:@"getUserInfo" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-            NSLog(@"%@",responseObject);
+            
             _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:responseObject[@"data"] error:nil];
-            NSLog(@"user: %@",_user);
             [_userview setContentByUser:_user];
             
+            NSLog(@"%@", responseObject);
             if(![_user validation]){
                 EditorNav* editVC = [[EditorNav alloc] init];
-                [self presentViewController:editVC animated:YES completion:^{
+                [self.navigationController presentViewController:editVC animated:YES completion:^{
                     
                 }];
-                if ([editVC onDismissed]) {
                     [editVC setOnDismissed:^{
-                        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+                        [self.navigationController dismissViewControllerAnimated:NO completion:^
+                         {
+                             //[self requestUserInfo];
+                         }];
                     }];
-                }
             }
                 
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

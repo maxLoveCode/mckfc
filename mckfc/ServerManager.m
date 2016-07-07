@@ -62,13 +62,14 @@ NSString *const version = @"v1_0";
     }
     [self GET:[self appendedURL:URLString] parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        success(task, responseObject);
+        if ([responseObject[@"code"] integerValue] == self.successCode) {
+            success(task, responseObject);
+        }
         if (ServerDebugLog) {
             NSLog(@"code:%@  info:%@  successcode %lu",responseObject[@"code"],responseObject[@"msg"], (unsigned long)self.successCode);
         }
         if (animated) {
             if ([responseObject[@"code"] integerValue] == self.successCode) {
-                success(task, responseObject);
                 [_alert dismiss:_alert];
             }
             else
@@ -105,14 +106,15 @@ NSString *const version = @"v1_0";
     [self POST:[self appendedURL:URLString] parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
     //show animates
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        success(task, responseObject);
+        if ([responseObject[@"code"] integerValue] == self.successCode) {
+            success(task, responseObject);
+        }
         if (ServerDebugLog) {
             NSLog(@"code:%@  info:%@  successcode %lu",responseObject[@"code"],responseObject[@"msg"], (unsigned long)self.successCode);
         }
         if (animated) {
             if ([responseObject[@"code"] integerValue] == self.successCode) {
                 [_alert dismiss:_alert];
-                success(task, responseObject);
             }
             else
             {
