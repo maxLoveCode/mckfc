@@ -10,13 +10,13 @@
 
 typedef NS_ENUM(NSInteger, MenuViewStyle) {
     MenuViewStyleSecurityCheck,
-    MenuViewStyleQualityCheck
+    MenuViewStyleQualityCheck,
 };
 
 @interface CommonMenuView : UICollectionView
 
-@property (nonatomic, assign) MenuViewStyle* style;
+@property (nonatomic, assign) MenuViewStyle style;
 
--(instancetype)initWithStyle:(MenuViewStyle*)style;
+-(instancetype)initWithStyle:(MenuViewStyle)style;
 
 @end

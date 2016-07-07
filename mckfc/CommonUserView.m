@@ -56,6 +56,7 @@
     else
     {
         CommonMenuView* menu = [[CommonMenuView alloc] initWithStyle:MenuViewStyleSecurityCheck];
+        //CommonMenuView* menu = [[CommonMenuView alloc] initWithStyle:MenuViewStyleQualityCheck];
         [menu setFrame:CGRectOffset(menu.frame, 0, CGRectGetMidY(cell.contentView.frame)-CGRectGetMidY(menu.frame))];
         [cell.contentView addSubview:menu];
     }

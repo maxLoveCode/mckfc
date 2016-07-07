@@ -22,19 +22,20 @@
 -(instancetype)init
 {
     UICollectionViewFlowLayout* layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.minimumLineSpacing = 0;
-    self = [super initWithFrame:CGRectMake(0, 0, kScreen_Width, 2*kScreen_Width/3) collectionViewLayout:layout];
+    layout.minimumLineSpacing = 1;
+    self = [super initWithFrame:CGRectMake(k_Margin, 0, kScreen_Width-2*k_Margin, 2*kScreen_Width/3) collectionViewLayout:layout];
     [self registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"report"];
     self.delegate = self;
     self.dataSource = self;
-    [self setBackgroundColor:[UIColor whiteColor]];
+    [self setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    self.scrollEnabled = NO;
     return self;
 }
 
--(instancetype)initWithStyle:(MenuViewStyle*)style
+-(instancetype)initWithStyle:(MenuViewStyle)style
 {
     self = [[CommonMenuView alloc] init];
-    [self setStyle:style];
+    self.style = style;
     if (self.style == MenuViewStyleSecurityCheck) {
         _titleArray = @[@"到厂扫码",@"待收订单",@"工作记录",@"系统设置"];
     }
@@ -65,11 +66,11 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.style == MenuViewStyleSecurityCheck) {
-        return CGSizeMake(kScreen_Width/2, kScreen_Width/3) ;
+        return CGSizeMake((kScreen_Width-2*k_Margin)/2-0.5, kScreen_Width/3) ;
     }
     else
     {
-        return CGSizeMake(kScreen_Width/3, kScreen_Width/3) ;
+        return CGSizeMake((kScreen_Width-2*k_Margin)/3-0.75, kScreen_Width/3) ;
     }
 }
 
@@ -77,7 +78,7 @@
 {
     UICollectionViewCell* cell = [self dequeueReusableCellWithReuseIdentifier:@"report" forIndexPath:indexPath];
     
-    CGRect frame = CGRectMake((CGRectGetWidth(cell.contentView.frame)-100)/2, 0, 100, 100);
+    CGRect frame = CGRectMake((CGRectGetWidth(cell.contentView.frame)-100)/2, k_Margin/2, 100, 100);
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:frame];
     [imageView setImage:[UIImage imageNamed:@"default_avatar"]];
     
@@ -85,9 +86,11 @@
     label.text = _titleArray[indexPath.item];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = COLOR_WithHex(0x565656);
+    label.font = [UIFont systemFontOfSize:14];
     
     [cell.contentView addSubview:imageView];
     [cell.contentView addSubview:label];
+    [cell.contentView setBackgroundColor:[UIColor whiteColor]];
 
     return cell;
 }
@@ -99,7 +102,7 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     
-    return 0.0;
+    return 1.0;
 }
 
 @end
