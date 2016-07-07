@@ -18,7 +18,7 @@
 
 +(NSInteger)numberOfProperties
 {
-    return 2;
+    return 1;
     //return [[[MTLJSONAdapter JSONDictionaryFromModel:[Report class] error:nil] allKeys] count];
 }
 

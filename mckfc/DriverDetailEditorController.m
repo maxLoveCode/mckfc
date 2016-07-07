@@ -174,27 +174,9 @@
     if ([textField.text isEqualToString:@""]) {
         textField.text = detail;
     }
-    NSLog(@"%lu", textField.tag);
-}
-
-#pragma mark gesture
--(void)dismissKeyboard
-{
-    if (index!=0) {
-        DriverDetailEditorCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-        [cell.detailLabel resignFirstResponder];
-    }
-   
-}
-
-#pragma mark save info
--(void)save
-{
-    [self dismissKeyboard];
     
     DriverDetailEditorCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     NSString* result = cell.detailLabel.text;
-    NSString* detail = [detailText objectAtIndex:index];
     
     if ([result isEqualToString:detail]) {
         _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
@@ -225,6 +207,25 @@
         {
             _driver.licenseNo = result;
         }
+    }
+}
+
+#pragma mark gesture
+-(void)dismissKeyboard
+{
+    if (index!=0) {
+        DriverDetailEditorCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+        [cell.detailLabel resignFirstResponder];
+    }
+   
+}
+
+#pragma mark save info
+-(void)save
+{
+    [self dismissKeyboard];
+    
+
         
         NSMutableDictionary* params = [[NSMutableDictionary alloc]initWithDictionary: @{@"token":_server.accessToken}];
         NSDictionary* dic = @{@"carNo":_driver.carNo,
@@ -243,8 +244,6 @@
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
         }];
-
-    }
     
 }
 

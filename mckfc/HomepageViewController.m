@@ -53,7 +53,7 @@
             [_userview setContentByUser:_user];
             
             NSLog(@"%@", responseObject);
-            if(![_user validation]){
+            if([_user validation]){
                 EditorNav* editVC = [[EditorNav alloc] init];
                 [self.navigationController presentViewController:editVC animated:YES completion:^{
                     

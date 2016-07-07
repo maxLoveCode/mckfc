@@ -15,6 +15,10 @@
 		251F378B1D26447D00B423D1 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 251F378A1D26447D00B423D1 /* Report.m */; };
 		251F378F1D26698C00B423D1 /* ReportCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 251F378E1D26698C00B423D1 /* ReportCollectionView.m */; };
 		252B63261D1CDC7700C108C0 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 252B63251D1CDC7700C108C0 /* NSString+MD5.m */; };
+		252EF9B81D2E3C4C00565D00 /* SecurityNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9B71D2E3C4C00565D00 /* SecurityNav.m */; };
+		252EF9BB1D2E46A500565D00 /* SecurityHomePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9BA1D2E46A500565D00 /* SecurityHomePage.m */; };
+		252EF9C01D2E482400565D00 /* CommonUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9BF1D2E482400565D00 /* CommonUserView.m */; };
+		252EF9C31D2E4F2300565D00 /* CommonMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9C21D2E4F2300565D00 /* CommonMenuView.m */; };
 		2534B9951D23993400A82E0A /* LoadingStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 2534B9941D23993400A82E0A /* LoadingStats.m */; };
 		2534B9981D24ACF400A82E0A /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2534B9971D24ACF400A82E0A /* ReportViewController.m */; };
 		253BF5801D0D49F40006086D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF57F1D0D49F40006086D /* main.m */; };
@@ -88,6 +92,14 @@
 		251F378E1D26698C00B423D1 /* ReportCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportCollectionView.m; sourceTree = "<group>"; };
 		252B63241D1CDC7700C108C0 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		252B63251D1CDC7700C108C0 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		252EF9B61D2E3C4C00565D00 /* SecurityNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityNav.h; sourceTree = "<group>"; };
+		252EF9B71D2E3C4C00565D00 /* SecurityNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityNav.m; sourceTree = "<group>"; };
+		252EF9B91D2E46A500565D00 /* SecurityHomePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityHomePage.h; sourceTree = "<group>"; };
+		252EF9BA1D2E46A500565D00 /* SecurityHomePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityHomePage.m; sourceTree = "<group>"; };
+		252EF9BE1D2E482400565D00 /* CommonUserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonUserView.h; sourceTree = "<group>"; };
+		252EF9BF1D2E482400565D00 /* CommonUserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonUserView.m; sourceTree = "<group>"; };
+		252EF9C11D2E4F2300565D00 /* CommonMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonMenuView.h; sourceTree = "<group>"; };
+		252EF9C21D2E4F2300565D00 /* CommonMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonMenuView.m; sourceTree = "<group>"; };
 		2534B9931D23993400A82E0A /* LoadingStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingStats.h; sourceTree = "<group>"; };
 		2534B9941D23993400A82E0A /* LoadingStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingStats.m; sourceTree = "<group>"; };
 		2534B9961D24ACF400A82E0A /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController.h; sourceTree = "<group>"; };
@@ -264,6 +276,37 @@
 			path = mckfc;
 			sourceTree = "<group>";
 		};
+		252EF9B51D2E3A3200565D00 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				252EF9BD1D2E480D00565D00 /* View */,
+				252EF9BC1D2E480200565D00 /* Controller */,
+			);
+			name = Security;
+			sourceTree = "<group>";
+		};
+		252EF9BC1D2E480200565D00 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				252EF9B61D2E3C4C00565D00 /* SecurityNav.h */,
+				252EF9B71D2E3C4C00565D00 /* SecurityNav.m */,
+				252EF9B91D2E46A500565D00 /* SecurityHomePage.h */,
+				252EF9BA1D2E46A500565D00 /* SecurityHomePage.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		252EF9BD1D2E480D00565D00 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				252EF9BE1D2E482400565D00 /* CommonUserView.h */,
+				252EF9BF1D2E482400565D00 /* CommonUserView.m */,
+				252EF9C11D2E4F2300565D00 /* CommonMenuView.h */,
+				252EF9C21D2E4F2300565D00 /* CommonMenuView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		2534B9921D23990800A82E0A /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,6 +375,7 @@
 				25CECAF81D17A43700C9CCBE /* Loading */,
 				25B004901D191ECC0018EEB1 /* Queue */,
 				256F399D1D13D7DF00175E5A /* DetailEditor */,
+				252EF9B51D2E3A3200565D00 /* Security */,
 				251175471D10EB7500C3CE91 /* View */,
 				25EDD78C1D0E848A00AFB6F3 /* Model */,
 				253BF57E1D0D49F40006086D /* Supporting Files */,
@@ -743,9 +787,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				252EF9C01D2E482400565D00 /* CommonUserView.m in Sources */,
 				256F397B1D123E3900175E5A /* LoginNav.m in Sources */,
 				256F398A1D12887D00175E5A /* VerifyView.m in Sources */,
 				25F0DF141D1D2C5E007CEF17 /* MCPickerView.m in Sources */,
+				252EF9BB1D2E46A500565D00 /* SecurityHomePage.m in Sources */,
 				2512A1C41D111B3E00ED884B /* ServerManager.m in Sources */,
 				25CECB061D17BFC600C9CCBE /* MapViewController.m in Sources */,
 				25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */,
@@ -773,7 +819,9 @@
 				2512A1C91D112FDE00ED884B /* LoginViewController.m in Sources */,
 				25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */,
 				2512A1D01D113C6200ED884B /* HomepageViewController.m in Sources */,
+				252EF9C31D2E4F2300565D00 /* CommonMenuView.m in Sources */,
 				251175461D10EB6B00C3CE91 /* UserView.m in Sources */,
+				252EF9B81D2E3C4C00565D00 /* SecurityNav.m in Sources */,
 				251F378B1D26447D00B423D1 /* Report.m in Sources */,
 				253BF5801D0D49F40006086D /* main.m in Sources */,
 				256F39871D12885B00175E5A /* VerifyViewController.m in Sources */,

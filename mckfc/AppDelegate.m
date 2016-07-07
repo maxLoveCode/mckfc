@@ -8,10 +8,12 @@
 
 #import "AppDelegate.h"
 #import "LoadingNav.h"
+#import "SecurityNav.h"
 
 @interface AppDelegate ()
 
 @property (nonatomic, strong) LoadingNav* loadingNav;
+@property (nonatomic, strong) SecurityNav* securityNav;
 
 @end
 
@@ -27,11 +29,16 @@
     self.window.backgroundColor = [UIColor whiteColor];
 
     NSString* user_type = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"];
+    user_type = MKUSER_TYPE_SECURITY;
     
     if (!user_type || [user_type isEqualToString:MKUSER_TYPE_DRIVER] ) {
 //装载导视图（default）
         self.loadingNav = [[LoadingNav alloc] init];
         self.window.rootViewController = self.loadingNav;
+    }
+    else if([user_type isEqualToString:MKUSER_TYPE_SECURITY]) {
+        self.securityNav = [[SecurityNav alloc] init];
+        self.window.rootViewController = self.securityNav;
     }
     
     return YES;

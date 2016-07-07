@@ -27,12 +27,7 @@
 
 @implementation LoadingStatsViewController
 {
-    NSDictionary* titleText;
-    NSDictionary* secondSectionTitle;
-    NSDictionary* thirdSectionTitle;
-    NSDictionary* forthSectionTitle;
-    
-    NSMutableArray* checkMarks;
+    NSArray* titleText;
 }
 
 -(void)viewDidLoad
@@ -50,51 +45,35 @@
 #pragma mark titles and images
 -(void)initTitlesAndImages
 {
-    titleText = @{@"supplier":@"供应商名称",
-                  @"placeNo":@"地块编号"};
-    
-    secondSectionTitle = @{@"":@"装车前车辆检查",
-                           @"inspections":
-                               @{
-                                 @"异物":@"0",
-                                 @"油":@"0",
-                                 @"化学物品":@"0",
-                                 @"异味":@"0",
-                                 @"篷布":@"0"}};
-    
-    thirdSectionTitle =@{@"startTime":@"发车时间"};
-    
-    forthSectionTitle =@{@"extraInfo":@"其他情况说明"};
-    
-    checkMarks = [[NSMutableArray alloc] initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
+    titleText = @[@"供应商名称",@"地块编号",@"土豆重量", @"发车时间"];
 }
 
 #pragma mark tableViewDelegate
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 4) {
-        return kScreen_Height-itemHeight*12-40;
+    if (indexPath.section == 0) {
+        return itemHeight;
     }
-    else if(indexPath.section == 3)
-    {
+    else if(indexPath.section ==1){
         return itemHeight*2;
     }
     else
-        return itemHeight;
+        return kScreen_Height-itemHeight*6-60;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 5;
+    return 3;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 2;
+        return 4;
     }
-    else if (section == 1){
-        return 6;
+    else if(section == 1)
+    {
+        return 1;
     }
     else
         return 1;
@@ -103,82 +82,19 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section !=4) {
+    if (indexPath.section == 0) {
         LoadingCell* cell = [[LoadingCell alloc] init];
-        if (indexPath.section == 0) {
-            cell.style = LoadingCellStyleSelection;
-        }
-        else if (indexPath.section ==1){
-            if (indexPath.row ==0) {
-                [cell setStyle:LoadingCellStylePlain];
-            }
-            else{
-                cell.style = LoadingCellStyleBoolean;
-                cell.titleLabel.textColor = COLOR_TEXT_GRAY;
-            }
-        }
-        else if (indexPath.section ==2){
-            cell.style = LoadingCellStyleSelection;
-        }
-        else if (indexPath.section ==3){
-            cell.style = LoadingCellStyleTextField;
-            cell.textField.delegate = self;
-            cell.textField.text = _stats.extraInfo;
-        }
-
-        //titles and left imageview
-        NSArray* keys;
-        NSString* imageName;
-        if (indexPath.section == 0) {
-            keys = [titleText allKeys];
-            imageName = titleText[[keys objectAtIndex:indexPath.row]];
-        }
-        else if(indexPath.section == 1) {
-            if (indexPath.row ==0) {
-                keys = [secondSectionTitle allKeys];
-                imageName = secondSectionTitle[[keys objectAtIndex:indexPath.row]];
-            }
-            else{
-                keys = [[secondSectionTitle objectForKey:@"inspections"] allKeys];
-                imageName = [keys objectAtIndex:indexPath.row-1];
-            }
-            
-        }
-        else if (indexPath.section ==2){
-            keys = [thirdSectionTitle allKeys];
-            imageName = thirdSectionTitle[[keys objectAtIndex:indexPath.row]];
-        }
-        else{
-            keys = [forthSectionTitle allKeys];
-            imageName = forthSectionTitle[[keys objectAtIndex:indexPath.row]];
-        }
-        
-#pragma mark set properties
-        cell.titleLabel.text = imageName;
-        if ( indexPath.section ==1 && indexPath.row != 0) {
-            cell.leftImageView.image = nil;
-        }
-        else{
-            cell.leftImageView.image = [UIImage imageNamed:imageName];
-        }
-        
-        //chechimages
-        NSDictionary* dic = [MTLJSONAdapter JSONDictionaryFromModel:_stats error:nil];
-        if(cell.style == LoadingCellStyleBoolean){
-            //NSLog(@"dic%@",dic);
-            if ([[checkMarks objectAtIndex:(indexPath.row-1)]integerValue] == 0) {
-                cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"uncheck"]];
-            }
-            else
-            {
-                cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"check"]];
-            }
-        }
-        else if (cell.style == LoadingCellStyleSelection)
-        {
-            if(indexPath.section != 2)
-                cell.detailLabel.text = dic[[keys objectAtIndex:indexPath.row]];
-        }
+        [cell setStyle:LoadingCellStyleSelection];
+        cell.titleLabel.text = titleText[indexPath.row];
+        cell.leftImageView.image = [UIImage imageNamed:titleText[indexPath.row]];
+        return cell;
+    }
+    else if(indexPath.section ==1){
+        LoadingCell* cell = [[LoadingCell alloc] init];
+        NSString* title = @"其他情况说明";
+        [cell setStyle:LoadingCellStyleTextField];
+        cell.titleLabel.text = title;
+        cell.leftImageView.image = [UIImage imageNamed:title];
         return cell;
     }
     else{
@@ -205,16 +121,7 @@
 {
     
     LoadingCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-    if (cell.style == LoadingCellStyleBoolean) {
-        if ([[checkMarks objectAtIndex:(indexPath.row-1)]integerValue] == 0) {
-            [checkMarks setObject:@"1" atIndexedSubscript:(indexPath.row-1)];
-        }
-        else
-        {
-            [checkMarks setObject:@"0" atIndexedSubscript:(indexPath.row-1)];
-        }
-        
-    }
+  
     if (cell.style == LoadingCellStyleSelection){
         NSArray* offer = @[@"张三",@"李四",@"其他豆农"];
         NSArray* placeNo = @[@"A区", @"B区"];
@@ -250,16 +157,38 @@
         [bgView addSubview:label];
         return bgView;
     }
+    else if (section == 1){
+        UIView * bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, itemHeight)];
+        [bgView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+        
+        UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(k_Margin, 0, kScreen_Width-2*k_Margin, itemHeight)];
+        label.text = @"发车时间直接影响运输计划的时间安排，时间填写错误可能导致无法正常卸货，请仔细填写";
+        label.font = [UIFont systemFontOfSize:12];
+        label.textColor = [UIColor redColor];
+        label.numberOfLines = 0;
+        [bgView addSubview:label];
+        return bgView;
+    }
     return nil;
 }
 
+#pragma header view and footers
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section ==0) {
+    if (section ==0 ) {
         return 30;
+    }
+    else if(section ==1)
+    {
+        return itemHeight;
     }
     else
         return tableView.sectionHeaderHeight;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.01;
 }
 
 #pragma mark selectors

@@ -10,12 +10,11 @@
 
 @interface LoadingStats : MTLModel<MTLJSONSerializing>
 
-@property (nonatomic, copy) NSString *supplier;
+@property (nonatomic, copy) NSString *supplier; //供应商名称
 
-@property (nonatomic, copy) NSString *placeNo;
-@property (nonatomic, strong) NSMutableDictionary *inspections;
-@property (nonatomic, copy) NSDate *startTime;
-@property (nonatomic, copy) NSString *extraInfo;
+@property (nonatomic, copy) NSString *placeNo; //地块编号
+@property (nonatomic, copy) NSDate *startTime; //开始日期
+@property (nonatomic, copy) NSString *extraInfo; //额外信息
 
 -(instancetype)init;
 

@@ -15,9 +15,7 @@
              @"supplier":@"supplier",
              @"placeNo":@"placeNo",
              @"startTime":@"startTime",
-             @"extraInfo":@"extraInfo",
-             @"inspections":
-                 @[@"impurity",@"oil",@"chemical",@"smell",@"tarpaulin"]};
+             @"extraInfo":@"extraInfo"};
 }
 
 -(instancetype)init
@@ -33,13 +31,6 @@
 {
     self.supplier = @"";
     self.placeNo = @"";
-    
-    self.inspections = [[NSMutableDictionary alloc] initWithDictionary:@{
-                                                                        @"impurity":@"0",
-                                                                        @"oil":@"0",
-                                                                        @"chemical":@"0",
-                                                                        @"smell":@"0",
-                                                                        @"tarpaulin":@"0"}];
     self.startTime = nil;
     self.extraInfo = @"";
 }

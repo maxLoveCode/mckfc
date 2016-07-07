@@ -77,7 +77,8 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section ==0) {
-        return 0.01;     }
+        return 0.01;
+    }
     else
         return tableView.sectionHeaderHeight;
 }
@@ -133,6 +134,7 @@
     avatar.layer.borderWidth = 1.5;
     avatar.layer.cornerRadius = avatarHeight/2;
     avatar.layer.masksToBounds = YES;
+    [avatar setImage:[UIImage imageNamed:@"default_avatar"]];
     avatar.tag = 1000;
     
     UILabel* nameLabel = [[UILabel alloc] initWithFrame:
