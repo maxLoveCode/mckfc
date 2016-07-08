@@ -7,7 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommonMenuView.h"
+
+@class CommonUserView;
+
+@protocol CommonUserViewDelegate <NSObject>
+
+-(void)navigateToWorkRecord;
+
+@end
 
 @interface CommonUserView : UIView
+
+@property (strong, nonatomic) CommonMenuView* menu;
+
+@property (weak, nonatomic) id<CommonUserViewDelegate> delegate;
 
 @end

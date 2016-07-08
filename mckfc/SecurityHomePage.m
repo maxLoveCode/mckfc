@@ -8,6 +8,7 @@
 
 #import "SecurityHomePage.h"
 #import "CommonUserView.h"
+#import "CommonMenuView.h"
 
 @interface SecurityHomePage ()
 

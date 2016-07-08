@@ -7,7 +7,6 @@
 //
 
 #import "CommonUserView.h"
-#import "CommonMenuView.h"
 
 //first section
 #define topMargin 60
@@ -15,9 +14,10 @@
 #define itemGap 20
 #define titleFont 15
 
-@interface CommonUserView()<UITableViewDelegate, UITableViewDataSource>
+@interface CommonUserView()<UITableViewDelegate, UITableViewDataSource ,MenuDelegate>
 
 @property (strong, nonatomic) UITableView* mainTableView;
+@property (nonatomic, assign) NSString* user_type;
 
 @end
 
@@ -55,10 +55,18 @@
     }
     else
     {
-        CommonMenuView* menu = [[CommonMenuView alloc] initWithStyle:MenuViewStyleSecurityCheck];
-        //CommonMenuView* menu = [[CommonMenuView alloc] initWithStyle:MenuViewStyleQualityCheck];
-        [menu setFrame:CGRectOffset(menu.frame, 0, CGRectGetMidY(cell.contentView.frame)-CGRectGetMidY(menu.frame))];
-        [cell.contentView addSubview:menu];
+        _user_type = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"];
+        if([_user_type isEqualToString:MKUSER_TYPE_SECURITY])
+        {
+             _menu = [[CommonMenuView alloc] initWithStyle:MenuViewStyleSecurityCheck];
+        }
+        else
+        {
+             _menu = [[CommonMenuView alloc] initWithStyle:MenuViewStyleQualityCheck];
+        }
+        [_menu setFrame:CGRectOffset(_menu.frame, 0, CGRectGetMidY(cell.contentView.frame)-CGRectGetMidY(_menu.frame))];
+        _menu.menudelegate = self;
+        [cell.contentView addSubview:_menu];
     }
     return cell;
 }
@@ -134,6 +142,11 @@
 {
     [super layoutSubviews];
     [self addSubview:self.mainTableView];
+}
+
+-(void)CommonMenuView:(CommonMenuView *)menu didSelectWorkRecordWithType:(MenuViewStyle)style
+{
+    [self.delegate navigateToWorkRecord];
 }
 
 @end

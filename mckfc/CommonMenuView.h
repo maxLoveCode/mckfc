@@ -13,9 +13,18 @@ typedef NS_ENUM(NSInteger, MenuViewStyle) {
     MenuViewStyleQualityCheck,
 };
 
+@class CommonMenuView;
+
+@protocol MenuDelegate <NSObject>
+
+-(void)CommonMenuView:(CommonMenuView*)menu didSelectWorkRecordWithType:(MenuViewStyle)style;
+
+@end
+
 @interface CommonMenuView : UICollectionView
 
 @property (nonatomic, assign) MenuViewStyle style;
+@property (nonatomic, weak) id<MenuDelegate> menudelegate;
 
 -(instancetype)initWithStyle:(MenuViewStyle)style;
 

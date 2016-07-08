@@ -36,7 +36,7 @@
 {
     self = [[CommonMenuView alloc] init];
     self.style = style;
-    if (self.style == MenuViewStyleSecurityCheck) {
+    if (self.style != MenuViewStyleSecurityCheck) {
         _titleArray = @[@"到厂扫码",@"待收订单",@"工作记录",@"系统设置"];
     }
     else
@@ -54,7 +54,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (self.style == MenuViewStyleSecurityCheck) {
+    if (self.style != MenuViewStyleSecurityCheck) {
         return 4;
     }
     else
@@ -65,7 +65,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.style == MenuViewStyleSecurityCheck) {
+    if (self.style != MenuViewStyleSecurityCheck) {
         return CGSizeMake((kScreen_Width-2*k_Margin)/2-0.5, kScreen_Width/3) ;
     }
     else
@@ -103,6 +103,14 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     
     return 1.0;
+}
+
+#pragma mark select delegate
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.item == [_titleArray count] -2) {
+        [self.menudelegate CommonMenuView:self didSelectWorkRecordWithType:self.style];
+    }
 }
 
 @end

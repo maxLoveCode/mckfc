@@ -9,11 +9,13 @@
 #import "AppDelegate.h"
 #import "LoadingNav.h"
 #import "SecurityNav.h"
+#import "QualityControlNav.h"
 
 @interface AppDelegate ()
 
 @property (nonatomic, strong) LoadingNav* loadingNav;
 @property (nonatomic, strong) SecurityNav* securityNav;
+@property (nonatomic, strong) QualityControlNav* QCNav;
 
 @end
 
@@ -29,7 +31,8 @@
     self.window.backgroundColor = [UIColor whiteColor];
 
     NSString* user_type = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"];
-    user_type = MKUSER_TYPE_SECURITY;
+    user_type = MKUSER_TYPE_QUALITYCONTROL;
+    [[NSUserDefaults standardUserDefaults] setObject:user_type forKey:@"user_type"];
     
     if (!user_type || [user_type isEqualToString:MKUSER_TYPE_DRIVER] ) {
 //装载导视图（default）
@@ -39,6 +42,11 @@
     else if([user_type isEqualToString:MKUSER_TYPE_SECURITY]) {
         self.securityNav = [[SecurityNav alloc] init];
         self.window.rootViewController = self.securityNav;
+    }
+    else
+    {
+        self.QCNav = [[QualityControlNav alloc] init];
+        self.window.rootViewController = self.QCNav;
     }
     
     return YES;

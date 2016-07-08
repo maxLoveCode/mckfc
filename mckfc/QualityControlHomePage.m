@@ -8,8 +8,10 @@
 
 #import "QualityControlHomePage.h"
 #import "CommonUserView.h"
+#import "CommonMenuView.h"
+#import "WorkRecordViewController.h"
 
-@interface QualityControlHomePage ()
+@interface QualityControlHomePage () <CommonUserViewDelegate>
 
 @property (nonatomic, strong) CommonUserView* userView;
 
@@ -20,7 +22,13 @@
 -(void)viewDidLoad
 {
     _userView = [[CommonUserView alloc] init];
+    _userView.delegate = self;
     self.view = _userView;
 }
 
+-(void)navigateToWorkRecord
+{
+    WorkRecordViewController *WRVC = [[WorkRecordViewController alloc] init];
+    [self.navigationController pushViewController:WRVC animated:YES];
+}
 @end
