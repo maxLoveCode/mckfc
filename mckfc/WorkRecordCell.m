@@ -32,7 +32,7 @@ extern NSString *const reuseIdentifier;
 
 -(instancetype)init
 {
-    NSString *const reuseIdentifier = @"wordRecord";
+    NSString *const reuseIdentifier = @"workRecord";
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     
     for (UIView* subview in [self.contentView subviews]) {

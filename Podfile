@@ -10,6 +10,7 @@ def default_pods
 	pod 'AMapSearch','~>4.0.0'
 	pod 'GDQrCode', '~> 1.0.0'
 	pod 'SDWebImage', '~> 3.8.1'
+	pod 'JTCalendar', '~> 2.0'
 end
 
 target 'mckfc' do

@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>JTCalendar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Mantle.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,22 +47,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0CEEE75BD4DA1CF346C920B88125B914</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>426BC4549A625B5E1E4200D5261A98BF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4C8A40FEAD050905581EC8745829E0D7</key>
+		<key>727F06E43BAD8247488AF53EB1FEFAF4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7F72CEE5D0D1246FA2F8306766C40DC5</key>
+		<key>7EB2D8A3A1BF2DD7C6AD825F616D590E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -67,7 +67,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E8038C4E6F319508C5779DAAE7912A6C</key>
+		<key>9EB805870579AD5B39BEF1B54588C181</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C3AD7E342840A1BEA026D1D3A2D9C1A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C67B0B385B2604FD3747AFDB9F179D54</key>
 		<dict>
 			<key>primary</key>
 			<true/>
