@@ -183,8 +183,8 @@
     UITableViewCell* firstCell = [self.mainTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     UIView* content = firstCell.contentView;
     UILabel* nameLabel = [content viewWithTag:1001];
-    nameLabel.text = user.driverName;
-    if ([user.driverName isEqualToString:@""]) {
+    nameLabel.text = user.driver;
+    if ([user.driver isEqualToString:@""]) {
         nameLabel.text = @"未命名司机";
     }
     
@@ -192,7 +192,7 @@
     [star setStarValue:user.star];
     
     UILabel* carlabel = [content viewWithTag:1002];
-    carlabel.text = user.cardID;
+    carlabel.text = user.truckno;
     if ([carlabel.text isEqualToString:@""]) {
         carlabel.text = @"未填写车牌号";
     }
@@ -201,7 +201,9 @@
     UIImageView* avatar = [content viewWithTag:1000];
     [avatar sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
     
-    [_stats setStatsFromDictionary:user.stats];
+    [_stats setStatsFromDictionary:@{@"totalMile":user.totalmile,
+                                     @"totalWeight":user.totalweight,
+                                     @"transportTime":user.transporttime}];
 }
 
 @end

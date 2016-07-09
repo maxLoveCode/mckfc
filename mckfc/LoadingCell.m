@@ -80,6 +80,18 @@
     return _textField;
 }
 
+-(UITextField *)digitInput
+{
+    if (!_digitInput) {
+        _digitInput = [[UITextField alloc] init];
+        _digitInput.textColor = COLOR_WithHex(0x565656);
+        _digitInput.font = [UIFont systemFontOfSize:14];
+        _digitInput.textAlignment = NSTextAlignmentRight;
+        _digitInput.keyboardType = UIKeyboardTypeDecimalPad;
+    }
+    return _digitInput;
+}
+
 -(void)setStyle:(LoadingCellStyle)style
 {
     self->_style = style;
@@ -95,6 +107,15 @@
     else if(style == LoadingCellStyleTextField){
         [self addSubview:self.textField];
     }
+    else if(style == LoadingCellStyleDigitInput){
+        [self addSubview:self.digitInput];
+        UILabel* kg = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+        kg.textColor =COLOR_TEXT_GRAY;
+        kg.font = [UIFont systemFontOfSize:14];
+        kg.text = @"KG";
+        self.accessoryType = UITableViewCellAccessoryNone;
+        self.accessoryView = kg;
+    }
 }
 
 #pragma mark layouts
@@ -108,6 +129,8 @@
     
     if (self.style == LoadingCellStyleTextField) {
         [self.textField setFrame:CGRectMake(k_Margin, itemHeight-10, kScreen_Width-2*k_Margin, itemHeight)];
+    }else if(self.style == LoadingCellStyleDigitInput){
+        [self.digitInput setFrame:self.detailLabel.frame];
     }
 }
 

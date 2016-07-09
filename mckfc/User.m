@@ -13,29 +13,40 @@
 +(NSDictionary *)JSONKeyPathsByPropertyKey
 {
     return @{
+             
+             @"avatar":@"avatar",
              @"mobile":@"mobile",
-             @"carNo":@"carNo",
-             @"driverName":@"driverName",
-             @"cardID":@"cardId",
-             @"driverNo":@"driverNo",
-             @"licenseNo":@"licenseNo",
+             @"truckno":@"truckno",
+             @"driver":@"driver",
+             @"idcard":@"idcard",
+             @"driverno":@"driverno",
+             @"licenseno":@"licenseno",
              @"star":@"star",
-             @"stats":@[@"totalMile",@"totalWeight",@"transportTime"]};
+             
+             @"totalmile":@"totalmile",
+             @"totalweight":@"totalweight",
+             @"transporttime":@"transporttime"
+             };
 }
 
 -(instancetype)init
 {
     self = [super init];
-    self.mobile = @"";
-    self.carNo = @"";
-    self.driverNo = @"";
-    self.cardID = @"";
-    self.driverName = @"";
-    self.licenseNo = @"";
-    self.star = 0;
-    self.stats = nil;
     
     return self;
+}
+
+-(void)setNilValueForKey:(NSString *)key
+{
+    if ([key isEqualToString:@"totalmile"]) {
+        self.totalmile = 0;
+    } else if ([key isEqualToString:@"totalweight"]) {
+        self.totalweight = 0;
+    } else if([key isEqualToString:@"transporttime"]){
+        self.transporttime = 0;
+    }else {
+        [super setNilValueForKey:key];
+    }
 }
 
 -(NSString *)description
@@ -45,12 +56,11 @@
 
 -(BOOL)validation
 {
-    if ([self.mobile isEqualToString:@""] || [self.carNo isEqualToString:@""]
-        ||[self.driverNo isEqualToString:@""] || [self.licenseNo isEqualToString:@""]
-        ||[self.cardID isEqualToString:@""]) {
+   if ([self.truckno isEqualToString: @""] || !self.truckno)
+   {
         return NO;
-    }
-    else
+   }
+   else
         return YES;
 }
 

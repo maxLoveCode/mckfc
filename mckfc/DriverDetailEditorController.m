@@ -15,7 +15,6 @@
 
 #import "EditorNav.h"
 
-#import "User.h"
 
 @interface DriverDetailEditorController()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate,HUDViewDelegate>
 {
@@ -24,7 +23,6 @@
     NSInteger index;
 }
 
-@property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) ServerManager* server;
 @property (nonatomic, strong) User* driver;
 @property AlertHUDView *alert;
@@ -67,7 +65,9 @@
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    _driver = [[User alloc] init];
+    if (!_driver) {
+        _driver = [[User alloc] init];
+    }
 }
 
 -(UITableView *)tableView
@@ -189,23 +189,23 @@
     {
         if(index == 1) //car no
         {
-            _driver.carNo = result;
+            _driver.truckno = result;
         }
         else if(index ==2)
         {
-            _driver.driverName = result;
+            _driver.driver = result;
         }
         else if(index ==3)
         {
-            _driver.cardID = result;
+            _driver.idcard = result;
         }
         else if(index ==4)
         {
-            _driver.driverNo = result;
+            _driver.driverno = result;
         }
         else
         {
-            _driver.licenseNo = result;
+            _driver.licenseno = result;
         }
     }
 }
@@ -228,14 +228,14 @@
 
         
         NSMutableDictionary* params = [[NSMutableDictionary alloc]initWithDictionary: @{@"token":_server.accessToken}];
-        NSDictionary* dic = @{@"carNo":_driver.carNo,
-                              @"driverName":_driver.driverName,
-                              @"cardId":_driver.cardID,
-                              @"driverNo":_driver.driverNo,
-                              @"licenseNo":_driver.licenseNo};
+        NSDictionary* dic = @{@"truckno":_driver.truckno,
+                              @"driver":_driver.driver,
+                              @"idcard":_driver.idcard,
+                              @"driverno":_driver.driverno,
+                              @"licenseno":_driver.licenseno};
         [params addEntriesFromDictionary:dic];
-        NSLog(@"params%@", params);
-        [_server POST:@"registerComplete" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        //NSLog(@"params%@", params);
+        [_server POST:@"updateTruck" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
             EditorNav* editorNav = (EditorNav* )self.navigationController;
 
             if (editorNav.onDismissed) {
@@ -295,6 +295,13 @@
     if (self.alert) {
         [self.alert removeFromSuperview];
     }
+}
+
+-(void)setUser:(User*)user
+{
+    self.driver = user;
+    [self.tableView reloadData];
+    NSLog(@"%@", self.driver);
 }
 
 @end

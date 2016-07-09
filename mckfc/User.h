@@ -12,12 +12,15 @@
 
 @property (nonatomic, copy) NSString *mobile;
 
-@property (nonatomic, copy) NSString *carNo;  //车牌号
-@property (nonatomic, copy) NSString *driverName; //司机姓名
-@property (nonatomic, copy) NSString *cardID;  //身份证
-@property (nonatomic, copy) NSString *driverNo; //驾驶证号
-@property (nonatomic, copy) NSString *licenseNo; //行驶证号
-@property (nonatomic, copy) NSDictionary* stats;
+@property (nonatomic, copy) NSString *truckno;  //车牌号
+@property (nonatomic, copy) NSString *driver; //司机姓名
+@property (nonatomic, copy) NSString *idcard;  //身份证
+@property (nonatomic, copy) NSString *driverno; //驾驶证号
+@property (nonatomic, copy) NSString *licenseno; //行驶证号
+
+@property (nonatomic, assign) NSNumber *totalmile;
+@property (nonatomic, assign) NSNumber *totalweight;
+@property (nonatomic, assign) NSNumber *transporttime;
 
 
 @property (nonatomic, copy) NSString *avatar; //头像

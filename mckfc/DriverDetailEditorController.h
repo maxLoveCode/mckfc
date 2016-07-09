@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "User.h"
 
 @interface DriverDetailEditorController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+
+@property (nonatomic, strong) UITableView* tableView;
+
+-(void)setUser:(User*)user;
 
 @end

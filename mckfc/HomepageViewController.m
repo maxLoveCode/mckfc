@@ -11,6 +11,7 @@
 #import "ServerManager.h"
 #import "LoginNav.h"
 #import "LoadingStatsViewController.h"
+#import "DriverDetailEditorController.h"
 
 #import "EditorNav.h"
 
@@ -48,13 +49,15 @@
     if (_serverManager.accessToken) {
         NSDictionary* params = @{@"token": _serverManager.accessToken};
         [_serverManager GET:@"getUserInfo" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-            
-            _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:responseObject[@"data"] error:nil];
+            NSError* error;
+            NSDictionary* data = responseObject[@"data"];
+            _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:data error:&error];
             [_userview setContentByUser:_user];
             
-            NSLog(@"%@", responseObject);
-            if([_user validation]){
+            if(![_user validation]){
                 EditorNav* editVC = [[EditorNav alloc] init];
+                DriverDetailEditorController* driverVC =(DriverDetailEditorController*)editVC.topViewController;
+                [driverVC setUser:_user];
                 [self.navigationController presentViewController:editVC animated:YES completion:^{
                     
                 }];

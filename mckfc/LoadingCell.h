@@ -14,6 +14,7 @@ typedef NS_ENUM(NSUInteger, LoadingCellStyle) {
     LoadingCellStyleSelection,
     LoadingCellStyleTextField,
     LoadingCellStyleImagePicker,
+    LoadingCellStyleDigitInput,
     LoadingCellStyleBoolean,
 };
 
@@ -24,6 +25,7 @@ typedef NS_ENUM(NSUInteger, LoadingCellStyle) {
 @property (nonatomic, strong) UILabel* detailLabel;
 
 @property (nonatomic, strong) UITextView* textField;
+@property (nonatomic, strong) UITextField* digitInput;
 
 @property (nonatomic, assign) LoadingCellStyle style;
 

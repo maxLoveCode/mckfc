@@ -18,7 +18,7 @@
 #define buttonHeight 40
 #define buttonWidth 340
 
-@interface LoadingStatsViewController ()<MCPickerViewDelegate, UITextViewDelegate>
+@interface LoadingStatsViewController ()<MCPickerViewDelegate, UITextViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) MCPickerView* pickerView;
 @property (nonatomic, strong) LoadingStats* stats;
@@ -39,6 +39,7 @@
     self.tableView.dataSource = self;
     
     _stats = [[LoadingStats alloc] init];
+    NSLog(@"%@", _stats);
     [self initTitlesAndImages];
 }
 
@@ -58,7 +59,7 @@
         return itemHeight*2;
     }
     else
-        return kScreen_Height-itemHeight*6-60;
+        return kScreen_Height-itemHeight*6-60-66-20;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -84,7 +85,27 @@
 {
     if (indexPath.section == 0) {
         LoadingCell* cell = [[LoadingCell alloc] init];
-        [cell setStyle:LoadingCellStyleSelection];
+        
+        if (indexPath.row != 2) {
+            [cell setStyle:LoadingCellStyleSelection];
+            if (indexPath.row == 0) {
+                cell.detailLabel.text = _stats.supplier;
+            }
+            else if (indexPath.row ==1){
+                cell.detailLabel.text = _stats.placeNo;
+            }
+            else
+            {
+                
+            }
+        }
+        else
+        {
+            [cell setStyle:LoadingCellStyleDigitInput];
+            cell.digitInput.delegate = self;
+            cell.digitInput.text = [NSString stringWithFormat:@"%@",_stats.weight];
+        }
+        
         cell.titleLabel.text = titleText[indexPath.row];
         cell.leftImageView.image = [UIImage imageNamed:titleText[indexPath.row]];
         return cell;
@@ -206,7 +227,7 @@
         if (indexPath.row ==0) {
             _stats.supplier = string;
         }
-        else{
+        else if (indexPath.row ==1){
             _stats.placeNo = string;
         }
     }
@@ -232,6 +253,19 @@
 -(void)textViewDidEndEditing:(UITextView *)textView
 {
     [_stats setExtraInfo:textView.text];
+}
+
+#pragma mark textfield delegate
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if ([textField.text isEqualToString:@"0"]) {
+        textField.text = @"";
+    }
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [_stats setWeight:[NSNumber numberWithFloat:[textField.text floatValue]]];
 }
 
 @end
