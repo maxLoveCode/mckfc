@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, MenuViewStyle) {
 @protocol MenuDelegate <NSObject>
 
 -(void)CommonMenuView:(CommonMenuView*)menu didSelectWorkRecordWithType:(MenuViewStyle)style;
+-(void)CommonMenuView:(CommonMenuView *)menu didSelectScanQRCode:(MenuViewStyle)style withIndex:(NSInteger)index;
 
 @end
 

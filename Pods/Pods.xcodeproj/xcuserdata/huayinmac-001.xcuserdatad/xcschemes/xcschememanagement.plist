@@ -39,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>QRCodeReaderViewController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,17 +52,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>023DEC9B096DA95D566D34148E7C6D46</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>231D84B253A317A140BB8F64E3349555</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>289AEC272090C1C54A008D77F4D861F1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>426BC4549A625B5E1E4200D5261A98BF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>727F06E43BAD8247488AF53EB1FEFAF4</key>
+		<key>570793E29028A3E698CA9CA1A71C140E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7EB2D8A3A1BF2DD7C6AD825F616D590E</key>
+		<key>85FB13256DB544FB22F3DDEFBA65F578</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -67,17 +87,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9EB805870579AD5B39BEF1B54588C181</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>C3AD7E342840A1BEA026D1D3A2D9C1A7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C67B0B385B2604FD3747AFDB9F179D54</key>
 		<dict>
 			<key>primary</key>
 			<true/>

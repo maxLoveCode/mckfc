@@ -11,6 +11,7 @@ def default_pods
 	pod 'GDQrCode', '~> 1.0.0'
 	pod 'SDWebImage', '~> 3.8.1'
 	pod 'JTCalendar', '~> 2.0'
+	pod 'QRCodeReaderViewController', '~> 4.0.1'
 end
 
 target 'mckfc' do

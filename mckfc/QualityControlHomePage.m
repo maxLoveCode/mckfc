@@ -10,8 +10,9 @@
 #import "CommonUserView.h"
 #import "CommonMenuView.h"
 #import "WorkRecordViewController.h"
+#import "QRCodeReaderViewController.h"
 
-@interface QualityControlHomePage () <CommonUserViewDelegate>
+@interface QualityControlHomePage () <CommonUserViewDelegate, QRCodeReaderDelegate>
 
 @property (nonatomic, strong) CommonUserView* userView;
 
@@ -31,4 +32,39 @@
     WorkRecordViewController *WRVC = [[WorkRecordViewController alloc] init];
     [self.navigationController pushViewController:WRVC animated:YES];
 }
+
+-(void)navigateToQRScanner
+{
+    // Create the reader object
+    QRCodeReader *reader = [QRCodeReader readerWithMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
+    
+    // Instantiate the view controller
+    QRCodeReaderViewController *vc = [QRCodeReaderViewController readerWithCancelButtonTitle:@"Cancel" codeReader:reader startScanningAtLoad:YES showSwitchCameraButton:YES showTorchButton:YES];
+    
+    // Set the presentation style
+    vc.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self.navigationController presentViewController:vc animated:YES completion:nil];
+    // Define the delegate receiver
+    vc.delegate = self;
+    
+//    // Or use blocks
+//    [reader setCompletionWithBlock:^(NSString *resultAsString) {
+//        NSLog(@"%@", resultAsString);
+//    }];
+}
+
+#pragma mark - QRCodeReader Delegate Methods
+
+- (void)reader:(QRCodeReaderViewController *)reader didScanResult:(NSString *)result
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSLog(@"%@", result);
+    }];
+}
+
+- (void)readerDidCancel:(QRCodeReaderViewController *)reader
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
 @end

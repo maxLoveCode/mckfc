@@ -149,4 +149,9 @@
     [self.delegate navigateToWorkRecord];
 }
 
+-(void)CommonMenuView:(CommonMenuView *)menu didSelectScanQRCode:(MenuViewStyle)style withIndex:(NSInteger)index
+{
+    [self.delegate navigateToQRScanner];
+}
+
 @end

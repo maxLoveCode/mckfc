@@ -14,6 +14,7 @@
 @protocol CommonUserViewDelegate <NSObject>
 
 -(void)navigateToWorkRecord;
+-(void)navigateToQRScanner;
 
 @end
 
