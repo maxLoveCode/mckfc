@@ -36,6 +36,7 @@
     
     _mapVC = [[MapViewController alloc] init];
     [self addChildViewController:_mapVC];
+    self.navigationController.navigationItem.hidesBackButton = YES;
     
     titleText = @[@"发运时间",@"运输目的地",@"计划到达时间",@"计划卸货时间"];
 }

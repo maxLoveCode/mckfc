@@ -29,6 +29,9 @@
 		252EF9DF1D30AC1B00565D00 /* orderGeneralReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9DE1D30AC1B00565D00 /* orderGeneralReport.m */; };
 		252EF9E21D30AF9F00565D00 /* WorkFlowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9E11D30AF9F00565D00 /* WorkFlowCell.m */; };
 		252EF9E51D33407900565D00 /* MCDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9E41D33407900565D00 /* MCDatePickerView.m */; };
+		252EF9E81D3349FE00565D00 /* Vendor.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9E71D3349FE00565D00 /* Vendor.m */; };
+		252EF9EB1D3369E900565D00 /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9EA1D3369E900565D00 /* City.m */; };
+		252EF9EE1D336F4400565D00 /* Field.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9ED1D336F4400565D00 /* Field.m */; };
 		2534B9951D23993400A82E0A /* LoadingStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 2534B9941D23993400A82E0A /* LoadingStats.m */; };
 		2534B9981D24ACF400A82E0A /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2534B9971D24ACF400A82E0A /* ReportViewController.m */; };
 		253BF5801D0D49F40006086D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF57F1D0D49F40006086D /* main.m */; };
@@ -130,6 +133,12 @@
 		252EF9E11D30AF9F00565D00 /* WorkFlowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkFlowCell.m; sourceTree = "<group>"; };
 		252EF9E31D33407900565D00 /* MCDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCDatePickerView.h; sourceTree = "<group>"; };
 		252EF9E41D33407900565D00 /* MCDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCDatePickerView.m; sourceTree = "<group>"; };
+		252EF9E61D3349FE00565D00 /* Vendor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vendor.h; sourceTree = "<group>"; };
+		252EF9E71D3349FE00565D00 /* Vendor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vendor.m; sourceTree = "<group>"; };
+		252EF9E91D3369E900565D00 /* City.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = City.h; sourceTree = "<group>"; };
+		252EF9EA1D3369E900565D00 /* City.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = City.m; sourceTree = "<group>"; };
+		252EF9EC1D336F4400565D00 /* Field.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Field.h; sourceTree = "<group>"; };
+		252EF9ED1D336F4400565D00 /* Field.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Field.m; sourceTree = "<group>"; };
 		2534B9931D23993400A82E0A /* LoadingStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingStats.h; sourceTree = "<group>"; };
 		2534B9941D23993400A82E0A /* LoadingStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingStats.m; sourceTree = "<group>"; };
 		2534B9961D24ACF400A82E0A /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController.h; sourceTree = "<group>"; };
@@ -392,6 +401,12 @@
 			children = (
 				2534B9931D23993400A82E0A /* LoadingStats.h */,
 				2534B9941D23993400A82E0A /* LoadingStats.m */,
+				252EF9E61D3349FE00565D00 /* Vendor.h */,
+				252EF9E71D3349FE00565D00 /* Vendor.m */,
+				252EF9E91D3369E900565D00 /* City.h */,
+				252EF9EA1D3369E900565D00 /* City.m */,
+				252EF9EC1D336F4400565D00 /* Field.h */,
+				252EF9ED1D336F4400565D00 /* Field.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -885,10 +900,12 @@
 				256F39841D12847D00175E5A /* SignUpViewController.m in Sources */,
 				2534B9951D23993400A82E0A /* LoadingStats.m in Sources */,
 				256F39A81D17891A00175E5A /* MCStarView.m in Sources */,
+				252EF9E81D3349FE00565D00 /* Vendor.m in Sources */,
 				2534B9981D24ACF400A82E0A /* ReportViewController.m in Sources */,
 				25EDD78B1D0E847800AFB6F3 /* User.m in Sources */,
 				252EF9D91D2F5D2400565D00 /* WorkStatusView.m in Sources */,
 				252EF9C61D2E6EED00565D00 /* QualityControlNav.m in Sources */,
+				252EF9EE1D336F4400565D00 /* Field.m in Sources */,
 				256F39811D12836900175E5A /* SignUpView.m in Sources */,
 				2512A1CD1D1130B100ED884B /* LoginView.m in Sources */,
 				252EF9D31D2F4D2800565D00 /* WorkRecordViewController.m in Sources */,
@@ -898,6 +915,7 @@
 				256F399C1D13A32000175E5A /* StatsView.m in Sources */,
 				253BF5831D0D49F40006086D /* AppDelegate.m in Sources */,
 				256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */,
+				252EF9EB1D3369E900565D00 /* City.m in Sources */,
 				256F39961D12B2A000175E5A /* DriverDetailEditorController.m in Sources */,
 				251F378F1D26698C00B423D1 /* ReportCollectionView.m in Sources */,
 				25B004991D1922970018EEB1 /* QRCodeView.m in Sources */,

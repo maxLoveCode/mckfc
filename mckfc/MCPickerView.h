@@ -11,12 +11,13 @@
 
 @protocol MCPickerViewDelegate <NSObject>
 
--(void)didSelectString:(NSString*)string fromPickerView:(MCPickerView*)pickerView;
+-(void)pickerView:(MCPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component;
 
 @end
 
 @interface MCPickerView : UIView<UIPickerViewDelegate,UIPickerViewDataSource>
 
+@property (nonatomic, strong) NSArray* greaterOrderData;
 @property (nonatomic, strong) NSArray* data;
 
 @property (nonatomic, strong) UIPickerView* picker;

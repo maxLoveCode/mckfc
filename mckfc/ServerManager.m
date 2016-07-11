@@ -66,7 +66,7 @@ NSString *const version = @"v1_0";
             success(task, responseObject);
         }
         if (ServerDebugLog) {
-            NSLog(@"code:%@  info:%@  successcode %lu",responseObject[@"code"],responseObject[@"msg"], (unsigned long)self.successCode);
+            NSLog(@"code:%@  info:%@",responseObject[@"code"],responseObject[@"msg"]);
         }
         if (animated) {
             if ([responseObject[@"code"] integerValue] == self.successCode) {
@@ -110,7 +110,7 @@ NSString *const version = @"v1_0";
             success(task, responseObject);
         }
         if (ServerDebugLog) {
-            NSLog(@"code:%@  info:%@  successcode %lu",responseObject[@"code"],responseObject[@"msg"], (unsigned long)self.successCode);
+            NSLog(@"code:%@  info:%@",responseObject[@"code"],responseObject[@"msg"]);
         }
         if (animated) {
             if ([responseObject[@"code"] integerValue] == self.successCode) {

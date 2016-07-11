@@ -12,8 +12,8 @@
 
 +(NSDictionary *)JSONKeyPathsByPropertyKey{
     return @{
-             @"supplier":@"supplier",
-             @"placeNo":@"placeNo",
+             @"supplier":@"vendorid",
+             @"field":@"placeNo",
              @"departuretime":@"departuretime",
              @"extraInfo":@"extraInfo",
              @"weight":@"weight"};
@@ -21,41 +21,20 @@
 
 -(instancetype)init
 {
-    NSLog(@"23123");
     self = [super init];
-    [self defaultValues];
+    //[self defaultValues];
     return self;
-}
-
--(void)defaultValues
-{
-    self.supplier = @"请选择供应商";
-    self.placeNo = @"请选择地区";
-    self.departuretime = nil;
-    self.extraInfo = @"";
-    
-    self.weight = [NSNumber numberWithInteger:0];
 }
 
 -(void)setNilValueForKey:(NSString *)key
 {
-    NSLog(@"test");
-    if ([key isEqualToString:@"supplier"]) {
-        self.supplier = @"请选择供应商";
-    }else if([key isEqualToString:@"placeNo"]){
-        self.placeNo = @"请选择地区";
-    }else if([key isEqualToString:@"startTime"]){
-        
-    }else if([key isEqualToString:@"weight"]){
+    if ([key isEqualToString:@"weight"]) {
         self.weight = 0;
-    }else
-    {
-        [super setNilValueForKey:key];
     }
 }
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"stats: %@", [MTLJSONAdapter JSONArrayFromModels:@[self] error:nil]];
+    return [NSString stringWithFormat:@"stats: %@", [MTLJSONAdapter JSONDictionaryFromModel:self error:nil]];
 }
 @end

@@ -158,8 +158,8 @@
 
 -(void)dismiss:(AlertHUDView *)alert
 {
-    [UIView animateWithDuration:1 animations:^{
-        alert.alpha = 0.1;
+    [UIView animateWithDuration:0.8 animations:^{
+        alert.alpha = 0;
     }completion:^(BOOL finished) {
         [alert.HUDimage stopAnimating];
         [alert removeFromSuperview];

@@ -12,13 +12,20 @@
 
 @implementation MCPickerView
 
+-(instancetype)init
+{
+    self = [super init];
+    
+    [self setFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height)];
+    [self addSubview:self.mask];
+    [self addSubview:self.picker];
+    return self;
+}
+
 -(instancetype)initWithArray:(NSArray*)data
 {
     self = [super init];
     self.data = data;
-    [self setFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height)];
-    [self addSubview:self.mask];
-    [self addSubview:self.picker];
     return self;
 }
 
@@ -52,17 +59,36 @@
 #pragma mark UIPickerView delegate
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    return 1;
+    if(_greaterOrderData)
+        return 2;
+    else
+        return 1;
 }
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [_data count];
+    if (_greaterOrderData) {
+        if (component == 0) {
+            return [_greaterOrderData count];
+        }
+        else
+            return [_data count];
+    }
+    else
+        return [_data count];
 }
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [_data objectAtIndex:row];
+    if (_greaterOrderData) {
+        if (component == 0) {
+            return [[_greaterOrderData objectAtIndex:row] description];
+        }
+        else
+            return [[_data objectAtIndex:row] description];
+    }
+    else
+        return [[_data objectAtIndex:row] description];
 }
 
 -(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
@@ -73,8 +99,7 @@
 #pragma mark UIPickerview select delegate
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [self.delegate didSelectString:[_data objectAtIndex:row] fromPickerView:self];
-    //[self dismiss];
+    [self.delegate pickerView:self didSelectRow:row inComponent:component];
 }
 
 -(void)tapSelect
