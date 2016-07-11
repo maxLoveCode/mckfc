@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "TransportDetail.h"
+
 @interface TranspotationPlanViewController : UITableViewController
+
+@property (nonatomic, strong) TransportDetail* detail;
 
 @end

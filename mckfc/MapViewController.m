@@ -17,13 +17,25 @@
     MAMapPoint termination;
     AMapSearchAPI *_search;
 }
+
 @property (nonatomic,strong) AMapPath* path;
 @property (nonatomic,strong) MAUserLocation* userLocation;
-@property (nonatomic,strong) NSTimer* timer;
+
+
+@property (nonatomic, assign) double terminateLongtitude;
+@property (nonatomic, assign) double terminateLatitude;
 
 @end
 
 @implementation MapViewController
+
+-(instancetype)initWithTerminateLong:(double)longtitude Lat:(double)latitude
+{
+    self = [super init];
+    self.terminateLongtitude = longtitude;
+    self.terminateLatitude = latitude;
+    return self;
+}
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -36,7 +48,7 @@
     _mapView.delegate = self;
     _mapView.showsUserLocation = YES;
     [_mapView setUserTrackingMode: MAUserTrackingModeFollow animated:YES];
-    [self terminateHarBin];
+    //[self terminateHarBin];
     [self.view addSubview:_mapView];
 }
 
@@ -71,11 +83,10 @@ updatingLocation:(BOOL)updatingLocation
         _search = [[AMapSearchAPI alloc] init];
         _search.delegate = self;
     }
-    
     //构造AMapDrivingRouteSearchRequest对象，设置驾车路径规划请求参数
     AMapDrivingRouteSearchRequest *request = [[AMapDrivingRouteSearchRequest alloc] init];
     request.origin = [AMapGeoPoint locationWithLatitude:startPoint.latitude longitude:startPoint.longitude];
-    request.destination = [AMapGeoPoint locationWithLatitude:44.04 longitude:125.42];
+    request.destination = [AMapGeoPoint locationWithLatitude:_terminateLatitude longitude:_terminateLongtitude];
     request.strategy = 2;//距离优先
     request.requireExtension = YES;
     
@@ -83,6 +94,8 @@ updatingLocation:(BOOL)updatingLocation
     
     [_search AMapDrivingRouteSearch: request];
 }
+
+#pragma mark start searching
 
 //实现路径搜索的回调函数
 - (void)onRouteSearchDone:(AMapRouteSearchBaseRequest *)request response:(AMapRouteSearchResponse *)response
@@ -92,9 +105,8 @@ updatingLocation:(BOOL)updatingLocation
         return;
     }
     //通过AMapNavigationSearchResponse对象处理搜索结果
-    _userLocation.title = [NSString stringWithFormat:@"距离目的地还有%.2ld公里", _path.distance/1000];
-    _userLocation.subtitle = [NSString stringWithFormat:@"预计%ld小时到达",_path.distance/80000];
-    
+    _userLocation.title = [NSString stringWithFormat:@"预计%ld小时到达",_path.duration/3600];
+    _userLocation.subtitle =[NSString stringWithFormat:@"距离目的地还有%.2ld公里", _path.distance/1000];
     NSMutableArray* polys = [[NSMutableArray alloc] init];
     _path = [response.route.paths objectAtIndex:0];
     [_path.steps enumerateObjectsUsingBlock:^(AMapStep *step, NSUInteger idx, BOOL *stop) {
@@ -104,6 +116,36 @@ updatingLocation:(BOOL)updatingLocation
         }
     }];
     [_mapView addOverlays:polys];
+}
+
+-(void)didStartRegeoSearch
+{
+    //初始化检索对象
+    _search = [[AMapSearchAPI alloc] init];
+    _search.delegate = self;
+    
+    //构造AMapReGeocodeSearchRequest对象
+    AMapReGeocodeSearchRequest *regeo = [[AMapReGeocodeSearchRequest alloc] init];
+    regeo.location = [AMapGeoPoint locationWithLatitude:_userLocation.coordinate.latitude     longitude:_userLocation.coordinate.longitude];
+    regeo.radius = 10000;
+    regeo.requireExtension = YES;
+    
+    //发起逆地理编码
+    [_search AMapReGoecodeSearch: regeo];
+    
+}
+
+//实现逆地理编码的回调函数
+- (void)onReGeocodeSearchDone:(AMapReGeocodeSearchRequest *)request response:(AMapReGeocodeSearchResponse *)response
+{
+    if(response.regeocode != nil)
+    {
+        //通过AMapReGeocodeSearchResponse对象处理搜索结果
+        NSString *result = [NSString stringWithFormat:@"ReGeocode: %@", response.regeocode];
+        NSLog(@"ReGeo: %@", result);
+        
+        [self.delegate mapView:self LocationOnLatitude:_userLocation.coordinate.latitude Longtitude:_userLocation.coordinate.longitude address:response.regeocode.formattedAddress distance:_path.distance expecttime:_path.duration*1000];
+    }
 }
 
 - (MAOverlayView *)mapView:(MAMapView *)mapView viewForOverlay:(id <MAOverlay>)overlay
@@ -159,7 +201,8 @@ updatingLocation:(BOOL)updatingLocation
         return nil;
     }
     
-    NSUInteger count = 0;     CLLocationCoordinate2D *coordinates = [self coordinatesForString:coordinateString
+    NSUInteger count = 0;
+    CLLocationCoordinate2D *coordinates = [self coordinatesForString:coordinateString
                                                      coordinateCount:&count
                                                           parseToken:@";"];
     
@@ -183,6 +226,9 @@ updatingLocation:(BOOL)updatingLocation
 #pragma mark timer
 -(void)repeatTimer
 {
-    //NSLog(@"10 secs");
+    [self initSearchInstanceWithStartPoint:_userLocation.coordinate];
+    [self didStartRegeoSearch];
 }
+
+
 @end

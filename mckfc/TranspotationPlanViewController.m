@@ -11,11 +11,15 @@
 #import "MapViewController.h"
 #import "QueueViewController.h"
 
+#import "ServerManager.h"
+
 #define itemHeight 44
 
-@interface TranspotationPlanViewController()
+@interface TranspotationPlanViewController()<mapViewDelegate>
 
 @property (nonatomic, strong) MapViewController* mapVC;
+@property (nonatomic, strong) ServerManager* server;
+
 
 @end
 
@@ -34,11 +38,21 @@
     self.tableView.dataSource = self;
     self.tableView.bounces = NO;
     
-    _mapVC = [[MapViewController alloc] init];
-    [self addChildViewController:_mapVC];
     self.navigationController.navigationItem.hidesBackButton = YES;
     
     titleText = @[@"发运时间",@"运输目的地",@"计划到达时间",@"计划卸货时间"];
+    _server = [ServerManager sharedInstance];
+    [self requestDetails];
+}
+
+-(MapViewController *)mapVC
+{
+    if (!_mapVC && _detail.pointx!= nil && _detail.pointy!=nil) {
+        _mapVC = [[MapViewController alloc] initWithTerminateLong:[_detail.pointx doubleValue] Lat:[_detail.pointy doubleValue]];
+        _mapVC.delegate = self;
+        [self addChildViewController:_mapVC];
+    }
+    return _mapVC;
 }
 
 #pragma mark tableViewDelegate
@@ -68,13 +82,27 @@
     {
         TransportationViewCell* cell = [[TransportationViewCell alloc] init];
         cell.titleLabel.text = titleText[indexPath.row];
+        if (indexPath.row == 0) {
+            cell.detailLabel.text = _detail.departuretime;
+        }
+        else if(indexPath.row == 1){
+            cell.detailLabel.text = _detail.destination;
+        }
+        else if(indexPath.row == 2){
+            cell.detailLabel.text = _detail.planarrivetime;
+        }
+        else if(indexPath.row == 3){
+            cell.detailLabel.text = _detail.planentertime;
+        }
         return cell;
     }
     else if(indexPath.row ==4)
     {
         UITableViewCell* cell =[tableView dequeueReusableCellWithIdentifier:@"plan" forIndexPath:indexPath];
-        [_mapVC.view setFrame:cell.contentView.frame];
-        [cell.contentView addSubview:_mapVC.view];
+        if (_detail) {
+            [self.mapVC.view setFrame:cell.contentView.frame];
+            [cell.contentView addSubview:self.mapVC.view];
+        }
         return cell;
     }
     else
@@ -97,7 +125,44 @@
 #pragma selector
 -(void)confirmBtn
 {
+    [self.mapVC.timer invalidate];
     QueueViewController* queueVC = [[QueueViewController alloc] init];
     [self.navigationController pushViewController:queueVC animated:YES];
+}
+
+#pragma mark loding stats
+-(void)requestDetails
+{
+    NSDictionary* params;
+    params = @{@"token":_server.accessToken,
+               @"id":[NSString stringWithFormat:@"%lu",(long)_detail.transportID]};
+    [_server GET:@"getTransportDetail" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject) {
+        NSDictionary* data = responseObject[@"data"];
+        NSError* error;
+        _detail = [MTLJSONAdapter modelOfClass:[TransportDetail class] fromJSONDictionary:data error:&error];
+        if (error) {
+            NSLog(@"error %@", error);
+        }
+        [self.tableView reloadData];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
+-(void)mapView:(MapViewController *)mapView LocationOnLatitude:(double)latitude Longtitude:(double)longtitude address:(NSString *)address distance:(double)distance expecttime:(long)expecttime
+{
+    NSDictionary* params = @{@"transportid": [NSString stringWithFormat:@"%lu",_detail.transportID],
+                             @"distance":[NSString stringWithFormat:@"%f",distance],
+                             @"pointx":[NSString stringWithFormat:@"%f",longtitude],
+                             @"pointy":[NSString stringWithFormat:@"%f",latitude],
+                             @"address":address,
+                             @"expecttime":[NSString stringWithFormat:@"%ld",expecttime],
+                             @"token":_server.accessToken};
+    NSLog(@"10secs: %@", params);
+    [_server POST:@"location" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSLog(@"%@", responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 @end

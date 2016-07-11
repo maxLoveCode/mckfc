@@ -44,6 +44,7 @@
         _mainTableView.delegate = self;
         _mainTableView.dataSource = self;
         [_mainTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"mainTable"];
+        _mainTableView.allowsSelection = NO;
     }
     return _mainTableView;
 }

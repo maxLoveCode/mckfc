@@ -20,6 +20,7 @@
 #import "Vendor.h"
 #import "City.h"
 #import "Field.h"
+#import "TransportDetail.h"
 
 #import "ServerManager.h"
 
@@ -338,7 +339,11 @@
     }
     
     [_server POST:@"transport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSDictionary* data = responseObject[@"data"];
+        TransportDetail* detail = [[TransportDetail alloc] initWithID:[data[@"transportid"] integerValue]];
+        NSLog(@"%@", detail);
         TranspotationPlanViewController *plan = [[TranspotationPlanViewController alloc] initWithStyle:UITableViewStylePlain];
+        plan.detail = detail;
         [self.navigationController pushViewController:plan animated:YES];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         

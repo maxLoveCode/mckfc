@@ -32,6 +32,7 @@
 		252EF9E81D3349FE00565D00 /* Vendor.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9E71D3349FE00565D00 /* Vendor.m */; };
 		252EF9EB1D3369E900565D00 /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9EA1D3369E900565D00 /* City.m */; };
 		252EF9EE1D336F4400565D00 /* Field.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9ED1D336F4400565D00 /* Field.m */; };
+		252EF9F11D337BA000565D00 /* TransportDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9F01D337BA000565D00 /* TransportDetail.m */; };
 		2534B9951D23993400A82E0A /* LoadingStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 2534B9941D23993400A82E0A /* LoadingStats.m */; };
 		2534B9981D24ACF400A82E0A /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2534B9971D24ACF400A82E0A /* ReportViewController.m */; };
 		253BF5801D0D49F40006086D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF57F1D0D49F40006086D /* main.m */; };
@@ -139,6 +140,8 @@
 		252EF9EA1D3369E900565D00 /* City.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = City.m; sourceTree = "<group>"; };
 		252EF9EC1D336F4400565D00 /* Field.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Field.h; sourceTree = "<group>"; };
 		252EF9ED1D336F4400565D00 /* Field.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Field.m; sourceTree = "<group>"; };
+		252EF9EF1D337BA000565D00 /* TransportDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransportDetail.h; sourceTree = "<group>"; };
+		252EF9F01D337BA000565D00 /* TransportDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransportDetail.m; sourceTree = "<group>"; };
 		2534B9931D23993400A82E0A /* LoadingStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingStats.h; sourceTree = "<group>"; };
 		2534B9941D23993400A82E0A /* LoadingStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingStats.m; sourceTree = "<group>"; };
 		2534B9961D24ACF400A82E0A /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController.h; sourceTree = "<group>"; };
@@ -407,6 +410,8 @@
 				252EF9EA1D3369E900565D00 /* City.m */,
 				252EF9EC1D336F4400565D00 /* Field.h */,
 				252EF9ED1D336F4400565D00 /* Field.m */,
+				252EF9EF1D337BA000565D00 /* TransportDetail.h */,
+				252EF9F01D337BA000565D00 /* TransportDetail.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -908,6 +913,7 @@
 				252EF9EE1D336F4400565D00 /* Field.m in Sources */,
 				256F39811D12836900175E5A /* SignUpView.m in Sources */,
 				2512A1CD1D1130B100ED884B /* LoginView.m in Sources */,
+				252EF9F11D337BA000565D00 /* TransportDetail.m in Sources */,
 				252EF9D31D2F4D2800565D00 /* WorkRecordViewController.m in Sources */,
 				252EF9E21D30AF9F00565D00 /* WorkFlowCell.m in Sources */,
 				252EF9C91D2E6F1000565D00 /* QualityControlHomePage.m in Sources */,

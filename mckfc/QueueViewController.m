@@ -10,6 +10,9 @@
 #import "QRCodeView.h"
 
 #import "ReportViewController.h"
+#import "ServerManager.h"
+
+#import "UIImageView+WebCache.h"
 
 #define itemHeight 44
 #define topMargin 60
@@ -20,7 +23,8 @@
 }
 
 @property (nonatomic, strong) UITableView* tableView;
-@property (nonatomic, strong) QRCodeView* QRCode;
+@property (nonatomic, strong) UIImageView* QRCode;
+@property (nonatomic, strong) ServerManager* server;
 
 @end
 
@@ -28,8 +32,11 @@
 
 -(void)viewDidLoad
 {
-    titleText = @[@"前面等待车辆：",@"预计等待时间："];
+    titleText = @[@"预计厂前等待时间：",@"仓库位置："];
     self.view = self.tableView;
+    
+    _server = [ServerManager sharedInstance];
+    [self requestQRCode];
 }
 
 #pragma mark setter
@@ -40,14 +47,15 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Queue"];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return _tableView;
 }
 
--(QRCodeView *)QRCode
+-(UIImageView *)QRCode
 {
     if (!_QRCode) {
-        _QRCode = [[QRCodeView alloc] initWithFrame:CGRectMake(0, 0, 288, 288)];
+        _QRCode = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 288, 288)];
         [_QRCode setCenter:CGPointMake(kScreen_Width/2, itemHeight+topMargin+144)];
     }
     return _QRCode;
@@ -62,7 +70,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 3;
+        return 2;
     }
     else
         return 1;
@@ -71,40 +79,22 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            return itemHeight*2;
-        }
-        else{
-            return itemHeight;
-        }
+        return itemHeight;
     }
     else
-    {
         return kScreen_Height-64-itemHeight*4;
-    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"Queue" forIndexPath:indexPath];
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            UILabel* label =[[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, cell.contentView.frame.size.height)];
-            label.text = @"序号：001";
-            label.textAlignment = NSTextAlignmentCenter;
-            label.font = [UIFont systemFontOfSize:20];
-            label.textColor = COLOR_WithHex(0x2f2f2f);
-            [cell.contentView addSubview:label];
-            return cell;
-        }
-        else{
-            UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(k_Margin, 0, 100, itemHeight)];
-            titleLabel.text = titleText[indexPath.row-1];
-            titleLabel.font = [UIFont systemFontOfSize:13];
-            titleLabel.textColor = COLOR_TEXT_GRAY;
-            [cell.contentView addSubview:titleLabel];
-            return cell;
-        }
+        UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(44+k_Margin, 0, 150, itemHeight)];
+        titleLabel.text = titleText[indexPath.row];
+        titleLabel.font = [UIFont systemFontOfSize:13];
+        titleLabel.textColor = COLOR_TEXT_GRAY;
+        [cell.contentView addSubview:titleLabel];
+        return cell;
     }
     else
     {
@@ -115,10 +105,50 @@
         label.numberOfLines = 2;
         [cell.contentView addSubview:label];
         
-        [self.QRCode setQRCode:@"test"];
         [cell.contentView addSubview:self.QRCode];
         return cell;
     }
+}
+
+#pragma mark tableview header and footers
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if(section ==0)
+    {
+        return itemHeight;
+    }
+    else
+        return 20;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if(section ==0)
+    {
+        return itemHeight;
+    }
+    else
+        return 0.01;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, itemHeight)];
+        [view setBackgroundColor:[UIColor whiteColor]];
+        return view;
+    }
+    return nil;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    if (section == 0) {
+        UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, itemHeight)];
+        [view setBackgroundColor:[UIColor whiteColor]];
+        return view;
+    }
+    return nil;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -132,4 +162,18 @@
     [self.navigationController pushViewController:reportVC animated:YES];
 }
 
+-(void)requestQRCode
+{
+    NSDictionary* params = @{@"token":_server.accessToken,
+                             @"transportid":@"48",
+                             @"width":@"288",
+                             @"height":@"288"};
+    [_server GET:@"generateQr" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+        self.QRCode.image = [responseObject objectForKey:@"data"];
+        [_tableView reloadData];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
 @end
