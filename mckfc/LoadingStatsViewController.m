@@ -10,6 +10,7 @@
 #import "TranspotationPlanViewController.h"
 #import "LoadingCell.h"
 #import "MCPickerView.h"
+#import "MCDatePickerView.h"
 
 #import "LoadingStats.h"
 
@@ -18,7 +19,10 @@
 #define buttonHeight 40
 #define buttonWidth 340
 
-@interface LoadingStatsViewController ()<MCPickerViewDelegate, UITextViewDelegate, UITextFieldDelegate>
+@interface LoadingStatsViewController ()<MCPickerViewDelegate, UITextViewDelegate, UITextFieldDelegate, DatePickerDelegate>
+{
+    NSDateFormatter *dateFormatter;
+}
 
 @property (nonatomic, strong) MCPickerView* pickerView;
 @property (nonatomic, strong) LoadingStats* stats;
@@ -86,7 +90,7 @@
     if (indexPath.section == 0) {
         LoadingCell* cell = [[LoadingCell alloc] init];
         
-        if (indexPath.row != 2) {
+        if (indexPath.row != 2 && indexPath.row != 3) {
             [cell setStyle:LoadingCellStyleSelection];
             if (indexPath.row == 0) {
                 cell.detailLabel.text = _stats.supplier;
@@ -94,16 +98,19 @@
             else if (indexPath.row ==1){
                 cell.detailLabel.text = _stats.placeNo;
             }
-            else
-            {
-                
-            }
         }
-        else
+        else if(indexPath.row == 2)
         {
             [cell setStyle:LoadingCellStyleDigitInput];
             cell.digitInput.delegate = self;
             cell.digitInput.text = [NSString stringWithFormat:@"%@",_stats.weight];
+        }
+        else
+        {
+            [cell setStyle:LoadingCellStyleDatePicker];
+            dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+            cell.detailLabel.text = [dateFormatter stringFromDate:_stats.departuretime];
         }
         
         cell.titleLabel.text = titleText[indexPath.row];
@@ -159,6 +166,12 @@
         pickerView.delegate = self;
         pickerView.index = indexPath;
         [pickerView show];
+    }
+    else if(cell.style == LoadingCellStyleDatePicker)
+    {
+        MCDatePickerView* datePicker = [[MCDatePickerView alloc] init];
+        datePicker.delegate = self;
+        [datePicker show];
     }
     
     [tableView reloadData];
@@ -266,6 +279,13 @@
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     [_stats setWeight:[NSNumber numberWithFloat:[textField.text floatValue]]];
+}
+
+#pragma mark datePicker delegate
+-(void)datePickerViewDidSelectDate:(NSDate *)date
+{
+    _stats.departuretime = date;
+    [self.tableView reloadData];
 }
 
 @end

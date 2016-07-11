@@ -97,7 +97,7 @@
     self->_style = style;
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.leftImageView];
-    if(style == LoadingCellStyleSelection){
+    if(style == LoadingCellStyleSelection || style == LoadingCellStyleDatePicker){
         [self.contentView addSubview:self.detailLabel];
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }

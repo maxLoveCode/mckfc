@@ -43,7 +43,6 @@
     if (!_mask) {
         _mask = [[UIView alloc] initWithFrame:self.frame];
         [_mask setBackgroundColor:[UIColor colorWithWhite:0.3 alpha:0.7]];
-        //_mask.userInteractionEnabled = NO;
          UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
         [_mask addGestureRecognizer:tap];
     }
@@ -75,11 +74,12 @@
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     [self.delegate didSelectString:[_data objectAtIndex:row] fromPickerView:self];
-    [self dismiss];
+    //[self dismiss];
 }
 
 -(void)tapSelect
 {
+    NSLog(@"tap");
     [self.picker.delegate pickerView:self.picker didSelectRow:[_picker selectedRowInComponent:0] inComponent:0];
 }
 

@@ -31,7 +31,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
 
     NSString* user_type = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"];
-    user_type = MKUSER_TYPE_QUALITYCONTROL;
+    user_type = MKUSER_TYPE_DRIVER;
     [[NSUserDefaults standardUserDefaults] setObject:user_type forKey:@"user_type"];
     
     if (!user_type || [user_type isEqualToString:MKUSER_TYPE_DRIVER] ) {

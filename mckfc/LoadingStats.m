@@ -14,7 +14,7 @@
     return @{
              @"supplier":@"supplier",
              @"placeNo":@"placeNo",
-             @"startTime":@"startTime",
+             @"departuretime":@"departuretime",
              @"extraInfo":@"extraInfo",
              @"weight":@"weight"};
 }
@@ -31,7 +31,7 @@
 {
     self.supplier = @"请选择供应商";
     self.placeNo = @"请选择地区";
-    self.startTime = nil;
+    self.departuretime = nil;
     self.extraInfo = @"";
     
     self.weight = [NSNumber numberWithInteger:0];

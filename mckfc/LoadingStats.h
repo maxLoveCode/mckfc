@@ -14,7 +14,7 @@
 
 @property (nonatomic, copy) NSString *placeNo; //地块编号
 @property (nonatomic, copy) NSNumber *weight;
-@property (nonatomic, copy) NSDate *startTime; //开始日期
+@property (nonatomic, copy) NSDate *departuretime; //开始日期
 @property (nonatomic, copy) NSString *extraInfo; //额外信息
 
 -(instancetype)init;

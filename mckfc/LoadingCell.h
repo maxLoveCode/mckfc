@@ -10,12 +10,13 @@
 @class LoadingCell;
 
 typedef NS_ENUM(NSUInteger, LoadingCellStyle) {
-    LoadingCellStylePlain,
-    LoadingCellStyleSelection,
-    LoadingCellStyleTextField,
-    LoadingCellStyleImagePicker,
-    LoadingCellStyleDigitInput,
-    LoadingCellStyleBoolean,
+    LoadingCellStylePlain,  //一个 title 一个 detail
+    LoadingCellStyleSelection, //点击出现选择器
+    LoadingCellStyleTextField, //点击出现 textfield， 两倍高度
+    LoadingCellStyleImagePicker, //点击上传图片，暂时不需要了
+    LoadingCellStyleDigitInput, //填写重要，accessoryview 是 KG
+    LoadingCellStyleBoolean, //左边是一个点击切换布尔值的 cell，现在也不需要了
+    LoadingCellStyleDatePicker //需求又改了，现在要专门选择年月日
 };
 
 @interface LoadingCell : UITableViewCell
