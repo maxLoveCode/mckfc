@@ -26,6 +26,9 @@
 @property (nonatomic, strong) QRCodeView* QRCode;
 @property (nonatomic, strong) ServerManager* server;
 
+@property (nonatomic, copy) NSString* expecttime;
+@property (nonatomic, copy) NSString* location;
+
 @property (nonatomic, assign) NSInteger transportID;
 
 @end
@@ -41,10 +44,12 @@
 
 -(void)viewDidLoad
 {
+    self.title = @"厂前排队";
     titleText = @[@"预计厂前等待时间：",@"仓库位置："];
     self.view = self.tableView;
     
     _server = [ServerManager sharedInstance];
+    [self requestQueueInfo];
     [self requestQRCode];
 }
 
@@ -103,6 +108,20 @@
         titleLabel.font = [UIFont systemFontOfSize:13];
         titleLabel.textColor = COLOR_TEXT_GRAY;
         [cell.contentView addSubview:titleLabel];
+        
+        UILabel* detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame), CGRectGetMinY(titleLabel.frame), kScreen_Width-CGRectGetMaxX(titleLabel.frame), CGRectGetHeight(titleLabel.frame))];
+        detailLabel.font = [UIFont systemFontOfSize:14];
+        detailLabel.textColor = COLOR_WithHex(0x565656);
+        
+        if (indexPath.row ==0) {
+            detailLabel.text = _expecttime;
+        }
+        else
+        {
+            detailLabel.text = _location;
+        }
+        [cell.contentView addSubview:detailLabel];
+        
         return cell;
     }
     else
@@ -181,7 +200,13 @@
     NSDictionary* params = @{@"token":_server.accessToken,
                              @"id":[NSString stringWithFormat:@"%lu",_transportID]};
     [_server GET:@"getQueueDetail" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        NSLog(@"response:%@", responseObject);
+        //NSLog(@"response:%@", responseObject);
+        NSDictionary* data = responseObject[@"data"];
+        NSNumber *time = data[@"expectwaittime"];
+        NSInteger remainning = [time integerValue]/1000/60;
+        _expecttime = [NSString stringWithFormat:@"%li分钟", (long)remainning];
+        _location = data[@"storename"];
+        [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];

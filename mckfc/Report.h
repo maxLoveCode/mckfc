@@ -10,8 +10,19 @@
 
 @interface Report : MTLModel<MTLJSONSerializing>
 
-@property (nonatomic, copy) NSString* weight;
-@property (nonatomic, copy) NSString* quality;
+@property (nonatomic, copy) NSDictionary* weight;
+
+@property (nonatomic, copy) NSString* arrivetime;
+@property (nonatomic, copy) NSString* departuretime;
+@property (nonatomic, copy) NSNumber* transportid;
+
+@property (nonatomic, assign) BOOL isrefuse;
+@property (nonatomic, copy) NSString* refusecause;
+
+@property (nonatomic, copy) NSNumber* totaldistance;
+
+@property (nonatomic, copy) NSString* totalTime;
+
 
 +(NSInteger)numberOfProperties;
 

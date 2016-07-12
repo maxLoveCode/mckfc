@@ -126,9 +126,6 @@
 -(void)confirmBtn
 {
     [self.mapVC.timer fire];
-    [self.mapVC.timer invalidate];
-    QueueViewController* queueVC = [[QueueViewController alloc] initWithID:_detail.transportID];
-    [self.navigationController pushViewController:queueVC animated:YES];
 }
 
 #pragma mark loding stats
@@ -159,9 +156,14 @@
                              @"address":address,
                              @"expecttime":[NSString stringWithFormat:@"%ld",expecttime],
                              @"token":_server.accessToken};
-    NSLog(@"10secs: %@", params);
     [_server POST:@"location" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
+        //NSLog(@"%@", responseObject);
+        if ([responseObject[@"data"] objectForKey:@"isbefore"]) {
+            
+            [self.mapVC.timer invalidate];
+            QueueViewController* queueVC = [[QueueViewController alloc] initWithID:_detail.transportID];
+            [self.navigationController pushViewController:queueVC animated:YES];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];

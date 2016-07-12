@@ -141,8 +141,8 @@ updatingLocation:(BOOL)updatingLocation
     if(response.regeocode != nil)
     {
         //通过AMapReGeocodeSearchResponse对象处理搜索结果
-        NSString *result = [NSString stringWithFormat:@"ReGeocode: %@", response.regeocode];
-        NSLog(@"ReGeo: %@", result);
+        //NSString *result = [NSString stringWithFormat:@"ReGeocode: %@", response.regeocode];
+        //NSLog(@"ReGeo: %@", result);
         
         [self.delegate mapView:self LocationOnLatitude:_userLocation.coordinate.latitude Longtitude:_userLocation.coordinate.longitude address:response.regeocode.formattedAddress distance:_path.distance expecttime:_path.duration*1000];
     }

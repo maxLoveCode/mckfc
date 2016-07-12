@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Report.h"
 
 @interface ReportCollectionView : UICollectionView<UICollectionViewDelegate, UICollectionViewDataSource>
+
+@property (nonatomic, strong) Report* report;
 
 -(instancetype)init;
 

@@ -11,15 +11,20 @@
 @implementation Report
 +(NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"weight":@"weight",
-             @"quality":@"quality"
+    return @{@"arrivetime":@"arrivetime",
+             @"departuretime":@"departuretime",
+             @"transportid":@"id",
+             @"isrefuse":@"isrefuse",
+             @"refusecause":@"refusecause",
+             @"totaldistance":@"totaldistance",
+             @"totalTime":@"totaltime",
+             @"weight":@"weight"
              };
 }
 
 +(NSInteger)numberOfProperties
 {
     return 1;
-    //return [[[MTLJSONAdapter JSONDictionaryFromModel:[Report class] error:nil] allKeys] count];
 }
 
 @end

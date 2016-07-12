@@ -48,10 +48,15 @@
 {
     UICollectionViewCell* cell = [self dequeueReusableCellWithReuseIdentifier:@"report" forIndexPath:indexPath];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width/3, itemHeight)];
-    //label.text = [NSString stringWithFormat:@"%lu", indexPath.item];
-    label.textAlignment = NSTextAlignmentCenter;
+    for (UIView* subview in [cell.contentView subviews]) {
+        [subview removeFromSuperview];
+    }
     
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width/3, itemHeight)];
+    
+    label.textAlignment = NSTextAlignmentCenter;
+    label.font = [UIFont systemFontOfSize:14];
+    label.textColor = COLOR_WithHex(0x565656);
     if (indexPath.item == 1) {
         label.text = @"产地";
     }
@@ -62,10 +67,14 @@
         label.text = @"重量";
     }
     else if(indexPath.item == 4){
-        label.text = @"40吨";
+        if (_report) {
+            label.text = [NSString stringWithFormat:@"%@吨", _report.weight[@"origin"]];
+        }
     }
     else if(indexPath.item == 5){
-        label.text = @"50吨";
+        if (_report) {
+            label.text = [NSString stringWithFormat:@"%@吨", _report.weight[@"factory"]];
+        }
     }
     
     [cell.contentView addSubview:label];
