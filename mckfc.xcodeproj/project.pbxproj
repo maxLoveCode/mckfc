@@ -14,6 +14,7 @@
 		2512A1D01D113C6200ED884B /* HomepageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2512A1CF1D113C6200ED884B /* HomepageViewController.m */; };
 		251F378B1D26447D00B423D1 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 251F378A1D26447D00B423D1 /* Report.m */; };
 		251F378F1D26698C00B423D1 /* ReportCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 251F378E1D26698C00B423D1 /* ReportCollectionView.m */; };
+		2527ECCB1D350C8C00350DC6 /* rightNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2527ECCA1D350C8C00350DC6 /* rightNavigationItem.m */; };
 		252B63261D1CDC7700C108C0 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 252B63251D1CDC7700C108C0 /* NSString+MD5.m */; };
 		252EF9B81D2E3C4C00565D00 /* SecurityNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9B71D2E3C4C00565D00 /* SecurityNav.m */; };
 		252EF9BB1D2E46A500565D00 /* SecurityHomePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9BA1D2E46A500565D00 /* SecurityHomePage.m */; };
@@ -103,6 +104,8 @@
 		251F378A1D26447D00B423D1 /* Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Report.m; sourceTree = "<group>"; };
 		251F378D1D26698C00B423D1 /* ReportCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportCollectionView.h; sourceTree = "<group>"; };
 		251F378E1D26698C00B423D1 /* ReportCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportCollectionView.m; sourceTree = "<group>"; };
+		2527ECC91D350C8C00350DC6 /* rightNavigationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rightNavigationItem.h; sourceTree = "<group>"; };
+		2527ECCA1D350C8C00350DC6 /* rightNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rightNavigationItem.m; sourceTree = "<group>"; };
 		252B63241D1CDC7700C108C0 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		252B63251D1CDC7700C108C0 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		252EF9B61D2E3C4C00565D00 /* SecurityNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityNav.h; sourceTree = "<group>"; };
@@ -256,6 +259,8 @@
 				252EF9E11D30AF9F00565D00 /* WorkFlowCell.m */,
 				252EF9E31D33407900565D00 /* MCDatePickerView.h */,
 				252EF9E41D33407900565D00 /* MCDatePickerView.m */,
+				2527ECC91D350C8C00350DC6 /* rightNavigationItem.h */,
+				2527ECCA1D350C8C00350DC6 /* rightNavigationItem.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -885,6 +890,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				252EF9C01D2E482400565D00 /* CommonUserView.m in Sources */,
+				2527ECCB1D350C8C00350DC6 /* rightNavigationItem.m in Sources */,
 				256F397B1D123E3900175E5A /* LoginNav.m in Sources */,
 				256F398A1D12887D00175E5A /* VerifyView.m in Sources */,
 				25F0DF141D1D2C5E007CEF17 /* MCPickerView.m in Sources */,

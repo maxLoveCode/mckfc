@@ -10,6 +10,7 @@
 #import "TransportationViewCell.h"
 #import "MapViewController.h"
 #import "QueueViewController.h"
+#import "rightNavigationItem.h"
 
 #import "ServerManager.h"
 
@@ -19,6 +20,7 @@
 
 @property (nonatomic, strong) MapViewController* mapVC;
 @property (nonatomic, strong) ServerManager* server;
+@property (nonatomic, strong) rightNavigationItem* popUpMenu;
 
 @property (nonatomic, strong) UIButton* confirm;
 
@@ -41,6 +43,7 @@
     self.tableView.bounces = NO;
     
     self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.rightBarButtonItem = self.popUpMenu;
     
     titleText = @[@"发运时间",@"运输目的地",@"计划到达时间",@"计划卸货时间"];
     _server = [ServerManager sharedInstance];
@@ -55,6 +58,14 @@
         [self addChildViewController:_mapVC];
     }
     return _mapVC;
+}
+
+-(rightNavigationItem *)popUpMenu
+{
+    if (!_popUpMenu) {
+        _popUpMenu = [[rightNavigationItem alloc] initCutomItem];
+    }
+    return _popUpMenu;
 }
 
 -(UIButton *)confirm
