@@ -62,6 +62,8 @@ updatingLocation:(BOOL)updatingLocation
         
         if (!_path &&userLocation) {
             [_mapView selectAnnotation:userLocation animated:YES];
+            
+            _userLocation.title = @"正在计算规划路程...";
             [self initSearchInstanceWithStartPoint:userLocation.coordinate];
         }
         
@@ -104,6 +106,8 @@ updatingLocation:(BOOL)updatingLocation
     {
         return;
     }
+    //delegate to parent view controller
+    [self.delegate mapViewhasLocated:self];
     //通过AMapNavigationSearchResponse对象处理搜索结果
     _userLocation.title = [NSString stringWithFormat:@"预计%ld小时到达",_path.duration/3600];
     _userLocation.subtitle =[NSString stringWithFormat:@"距离目的地还有%.2ld公里", _path.distance/1000];

@@ -19,6 +19,8 @@
                                       distance:(double)distance
                                     expecttime:(long)expecttime;
 
+-(void)mapViewhasLocated:(MapViewController*)mapView;
+
 @end
 
 @interface MapViewController : UIViewController

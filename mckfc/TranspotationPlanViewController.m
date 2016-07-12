@@ -20,6 +20,8 @@
 @property (nonatomic, strong) MapViewController* mapVC;
 @property (nonatomic, strong) ServerManager* server;
 
+@property (nonatomic, strong) UIButton* confirm;
+
 
 @end
 
@@ -53,6 +55,24 @@
         [self addChildViewController:_mapVC];
     }
     return _mapVC;
+}
+
+-(UIButton *)confirm
+{
+    if (!_confirm) {
+        
+        _confirm = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_confirm setTitle:@"我已到厂前" forState:UIControlStateNormal];
+        
+        [_confirm setBackgroundColor:COLOR_TEXT_GRAY];
+        
+        [_confirm setTitleColor:COLOR_THEME_CONTRAST forState:UIControlStateNormal];
+        [_confirm setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
+        
+        [_confirm addTarget:self action:@selector(confirmBtn) forControlEvents:UIControlEventTouchUpInside];
+        _confirm.enabled = NO;
+    }
+    return _confirm;
 }
 
 #pragma mark tableViewDelegate
@@ -109,15 +129,9 @@
     {
         UITableViewCell* cell =[tableView dequeueReusableCellWithIdentifier:@"plan" forIndexPath:indexPath];
         
-        UIButton* confirm;
-        confirm = [UIButton buttonWithType:UIButtonTypeCustom];
-        [confirm setTitle:@"我已到厂前" forState:UIControlStateNormal];
-        [confirm setBackgroundColor:COLOR_THEME];
-        [confirm setTitleColor:COLOR_THEME_CONTRAST forState:UIControlStateNormal];
-        [confirm setFrame: cell.contentView.frame];
-        [confirm addTarget:self action:@selector(confirmBtn) forControlEvents:UIControlEventTouchUpInside];
-        [cell.contentView addSubview:confirm];
-        
+
+        [cell.contentView addSubview:self.confirm];
+        [self.confirm setFrame: cell.contentView.frame];
         return cell;
     }
 }
@@ -167,5 +181,11 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
+}
+
+-(void)mapViewhasLocated:(MapViewController *)mapView
+{
+    self.confirm.enabled = YES;
+    [_confirm setBackgroundColor:COLOR_THEME];
 }
 @end

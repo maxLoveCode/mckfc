@@ -99,7 +99,10 @@ extern NSString *const reuseIdentifier;
         }
     }
     else if(indexPath.section ==2){
-        return kScreen_Height-itemHeight*10-20*3;
+        if(_reject)
+            return kScreen_Height-itemHeight*10-20*3;
+        else
+            return kScreen_Height-itemHeight*10-20*3 + itemHeight;
     }
     return itemHeight;
 }
