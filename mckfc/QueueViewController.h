@@ -10,4 +10,6 @@
 
 @interface QueueViewController : UIViewController
 
+-(instancetype)initWithID:(NSInteger)transportID;
+
 @end

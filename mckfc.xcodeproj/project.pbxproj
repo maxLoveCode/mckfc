@@ -62,7 +62,6 @@
 		25CECB0F1D18E28B00C9CCBE /* TransportationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECB0E1D18E28B00C9CCBE /* TransportationViewCell.m */; };
 		25EDD78B1D0E847800AFB6F3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EDD78A1D0E847800AFB6F3 /* User.m */; };
 		25F0DF141D1D2C5E007CEF17 /* MCPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F0DF131D1D2C5E007CEF17 /* MCPickerView.m */; };
-		25F0DF171D20FAE4007CEF17 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F0DF161D20FAE4007CEF17 /* Order.m */; };
 		2A383734F83D247A6E52A42F /* libPods-mckfcUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */; };
 		8A1A7A1E4129ACE6AA293190 /* libPods-mckfcTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B79285101850F79921E443BA /* libPods-mckfcTests.a */; };
 		A5C8BB96088FE4611120D108 /* libPods-mckfc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 129CF618CF2B96D1FCEA2F02 /* libPods-mckfc.a */; };
@@ -201,8 +200,6 @@
 		25EDD78A1D0E847800AFB6F3 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		25F0DF121D1D2C5E007CEF17 /* MCPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPickerView.h; sourceTree = "<group>"; };
 		25F0DF131D1D2C5E007CEF17 /* MCPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPickerView.m; sourceTree = "<group>"; };
-		25F0DF151D20FAE4007CEF17 /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
-		25F0DF161D20FAE4007CEF17 /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
 		2A3474A8AED6CD0ECD45000B /* libPods-mckfcUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfcUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C0EE5CD14F1FFCF59A0F5C5 /* Pods-mckfc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfc.release.xcconfig"; path = "Pods/Target Support Files/Pods-mckfc/Pods-mckfc.release.xcconfig"; sourceTree = "<group>"; };
 		33E4AD97041C7CA6DB6332A6 /* Pods-mckfcUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfcUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mckfcUITests/Pods-mckfcUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -598,8 +595,6 @@
 			children = (
 				25EDD7891D0E847800AFB6F3 /* User.h */,
 				25EDD78A1D0E847800AFB6F3 /* User.m */,
-				25F0DF151D20FAE4007CEF17 /* Order.h */,
-				25F0DF161D20FAE4007CEF17 /* Order.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -899,7 +894,6 @@
 				25CECB061D17BFC600C9CCBE /* MapViewController.m in Sources */,
 				252EF9CE1D2E737D00565D00 /* TodoCell.m in Sources */,
 				25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */,
-				25F0DF171D20FAE4007CEF17 /* Order.m in Sources */,
 				25CECB091D18DE7C00C9CCBE /* TranspotationPlanViewController.m in Sources */,
 				25B004931D1920E00018EEB1 /* QueueViewController.m in Sources */,
 				256F39841D12847D00175E5A /* SignUpViewController.m in Sources */,

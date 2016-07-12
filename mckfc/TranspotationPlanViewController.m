@@ -125,8 +125,9 @@
 #pragma selector
 -(void)confirmBtn
 {
+    [self.mapVC.timer fire];
     [self.mapVC.timer invalidate];
-    QueueViewController* queueVC = [[QueueViewController alloc] init];
+    QueueViewController* queueVC = [[QueueViewController alloc] initWithID:_detail.transportID];
     [self.navigationController pushViewController:queueVC animated:YES];
 }
 

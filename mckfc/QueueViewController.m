@@ -23,12 +23,21 @@
 }
 
 @property (nonatomic, strong) UITableView* tableView;
-@property (nonatomic, strong) UIImageView* QRCode;
+@property (nonatomic, strong) QRCodeView* QRCode;
 @property (nonatomic, strong) ServerManager* server;
+
+@property (nonatomic, assign) NSInteger transportID;
 
 @end
 
 @implementation QueueViewController
+
+-(instancetype)initWithID:(NSInteger)transportID
+{
+    self = [super init];
+    self.transportID = transportID;
+    return self;
+}
 
 -(void)viewDidLoad
 {
@@ -52,10 +61,10 @@
     return _tableView;
 }
 
--(UIImageView *)QRCode
+-(QRCodeView *)QRCode
 {
     if (!_QRCode) {
-        _QRCode = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 288, 288)];
+        _QRCode = [[QRCodeView alloc] initWithFrame:CGRectMake(0, 0, 288, 288)];
         [_QRCode setCenter:CGPointMake(kScreen_Width/2, itemHeight+topMargin+144)];
     }
     return _QRCode;
@@ -164,16 +173,18 @@
 
 -(void)requestQRCode
 {
+    [self.QRCode setQRCode:@"test"];
+}
+
+-(void)requestQueueInfo
+{
     NSDictionary* params = @{@"token":_server.accessToken,
-                             @"transportid":@"48",
-                             @"width":@"288",
-                             @"height":@"288"};
-    [_server GET:@"generateQr" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        NSLog(@"%@",responseObject);
-        self.QRCode.image = [responseObject objectForKey:@"data"];
-        [_tableView reloadData];
+                             @"id":[NSString stringWithFormat:@"%lu",_transportID]};
+    [_server GET:@"getQueueDetail" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSLog(@"response:%@", responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
 }
+ 
 @end
