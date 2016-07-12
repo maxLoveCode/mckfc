@@ -47,6 +47,8 @@ extern NSString *const reuseIdentifier;
     self.view = self.tableView;
     
     _server = [ServerManager sharedInstance];
+    
+    self.navigationItem.hidesBackButton = YES;
     [self requestReport];
 }
 

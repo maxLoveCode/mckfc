@@ -31,7 +31,6 @@
 
 #define k_Margin 18
 
-
 //debug serverManager
 #define ServerDebugLog YES
 
@@ -40,7 +39,7 @@
 
 //user type
 #define MKUSER_TYPE_DRIVER @"1"
-#define MKUSER_TYPE_QUALITYCONTROL @"2"
-#define MKUSER_TYPE_SECURITY @"3"
+#define MKUSER_TYPE_SECURITY @"2"
+#define MKUSER_TYPE_QUALITYCONTROL @"3"
 
 #endif /* Constant_h */

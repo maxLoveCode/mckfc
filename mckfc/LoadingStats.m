@@ -22,7 +22,11 @@
 -(instancetype)init
 {
     self = [super init];
-    //[self defaultValues];
+    
+    if (!self.departuretime) {
+        self.departuretime = [NSDate date];
+    }
+    
     return self;
 }
 

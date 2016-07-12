@@ -10,7 +10,7 @@
 
 #define topMargin 66
 #define buttonHeight 40
-#define buttonWidth 300
+#define buttonWidth kScreen_Width-4*k_Margin
 
 @interface SignUpView ()
 {
@@ -63,7 +63,7 @@
 
 -(void)layoutSubviews
 {
-    CGRect frame = CGRectMake((kScreen_Width - buttonWidth)/2, topMargin, buttonWidth, buttonHeight);
+    CGRect frame = CGRectMake(2*k_Margin, topMargin, buttonWidth, buttonHeight);
     [self.mobile setFrame:frame];
     [self.confirm setFrame:CGRectOffset(self.mobile.frame, 0, buttonHeight*2)];
 }

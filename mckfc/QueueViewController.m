@@ -39,6 +39,9 @@
 {
     self = [super init];
     self.transportID = transportID;
+    
+    self.navigationItem.hidesBackButton = YES;
+    
     return self;
 }
 
@@ -96,7 +99,14 @@
         return itemHeight;
     }
     else
-        return kScreen_Height-64-itemHeight*4;
+    {
+        CGFloat content = itemHeight+topMargin+288;
+        CGFloat screen = kScreen_Height-64-itemHeight*4;
+        if (content > screen) {
+            return content;
+        }
+        else return screen;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

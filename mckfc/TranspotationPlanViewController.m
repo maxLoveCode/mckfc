@@ -40,7 +40,7 @@
     self.tableView.dataSource = self;
     self.tableView.bounces = NO;
     
-    self.navigationController.navigationItem.hidesBackButton = YES;
+    self.navigationItem.hidesBackButton = YES;
     
     titleText = @[@"发运时间",@"运输目的地",@"计划到达时间",@"计划卸货时间"];
     _server = [ServerManager sharedInstance];
