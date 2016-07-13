@@ -14,7 +14,7 @@
 #import "AlertHUDView.h"
 
 #import "EditorNav.h"
-
+#import "CarPlateRegionSelector.h"
 
 @interface DriverDetailEditorController()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate,HUDViewDelegate>
 {
@@ -44,9 +44,9 @@
     detailText = @[@"",
                    @"请输入6位车牌号",
                    @"请输入司机姓名",
-                   @"请输入18位身份证号",
+                   @"请输入18位身份证号(选填)",
                    @"请输入驾驶证号",
-                   @"请输入行驶证号"];
+                   @"请输入行驶证号(选填)"];
     
     _server = [ServerManager sharedInstance];
     
@@ -107,6 +107,7 @@
     }
     else if(indexPath.row ==1){
         cell = [[DriverDetailEditorCell alloc] initWithStyle: DriverDetailCellStyleCarNumber reuseIdentifier:@"editor"];
+        [cell.popUpBtn addTarget:self action:@selector(popUpRegions:) forControlEvents:UIControlEventTouchUpInside];
     }
     else{
         cell = [[DriverDetailEditorCell alloc] initWithStyle: DriverDetailCellStylePlain reuseIdentifier:@"editor"];
@@ -116,21 +117,51 @@
     cell.titleLabel.text = title;
     
     NSString* detail = [detailText objectAtIndex:indexPath.row];
-    if (![detail isEqualToString:@""]) {
-        cell.detailLabel.text = detail;
-        cell.detailLabel.delegate = self;
-        cell.detailLabel.tag = indexPath.row;
+    cell.detailLabel.delegate = self;
+    cell.detailLabel.tag = indexPath.row;
+    cell.detailLabel.textColor = COLOR_WithHex(0x565656);
+    
+    if (indexPath.row == 1) {
+        NSLog(@"reload %@", _driver.region);
+        cell.detailLabel.text = _driver.cardigits;
+        cell.detailLabel.keyboardType = UIKeyboardTypeASCIICapable;
+        
+        if (_driver.region && ![_driver.region isEqualToString:@""]) {
+            [cell.popUpBtn setSelected:YES];
+            [cell.popUpBtn setTitle:_driver.region forState:UIControlStateSelected];
+        }
+        else
+        {
+            NSLog(@"%@",cell.popUpBtn);
+        }
+    }
+    else if(indexPath.row == 2){
+        cell.detailLabel.text = _driver.driver;
+    }
+    else if(indexPath.row == 3){
+        cell.detailLabel.text = _driver.idcard;
+        cell.detailLabel.keyboardType = UIKeyboardTypeAlphabet;
+    }
+    else if(indexPath.row == 4){
+        cell.detailLabel.text = _driver.driverno;
+        cell.detailLabel.keyboardType = UIKeyboardTypeNumberPad;
+    }else
+    {
+         cell.detailLabel.text = _driver.licenseno;
+        cell.detailLabel.keyboardType = UIKeyboardTypeNumberPad;
     }
     
+    if ([cell.detailLabel.text isEqualToString:@""]) {
+        cell.detailLabel.text = detail;
+        cell.detailLabel.textColor = COLOR_TEXT_GRAY;
+    }
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DriverDetailEditorCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-    NSLog(@"tap");
     if (cell.style == DriverDetailCellStyleAvatar) {
-        NSLog(@"did pick image");
         [self didPickImage];
     }
 }
@@ -173,23 +204,19 @@
     NSString* detail = [detailText objectAtIndex:textField.tag];
     if ([textField.text isEqualToString:@""]) {
         textField.text = detail;
+        textField.textColor = COLOR_TEXT_GRAY;
+    }
+    else
+    {
+        textField.textColor = COLOR_WithHex(0x565656);
     }
     
     DriverDetailEditorCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     NSString* result = cell.detailLabel.text;
     
-    if ([result isEqualToString:detail]) {
-        _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
-        _alert.title.text = @"出错啦";
-        _alert.detail.text = @"请填写完整信息";
-        _alert.delegate = self;
-        [_alert show:_alert];
-    }
-    else
-    {
         if(index == 1) //car no
         {
-            _driver.truckno = result;
+            _driver.cardigits = result;
         }
         else if(index ==2)
         {
@@ -207,7 +234,6 @@
         {
             _driver.licenseno = result;
         }
-    }
 }
 
 #pragma mark gesture
@@ -225,22 +251,42 @@
 {
     [self dismissKeyboard];
     
-
-        
-        NSMutableDictionary* params = [[NSMutableDictionary alloc]initWithDictionary: @{@"token":_server.accessToken}];
-        NSDictionary* dic = @{@"truckno":_driver.truckno,
+    NSMutableDictionary* params = [[NSMutableDictionary alloc]initWithDictionary: @{@"token":_server.accessToken}];
+    if (!_driver.driver) {
+        _driver.driver = @"未命名司机";
+    }
+    if (!_driver.region || !_driver.cardigits) {
+        _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
+        _alert.delegate = self;
+        _alert.title.text = @"信息错误";
+        _alert.detail.text = @"请填写车牌号";
+        [_alert show:_alert];
+        return;
+    }
+    
+    NSString* url;
+    
+    if (self.registerComplete) {
+        url = @"registerComplete";
+    }
+    else
+    {
+        url =@"updateUserInfo";
+    }
+    NSDictionary* dic = @{@"truckno":[NSString stringWithFormat:@"%@%@",_driver.region, _driver.cardigits],
                               @"driver":_driver.driver,
                               @"idcard":_driver.idcard,
                               @"driverno":_driver.driverno,
                               @"licenseno":_driver.licenseno};
         [params addEntriesFromDictionary:dic];
-        //NSLog(@"params%@", params);
-        [_server POST:@"updateTruck" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSLog(@"params%@", params);
+        [_server POST:url parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
             EditorNav* editorNav = (EditorNav* )self.navigationController;
 
             if (editorNav.onDismissed) {
                 editorNav.onDismissed();
             }
+            
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
         }];
@@ -275,11 +321,14 @@
     if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(__bridge NSString *)kUTTypeImage]) {
         UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
         [_server upLoadImageData:img forSize:CGSizeMake(100, 100) success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+            NSLog(@"%@",responseObject);
             [_driver setAvatar:responseObject[@"data"]];
             [_server POST:@"updateUserInfo" parameters:@{@"token":_server.accessToken,
                                                         @"avatar":_driver.avatar} animated:NO
                   success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject){
                       [self.tableView reloadData];
+                      
+                      NSLog(@"%@",responseObject);
                   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
                   }];
@@ -300,8 +349,36 @@
 -(void)setUser:(User*)user
 {
     self.driver = user;
+    if (user.truckno && ![user.truckno isEqualToString:@""]) {
+        self.driver.region = [user.truckno substringWithRange:NSMakeRange(0, 1)];
+        self.driver.cardigits = [user.truckno substringWithRange:NSMakeRange(1, [user.truckno length])];
+        NSLog(@"region: %@ cardigits: %@", self.driver.region, self.driver.cardigits);
+    }
     [self.tableView reloadData];
-    NSLog(@"%@", self.driver);
+}
+
+-(void)popUpRegions:(id)sender
+{
+    [_server GET:@"getRegionList"
+      parameters:@{@"token":_server.accessToken}
+        animated:YES
+         success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+             
+        CarPlateRegionSelector* selector = [[CarPlateRegionSelector alloc] init];
+        [selector setRegions:responseObject[@"data"]];
+        [selector show];
+       
+        //return block
+        __weak User* weakref = self.driver;
+        [selector setSelectBlock:^(NSString *result) {
+            weakref.region = result;
+            UIButton* button = sender;
+            button.selected = YES;
+            [_tableView reloadData];
+        }];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 @end

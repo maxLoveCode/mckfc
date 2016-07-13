@@ -12,6 +12,7 @@ def default_pods
 	pod 'SDWebImage', '~> 3.8.1'
 	pod 'JTCalendar', '~> 2.0'
 	pod 'QRCodeReaderViewController', '~> 4.0.1'
+	pod 'JPush-iOS-SDK', '~> 2.1.8'
 end
 
 target 'mckfc' do

@@ -60,6 +60,7 @@ extern NSString *const reuseIdentifier;
         _tableView.dataSource = self;
         NSString *const reuseIdentifier = @"reportTable";
         [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:reuseIdentifier];
+        _tableView.allowsSelection = NO;
     }
     return _tableView;
 }

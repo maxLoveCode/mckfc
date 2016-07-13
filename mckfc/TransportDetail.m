@@ -17,7 +17,8 @@
              @"planentertime":@"planentertime",
              @"pointx":@"pointx",
              @"pointy":@"pointy",
-             @"transportID":@"id"};
+             @"transportID":@"id",
+             @"factoryphone":@"factoryphone"};
 }
 
 -(instancetype)initWithID:(NSInteger)transportID

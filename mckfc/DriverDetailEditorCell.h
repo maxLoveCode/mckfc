@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, DriverDetailCellStyle) {
 @property (nonatomic, strong) UILabel* titleLabel;
 @property (nonatomic, strong) UIImageView* avatar;
 @property (nonatomic, strong) UITextField* detailLabel;
+@property (nonatomic, strong) UIButton* popUpBtn;
 
 +(CGFloat)heightForCell;
 

@@ -13,7 +13,6 @@
 +(NSDictionary *)JSONKeyPathsByPropertyKey
 {
     return @{
-             
              @"avatar":@"avatar",
              @"mobile":@"mobile",
              @"truckno":@"truckno",
@@ -22,10 +21,12 @@
              @"driverno":@"driverno",
              @"licenseno":@"licenseno",
              @"star":@"star",
-             
              @"totalmile":@"totalmile",
              @"totalweight":@"totalweight",
-             @"transporttime":@"transporttime"
+             @"transporttime":@"transporttime",
+             @"type":@"type",
+             @"transportstatus":@"transportstatus",
+             @"transportid":@"transportid",
              };
 }
 
@@ -44,6 +45,8 @@
         self.totalweight = 0;
     } else if([key isEqualToString:@"transporttime"]){
         self.transporttime = 0;
+    } else if([key isEqualToString:@"transportid"]){
+        self.transportid = -1;
     }else {
         [super setNilValueForKey:key];
     }

@@ -16,15 +16,26 @@
 @property (nonatomic, copy) NSString *driver; //司机姓名
 @property (nonatomic, copy) NSString *idcard;  //身份证
 @property (nonatomic, copy) NSString *driverno; //驾驶证号
+
+@property (nonatomic, copy) NSString* region; //地区部分
+@property (nonatomic, copy) NSString* cardigits; //数字部分
+
 @property (nonatomic, copy) NSString *licenseno; //行驶证号
 
+//the user statistics
 @property (nonatomic, assign) NSNumber *totalmile;
 @property (nonatomic, assign) NSNumber *totalweight;
 @property (nonatomic, assign) NSNumber *transporttime;
 
-
 @property (nonatomic, copy) NSString *avatar; //头像
 @property (nonatomic, assign) NSUInteger star; //评星
+
+//user enumerate type
+//check constant file for the enumerate list
+@property (nonatomic, assign) NSUInteger type;
+
+@property (nonatomic, assign) NSUInteger transportstatus;
+@property (nonatomic, assign) NSUInteger transportid;
 
 -(instancetype)init;
 

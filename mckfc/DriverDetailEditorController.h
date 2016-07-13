@@ -13,6 +13,7 @@
 @interface DriverDetailEditorController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (nonatomic, strong) UITableView* tableView;
+@property (nonatomic, assign) BOOL registerComplete;
 
 -(void)setUser:(User*)user;
 

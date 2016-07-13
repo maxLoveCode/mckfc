@@ -61,7 +61,7 @@
 {
     [_signUpView.mobile resignFirstResponder];
     NSDictionary* params = @{@"mobile":_signUpView.mobile.text};
-    [_server POST:@"sendCaptcha" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+    [_server POST:@"sendRegisterCaptcha" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         if([responseObject[@"code"] integerValue] == 10000)
         {
             VerifyViewController* verifyVC = [[VerifyViewController alloc] init];
@@ -72,11 +72,6 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
-//    VerifyViewController* verifyVC = [[VerifyViewController alloc] init];
-//    verifyVC.mobile = _signUpView.mobile.text;
-//    [verifyVC setText:_signUpView.mobile.text];
-//    _server.accessToken = @"test";
-//    [self.navigationController pushViewController:verifyVC animated:YES];
 }
 
 #pragma mark textField delegate

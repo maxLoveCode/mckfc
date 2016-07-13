@@ -112,7 +112,7 @@
         UILabel* kg = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
         kg.textColor =COLOR_TEXT_GRAY;
         kg.font = [UIFont systemFontOfSize:14];
-        kg.text = @"KG";
+        kg.text = @"吨";
         self.accessoryType = UITableViewCellAccessoryNone;
         self.accessoryView = kg;
     }

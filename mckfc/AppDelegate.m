@@ -11,6 +11,8 @@
 #import "SecurityNav.h"
 #import "QualityControlNav.h"
 
+#import "JPushService.h"
+
 @interface AppDelegate ()
 
 @property (nonatomic, strong) LoadingNav* loadingNav;
@@ -30,9 +32,17 @@
     
     self.window.backgroundColor = [UIColor whiteColor];
 
-    NSString* user_type = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"];
+    NSUserDefaults* defaults =[NSUserDefaults standardUserDefaults];
+    
+//the register flag, needs to be cleared if logout
+    NSString* complete = [defaults objectForKey:@"completeRegister"];
+    if (!complete || [complete isEqualToString:@""]) {
+        [defaults setObject:@"NO"  forKey:@"completeRegister"];
+    }
+//the usertype flag, needs to be cleared if logout
+    NSString* user_type = [defaults objectForKey:@"user_type"];
     user_type = MKUSER_TYPE_DRIVER;
-    [[NSUserDefaults standardUserDefaults] setObject:user_type forKey:@"user_type"];
+    [defaults setObject:user_type forKey:@"user_type"];
     
     if (!user_type || [user_type isEqualToString:MKUSER_TYPE_DRIVER] ) {
 //装载导视图（default）
@@ -72,6 +82,27 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)JPushInitailization
+{
+    //Required
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        //可以添加自定义categories
+        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                          UIUserNotificationTypeSound |
+                                                          UIUserNotificationTypeAlert)
+                                              categories:nil];
+    } else {
+        //categories 必须为nil
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                          UIRemoteNotificationTypeSound |
+                                                          UIRemoteNotificationTypeAlert)
+                                              categories:nil];
+#pragma clang diagnostic pop
+    }
 }
 
 @end

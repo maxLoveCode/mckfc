@@ -6,24 +6,33 @@
 //  Copyright © 2016年 Shanghai Impression Culture Communication Co.,Ltd. All rights reserved.
 //
 #define itemHeight 44
+#define menuWidth 140
 
 #import "rightNavigationItem.h"
+
+@interface rightNavigationItem () <UIGestureRecognizerDelegate>
+
+@property (nonatomic, assign) BOOL show;
+
+@end
 
 @implementation rightNavigationItem
 
 -(instancetype)initCutomItem
 {
     self = [super initWithImage:[UIImage imageNamed:@"check"] style:UIBarButtonItemStyleDone target:self action:@selector(selectBtn:)];
+    _show = NO;
     return self;
 }
 
 -(UITableView *)popMenu
 {
     if (!_popMenu) {
-        _popMenu = [[UITableView alloc] initWithFrame:CGRectMake(kScreen_Width-180-k_Margin, 0, 180, itemHeight*2) style:UITableViewStylePlain];
+        _popMenu = [[UITableView alloc] initWithFrame:CGRectMake(kScreen_Width-menuWidth, 64, menuWidth, itemHeight*2) style:UITableViewStylePlain];
         [_popMenu registerClass:[UITableViewCell class] forCellReuseIdentifier:@"menu"];
         _popMenu.dataSource = self;
         _popMenu.delegate = self;
+        [_popMenu setBackgroundColor:COLOR_WithHex(0xf3f3f3)];
     }
     return _popMenu;
 }
@@ -34,7 +43,7 @@
         _mask = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64)];
         [_mask setBackgroundColor:[UIColor colorWithWhite:0.3 alpha:0.7]];
         UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
-        [_mask addSubview:self.popMenu];
+        //tap.delegate = self;
         [_mask addGestureRecognizer:tap];
     }
     return _mask;
@@ -49,11 +58,22 @@
 {
     UITableViewCell* cell = [[UITableViewCell alloc] init];
     
-    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, itemHeight, itemHeight)];
-    imageView.image = [UIImage imageNamed:@"check"];
+    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(k_Margin/2, 0, itemHeight, itemHeight)];
     
-    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, 100, itemHeight)];
-    label.text = @"取消订单";
+    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, menuWidth-k_Margin, itemHeight)];
+    if (indexPath.row == 0) {
+        label.text = @"取消订单";
+        imageView.image = [UIImage imageNamed:@"phone"];
+    }
+    else
+    {
+        label.text = @"联系工厂";
+        imageView.image = [UIImage imageNamed:@"phone"];
+    }
+    label.font = [UIFont systemFontOfSize:15];
+    label.textColor = COLOR_WithHex(0x565656);
+    label.textAlignment = NSTextAlignmentRight;
+
     [cell.contentView addSubview:label];
     [cell.contentView addSubview:imageView];
     return cell;
@@ -61,17 +81,29 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"select");
+    [self.delegate MenuView:self selectIndexPath:indexPath];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 -(void)selectBtn:(id)sender
 {
-    [[UIApplication sharedApplication].keyWindow addSubview:self.mask];
+    if (_show) {
+        [self dismiss];
+    }
+    else{
+        _show = YES;
+        [[UIApplication sharedApplication].keyWindow addSubview:self.mask];
+        [[UIApplication sharedApplication].keyWindow addSubview:self.popMenu];
+    }
 }
 
 -(void)dismiss
 {
-    [self.mask removeFromSuperview];
+    if (_show) {
+        [self.popMenu removeFromSuperview];
+        [self.mask removeFromSuperview];
+        _show = NO;
+    }
 }
 
 

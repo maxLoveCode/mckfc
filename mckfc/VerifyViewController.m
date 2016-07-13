@@ -11,6 +11,8 @@
 #import "VerifyView.h"
 #import "EditorNav.h"
 
+#import "DriverDetailEditorController.h"
+
 @interface VerifyViewController()<UITextFieldDelegate>
 {
     NSArray* defaultText;
@@ -40,7 +42,7 @@
     _server = [ServerManager sharedInstance];
     
     self.view = self.verifyView;
-    
+    [self resend];
     
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
@@ -119,7 +121,19 @@
 {
     NSLog(@"resend");
     if (!_timer) {
+        NSLog(@"resend1");
         _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(fireTimer) userInfo:nil repeats:YES];
+    }
+    else
+    {
+        NSLog(@"resend2");
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(fireTimer) userInfo:nil repeats:YES];
+        NSDictionary* params = @{@"mobile":_mobile};
+        [_server POST:@"sendRegisterCaptcha" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+           
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+        }];
     }
 }
 
@@ -130,10 +144,8 @@
     }
     
     NSTimeInterval timeInterval = -[_startDate timeIntervalSinceNow];
-    NSLog(@"%i", (int)timeInterval);
     if (timeInterval>60) {
         [_timer invalidate];
-        _timer = nil;
         _startDate = nil;
         _verifyView.resend.enabled = YES;
         [_verifyView.resend setBackgroundColor:COLOR_THEME];
@@ -166,26 +178,19 @@
             [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"access_token"];
             _server.accessToken = token;
             EditorNav* EditorVC = [[EditorNav alloc] init];
+            DriverDetailEditorController* driverVC =(DriverDetailEditorController*)EditorVC.topViewController;
+            [driverVC setRegisterComplete:YES];
+            
             [self.navigationController presentViewController:EditorVC animated:YES completion:^{
                 
             }];
             [EditorVC setOnDismissed:^{
-                NSLog(@"dismiss");
                 [self.navigationController dismissViewControllerAnimated:NO completion:nil];
             }];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
-    
-//    EditorNav* EditorVC = [[EditorNav alloc] init];
-//    [self.navigationController presentViewController:EditorVC animated:YES completion:^{
-//        
-//    }];
-//    [EditorVC setOnDismissed:^{
-//        NSLog(@"dismiss");
-//        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
-//    }];
 }
 
 @end

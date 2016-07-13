@@ -16,7 +16,7 @@
 
 #define itemHeight 44
 
-@interface TranspotationPlanViewController()<mapViewDelegate>
+@interface TranspotationPlanViewController()<mapViewDelegate,menuDelegate>
 
 @property (nonatomic, strong) MapViewController* mapVC;
 @property (nonatomic, strong) ServerManager* server;
@@ -64,6 +64,7 @@
 {
     if (!_popUpMenu) {
         _popUpMenu = [[rightNavigationItem alloc] initCutomItem];
+        _popUpMenu.delegate =self;
     }
     return _popUpMenu;
 }
@@ -186,6 +187,7 @@
         if ([responseObject[@"data"] objectForKey:@"isbefore"]) {
             
             [self.mapVC.timer invalidate];
+            [self.popUpMenu dismiss];
             QueueViewController* queueVC = [[QueueViewController alloc] initWithID:_detail.transportID];
             [self.navigationController pushViewController:queueVC animated:YES];
         }
@@ -198,5 +200,38 @@
 {
     self.confirm.enabled = YES;
     [_confirm setBackgroundColor:COLOR_THEME];
+}
+
+-(void)MenuView:(rightNavigationItem *)Menu selectIndexPath:(NSIndexPath *)indexPath
+{
+    [_popUpMenu dismiss];
+    if (indexPath.row == 0) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"取消运输计划" message:@"你确定要取消运输计划吗?" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"确认取消" style:
+                         UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                             [self cancelTransport];
+                         }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"返回" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    else
+    {
+        //phone call
+        NSString* phone = _detail.factoryphone;
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",phone]]];
+    }
+}
+
+-(void)cancelTransport
+{
+    NSDictionary* params;
+    params = @{@"token": _server.accessToken,
+               @"transportid":[NSString stringWithFormat:@"%lu",_detail.transportID]};
+    [_server POST:@"cancelTransport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        [self.mapVC.timer invalidate];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 @end

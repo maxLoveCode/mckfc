@@ -96,7 +96,7 @@
 {
     [self dismissKeyboard];
     NSDictionary* params = @{@"username":mobile,
-                          @"password":[password MD5]};
+                             @"password":password};
     [_server POST:@"login" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         if ([responseObject[@"code"] integerValue] == 10000) {
             NSLog(@"%@",responseObject);

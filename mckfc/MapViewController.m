@@ -20,7 +20,7 @@
 
 @property (nonatomic,strong) AMapPath* path;
 @property (nonatomic,strong) MAUserLocation* userLocation;
-
+@property (nonatomic,strong) NSMutableArray* polys;
 
 @property (nonatomic, assign) double terminateLongtitude;
 @property (nonatomic, assign) double terminateLatitude;
@@ -60,15 +60,19 @@ updatingLocation:(BOOL)updatingLocation
         //取出当前位置的坐标
         _userLocation = userLocation;
         
+        [_mapView selectAnnotation:userLocation animated:YES];
+        
         if (!_path &&userLocation) {
-            [_mapView selectAnnotation:userLocation animated:YES];
             
             _userLocation.title = @"正在计算规划路程...";
-            [self initSearchInstanceWithStartPoint:userLocation.coordinate];
+            //[self initSearchInstanceWithStartPoint:userLocation.coordinate];
         }
-        
-        if (!_timer) {
-            _timer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(repeatTimer) userInfo:nil repeats:YES];
+        if (_userLocation)
+        {
+            if (!_timer) {
+                _timer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(repeatTimer) userInfo:nil repeats:YES];
+                [_timer fire];
+            }
         }
     }
 }
@@ -80,6 +84,7 @@ updatingLocation:(BOOL)updatingLocation
 
 -(void)initSearchInstanceWithStartPoint:(CLLocationCoordinate2D)startPoint;
 {
+    NSLog(@"发起路径搜索请求");
     //初始化检索对象
     if (!_search) {
         _search = [[AMapSearchAPI alloc] init];
@@ -106,27 +111,48 @@ updatingLocation:(BOOL)updatingLocation
     {
         return;
     }
+    
+    _path = [response.route.paths objectAtIndex:0];
     //delegate to parent view controller
     [self.delegate mapViewhasLocated:self];
     //通过AMapNavigationSearchResponse对象处理搜索结果
-    _userLocation.title = [NSString stringWithFormat:@"预计%ld小时到达",_path.duration/3600];
-    _userLocation.subtitle =[NSString stringWithFormat:@"距离目的地还有%.2ld公里", _path.distance/1000];
-    NSMutableArray* polys = [[NSMutableArray alloc] init];
-    _path = [response.route.paths objectAtIndex:0];
-    [_path.steps enumerateObjectsUsingBlock:^(AMapStep *step, NSUInteger idx, BOOL *stop) {
-        if (step!=nil) {
-            MAPolyline* line = [MapViewController polylineForStep:step];
-            [polys addObject:line];
-        }
-    }];
-    [_mapView addOverlays:polys];
+    [self didStartRegeoSearch];
+    
+    NSTimeInterval interval = (double)_path.duration;
+    NSDate* estimate = [NSDate dateWithTimeIntervalSinceNow:interval];
+    
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSString* string = [dateFormatter stringFromDate:estimate];
+    
+    
+    _userLocation.title = [NSString stringWithFormat:@"预计在 %@ 到达",string];
+    if (_path.distance == 0) {
+        _userLocation.subtitle =@"正在查询距离目的地距离...";
+    }
+    else
+    {
+        _userLocation.subtitle =[NSString stringWithFormat:@"距离目的地还有%.2lf公里", (float)_path.distance/1000];
+    }
+    if (!_polys) {
+        _polys = [[NSMutableArray alloc] init];
+        [_path.steps enumerateObjectsUsingBlock:^(AMapStep *step, NSUInteger idx, BOOL *stop) {
+            if (step!=nil) {
+                MAPolyline* line = [MapViewController polylineForStep:step];
+                [_polys addObject:line];
+            }
+        }];
+        [_mapView addOverlays:_polys];
+    }
 }
 
 -(void)didStartRegeoSearch
 {
     //初始化检索对象
-    _search = [[AMapSearchAPI alloc] init];
-    _search.delegate = self;
+    if (!_search) {
+        _search = [[AMapSearchAPI alloc] init];
+        _search.delegate = self;
+    }
     
     //构造AMapReGeocodeSearchRequest对象
     AMapReGeocodeSearchRequest *regeo = [[AMapReGeocodeSearchRequest alloc] init];
@@ -231,7 +257,6 @@ updatingLocation:(BOOL)updatingLocation
 -(void)repeatTimer
 {
     [self initSearchInstanceWithStartPoint:_userLocation.coordinate];
-    [self didStartRegeoSearch];
 }
 
 

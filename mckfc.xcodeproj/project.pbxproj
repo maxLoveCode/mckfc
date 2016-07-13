@@ -15,6 +15,7 @@
 		251F378B1D26447D00B423D1 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 251F378A1D26447D00B423D1 /* Report.m */; };
 		251F378F1D26698C00B423D1 /* ReportCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 251F378E1D26698C00B423D1 /* ReportCollectionView.m */; };
 		2527ECCB1D350C8C00350DC6 /* rightNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2527ECCA1D350C8C00350DC6 /* rightNavigationItem.m */; };
+		2527ECCE1D35D8AC00350DC6 /* CarPlateRegionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2527ECCD1D35D8AC00350DC6 /* CarPlateRegionSelector.m */; };
 		252B63261D1CDC7700C108C0 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 252B63251D1CDC7700C108C0 /* NSString+MD5.m */; };
 		252EF9B81D2E3C4C00565D00 /* SecurityNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9B71D2E3C4C00565D00 /* SecurityNav.m */; };
 		252EF9BB1D2E46A500565D00 /* SecurityHomePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9BA1D2E46A500565D00 /* SecurityHomePage.m */; };
@@ -106,6 +107,8 @@
 		251F378E1D26698C00B423D1 /* ReportCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportCollectionView.m; sourceTree = "<group>"; };
 		2527ECC91D350C8C00350DC6 /* rightNavigationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rightNavigationItem.h; sourceTree = "<group>"; };
 		2527ECCA1D350C8C00350DC6 /* rightNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rightNavigationItem.m; sourceTree = "<group>"; };
+		2527ECCC1D35D8AC00350DC6 /* CarPlateRegionSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarPlateRegionSelector.h; sourceTree = "<group>"; };
+		2527ECCD1D35D8AC00350DC6 /* CarPlateRegionSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarPlateRegionSelector.m; sourceTree = "<group>"; };
 		252B63241D1CDC7700C108C0 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		252B63251D1CDC7700C108C0 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		252EF9B61D2E3C4C00565D00 /* SecurityNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityNav.h; sourceTree = "<group>"; };
@@ -261,6 +264,8 @@
 				252EF9E41D33407900565D00 /* MCDatePickerView.m */,
 				2527ECC91D350C8C00350DC6 /* rightNavigationItem.h */,
 				2527ECCA1D350C8C00350DC6 /* rightNavigationItem.m */,
+				2527ECCC1D35D8AC00350DC6 /* CarPlateRegionSelector.h */,
+				2527ECCD1D35D8AC00350DC6 /* CarPlateRegionSelector.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -913,6 +918,7 @@
 				252EF9EE1D336F4400565D00 /* Field.m in Sources */,
 				256F39811D12836900175E5A /* SignUpView.m in Sources */,
 				2512A1CD1D1130B100ED884B /* LoginView.m in Sources */,
+				2527ECCE1D35D8AC00350DC6 /* CarPlateRegionSelector.m in Sources */,
 				252EF9F11D337BA000565D00 /* TransportDetail.m in Sources */,
 				252EF9D31D2F4D2800565D00 /* WorkRecordViewController.m in Sources */,
 				252EF9E21D30AF9F00565D00 /* WorkFlowCell.m in Sources */,
@@ -1080,13 +1086,13 @@
 			baseConfigurationReference = BC2D64BC3C296980EB6B04FB /* Pods-mckfc.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: macheng@huayinwenhua.com (92LZS958P7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = mckfc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ee2d90fd-b582-4dd1-a02d-dbbc296c2388";
 			};
 			name = Debug;
 		};
@@ -1095,13 +1101,13 @@
 			baseConfigurationReference = 2C0EE5CD14F1FFCF59A0F5C5 /* Pods-mckfc.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: macheng@huayinwenhua.com (92LZS958P7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = mckfc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ee2d90fd-b582-4dd1-a02d-dbbc296c2388";
 			};
 			name = Release;
 		};

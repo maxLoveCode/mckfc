@@ -202,7 +202,15 @@
 
 -(void)requestQRCode
 {
-    [self.QRCode setQRCode:@"test"];
+    NSDate* now = [NSDate date];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSDictionary* content = @{@"generatetime":[dateFormatter stringFromDate:now],
+                              @"transportid":[NSString stringWithFormat:@"%lu",_transportID]};
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:content options:NSJSONWritingPrettyPrinted error:nil];
+    NSString* data = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    [self.QRCode setQRCode:data];
 }
 
 -(void)requestQueueInfo

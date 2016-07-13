@@ -7,6 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@class rightNavigationItem;
+
+@protocol menuDelegate <NSObject>
+
+-(void)MenuView:(rightNavigationItem*)Menu selectIndexPath:(NSIndexPath*)indexPath;
+
+@end
 
 @interface rightNavigationItem : UIBarButtonItem <UITableViewDataSource, UITableViewDelegate>
 
@@ -14,5 +21,8 @@
 
 @property (nonatomic, strong) UITableView* popMenu;
 @property (nonatomic, strong) UIView* mask;
+@property (nonatomic, weak) id<menuDelegate> delegate;
+
+-(void)dismiss;
 
 @end

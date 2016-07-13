@@ -150,7 +150,6 @@
     }
     else
     {
-        
         alert.mask.userInteractionEnabled = YES;
         [alert.wrapperView addSubview:alert.confirm];
     }

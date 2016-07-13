@@ -133,7 +133,7 @@ NSString *const version = @"v1_0";
 #pragma mark formData
 -(void)upLoadImageData:(UIImage *)image forSize:(CGSize)size success:(void (^)(NSURLSessionDataTask * _Nullable, id _Nullable))success failure:(void (^)(NSURLSessionDataTask * _Nullable, NSError * _Nonnull))failure
 {
-    NSString *urlStr = [self appendedURL:@"upload"];
+    NSString *urlStr = [self appendedURL:@"uploadImage"];
     
     NSData* data = UIImageJPEGRepresentation(image, 1.0);
     
@@ -157,6 +157,7 @@ NSString *const version = @"v1_0";
         
     } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
 //get results
+        NSLog(@"%@",responseObject);
         if ([responseObject[@"code"] integerValue] == self.successCode) {
             [_alert dismiss:_alert];
             success(uploadTask,responseObject);
