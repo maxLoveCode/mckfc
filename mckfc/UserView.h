@@ -14,6 +14,7 @@
 @protocol UserViewDelegate <NSObject>
 
 -(void)didClickConfirm;
+-(void)didTapAvatar;
 
 @end
 

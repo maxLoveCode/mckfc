@@ -91,8 +91,8 @@
 -(QRCodeView *)QRCode
 {
     if (!_QRCode) {
-        _QRCode = [[QRCodeView alloc] initWithFrame:CGRectMake(0, 0, 260, 260)];
-        [_QRCode setCenter:CGPointMake(kScreen_Width/2, itemHeight+topMargin+130)];
+        _QRCode = [[QRCodeView alloc] initWithFrame:CGRectMake(0, 0, QRCodeSize, QRCodeSize)];
+        [_QRCode setCenter:CGPointMake(kScreen_Width/2, itemHeight+topMargin+QRCodeSize/2)];
     }
     return _QRCode;
 }
@@ -119,7 +119,7 @@
     }
     else
     {
-        CGFloat content = itemHeight+topMargin+260;
+        CGFloat content = itemHeight+topMargin+QRCodeSize;
         CGFloat screen = kScreen_Height-64-itemHeight*4;
         if (content > screen) {
             return content;

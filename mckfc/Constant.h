@@ -30,6 +30,7 @@
 #define COLOR_TEXT_GRAY COLOR_WithHex(0xa5a5a5)
 
 #define k_Margin 18
+#define QRCodeSize 220
 
 //debug serverManager
 #define ServerDebugLog YES

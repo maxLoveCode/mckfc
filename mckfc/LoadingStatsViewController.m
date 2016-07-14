@@ -337,7 +337,7 @@
     if (_stats.extraInfo) {
         [params addEntriesFromDictionary:@{@"remark":_stats.extraInfo}];
     }
-    
+    NSLog(@"%@", params);
     [_server POST:@"transport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSDictionary* data = responseObject[@"data"];
         TransportDetail* detail = [[TransportDetail alloc] initWithID:[data[@"transportid"] integerValue]];

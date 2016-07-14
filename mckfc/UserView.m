@@ -132,6 +132,11 @@
 {
     UIImageView* bgView = [[UIImageView alloc] initWithFrame:cell.contentView.frame];
     bgView.image = [UIImage imageNamed:@"home_bg"];
+    bgView.userInteractionEnabled = YES;
+    UIView* circleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, avatarHeight+4, avatarHeight+4)];
+    circleView.layer.cornerRadius = (avatarHeight+4)/2;
+    [circleView setBackgroundColor:[UIColor whiteColor]];
+    circleView.layer.masksToBounds = YES;
     
     UIImageView* avatar = [[UIImageView alloc] initWithFrame:
                            CGRectMake((kScreen_Width-avatarHeight)/2, topMargin, avatarHeight, avatarHeight)];
@@ -141,6 +146,10 @@
     avatar.layer.masksToBounds = YES;
     [avatar setImage:[UIImage imageNamed:@"default_avatar"]];
     avatar.tag = 1000;
+    circleView.center = avatar.center;
+    avatar.userInteractionEnabled = YES;
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvtar:)];
+    [avatar addGestureRecognizer:tap];
     
     UILabel* nameLabel = [[UILabel alloc] initWithFrame:
                           CGRectMake(0, CGRectGetMaxY(avatar.frame)+itemGap, kScreen_Width, titleFont)];
@@ -168,6 +177,7 @@
     [starView setFrame:CGRectMake((kScreen_Width-framesize.width)/2, CGRectGetMaxY(carLabel.frame)+itemGap, framesize.width, framesize.height )];
     [starView setStarValue:2];
     starView.tag = 1005;
+    [bgView addSubview:circleView];
     [bgView addSubview:avatar];
     [bgView addSubview:nameLabel];
     [bgView addSubview:carLabel];
@@ -209,6 +219,12 @@
     [_stats setStatsFromDictionary:@{@"totalMile":user.totalmile,
                                      @"totalWeight":user.totalweight,
                                      @"transportTime":user.transporttime}];
+}
+
+-(void)tapAvtar:(id)sender
+{
+    [self.delegate didTapAvatar];
+    NSLog(@"tap");
 }
 
 @end

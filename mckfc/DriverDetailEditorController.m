@@ -327,7 +327,7 @@
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"请选择图片来源" message: nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     
-    [alert addAction:[UIAlertAction actionWithTitle:@"照相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction *UIAlertAction){
+    [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction *UIAlertAction){
         imagePicker.delegate = self;
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         [self presentViewController:imagePicker animated:YES completion:nil];

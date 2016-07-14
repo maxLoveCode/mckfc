@@ -164,6 +164,7 @@
 		253BF59F1D0D49F40006086D /* mckfcUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mckfcUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		253BF5A31D0D49F40006086D /* mckfcUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mckfcUITests.m; sourceTree = "<group>"; };
 		253BF5A51D0D49F40006086D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25522BE71D376A450098E4B7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		256F39791D123E3900175E5A /* LoginNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginNav.h; sourceTree = "<group>"; };
 		256F397A1D123E3900175E5A /* LoginNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginNav.m; sourceTree = "<group>"; };
 		256F397F1D12836900175E5A /* SignUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpView.h; sourceTree = "<group>"; };
@@ -986,6 +987,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				253BF58D1D0D49F40006086D /* Base */,
+				25522BE71D376A450098E4B7 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

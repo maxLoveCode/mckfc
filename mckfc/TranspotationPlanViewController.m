@@ -183,8 +183,8 @@
                              @"expecttime":[NSString stringWithFormat:@"%ld",expecttime],
                              @"token":_server.accessToken};
     [_server POST:@"location" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        //NSLog(@"%@", responseObject);
-        if ([responseObject[@"data"] objectForKey:@"isbefore"]) {
+        NSLog(@"%@", responseObject);
+        if ([[responseObject[@"data"] objectForKey:@"isbefore"] integerValue] == 1) {
             
             [self.mapVC.timer invalidate];
             [self.popUpMenu dismiss];

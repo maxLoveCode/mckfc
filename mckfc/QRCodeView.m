@@ -22,9 +22,9 @@
 
 -(void)setQRCode:(NSString *)msg
 {
-    [self.imageView setFrame:CGRectMake(0, 0, 260, 260 )];
+    [self.imageView setFrame:CGRectMake(0, 0, QRCodeSize, QRCodeSize )];
     
-    [self.imageView gd_setQRCodeImageWithQRCodeImageSize:260
+    [self.imageView gd_setQRCodeImageWithQRCodeImageSize:QRCodeSize
                                         qrCodeImageColor:[UIColor blackColor]
                                       qrCodeBgImageColor:[UIColor whiteColor]
                                              centerImage:nil
