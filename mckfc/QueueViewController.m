@@ -28,6 +28,7 @@
 
 @property (nonatomic, copy) NSString* expecttime;
 @property (nonatomic, copy) NSString* location;
+@property (nonatomic, copy) NSString* phone;
 
 @property (nonatomic, assign) NSInteger transportID;
 
@@ -41,6 +42,9 @@
     self.transportID = transportID;
     
     self.navigationItem.hidesBackButton = YES;
+    
+    UIBarButtonItem* phone = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"phone"] style:UIBarButtonItemStylePlain target:self action:@selector(phoneCall:)];
+    self.navigationItem.rightBarButtonItem = phone;
     
     return self;
 }
@@ -233,18 +237,20 @@
     NSDictionary* params = @{@"token":_server.accessToken,
                              @"id":[NSString stringWithFormat:@"%lu",_transportID]};
     [_server GET:@"getQueueDetail" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        //NSLog(@"response:%@", responseObject);
+        NSLog(@"response:%@", responseObject);
         NSDictionary* data = responseObject[@"data"];
         NSNumber *time = data[@"expectwaittime"];
         NSInteger remainning = [time integerValue]/1000/60;
         _expecttime = [NSString stringWithFormat:@"%li分钟", (long)remainning];
         _location = data[@"storename"];
+        _phone = data[@"factoryphone"];
         [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
 }
 
+#pragma mark phone calls
 -(void)remoteNotification
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getNotification) name:notificationIdScan object:nil];
@@ -252,8 +258,19 @@
 
 -(void)getNotification
 {
-    NSLog(@"get notified");
     [self generateReport];
+}
+
+#pragma mark navigation item
+-(void)phoneCall:(id)sender
+{
+    if (_phone) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",_phone]]];
+    }
+    else
+    {
+        
+    }
 }
  
 @end

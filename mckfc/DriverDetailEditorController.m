@@ -252,9 +252,20 @@
     [self dismissKeyboard];
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc]initWithDictionary: @{@"token":_server.accessToken}];
+    
     if (!_driver.driver) {
         _driver.driver = @"未命名司机";
     }
+    if (!_driver.licenseno) {
+        _driver.licenseno = @"";
+    }
+    if (!_driver.idcard) {
+        _driver.idcard = @"";
+    }
+    if (!_driver.driverno) {
+        _driver.driverno = @"";
+    }
+    
     if (!_driver.region || !_driver.cardigits) {
         _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
         _alert.delegate = self;
@@ -273,20 +284,37 @@
     {
         url =@"updateUserInfo";
     }
+    
+    
     NSDictionary* dic = @{@"truckno":[NSString stringWithFormat:@"%@%@",_driver.region, _driver.cardigits],
                               @"driver":_driver.driver,
                               @"idcard":_driver.idcard,
                               @"driverno":_driver.driverno,
                               @"licenseno":_driver.licenseno};
         [params addEntriesFromDictionary:dic];
-        NSLog(@"params%@", params);
         [_server POST:url parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-            EditorNav* editorNav = (EditorNav* )self.navigationController;
-
-            if (editorNav.onDismissed) {
-                editorNav.onDismissed();
+            if (_registerComplete) {
+                [_server POST:@"updateUserInfo" parameters:@{@"token":_server.accessToken,
+                                                             @"avatar":_driver.avatar} animated:NO
+                      success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject){
+                          
+                          EditorNav* editorNav = (EditorNav* )self.navigationController;
+                          
+                          if (editorNav.onDismissed) {
+                              editorNav.onDismissed();
+                          }
+                      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                          
+                }];
             }
-            
+            else
+            {
+                EditorNav* editorNav = (EditorNav* )self.navigationController;
+
+                if (editorNav.onDismissed) {
+                    editorNav.onDismissed();
+                }
+            }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
         }];
@@ -323,15 +351,17 @@
         [_server upLoadImageData:img forSize:CGSizeMake(100, 100) success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
             NSLog(@"%@",responseObject);
             [_driver setAvatar:responseObject[@"data"]];
-            [_server POST:@"updateUserInfo" parameters:@{@"token":_server.accessToken,
-                                                        @"avatar":_driver.avatar} animated:NO
-                  success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject){
-                      [self.tableView reloadData];
-                      
-                      NSLog(@"%@",responseObject);
-                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            
-                  }];
+            [self.tableView reloadData];
+            if (!_registerComplete) {
+                [_server POST:@"updateUserInfo" parameters:@{@"token":_server.accessToken,
+                                                             @"avatar":_driver.avatar} animated:NO
+                      success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject){
+                          
+                          NSLog(@"%@",responseObject);
+                      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                          
+                }];
+            }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
         }];
@@ -346,17 +376,18 @@
     }
 }
 
+#pragma mark set content
 -(void)setUser:(User*)user
 {
     self.driver = user;
     if (user.truckno && ![user.truckno isEqualToString:@""]) {
         self.driver.region = [user.truckno substringWithRange:NSMakeRange(0, 1)];
         self.driver.cardigits = [user.truckno substringWithRange:NSMakeRange(1, [user.truckno length])];
-        NSLog(@"region: %@ cardigits: %@", self.driver.region, self.driver.cardigits);
     }
     [self.tableView reloadData];
 }
 
+#pragma mark popUp menu
 -(void)popUpRegions:(id)sender
 {
     [_server GET:@"getRegionList"
@@ -380,5 +411,4 @@
         
     }];
 }
-
 @end

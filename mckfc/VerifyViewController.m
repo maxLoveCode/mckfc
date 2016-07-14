@@ -119,14 +119,11 @@
 #pragma mark buttons
 -(void)resend
 {
-    NSLog(@"resend");
     if (!_timer) {
-        NSLog(@"resend1");
         _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(fireTimer) userInfo:nil repeats:YES];
     }
     else
     {
-        NSLog(@"resend2");
         _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(fireTimer) userInfo:nil repeats:YES];
         NSDictionary* params = @{@"mobile":_mobile};
         [_server POST:@"sendRegisterCaptcha" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
@@ -185,7 +182,10 @@
                 
             }];
             [EditorVC setOnDismissed:^{
-                [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+                NSLog(@"dismisssss");
+                [self.navigationController dismissViewControllerAnimated:NO completion:^{
+                    [self dismissViewControllerAnimated:NO completion:nil];
+                }];
             }];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

@@ -109,11 +109,13 @@
     [JPUSHService setupWithOption:options
                            appKey:@"a69a0e330940d3f164a2a82d"
                           channel:nil apsForProduction:NO];
+    
+    [JPUSHService setLogOFF];
 }
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSLog(@"revcieve remote notification");
+  //  NSLog(@"revcieve remote notification");
     NSLog(@"%@",userInfo);
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationIdScan object:self userInfo:userInfo];
 }

@@ -65,6 +65,7 @@
         }];
     }
     else{
+        NSLog(@"login");
         LoginNav* loginVC = [[LoginNav alloc] init];
         [self presentViewController:loginVC animated:NO completion:^{
             }];
