@@ -56,6 +56,20 @@
     [self requestQRCode];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [[UIScreen mainScreen] setBrightness:0.8];
+    [super viewDidAppear:animated];
+    [self remoteNotification];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:notificationIdScan object:nil];
+}
+
+
 #pragma mark setter
 -(UITableView *)tableView
 {
@@ -65,6 +79,7 @@
         _tableView.dataSource = self;
         [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Queue"];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.allowsSelection = NO;
     }
     return _tableView;
 }
@@ -72,8 +87,8 @@
 -(QRCodeView *)QRCode
 {
     if (!_QRCode) {
-        _QRCode = [[QRCodeView alloc] initWithFrame:CGRectMake(0, 0, 288, 288)];
-        [_QRCode setCenter:CGPointMake(kScreen_Width/2, itemHeight+topMargin+144)];
+        _QRCode = [[QRCodeView alloc] initWithFrame:CGRectMake(0, 0, 260, 260)];
+        [_QRCode setCenter:CGPointMake(kScreen_Width/2, itemHeight+topMargin+130)];
     }
     return _QRCode;
 }
@@ -87,7 +102,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 2;
+        return 1;
     }
     else
         return 1;
@@ -100,7 +115,7 @@
     }
     else
     {
-        CGFloat content = itemHeight+topMargin+288;
+        CGFloat content = itemHeight+topMargin+260;
         CGFloat screen = kScreen_Height-64-itemHeight*4;
         if (content > screen) {
             return content;
@@ -191,7 +206,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self generateReport];
+    //[self generateReport];
 }
 
 -(void)generateReport
@@ -228,6 +243,17 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
+}
+
+-(void)remoteNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getNotification) name:notificationIdScan object:nil];
+}
+
+-(void)getNotification
+{
+    NSLog(@"get notified");
+    [self generateReport];
 }
  
 @end

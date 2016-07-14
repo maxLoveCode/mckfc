@@ -34,11 +34,6 @@
 
     NSUserDefaults* defaults =[NSUserDefaults standardUserDefaults];
     
-//the register flag, needs to be cleared if logout
-    NSString* complete = [defaults objectForKey:@"completeRegister"];
-    if (!complete || [complete isEqualToString:@""]) {
-        [defaults setObject:@"NO"  forKey:@"completeRegister"];
-    }
 //the usertype flag, needs to be cleared if logout
     NSString* user_type = [defaults objectForKey:@"user_type"];
     user_type = MKUSER_TYPE_DRIVER;
@@ -58,6 +53,8 @@
         self.QCNav = [[QualityControlNav alloc] init];
         self.window.rootViewController = self.QCNav;
     }
+//Jpush
+    [self JPushInitailizationWithOption:launchOptions];
     
     return YES;
 }
@@ -84,7 +81,12 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)JPushInitailization
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    [JPUSHService registerDeviceToken:deviceToken];
+}
+
+- (void)JPushInitailizationWithOption:(NSDictionary*) options
 {
     //Required
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
@@ -103,6 +105,17 @@
                                               categories:nil];
 #pragma clang diagnostic pop
     }
+    
+    [JPUSHService setupWithOption:options
+                           appKey:@"a69a0e330940d3f164a2a82d"
+                          channel:nil apsForProduction:NO];
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"revcieve remote notification");
+    NSLog(@"%@",userInfo);
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationIdScan object:self userInfo:userInfo];
 }
 
 @end

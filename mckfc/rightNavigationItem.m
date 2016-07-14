@@ -20,7 +20,7 @@
 
 -(instancetype)initCutomItem
 {
-    self = [super initWithImage:[UIImage imageNamed:@"check"] style:UIBarButtonItemStyleDone target:self action:@selector(selectBtn:)];
+    self = [super initWithImage:[UIImage imageNamed:@"popUp"] style:UIBarButtonItemStyleDone target:self action:@selector(selectBtn:)];
     _show = NO;
     return self;
 }
@@ -63,12 +63,12 @@
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, menuWidth-k_Margin, itemHeight)];
     if (indexPath.row == 0) {
         label.text = @"取消订单";
-        imageView.image = [UIImage imageNamed:@"phone"];
+        imageView.image = [UIImage imageNamed:@"menuCancel"];
     }
     else
     {
         label.text = @"联系工厂";
-        imageView.image = [UIImage imageNamed:@"phone"];
+        imageView.image = [UIImage imageNamed:@"menuPhone"];
     }
     label.font = [UIFont systemFontOfSize:15];
     label.textColor = COLOR_WithHex(0x565656);

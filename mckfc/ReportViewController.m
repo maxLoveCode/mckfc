@@ -18,7 +18,7 @@
 #define topMargin 60
 
 #define buttonHeight 40
-#define buttonWidth 340
+#define buttonWidth kScreen_Width-4*k_Margin
 
 extern NSString *const reuseIdentifier;
 
@@ -219,7 +219,7 @@ extern NSString *const reuseIdentifier;
     [confirm setTitleColor:COLOR_THEME_CONTRAST forState:UIControlStateNormal];
     confirm.layer.cornerRadius = 3;
     confirm.layer.masksToBounds = YES;
-    [confirm setFrame:CGRectMake((kScreen_Width-buttonWidth)/2, topMargin,buttonWidth , buttonHeight)];
+    [confirm setFrame:CGRectMake(2*k_Margin, topMargin,buttonWidth , buttonHeight)];
     [confirm addTarget:self action:@selector(confirmBtn) forControlEvents:UIControlEventTouchUpInside];
     return confirm;
 }

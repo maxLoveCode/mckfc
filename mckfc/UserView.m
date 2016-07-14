@@ -69,7 +69,8 @@
         return secondSection;
     }
     else{
-        CGFloat content = kScreen_Height-[self firstSectionHeight]- secondSection - 64 -40;
+        CGFloat content = kScreen_Height-[self firstSectionHeight]- secondSection
+        - 64 -40;
         if (content < topMargin*2+buttonHeight) {
             return topMargin*2+buttonHeight;
         }

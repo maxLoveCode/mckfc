@@ -42,4 +42,7 @@
 #define MKUSER_TYPE_SECURITY @"2"
 #define MKUSER_TYPE_QUALITYCONTROL @"3"
 
+//notification identity
+#define notificationIdScan @"scanQR"
+
 #endif /* Constant_h */
