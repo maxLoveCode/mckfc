@@ -36,7 +36,6 @@
     
 //the usertype flag, needs to be cleared if logout
     NSString* user_type = [defaults objectForKey:@"user_type"];
-    user_type = MKUSER_TYPE_DRIVER;
     [defaults setObject:user_type forKey:@"user_type"];
     
     if (!user_type || [user_type isEqualToString:MKUSER_TYPE_DRIVER] ) {

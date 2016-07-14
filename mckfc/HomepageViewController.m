@@ -39,14 +39,15 @@
     _userview.delegate = self;
     
     
-    [self requestUserInfo];
-    
     self.view = _userview;
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    if (!_user) {
+        [self requestUserInfo];
+    }
 }
 
 -(void)requestUserInfo
@@ -62,7 +63,12 @@
             NSLog(@"%@",_user);
             [self checkIfNeedsToUpdateUser];
             [self checkIfNeedsToContinue];
-                
+            
+            if (_user.type != [MKUSER_TYPE_DRIVER integerValue]) {
+                LoginNav* loginVC = [[LoginNav alloc] init];
+                [self presentViewController:loginVC animated:NO completion:^{
+                }];
+            }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
         }];
@@ -75,12 +81,14 @@
     }
 }
 
+#pragma mark select loading selector
 -(void)didClickConfirm
 {
     LoadingStatsViewController *loadingStats = [[LoadingStatsViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [self.navigationController pushViewController:loadingStats animated:YES];
 }
 
+#pragma mark tap avatar delegate
 -(void)didTapAvatar
 {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"更换头像" message:nil preferredStyle:UIAlertControllerStyleActionSheet];

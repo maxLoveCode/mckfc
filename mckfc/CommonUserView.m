@@ -7,6 +7,7 @@
 //
 
 #import "CommonUserView.h"
+#import "UIImageView+WebCache.h"
 
 //first section
 #define topMargin 60
@@ -16,7 +17,7 @@
 
 @interface CommonUserView()<UITableViewDelegate, UITableViewDataSource ,MenuDelegate>
 
-@property (strong, nonatomic) UITableView* mainTableView;
+
 @property (nonatomic, assign) NSString* user_type;
 
 @end
@@ -97,6 +98,12 @@
 {
     UIImageView* bgView = [[UIImageView alloc] initWithFrame:cell.contentView.frame];
     bgView.image = [UIImage imageNamed:@"home_bg"];
+    bgView.userInteractionEnabled = YES;
+    
+    UIView* circleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, avatarHeight+4, avatarHeight+4)];
+    circleView.layer.cornerRadius = (avatarHeight+4)/2;
+    [circleView setBackgroundColor:[UIColor whiteColor]];
+    circleView.layer.masksToBounds = YES;
     
     UIImageView* avatar = [[UIImageView alloc] initWithFrame:
                            CGRectMake((kScreen_Width-avatarHeight)/2, topMargin, avatarHeight, avatarHeight)];
@@ -104,25 +111,39 @@
     avatar.layer.borderWidth = 1.5;
     avatar.layer.cornerRadius = avatarHeight/2;
     avatar.layer.masksToBounds = YES;
-    [avatar setImage:[UIImage imageNamed:@"default_avatar"]];
+    [avatar sd_setImageWithURL:[NSURL URLWithString:_user.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+    
+    circleView.center = avatar.center;
+    
+    avatar.userInteractionEnabled = YES;
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvtar:)];
+    [avatar addGestureRecognizer:tap];
     
     UILabel* nameLabel = [[UILabel alloc] initWithFrame:
                           CGRectMake(0, CGRectGetMaxY(avatar.frame)+itemGap, kScreen_Width, titleFont)];
     nameLabel.textAlignment = NSTextAlignmentCenter;
     nameLabel.font = [UIFont systemFontOfSize:titleFont];
-    nameLabel.text= @"张三";
+    nameLabel.text= _user.driver; //原来只有司机，后面才换的所有人都用 user，所以叫 user.name 更好
     
     UILabel* Occupation = [[UILabel alloc] initWithFrame:
                          CGRectOffset(nameLabel.frame, 0, itemGap+CGRectGetHeight(nameLabel.frame))];
     Occupation.textAlignment = NSTextAlignmentCenter;
     Occupation.font = [UIFont systemFontOfSize:titleFont];
-    Occupation.text = @"门卫";
+    Occupation.text = @"职位";
+    if (self.user.type == [MKUSER_TYPE_SECURITY integerValue]) {
+        Occupation.text = @"门卫";
+    }
+    else
+    {
+        Occupation.text = @"质检人员";
+    }
     
     UIView* leftView = [[UIView alloc] initWithFrame:CGRectMake(k_Margin, CGRectGetMidY(Occupation.frame), 94, 0.5)];
     [leftView setBackgroundColor:COLOR_WithHex(0xdddddd)];
     UIView* rightView = [[UIView alloc] initWithFrame:CGRectMake(kScreen_Width- k_Margin- 94, CGRectGetMidY(Occupation.frame), 94, 0.5)];
     [rightView setBackgroundColor:COLOR_WithHex(0xdddddd)];
     
+    [bgView addSubview:circleView];
     [bgView addSubview:avatar];
     [bgView addSubview:nameLabel];
     [bgView addSubview:Occupation];
@@ -151,7 +172,13 @@
 
 -(void)CommonMenuView:(CommonMenuView *)menu didSelectScanQRCode:(MenuViewStyle)style withIndex:(NSInteger)index
 {
-    [self.delegate navigateToQRScanner];
+    [self.delegate navigateToQRScannerWithItem:index];
 }
+
+-(void)tapAvtar:(id)sender
+{
+    [self.delegate didTapAvatar];
+}
+
 
 @end

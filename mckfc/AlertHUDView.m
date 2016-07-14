@@ -33,6 +33,15 @@
     {
         [self.wrapperView addSubview:self.HUDimage];
     }
+    else if(_style == HUDAlertStyleBool)
+    {
+        [self.wrapperView addSubview:self.cancel];
+        [self.wrapperView addSubview:self.confirm];
+    }
+    else
+    {
+        [self.wrapperView addSubview:self.confirm];
+    }
     
     return self;
 }
@@ -105,12 +114,23 @@
     if (!_confirm) {
         _confirm = [UIButton buttonWithType:UIButtonTypeCustom];
         [_confirm setBackgroundColor:COLOR_THEME];
-        [_confirm setTitle:@"OK" forState:UIControlStateNormal];
-        [_confirm setFrame:CGRectMake(0, CGRectGetMaxY(self.detail.frame), CGRectGetWidth(self.wrapperView.frame), titleHeight)];
+        [_confirm setTitle:@"确认" forState:UIControlStateNormal];
         [_confirm setTitleColor:COLOR_THEME_CONTRAST forState:UIControlStateNormal];
         [_confirm addTarget:self action:@selector(HUDDidConfirm) forControlEvents:UIControlEventTouchUpInside];
     }
     return _confirm;
+}
+
+-(UIButton *)cancel
+{
+    if (!_cancel) {
+        _cancel = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_cancel setBackgroundColor:COLOR_THEME_CONTRAST];
+        [_cancel setTitle:@"取消" forState:UIControlStateNormal];
+        [_cancel setTitleColor:COLOR_THEME forState:UIControlStateNormal];
+        [_cancel addTarget:self action:@selector(HUDDidCancel) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _cancel;
 }
 
 #pragma mark layouts
@@ -131,9 +151,20 @@
         self.HUDimage.center = self.detail.center;
     }
     
+    if (_style == HUDAlertStyleBool) {
+        [self.confirm setFrame:CGRectMake(0, CGRectGetMaxY(self.detail.frame), CGRectGetWidth(self.wrapperView.frame)/2, titleHeight)];
+        [self.cancel setFrame:CGRectMake(CGRectGetWidth(self.wrapperView.frame)/2, CGRectGetMaxY(self.detail.frame), CGRectGetWidth(self.wrapperView.frame)/2, titleHeight)];
+    }
+    
+    if(_style == HUDAlertStylePlain)
+    {
+        [self.confirm setFrame:CGRectMake(0, CGRectGetMaxY(self.detail.frame), CGRectGetWidth(self.wrapperView.frame), titleHeight)];
+    }
+    
     [self addSubview:self.mask];
 }
 
+#pragma show and dismiss
 -(void)show: (AlertHUDView*)alert 
 {
     AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -148,10 +179,14 @@
         self.title.text = @"网络加载中";
         [self.HUDimage startAnimating];
     }
-    else
+    else if(_style == HUDAlertStylePlain)
     {
         alert.mask.userInteractionEnabled = YES;
         [alert.wrapperView addSubview:alert.confirm];
+    }
+    else
+    {
+        alert.mask.userInteractionEnabled = YES;
     }
 }
 
@@ -167,6 +202,10 @@
 
 -(void)failureWithMsg:(AlertHUDView *)alert msg:(NSString*)msg
 {
+    
+    alert.style = HUDAlertStylePlain;
+    [alert layoutSubviews];
+    
     [alert.HUDimage stopAnimating];
     [alert.HUDimage removeFromSuperview];
     
@@ -182,5 +221,8 @@
     [self.delegate didSelectConfirm];
 }
 
-
+-(void)HUDDidCancel
+{
+    [self removeFromSuperview];
+}
 @end

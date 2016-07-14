@@ -12,9 +12,14 @@
 #import "WorkRecordViewController.h"
 #import "QRCodeReaderViewController.h"
 
+#import "User.h"
+#import "ServerManager.h"
+
 @interface QualityControlHomePage () <CommonUserViewDelegate, QRCodeReaderDelegate>
 
 @property (nonatomic, strong) CommonUserView* userView;
+@property (nonatomic, strong) ServerManager* server;
+@property (nonatomic, strong) User* user;
 
 @end
 
@@ -24,8 +29,41 @@
 {
     _userView = [[CommonUserView alloc] init];
     _userView.delegate = self;
+    
+    
+    _server = [ServerManager sharedInstance];
+    
     self.view = _userView;
 }
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (!_user) {
+        [self requestUserInfo];
+    }
+}
+
+-(void)requestUserInfo
+{
+    //根据 access token 判断第一次
+    if (_server.accessToken) {
+        NSDictionary* params = @{@"token": _server.accessToken};
+        [_server GET:@"getUserInfo" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+            NSError* error;
+            NSDictionary* data = responseObject[@"data"];
+            _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:data error:&error];
+            _userView.user = _user;
+            [_userView.mainTableView reloadData];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+        }];
+    }
+    else{
+        
+    }
+}
+
 
 -(void)navigateToWorkRecord
 {
@@ -33,7 +71,7 @@
     [self.navigationController pushViewController:WRVC animated:YES];
 }
 
--(void)navigateToQRScanner
+-(void)navigateToQRScannerWithItem:(NSInteger)item
 {
     // Create the reader object
     QRCodeReader *reader = [QRCodeReader readerWithMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
@@ -47,24 +85,20 @@
     // Define the delegate receiver
     vc.delegate = self;
     
-//    // Or use blocks
-//    [reader setCompletionWithBlock:^(NSString *resultAsString) {
-//        NSLog(@"%@", resultAsString);
-//    }];
 }
 
 #pragma mark - QRCodeReader Delegate Methods
-
-- (void)reader:(QRCodeReaderViewController *)reader didScanResult:(NSString *)result
-{
-    [self dismissViewControllerAnimated:YES completion:^{
-        NSLog(@"%@", result);
-    }];
-}
 
 - (void)readerDidCancel:(QRCodeReaderViewController *)reader
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
+
+-(void)didTapAvatar
+{
+    
+}
+
+
 
 @end

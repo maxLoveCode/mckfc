@@ -12,6 +12,11 @@
 
 #import "NSString+MD5.h"
 
+//may change root view by usertype
+#import "LoadingNav.h"
+#import "SecurityNav.h"
+#import "QualityControlNav.h"
+
 @interface LoginViewController()<UITextFieldDelegate, LoginViewDelegate>
 {
     NSArray* defaultText;
@@ -101,11 +106,20 @@
         if ([responseObject[@"code"] integerValue] == 10000) {
             NSLog(@"%@",responseObject);
             [[NSUserDefaults standardUserDefaults] setObject:[responseObject[@"data"] objectForKey:@"token"] forKey:@"access_token"];
+            NSString* type = [NSString stringWithFormat:@"%@", [responseObject[@"data"] objectForKey:@"type"]];
+            [[NSUserDefaults standardUserDefaults] setObject:type forKey:@"user_type"];
+            
             _server.accessToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"];
-            NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]);
-            [self dismissViewControllerAnimated:YES completion:^{
+            
+            if([self switchRootView: type])
+            {
                 
-            }];
+            }
+            else
+            {
+                [self dismissViewControllerAnimated:YES completion:^{
+                }];
+            }
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -123,12 +137,43 @@
     
 }
 
-
 #pragma mark gesture
 -(void)dismissKeyboard
 {
     [_loginView.mobile resignFirstResponder];
     [_loginView.password resignFirstResponder];
+}
+
+#pragma mark app loginview
+-(BOOL)switchRootView:(NSString*)type
+{
+    
+    UIApplication* app = [UIApplication sharedApplication];
+    UIViewController*root =  app.keyWindow.rootViewController;
+    if ([type isEqualToString:MKUSER_TYPE_DRIVER]) {
+        if(![root isKindOfClass:[LoadingNav class]]){
+            LoadingNav* loadingNav = [[LoadingNav alloc] init];
+            app.keyWindow.rootViewController = loadingNav;
+            return YES;
+        }
+    }
+    else if([type isEqualToString:MKUSER_TYPE_SECURITY]){
+        if(![root isKindOfClass:[SecurityNav class]]){
+            SecurityNav* securityNav = [[SecurityNav alloc] init];
+            app.keyWindow.rootViewController = securityNav;
+            
+            return YES;
+        }
+    }
+    else{
+        if(![root isKindOfClass:[QualityControlNav class]]){
+            QualityControlNav* QCNav = [[QualityControlNav alloc] init];
+            app.keyWindow.rootViewController = QCNav;
+            
+            return YES;
+        }
+    }
+    return NO;
 }
 
 

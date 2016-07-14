@@ -8,19 +8,24 @@
 
 #import <UIKit/UIKit.h>
 #import "CommonMenuView.h"
+#import "User.h"
 
 @class CommonUserView;
 
 @protocol CommonUserViewDelegate <NSObject>
 
 -(void)navigateToWorkRecord;
--(void)navigateToQRScanner;
+-(void)navigateToQRScannerWithItem:(NSInteger)item;
+-(void)didTapAvatar;
 
 @end
 
 @interface CommonUserView : UIView
 
 @property (strong, nonatomic) CommonMenuView* menu;
+@property (strong, nonatomic) User* user;
+
+@property (strong, nonatomic) UITableView* mainTableView;
 
 @property (weak, nonatomic) id<CommonUserViewDelegate> delegate;
 

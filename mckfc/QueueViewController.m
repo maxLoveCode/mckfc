@@ -224,7 +224,7 @@
     NSDate* now = [NSDate date];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDictionary* content = @{@"generatetime":[dateFormatter stringFromDate:now],
                               @"transportid":[NSString stringWithFormat:@"%lu",_transportID]};
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:content options:NSJSONWritingPrettyPrinted error:nil];

@@ -224,7 +224,6 @@
 -(void)tapAvtar:(id)sender
 {
     [self.delegate didTapAvatar];
-    NSLog(@"tap");
 }
 
 @end
