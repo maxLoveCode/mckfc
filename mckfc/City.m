@@ -10,6 +10,12 @@
 
 @implementation City
 
++(NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{@"cityid":@"id",
+             @"name":@"name"};
+}
+
 -(instancetype)initWithName:(NSString *)name
 {
     self = [super init];

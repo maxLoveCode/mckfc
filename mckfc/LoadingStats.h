@@ -9,11 +9,12 @@
 #import <Mantle/Mantle.h>
 #import "Vendor.h"
 #import "Field.h"
+#import "City.h"
 
 @interface LoadingStats : MTLModel<MTLJSONSerializing>
 
 @property (nonatomic, copy) Vendor *supplier; //供应商名称
-
+@property (nonatomic, copy) City *city;
 @property (nonatomic, copy) Field *field; //地块编号
 @property (nonatomic, copy) NSNumber *weight;
 @property (nonatomic, copy) NSDate *departuretime; //开始日期

@@ -176,10 +176,8 @@
 -(void)mapView:(MapViewController *)mapView LocationOnLatitude:(double)latitude Longtitude:(double)longtitude address:(NSString *)address distance:(double)distance expecttime:(long)expecttime
 {
     NSDictionary* params = @{@"transportid": [NSString stringWithFormat:@"%lu",_detail.transportID],
-                             @"distance":[NSString stringWithFormat:@"%f",distance],
                              @"pointx":[NSString stringWithFormat:@"%f",longtitude],
                              @"pointy":[NSString stringWithFormat:@"%f",latitude],
-                             @"address":address,
                              @"expecttime":[NSString stringWithFormat:@"%ld",expecttime],
                              @"token":_server.accessToken};
     [_server POST:@"location" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {

@@ -36,9 +36,8 @@
     
 //the usertype flag, needs to be cleared if logout
     NSString* user_type = [defaults objectForKey:@"user_type"];
-    [defaults setObject:user_type forKey:@"user_type"];
-    
-    if (!user_type || [user_type isEqualToString:MKUSER_TYPE_DRIVER] ) {
+    NSLog(@"user_type %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"]);
+    if (user_type == nil || [user_type isEqualToString:MKUSER_TYPE_DRIVER] || [user_type isEqualToString:@""]) {
 //装载导视图（default）
         self.loadingNav = [[LoadingNav alloc] init];
         self.window.rootViewController = self.loadingNav;
@@ -88,6 +87,7 @@
 - (void)JPushInitailizationWithOption:(NSDictionary*) options
 {
     //Required
+    
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
         //可以添加自定义categories
         [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |

@@ -28,6 +28,8 @@
 
 @property (nonatomic, strong) AlertHUDView* alert;
 
+@property (nonatomic, copy) NSString* ScanedTransportID;
+
 @end
 
 @implementation SecurityHomePage
@@ -138,25 +140,41 @@
     
 }
 
+-(void)didSelectConfirm
+{
+    [self.alert removeFromSuperview];
+    [self inspectArrivedTruck];
+}
+
 - (void)scanDataToServer:(NSDictionary*)data request:(NSString* )request success:(void(^)())success
 {
     NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token": _server.accessToken}];
     [params addEntriesFromDictionary:data];
-    NSLog(@"params%@", params);
     [_server POST:request parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        NSLog(@"response: %@",responseObject);
-        self.alert.title.text = @"确认车辆到厂";
-        self.alert.detail.text = [responseObject[@"data"] objectForKey:@"message"];
-        [self.alert show:_alert];
+        if([request isEqualToString:@"scanArrive"])
+        {
+            self.alert.title.text = @"确认车辆到厂";
+            self.alert.detail.text = [responseObject[@"data"] objectForKey:@"message"];
+            [self.alert show:_alert];
+        }
+        _ScanedTransportID = [params objectForKey:@"transportid"];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
 }
 
--(void)didSelectConfirm
+- (void)inspectArrivedTruck
 {
-    [self.alert removeFromSuperview];
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token": _server.accessToken,
+                       @"transportid":_ScanedTransportID}];
+    [_server POST:@"truckArrive" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
+
+
 
 
 

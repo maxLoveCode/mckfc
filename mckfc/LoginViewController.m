@@ -104,11 +104,11 @@
                              @"password":password};
     [_server POST:@"login" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         if ([responseObject[@"code"] integerValue] == 10000) {
-            NSLog(@"%@",responseObject);
+//saving access_token and user_type
             [[NSUserDefaults standardUserDefaults] setObject:[responseObject[@"data"] objectForKey:@"token"] forKey:@"access_token"];
             NSString* type = [NSString stringWithFormat:@"%@", [responseObject[@"data"] objectForKey:@"type"]];
             [[NSUserDefaults standardUserDefaults] setObject:type forKey:@"user_type"];
-            
+            [[NSUserDefaults standardUserDefaults] synchronize];
             _server.accessToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"];
             
             if([self switchRootView: type])

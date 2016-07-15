@@ -193,7 +193,8 @@
             if (!cityList) {
                 [self requestCityListSuccess:^{
                     City* city = [cityList objectAtIndex:0];
-                    [self requestVendors:city.name success:^{
+                    [self requestVendors:city.cityid success:^{
+                        NSLog(@"request %@%@", city.name, city.cityid);
                         MCPickerView *pickerView = [[MCPickerView alloc] init];
                         pickerView.delegate =self;
                         pickerView.index = indexPath;
@@ -211,7 +212,8 @@
             else
             {
                 City* city = [cityList objectAtIndex:0];
-                [self requestVendors:city.name success:^{
+                [self requestVendors:city.cityid success:^{
+                    NSLog(@"request %@%@", city.name, city.cityid);
                     MCPickerView *pickerView = [[MCPickerView alloc] init];
                     pickerView.delegate =self;
                     pickerView.index = indexPath;
@@ -359,12 +361,12 @@
             NSInteger components = [pickerView.picker numberOfComponents];
             if (component != components-1) { // not the last component
                 City* selectedCity = [cityList objectAtIndex:row];
-                [self requestVendors:selectedCity.name success:^{
+                [self requestVendors:selectedCity.cityid success:^{
                     [pickerView setData:vendorList];
                     [pickerView.picker reloadComponent:component+1];
                     Vendor* vendor = vendorList[0];
                     _stats.supplier = vendor;
-                    
+                    _stats.city = selectedCity;
                     [self.tableView reloadData];
                 }];
             }
@@ -430,13 +432,13 @@
 {
     NSDictionary* params = @{@"token": _server.accessToken};
     [_server GET:@"getCityList" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        NSMutableArray* array = [[NSMutableArray alloc] init];
-        for (NSString* name in responseObject[@"data"]) {
-            City* city = [[City alloc] initWithName:name];
-            [array addObject:city];
+        NSArray* jsonArray = responseObject[@"data"];
+        NSError* error;
+        cityList = [MTLJSONAdapter modelsOfClass:[City class] fromJSONArray:jsonArray error:&error];
+        _stats.city = cityList[0];
+        if (cityList) {
+            success();
         }
-        cityList = array;
-        success();
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
@@ -449,7 +451,9 @@
     [_server GET:@"getVendorList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* data = responseObject[@"data"];
         vendorList = [MTLJSONAdapter modelsOfClass:[Vendor class] fromJSONArray:data error:nil];
-        success();
+        if (vendorList && [vendorList count] >0) {
+            success();
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];

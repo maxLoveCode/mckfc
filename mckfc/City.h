@@ -8,9 +8,10 @@
 
 #import <Mantle/Mantle.h>
 
-@interface City : MTLModel
+@interface City : MTLModel<MTLJSONSerializing>
 
 @property (nonatomic, copy) NSString *name; //city name
+@property (nonatomic, copy) NSString* cityid;
 
 -(instancetype)initWithName:(NSString*)name;
 
