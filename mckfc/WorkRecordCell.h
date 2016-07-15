@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "workRecord.h"
 
 @interface WorkRecordCell : UITableViewCell
+
+@property (nonatomic, strong) workRecord* record;
 
 +(CGFloat)HeightForWorkRecordCell;
 

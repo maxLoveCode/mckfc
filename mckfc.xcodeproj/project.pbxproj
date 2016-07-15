@@ -54,6 +54,7 @@
 		256F39A21D13D83200175E5A /* EditorNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A11D13D83200175E5A /* EditorNav.m */; };
 		256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A41D13E8A900175E5A /* AlertHUDView.m */; };
 		256F39A81D17891A00175E5A /* MCStarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A71D17891A00175E5A /* MCStarView.m */; };
+		257DB7971D38B4C400C2227E /* workRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7961D38B4C400C2227E /* workRecord.m */; };
 		25B004931D1920E00018EEB1 /* QueueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004921D1920E00018EEB1 /* QueueViewController.m */; };
 		25B004991D1922970018EEB1 /* QRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004981D1922970018EEB1 /* QRCodeView.m */; };
 		25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFC1D17A53500C9CCBE /* LoadingNav.m */; };
@@ -187,6 +188,8 @@
 		256F39A41D13E8A900175E5A /* AlertHUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertHUDView.m; sourceTree = "<group>"; };
 		256F39A61D17891A00175E5A /* MCStarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCStarView.h; sourceTree = "<group>"; };
 		256F39A71D17891A00175E5A /* MCStarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCStarView.m; sourceTree = "<group>"; };
+		257DB7951D38B4C400C2227E /* workRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = workRecord.h; sourceTree = "<group>"; };
+		257DB7961D38B4C400C2227E /* workRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = workRecord.m; sourceTree = "<group>"; };
 		25B004911D1920E00018EEB1 /* QueueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueViewController.h; sourceTree = "<group>"; };
 		25B004921D1920E00018EEB1 /* QueueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueViewController.m; sourceTree = "<group>"; };
 		25B004971D1922970018EEB1 /* QRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeView.h; sourceTree = "<group>"; };
@@ -606,6 +609,8 @@
 			children = (
 				25EDD7891D0E847800AFB6F3 /* User.h */,
 				25EDD78A1D0E847800AFB6F3 /* User.m */,
+				257DB7951D38B4C400C2227E /* workRecord.h */,
+				257DB7961D38B4C400C2227E /* workRecord.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -942,6 +947,7 @@
 				2512A1D01D113C6200ED884B /* HomepageViewController.m in Sources */,
 				252EF9C31D2E4F2300565D00 /* CommonMenuView.m in Sources */,
 				251175461D10EB6B00C3CE91 /* UserView.m in Sources */,
+				257DB7971D38B4C400C2227E /* workRecord.m in Sources */,
 				252EF9DC1D2FA51C00565D00 /* WorkDetailViewController.m in Sources */,
 				252EF9B81D2E3C4C00565D00 /* SecurityNav.m in Sources */,
 				252EF9D61D2F5C4100565D00 /* WorkRecordCell.m in Sources */,
@@ -1094,7 +1100,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bfe8e2d1-4b17-423b-8964-3260e89d3d11";
+				PROVISIONING_PROFILE = "ee2d90fd-b582-4dd1-a02d-dbbc296c2388";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1110,7 +1116,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bfe8e2d1-4b17-423b-8964-3260e89d3d11";
+				PROVISIONING_PROFILE = "ee2d90fd-b582-4dd1-a02d-dbbc296c2388";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

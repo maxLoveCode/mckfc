@@ -111,7 +111,7 @@ extern NSString *const reuseIdentifier;
 {
     [super layoutSubviews];
     [self.orderLabel setFrame:CGRectMake(k_Margin, 0, kScreen_Width-2*k_Margin, orderLabelHeight)];
-    [self.nameLabel setFrame:CGRectMake(k_Margin, CGRectGetMaxY(self.orderLabel.frame), mainLabelHeight, mainLabelHeight)];
+    [self.nameLabel setFrame:CGRectMake(k_Margin, CGRectGetMaxY(self.orderLabel.frame), mainLabelHeight+30, mainLabelHeight)];
     [self.carLabel setFrame:CGRectMake(CGRectGetMaxX(self.nameLabel.frame), CGRectGetMinY(self.nameLabel.frame), 140, CGRectGetHeight(self.nameLabel.frame))];
     [self.warehouse setFrame:CGRectMake(CGRectGetMaxX(self.contentView.frame)-60, CGRectGetMaxY(self.orderLabel.frame), 60, mainLabelHeight)];
     [self.statusView setFrame:CGRectMake(k_Margin, CGRectGetMaxY(self.nameLabel.frame), kScreen_Width - 2*k_Margin, statusHeight)];
@@ -127,6 +127,21 @@ extern NSString *const reuseIdentifier;
     
     [self.contentView addSubview:topMargin];
     [self.contentView addSubview:botMargin];
+}
+
+-(void)setRecord:(workRecord *)record
+{
+    self->_record = record;
+    self.orderLabel.text = [NSString stringWithFormat:@"订单编号：%@", record.transportno];
+    if ([record.driver isEqualToString:@""]) {
+        self.nameLabel.text = @"未命名司机";
+    }
+    else
+    {
+        self.nameLabel.text = record.driver;
+    }
+    self.carLabel.text = record.truckno;
+    self.warehouse.text = record.storename;
 }
 
 +(CGFloat)HeightForWorkRecordCell

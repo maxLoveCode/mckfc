@@ -107,7 +107,7 @@
     
     [JPUSHService setupWithOption:options
                            appKey:@"a69a0e330940d3f164a2a82d"
-                          channel:nil apsForProduction:YES];
+                          channel:nil apsForProduction:NO];
     
     [JPUSHService setLogOFF];
 }

@@ -11,6 +11,10 @@
 #import <JTCalendar/JTCalendar.h>
 #import "WorkDetailViewController.h"
 
+#import "ServerManager.h"
+
+#import "workRecord.h"
+
 extern NSString *const reuseIdentifier;
 
 @interface WorkRecordViewController()<UITableViewDelegate, UITableViewDataSource,JTCalendarDelegate>
@@ -23,6 +27,11 @@ extern NSString *const reuseIdentifier;
 
 @property (strong, nonatomic) UIView* calendarWrapperView;
 
+@property (strong, nonatomic) NSDate* selected;
+
+@property (strong, nonatomic) ServerManager* server;
+
+@property (nonatomic, strong) NSArray* recordArray;
 @end
 
 @implementation WorkRecordViewController
@@ -31,6 +40,9 @@ extern NSString *const reuseIdentifier;
 {
     self.view = self.tableView;
     self.title = @"今日待办";
+    
+    _selected = [NSDate date];
+    _server = [ServerManager sharedInstance];
 }
 
 #pragma mark setter
@@ -71,7 +83,7 @@ extern NSString *const reuseIdentifier;
 #pragma mark UITableview controller
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 5;
+    return 1+[_recordArray count];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -83,14 +95,15 @@ extern NSString *const reuseIdentifier;
 {
     if (indexPath.section == 0) {
         UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"workRecord"];
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.contentView addSubview:self.calendarWrapperView];
         return cell;
     }
     else
     {
         WorkRecordCell *cell = [[WorkRecordCell alloc] init];
-    
+        cell.record = _recordArray[indexPath.row];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
 }
@@ -150,4 +163,57 @@ extern NSString *const reuseIdentifier;
     [(UILabel *)menuItemView setText:text];
 }
 
+- (UIView<JTCalendarDay> *)calendarBuildDayView:(JTCalendarManager *)calendar
+{
+    JTCalendarDayView *view = [JTCalendarDayView new];
+    
+    view.textLabel.font = [UIFont fontWithName:@"Avenir-Light" size:13];
+    view.textLabel.textColor = [UIColor blackColor];
+    
+    [view.circleView setBackgroundColor:[UIColor redColor]];
+    return view;
+}
+
+- (void)calendar:(JTCalendarManager *)calendar prepareDayView:(UIView<JTCalendarDay> *)dayView
+{
+    NSDate* date = dayView.date;
+    JTCalendarDayView* view = (JTCalendarDayView*) dayView;
+    if ([calendar.dateHelper date:date isTheSameDayThan:_selected]) {
+        view.textLabel.textColor= [UIColor whiteColor];
+        view.circleView.hidden = NO;
+    }
+    else
+    {
+        view.textLabel.textColor= COLOR_WithHex(0x565656);
+        view.circleView.hidden = YES;
+    }
+}
+
+-(void)calendar:(JTCalendarManager *)calendar didTouchDayView:(UIView<JTCalendarDay> *)dayView
+{
+    self.selected = dayView.date;
+    [self requestListWithDate:dayView.date];
+    [calendar reload];
+}
+
+-(void)requestListWithDate:(NSDate*)date
+{
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString* dateString = [dateFormatter stringFromDate:date];
+    NSDictionary* params = @{@"token":_server.accessToken,
+                             @"date":dateString};
+    [_server GET:@"getHistoryList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSError* error;
+        NSLog(@"%@",responseObject[@"data"]);
+        NSDictionary* data = responseObject[@"data"];
+        _recordArray = [MTLJSONAdapter modelsOfClass:[workRecord class] fromJSONArray:data[@"array"] error:&error];
+        if (error) {
+            NSLog(@"%@", error);
+        }
+        [_tableView reloadData];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
 @end
