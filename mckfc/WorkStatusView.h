@@ -10,4 +10,6 @@
 
 @interface WorkStatusView : UIView
 
+@property (nonatomic, strong) NSArray* data;
+
 @end

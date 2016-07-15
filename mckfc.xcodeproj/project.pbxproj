@@ -55,6 +55,8 @@
 		256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A41D13E8A900175E5A /* AlertHUDView.m */; };
 		256F39A81D17891A00175E5A /* MCStarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A71D17891A00175E5A /* MCStarView.m */; };
 		257DB7971D38B4C400C2227E /* workRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7961D38B4C400C2227E /* workRecord.m */; };
+		257DB79A1D38C9BF00C2227E /* WorkDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7991D38C9BF00C2227E /* WorkDetail.m */; };
+		257DB79D1D38D24000C2227E /* WorkFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB79C1D38D24000C2227E /* WorkFlow.m */; };
 		25B004931D1920E00018EEB1 /* QueueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004921D1920E00018EEB1 /* QueueViewController.m */; };
 		25B004991D1922970018EEB1 /* QRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004981D1922970018EEB1 /* QRCodeView.m */; };
 		25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFC1D17A53500C9CCBE /* LoadingNav.m */; };
@@ -190,6 +192,10 @@
 		256F39A71D17891A00175E5A /* MCStarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCStarView.m; sourceTree = "<group>"; };
 		257DB7951D38B4C400C2227E /* workRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = workRecord.h; sourceTree = "<group>"; };
 		257DB7961D38B4C400C2227E /* workRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = workRecord.m; sourceTree = "<group>"; };
+		257DB7981D38C9BF00C2227E /* WorkDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkDetail.h; sourceTree = "<group>"; };
+		257DB7991D38C9BF00C2227E /* WorkDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkDetail.m; sourceTree = "<group>"; };
+		257DB79B1D38D24000C2227E /* WorkFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkFlow.h; sourceTree = "<group>"; };
+		257DB79C1D38D24000C2227E /* WorkFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkFlow.m; sourceTree = "<group>"; };
 		25B004911D1920E00018EEB1 /* QueueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueViewController.h; sourceTree = "<group>"; };
 		25B004921D1920E00018EEB1 /* QueueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueViewController.m; sourceTree = "<group>"; };
 		25B004971D1922970018EEB1 /* QRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeView.h; sourceTree = "<group>"; };
@@ -611,6 +617,10 @@
 				25EDD78A1D0E847800AFB6F3 /* User.m */,
 				257DB7951D38B4C400C2227E /* workRecord.h */,
 				257DB7961D38B4C400C2227E /* workRecord.m */,
+				257DB7981D38C9BF00C2227E /* WorkDetail.h */,
+				257DB7991D38C9BF00C2227E /* WorkDetail.m */,
+				257DB79B1D38D24000C2227E /* WorkFlow.h */,
+				257DB79C1D38D24000C2227E /* WorkFlow.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -905,6 +915,7 @@
 				256F397B1D123E3900175E5A /* LoginNav.m in Sources */,
 				256F398A1D12887D00175E5A /* VerifyView.m in Sources */,
 				25F0DF141D1D2C5E007CEF17 /* MCPickerView.m in Sources */,
+				257DB79A1D38C9BF00C2227E /* WorkDetail.m in Sources */,
 				252EF9E51D33407900565D00 /* MCDatePickerView.m in Sources */,
 				252EF9BB1D2E46A500565D00 /* SecurityHomePage.m in Sources */,
 				2512A1C41D111B3E00ED884B /* ServerManager.m in Sources */,
@@ -923,6 +934,7 @@
 				252EF9C61D2E6EED00565D00 /* QualityControlNav.m in Sources */,
 				252EF9EE1D336F4400565D00 /* Field.m in Sources */,
 				256F39811D12836900175E5A /* SignUpView.m in Sources */,
+				257DB79D1D38D24000C2227E /* WorkFlow.m in Sources */,
 				2512A1CD1D1130B100ED884B /* LoginView.m in Sources */,
 				2527ECCE1D35D8AC00350DC6 /* CarPlateRegionSelector.m in Sources */,
 				252EF9F11D337BA000565D00 /* TransportDetail.m in Sources */,

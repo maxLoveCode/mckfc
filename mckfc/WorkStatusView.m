@@ -24,16 +24,23 @@
 {
     self = [super init];
     
-    titleArray = @[@"到厂",@"进厂",@"卸货",@"质检",@"出厂"];
-    CGFloat labelWidth = 30;
+
+    return self;
+}
+
+-(void)setData:(NSArray *)data
+{
+    self->_data = data;
+    
+    CGFloat labelWidth = 34;
     CGFloat viewWidth = kScreen_Width - 2*k_Margin;
-    CGFloat spacing = (viewWidth-labelWidth*5)/(5-1);
-    for (NSInteger i =0; i<5 ; i++) {
+    CGFloat spacing = (viewWidth-labelWidth*[data count])/([data count]-1);
+    for (NSInteger i =0; i<[data count] ; i++) {
         UILabel* label = [[UILabel alloc] init];
         CGRect labelFrame = CGRectMake((spacing+labelWidth)*i, 0, labelWidth, 25);
         [label setFrame:labelFrame];
         label.tag = 100+i;
-        label.text = titleArray[i];
+        label.text = [_data[i] objectForKey:@"title"];
         label.font = [UIFont systemFontOfSize:13];
         label.textColor = COLOR_TEXT_GRAY;
         label.textAlignment = NSTextAlignmentCenter;
@@ -41,11 +48,17 @@
         
         UIImageView* imageView = [[UIImageView alloc] init];
         [imageView setFrame:CGRectMake(CGRectGetMidX(label.frame)-8, CGRectGetMaxY(label.frame)-2, 16, 16)];
-        imageView.image = [UIImage imageNamed:@"uncheck"];
+        if ([[_data[i] objectForKey:@"ischecked"] integerValue] == 0) {
+            imageView.image = [UIImage imageNamed:@"uncheck"];
+        }
+        else
+        {
+            imageView.image = [UIImage imageNamed:@"check"];
+        }
         imageView.tag = 1000+i;
         [self addSubview:imageView];
         
-        if(i!=4)
+        if(i!=[data count]-1)
         {
             UIView* cons = [[UIView alloc] init];
             [cons setFrame:CGRectMake(CGRectGetMaxX(label.frame)+5, CGRectGetMidY(imageView.frame), spacing-10, 1)];
@@ -53,7 +66,6 @@
             [self addSubview:cons];
         }
     }
-    return self;
 }
 
 @end

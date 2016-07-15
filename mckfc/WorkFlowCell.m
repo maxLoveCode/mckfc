@@ -71,7 +71,7 @@
 {
     [super layoutSubviews];
     [self.indicator setFrame:CGRectMake(k_Margin, 9, indicatorWidth, indicatorWidth)];
-    [self.titleLabel setFrame:CGRectMake(CGRectGetMaxX(self.indicator.frame)+k_Margin/2, 0, 30, [WorkFlowCell cellHeight]/2)];
+    [self.titleLabel setFrame:CGRectMake(CGRectGetMaxX(self.indicator.frame)+k_Margin/2, 0, 60, [WorkFlowCell cellHeight]/2)];
     [self.detailLabel setFrame:CGRectMake(CGRectGetMinX(_titleLabel.frame), [WorkFlowCell cellHeight]/2, kScreen_Width-2*CGRectGetMinX(_titleLabel.frame), [WorkFlowCell cellHeight]/2)];
     [self.timeLabel setFrame:CGRectMake(kScreen_Width - 150-k_Margin, CGRectGetMinY(self.titleLabel.frame), 150, [WorkFlowCell cellHeight]/2)];
 }
@@ -80,6 +80,26 @@
 +(CGFloat)cellHeight
 {
     return 66;
+}
+
+#pragma mark content;
+-(void)setWorkFlow:(WorkFlow *)workFlow
+{
+    self->_workFlow = workFlow;
+    self.titleLabel.text = workFlow.title;
+    self.detailLabel.text = workFlow.content;
+    self.timeLabel.text = workFlow.time;
+    if (workFlow.ischecked) {
+        self.indicator.image = [UIImage imageNamed:@"check"];
+    }
+    else
+    {
+        self.indicator.image = [UIImage imageNamed:@"uncheck"];
+    }
+    
+    if (!workFlow.auth) {
+        self.accessoryView.hidden = YES;
+    }
 }
 
 @end

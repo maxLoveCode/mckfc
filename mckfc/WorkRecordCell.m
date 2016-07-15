@@ -142,6 +142,7 @@ extern NSString *const reuseIdentifier;
     }
     self.carLabel.text = record.truckno;
     self.warehouse.text = record.storename;
+    [self.statusView setData:record.reportArray];
 }
 
 +(CGFloat)HeightForWorkRecordCell

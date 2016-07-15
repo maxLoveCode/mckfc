@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WorkFlow.h"
 
 @interface WorkFlowCell : UITableViewCell
 
@@ -14,6 +15,8 @@
 @property (nonatomic, strong) UILabel* titleLabel;
 @property (nonatomic, strong) UILabel* detailLabel;
 @property (nonatomic, strong) UILabel* timeLabel;
+
+@property (nonatomic, strong) WorkFlow* workFlow;
 
 +(CGFloat)cellHeight;
 

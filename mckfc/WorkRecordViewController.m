@@ -43,6 +43,10 @@ extern NSString *const reuseIdentifier;
     
     _selected = [NSDate date];
     _server = [ServerManager sharedInstance];
+    if(!_recordArray)
+    {
+        [self requestListWithDate:_selected];
+    }
 }
 
 #pragma mark setter
@@ -125,6 +129,8 @@ extern NSString *const reuseIdentifier;
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell isKindOfClass:[WorkRecordCell class]]) {
         WorkDetailViewController* detail = [[WorkDetailViewController alloc] init];
+        workRecord* record = _recordArray[indexPath.row];
+        [detail setTransportid: [NSString stringWithFormat:@"%@",record.recordid]];
         [self.navigationController pushViewController:detail animated:YES];
     }
 }
@@ -163,6 +169,7 @@ extern NSString *const reuseIdentifier;
     [(UILabel *)menuItemView setText:text];
 }
 
+#pragma mark prepare the date view
 - (UIView<JTCalendarDay> *)calendarBuildDayView:(JTCalendarManager *)calendar
 {
     JTCalendarDayView *view = [JTCalendarDayView new];
@@ -191,11 +198,27 @@ extern NSString *const reuseIdentifier;
 
 -(void)calendar:(JTCalendarManager *)calendar didTouchDayView:(UIView<JTCalendarDay> *)dayView
 {
+    
+    if ([calendar.dateHelper date:dayView.date isTheSameDayThan:[NSDate date]])
+    {
+        self.navigationItem.title = @"今日待办";
+    }
+    else if([calendar.dateHelper date:dayView.date isEqualOrBefore:[NSDate date]])
+    {
+        self.navigationItem.title = @"历史记录";
+    }
+    else
+    {
+        self.navigationItem.title = @"工作计划";
+    }
+    
     self.selected = dayView.date;
     [self requestListWithDate:dayView.date];
+        
     [calendar reload];
 }
 
+#pragma mark web request
 -(void)requestListWithDate:(NSDate*)date
 {
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
@@ -205,7 +228,7 @@ extern NSString *const reuseIdentifier;
                              @"date":dateString};
     [_server GET:@"getHistoryList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSError* error;
-        NSLog(@"%@",responseObject[@"data"]);
+       // NSLog(@"%@",responseObject[@"data"]);
         NSDictionary* data = responseObject[@"data"];
         _recordArray = [MTLJSONAdapter modelsOfClass:[workRecord class] fromJSONArray:data[@"array"] error:&error];
         if (error) {

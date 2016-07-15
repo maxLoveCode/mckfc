@@ -9,7 +9,12 @@
 #import "WorkDetailViewController.h"
 #import "orderGeneralReport.h"
 #import "WorkFlowCell.h"
+#import "WorkFlow.h"
 
+#import "ServerManager.h"
+#import "WorkDetail.h"
+
+#import "UIImageView+Webcache.h"
 #define itemHeight 44
 
 @interface WorkDetailViewController()<UITableViewDelegate, UITableViewDataSource>
@@ -19,6 +24,8 @@
 }
 
 @property (nonatomic,strong) UITableView* tableView;
+@property (nonatomic,strong) ServerManager* server;
+@property (nonatomic,strong) WorkDetail* detail;
 
 @end
 
@@ -29,7 +36,9 @@
 {
     self.view = self.tableView;
     titleArray = @[@"供应商名称",@"地块编号",@"土豆重量",@"发车时间",@"预计到达时间"];
-    statusArray = @[@"到厂",@"进厂",@"卸货",@"质检",@"出厂"];
+    
+    _server = [ServerManager sharedInstance];
+    [self requestDetail];
 }
 
 #pragma mark setter
@@ -54,40 +63,56 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(section == 0 || section == 2)
+    if(section == 0)
         return 5;
+    else if(section ==2)
+        return [statusArray count];
     else
         return 1;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //NSString *const reuseIdentifier = @"workRecord";
-    //UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
-    
     UITableViewCell* cell =[[UITableViewCell alloc] init];
     if (indexPath.section == 0) {
         orderGeneralReport* report = [[orderGeneralReport alloc] init];
         report.titleLabel.text = titleArray[indexPath.row];
         report.detailLabel.text = @"meiyoushuju";
         report.leftImageView.image = [UIImage imageNamed:titleArray[indexPath.row]];
+        if (indexPath.row == 0) {
+            report.detailLabel.text = _detail.vendorname;
+        }
+        else if(indexPath.row ==1){
+            report.detailLabel.text = _detail.fieldno;
+        }
+        else if(indexPath.row ==2){
+            report.detailLabel.text = [NSString stringWithFormat:@"%@吨", _detail.weight];
+        }
+        else if(indexPath.row ==3){
+            report.detailLabel.text = _detail.departuretime;
+        }
+        else if(indexPath.row ==4){
+            report.detailLabel.text = _detail.planarrivetime;
+        }
         return report;
     }
     else if(indexPath.section == 1){
         orderGeneralReport* report = [[orderGeneralReport alloc] init];
         report.detailLabel.textAlignment = NSTextAlignmentLeft;
-        report.detailLabel.text = @"meiyoushuju";
-        report.titleLabel.text = @"Max";
+        report.detailLabel.text = _detail.truckno;
+        report.titleLabel.text = _detail.driver;
         [report.leftImageView setFrame:CGRectMake(k_Margin, (itemHeight-30)/2, 30, 30)];
         report.leftImageView.layer.cornerRadius = itemHeight/2;
         report.leftImageView.layer.masksToBounds = YES;
+        
+        [report.leftImageView sd_setImageWithURL:[NSURL URLWithString:_detail.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         report.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return report;
     }
     else
     {
         WorkFlowCell* workFlow = [[WorkFlowCell alloc] init];
-        workFlow.titleLabel.text = statusArray[indexPath.row];
+        [workFlow setWorkFlow:statusArray[indexPath.row]];
         return workFlow;
     }
     return cell;
@@ -131,6 +156,31 @@
         return bgView;
     }
     return nil;
+}
+
+#pragma mark request web data
+-(void)requestDetail
+{
+    NSDictionary* params = @{@"token":_server.accessToken,
+                             @"transportid":_transportid};
+    
+    [_server GET:@"getOrderDetail" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSDictionary* data = responseObject[@"data"];
+        
+        NSLog(@"response%@", data);
+        NSError* error;
+        _detail = [MTLJSONAdapter modelOfClass:[WorkDetail class] fromJSONDictionary:data error:&error];
+        if (error) {
+            NSLog(@"%@",error);
+        }
+        statusArray = [MTLJSONAdapter modelsOfClass:[WorkFlow class] fromJSONArray:_detail.report error:&error];
+        if (error) {
+            NSLog(@"%@",error);
+        }
+        [self.tableView reloadData];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 

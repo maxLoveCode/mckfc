@@ -10,4 +10,6 @@
 
 @interface WorkDetailViewController : UIViewController
 
+@property (nonatomic, strong, nonnull) NSString* transportid;
+
 @end
