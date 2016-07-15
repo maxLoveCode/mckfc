@@ -23,7 +23,6 @@
 		252EF9C31D2E4F2300565D00 /* CommonMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9C21D2E4F2300565D00 /* CommonMenuView.m */; };
 		252EF9C61D2E6EED00565D00 /* QualityControlNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9C51D2E6EED00565D00 /* QualityControlNav.m */; };
 		252EF9C91D2E6F1000565D00 /* QualityControlHomePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9C81D2E6F1000565D00 /* QualityControlHomePage.m */; };
-		252EF9CE1D2E737D00565D00 /* TodoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9CD1D2E737D00565D00 /* TodoCell.m */; };
 		252EF9D31D2F4D2800565D00 /* WorkRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9D21D2F4D2800565D00 /* WorkRecordViewController.m */; };
 		252EF9D61D2F5C4100565D00 /* WorkRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9D51D2F5C4100565D00 /* WorkRecordCell.m */; };
 		252EF9D91D2F5D2400565D00 /* WorkStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9D81D2F5D2400565D00 /* WorkStatusView.m */; };
@@ -57,6 +56,8 @@
 		257DB7971D38B4C400C2227E /* workRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7961D38B4C400C2227E /* workRecord.m */; };
 		257DB79A1D38C9BF00C2227E /* WorkDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7991D38C9BF00C2227E /* WorkDetail.m */; };
 		257DB79D1D38D24000C2227E /* WorkFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB79C1D38D24000C2227E /* WorkFlow.m */; };
+		257DB7A61D38E91900C2227E /* TruckUnloadProcessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7A51D38E91900C2227E /* TruckUnloadProcessViewController.m */; };
+		257DB7A91D38EC0D00C2227E /* QualityCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7A81D38EC0D00C2227E /* QualityCheckViewController.m */; };
 		25B004931D1920E00018EEB1 /* QueueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004921D1920E00018EEB1 /* QueueViewController.m */; };
 		25B004991D1922970018EEB1 /* QRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004981D1922970018EEB1 /* QRCodeView.m */; };
 		25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFC1D17A53500C9CCBE /* LoadingNav.m */; };
@@ -126,8 +127,6 @@
 		252EF9C51D2E6EED00565D00 /* QualityControlNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QualityControlNav.m; sourceTree = "<group>"; };
 		252EF9C71D2E6F1000565D00 /* QualityControlHomePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QualityControlHomePage.h; sourceTree = "<group>"; };
 		252EF9C81D2E6F1000565D00 /* QualityControlHomePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QualityControlHomePage.m; sourceTree = "<group>"; };
-		252EF9CC1D2E737D00565D00 /* TodoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoCell.h; sourceTree = "<group>"; };
-		252EF9CD1D2E737D00565D00 /* TodoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoCell.m; sourceTree = "<group>"; };
 		252EF9D11D2F4D2800565D00 /* WorkRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkRecordViewController.h; sourceTree = "<group>"; };
 		252EF9D21D2F4D2800565D00 /* WorkRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkRecordViewController.m; sourceTree = "<group>"; };
 		252EF9D41D2F5C4100565D00 /* WorkRecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkRecordCell.h; sourceTree = "<group>"; };
@@ -196,6 +195,10 @@
 		257DB7991D38C9BF00C2227E /* WorkDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkDetail.m; sourceTree = "<group>"; };
 		257DB79B1D38D24000C2227E /* WorkFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkFlow.h; sourceTree = "<group>"; };
 		257DB79C1D38D24000C2227E /* WorkFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkFlow.m; sourceTree = "<group>"; };
+		257DB7A41D38E91900C2227E /* TruckUnloadProcessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TruckUnloadProcessViewController.h; sourceTree = "<group>"; };
+		257DB7A51D38E91900C2227E /* TruckUnloadProcessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TruckUnloadProcessViewController.m; sourceTree = "<group>"; };
+		257DB7A71D38EC0D00C2227E /* QualityCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QualityCheckViewController.h; sourceTree = "<group>"; };
+		257DB7A81D38EC0D00C2227E /* QualityCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QualityCheckViewController.m; sourceTree = "<group>"; };
 		25B004911D1920E00018EEB1 /* QueueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueViewController.h; sourceTree = "<group>"; };
 		25B004921D1920E00018EEB1 /* QueueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueViewController.m; sourceTree = "<group>"; };
 		25B004971D1922970018EEB1 /* QRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeView.h; sourceTree = "<group>"; };
@@ -392,6 +395,10 @@
 				252EF9C51D2E6EED00565D00 /* QualityControlNav.m */,
 				252EF9C71D2E6F1000565D00 /* QualityControlHomePage.h */,
 				252EF9C81D2E6F1000565D00 /* QualityControlHomePage.m */,
+				257DB7A41D38E91900C2227E /* TruckUnloadProcessViewController.h */,
+				257DB7A51D38E91900C2227E /* TruckUnloadProcessViewController.m */,
+				257DB7A71D38EC0D00C2227E /* QualityCheckViewController.h */,
+				257DB7A81D38EC0D00C2227E /* QualityCheckViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -399,8 +406,6 @@
 		252EF9CF1D2E738300565D00 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				252EF9CC1D2E737D00565D00 /* TodoCell.h */,
-				252EF9CD1D2E737D00565D00 /* TodoCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -918,9 +923,9 @@
 				257DB79A1D38C9BF00C2227E /* WorkDetail.m in Sources */,
 				252EF9E51D33407900565D00 /* MCDatePickerView.m in Sources */,
 				252EF9BB1D2E46A500565D00 /* SecurityHomePage.m in Sources */,
+				257DB7A91D38EC0D00C2227E /* QualityCheckViewController.m in Sources */,
 				2512A1C41D111B3E00ED884B /* ServerManager.m in Sources */,
 				25CECB061D17BFC600C9CCBE /* MapViewController.m in Sources */,
-				252EF9CE1D2E737D00565D00 /* TodoCell.m in Sources */,
 				25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */,
 				25CECB091D18DE7C00C9CCBE /* TranspotationPlanViewController.m in Sources */,
 				25B004931D1920E00018EEB1 /* QueueViewController.m in Sources */,
@@ -935,6 +940,7 @@
 				252EF9EE1D336F4400565D00 /* Field.m in Sources */,
 				256F39811D12836900175E5A /* SignUpView.m in Sources */,
 				257DB79D1D38D24000C2227E /* WorkFlow.m in Sources */,
+				257DB7A61D38E91900C2227E /* TruckUnloadProcessViewController.m in Sources */,
 				2512A1CD1D1130B100ED884B /* LoginView.m in Sources */,
 				2527ECCE1D35D8AC00350DC6 /* CarPlateRegionSelector.m in Sources */,
 				252EF9F11D337BA000565D00 /* TransportDetail.m in Sources */,

@@ -9,6 +9,7 @@
 #import "CommonMenuView.h"
 
 #define menuItemWidth kScreen_Width/3 -2*k_Margin
+#define imageSize 60
 
 @interface CommonMenuView ()<UICollectionViewDelegate, UICollectionViewDataSource>
 {
@@ -78,9 +79,9 @@
 {
     UICollectionViewCell* cell = [self dequeueReusableCellWithReuseIdentifier:@"report" forIndexPath:indexPath];
     
-    CGRect frame = CGRectMake((CGRectGetWidth(cell.contentView.frame)-100)/2, k_Margin/2, 100, 100);
+    CGRect frame = CGRectMake((CGRectGetWidth(cell.contentView.frame)-100)/2, k_Margin/2, imageSize, imageSize);
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:frame];
-    [imageView setImage:[UIImage imageNamed:@"default_avatar"]];
+    [imageView setImage:[UIImage imageNamed:_titleArray[indexPath.item]]];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame), CGRectGetWidth(cell.contentView.frame), 15)];
     label.text = _titleArray[indexPath.item];

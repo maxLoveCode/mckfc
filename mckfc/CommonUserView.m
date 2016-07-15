@@ -51,8 +51,12 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"mainTable" forIndexPath:indexPath];
+    for (UIView* subview in [cell.contentView subviews]) {
+        [subview removeFromSuperview];
+    }
     if (indexPath.section ==0) {
         [self firstSection:cell];
+        return cell;
     }
     else
     {

@@ -15,6 +15,10 @@
 #import "WorkDetail.h"
 
 #import "UIImageView+Webcache.h"
+
+#import "TruckUnloadProcessViewController.h"
+#import "QualityCheckViewController.h"
+
 #define itemHeight 44
 
 @interface WorkDetailViewController()<UITableViewDelegate, UITableViewDataSource>
@@ -35,6 +39,7 @@
 -(void)viewDidLoad
 {
     self.view = self.tableView;
+    self.title = @"记录详情";  
     titleArray = @[@"供应商名称",@"地块编号",@"土豆重量",@"发车时间",@"预计到达时间"];
     
     _server = [ServerManager sharedInstance];
@@ -156,6 +161,20 @@
         return bgView;
     }
     return nil;
+}
+
+#pragma mark selection
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    WorkFlow* workFlow = statusArray[indexPath.row];
+    if ([workFlow.type isEqualToString:@"enter"]) {
+        TruckUnloadProcessViewController* unloadVC = [[TruckUnloadProcessViewController alloc] init];
+        [self.navigationController pushViewController:unloadVC animated:YES];
+    }
+    else if([workFlow.type isEqualToString:@"unload"]){
+        QualityCheckViewController* qcVC = [[QualityCheckViewController alloc] init];
+        [self.navigationController pushViewController:qcVC animated:YES];
+    }
 }
 
 #pragma mark request web data
