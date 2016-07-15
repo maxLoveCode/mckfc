@@ -9,13 +9,16 @@
 #import "SecurityHomePage.h"
 #import "CommonUserView.h"
 #import "CommonMenuView.h"
+#import "AlertHUDView.h"
+
 #import "WorkRecordViewController.h"
 #import "QRCodeReaderViewController.h"
+#import "LoginNav.h"
 
 #import "User.h"
 #import "ServerManager.h"
 
-#import "AlertHUDView.h"
+
 
 @interface SecurityHomePage ()<CommonUserViewDelegate, QRCodeReaderDelegate, HUDViewDelegate>
 
@@ -66,7 +69,16 @@
             NSDictionary* data = responseObject[@"data"];
             _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:data error:&error];
             _userView.user = _user;
-            [_userView.mainTableView reloadData];
+            
+            if (_user.type != [MKUSER_TYPE_SECURITY integerValue]) {
+                LoginNav* loginVC = [[LoginNav alloc] init];
+                [self presentViewController:loginVC animated:NO completion:^{
+                }];
+            }
+            else
+            {
+                [_userView.mainTableView reloadData];
+            }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
         }];

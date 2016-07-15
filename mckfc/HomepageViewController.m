@@ -60,7 +60,7 @@
             NSDictionary* data = responseObject[@"data"];
             _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:data error:&error];
             [_userview setContentByUser:_user];
-            NSLog(@"%@",_user);
+    
             [self checkIfNeedsToUpdateUser];
             [self checkIfNeedsToContinue];
             
