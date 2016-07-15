@@ -32,7 +32,7 @@
         
         [self addSubview:self.label];
         [self addSubview:self.signUp];
-        [self addSubview:self.fogetPassword];
+        //[self addSubview:self.fogetPassword];
     }
     return self;
 }

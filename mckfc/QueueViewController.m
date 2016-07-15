@@ -226,7 +226,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDictionary* content = @{@"generatetime":[dateFormatter stringFromDate:now],
-                              @"transportid":[NSString stringWithFormat:@"%lu",_transportID]};
+                              @"transportid":[NSString stringWithFormat:@"%lu",(long)_transportID]};
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:content options:NSJSONWritingPrettyPrinted error:nil];
     NSString* data = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     [self.QRCode setQRCode:data];
@@ -235,7 +235,7 @@
 -(void)requestQueueInfo
 {
     NSDictionary* params = @{@"token":_server.accessToken,
-                             @"id":[NSString stringWithFormat:@"%lu",_transportID]};
+                             @"id":[NSString stringWithFormat:@"%lu",(long)_transportID]};
     [_server GET:@"getQueueDetail" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSLog(@"response:%@", responseObject);
         NSDictionary* data = responseObject[@"data"];

@@ -325,10 +325,10 @@
 {
     NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token":_server.accessToken} copyItems:YES];
     if (_stats.supplier) {
-        [params addEntriesFromDictionary:@{@"vendorid":[NSString stringWithFormat:@"%lu",_stats.supplier.vendorID]}];
+        [params addEntriesFromDictionary:@{@"vendorid":[NSString stringWithFormat:@"%lu",(unsigned long)_stats.supplier.vendorID]}];
     }
     if (_stats.field) {
-        [params addEntriesFromDictionary:@{@"fieldid":[NSString stringWithFormat:@"%lu",_stats.field.fieldID]}];
+        [params addEntriesFromDictionary:@{@"fieldid":[NSString stringWithFormat:@"%lu",(unsigned long)_stats.field.fieldID]}];
     }
     if (_stats.weight) {
         [params addEntriesFromDictionary:@{@"weight":[NSString stringWithFormat:@"%@",_stats.weight]}];

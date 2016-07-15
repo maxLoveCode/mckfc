@@ -1094,7 +1094,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ee2d90fd-b582-4dd1-a02d-dbbc296c2388";
+				PROVISIONING_PROFILE = "bfe8e2d1-4b17-423b-8964-3260e89d3d11";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1109,7 +1110,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ee2d90fd-b582-4dd1-a02d-dbbc296c2388";
+				PROVISIONING_PROFILE = "bfe8e2d1-4b17-423b-8964-3260e89d3d11";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

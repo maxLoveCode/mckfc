@@ -175,7 +175,7 @@
 
 -(void)mapView:(MapViewController *)mapView LocationOnLatitude:(double)latitude Longtitude:(double)longtitude address:(NSString *)address distance:(double)distance expecttime:(long)expecttime
 {
-    NSDictionary* params = @{@"transportid": [NSString stringWithFormat:@"%lu",_detail.transportID],
+    NSDictionary* params = @{@"transportid": [NSString stringWithFormat:@"%lu",(long)_detail.transportID],
                              @"pointx":[NSString stringWithFormat:@"%f",longtitude],
                              @"pointy":[NSString stringWithFormat:@"%f",latitude],
                              @"expecttime":[NSString stringWithFormat:@"%ld",expecttime],
@@ -224,7 +224,7 @@
 {
     NSDictionary* params;
     params = @{@"token": _server.accessToken,
-               @"transportid":[NSString stringWithFormat:@"%lu",_detail.transportID]};
+               @"transportid":[NSString stringWithFormat:@"%lu",(long)_detail.transportID]};
     [_server POST:@"cancelTransport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         [self.mapVC.timer invalidate];
         [self.navigationController popToRootViewControllerAnimated:YES];

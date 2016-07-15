@@ -178,8 +178,6 @@ updatingLocation:(BOOL)updatingLocation
 {
     if(response.regeocode != nil)
     {
-        NSString* cityCode = response.regeocode.addressComponent.citycode;
-        
         [self.delegate mapView:self LocationOnLatitude:_userLocation.coordinate.latitude Longtitude:_userLocation.coordinate.longitude address:response.regeocode.formattedAddress distance:_path.distance expecttime:_path.duration*1000];
     }
 }
