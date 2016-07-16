@@ -169,12 +169,23 @@
     WorkFlow* workFlow = statusArray[indexPath.row];
     if ([workFlow.type isEqualToString:@"enter"]) {
         TruckUnloadProcessViewController* unloadVC = [[TruckUnloadProcessViewController alloc] init];
+        [unloadVC setWorkFlow:workFlow];
         [self.navigationController pushViewController:unloadVC animated:YES];
     }
     else if([workFlow.type isEqualToString:@"unload"]){
         QualityCheckViewController* qcVC = [[QualityCheckViewController alloc] init];
+        [qcVC setWorkFlow:workFlow];
         [self.navigationController pushViewController:qcVC animated:YES];
     }
+    else if([workFlow.type isEqualToString:@"arrive"]){
+    }
+    else if([workFlow.type isEqualToString:@"checkone"]){
+    }
+    else if([workFlow.type isEqualToString:@"checktwo"]){
+    }
+    else if([workFlow.type isEqualToString:@"leave"]){
+    }
+
 }
 
 #pragma mark request web data

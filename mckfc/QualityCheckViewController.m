@@ -7,6 +7,14 @@
 //
 
 #import "QualityCheckViewController.h"
+#import "LoadingCell.h"
+
+@interface QualityCheckViewController ()
+{
+    NSArray* criteria;
+}
+
+@end
 
 @implementation QualityCheckViewController
 
@@ -22,6 +30,8 @@
     [self.view addSubview:self.confirm];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    criteria = @[@"无异物",@"无油",@"无化学物品",@"无异味"];
 }
 
 -(UITableView *)tableView
@@ -66,9 +76,45 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"weight"];
-    
+    LoadingCell* cell = [[LoadingCell alloc] init];
+    if (indexPath.section == 0) {
+        
+    }
+    else
+    {
+        if (indexPath.row != 0) {
+            cell.style = LoadingCellStyleBoolean;
+            cell.titleLabel.text = criteria[indexPath.row-1];
+            
+            UIImageView* view = (UIImageView*)cell.accessoryView;
+            if (cell.tag == 0) {
+                view.image = [UIImage imageNamed:@"check"];
+                
+            }
+            else
+            {
+                view.image = [UIImage imageNamed:@"uncheck"];
+            }
+            cell.accessoryView = view;
+        }
+        else
+        {
+            cell.style = LoadingCellStylePlain;
+            cell.titleLabel.text = @"车辆检查";
+            cell.leftImageView.image = [UIImage imageNamed:@"装车前车辆检查"];
+        }
+    }
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    LoadingCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (cell.style == LoadingCellStyleBoolean) {
+        cell.tag = !cell.tag;
+        NSLog(@"%lu",(long)cell.tag);
+    }
+    [tableView reloadData];
 }
 
 #pragma mark header and footers

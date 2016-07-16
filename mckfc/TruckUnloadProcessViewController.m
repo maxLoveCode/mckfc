@@ -7,6 +7,7 @@
 //
 
 #import "TruckUnloadProcessViewController.h"
+#import "LoadingCell.h"
 
 
 #define itemHeight 44
@@ -18,6 +19,7 @@
 
 -(void)viewDidLoad
 {
+    [super viewDidLoad];
     self.title = @"进厂称重";
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.confirm];
@@ -65,7 +67,20 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"weight"];
+    LoadingCell* cell = [[LoadingCell alloc] init];
+    if (indexPath.row == 0) {
+        cell.style = LoadingCellStylePlain;
+        cell.titleLabel.text = @"进场时间";
+        cell.leftImageView.image = [UIImage imageNamed:@"土豆重量"];
+        cell.detailLabel.text = self.workFlow.time;
+    }
+    else
+    {
+        cell.style = LoadingCellStyleDigitInput;
+        cell.titleLabel.text = @"土豆重量";
+        cell.leftImageView.image = [UIImage imageNamed:@"土豆重量"];
+    }
+    
     
     return cell;
 }

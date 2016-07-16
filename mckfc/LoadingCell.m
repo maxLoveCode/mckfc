@@ -64,7 +64,7 @@
 -(UIImageView *)leftImageView
 {
     if (!_leftImageView) {
-        _leftImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star"]];
+        _leftImageView = [[UIImageView alloc] init];
     }
     return _leftImageView;
 }
@@ -102,7 +102,8 @@
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     else if (style == LoadingCellStyleBoolean){
-        self.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"star"]];
+        self.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"uncheck"]];
+        self.titleLabel.textColor = COLOR_TEXT_GRAY;
     }
     else if(style == LoadingCellStyleTextField){
         [self addSubview:self.textField];
@@ -115,6 +116,10 @@
         kg.text = @"吨";
         self.accessoryType = UITableViewCellAccessoryNone;
         self.accessoryView = kg;
+    }
+    else if(style == LoadingCellStylePlain)
+    {
+        [self addSubview:self.detailLabel];
     }
 }
 
@@ -132,6 +137,10 @@
     }else if(self.style == LoadingCellStyleDigitInput){
         [self.digitInput setFrame:self.detailLabel.frame];
     }
+    else if(self.style == LoadingCellStylePlain){
+        [self.detailLabel setFrame:CGRectMake(CGRectGetMaxX(self.titleLabel.frame), 0, kScreen_Width-CGRectGetMaxX(self.titleLabel.frame)-k_Margin, itemHeight)];
+    }
 }
+
 
 @end

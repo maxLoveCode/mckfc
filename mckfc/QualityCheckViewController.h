@@ -6,9 +6,9 @@
 //  Copyright © 2016年 Shanghai Impression Culture Communication Co.,Ltd. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "WorkFlowInterface.h"
 
-@interface QualityCheckViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface QualityCheckViewController : WorkFlowInterface<UITableViewDelegate, UITableViewDataSource>
 
 
 @property (nonatomic, strong) UITableView* tableView;

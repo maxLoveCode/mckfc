@@ -82,8 +82,9 @@
     CGRect frame = CGRectMake((CGRectGetWidth(cell.contentView.frame)-100)/2, k_Margin/2, imageSize, imageSize);
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:frame];
     [imageView setImage:[UIImage imageNamed:_titleArray[indexPath.item]]];
+    imageView.center = cell.contentView.center;
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame), CGRectGetWidth(cell.contentView.frame), 15)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame)+5, CGRectGetWidth(cell.contentView.frame), 15)];
     label.text = _titleArray[indexPath.item];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = COLOR_WithHex(0x565656);

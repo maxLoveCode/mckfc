@@ -6,9 +6,9 @@
 //  Copyright © 2016年 Shanghai Impression Culture Communication Co.,Ltd. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "WorkFlowInterface.h"
 
-@interface TruckUnloadProcessViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface TruckUnloadProcessViewController : WorkFlowInterface<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) UIButton* confirm;
