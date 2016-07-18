@@ -59,6 +59,10 @@
 		257DB7A61D38E91900C2227E /* TruckUnloadProcessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7A51D38E91900C2227E /* TruckUnloadProcessViewController.m */; };
 		257DB7A91D38EC0D00C2227E /* QualityCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7A81D38EC0D00C2227E /* QualityCheckViewController.m */; };
 		257DB7AC1D39E0D700C2227E /* WorkFlowInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7AB1D39E0D700C2227E /* WorkFlowInterface.m */; };
+		257DB7AF1D3C696F00C2227E /* InspectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7AE1D3C696F00C2227E /* InspectionViewController.m */; };
+		257DB7B21D3C71AF00C2227E /* InspectionReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7B11D3C71AF00C2227E /* InspectionReport.m */; };
+		257DB7B51D3C821E00C2227E /* DynamicHeightTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7B41D3C821E00C2227E /* DynamicHeightTextCell.m */; };
+		257DB7B81D3CC7FF00C2227E /* rejectionSelectableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7B71D3CC7FF00C2227E /* rejectionSelectableCell.m */; };
 		25B004931D1920E00018EEB1 /* QueueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004921D1920E00018EEB1 /* QueueViewController.m */; };
 		25B004991D1922970018EEB1 /* QRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004981D1922970018EEB1 /* QRCodeView.m */; };
 		25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFC1D17A53500C9CCBE /* LoadingNav.m */; };
@@ -202,6 +206,14 @@
 		257DB7A81D38EC0D00C2227E /* QualityCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QualityCheckViewController.m; sourceTree = "<group>"; };
 		257DB7AA1D39E0D700C2227E /* WorkFlowInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkFlowInterface.h; sourceTree = "<group>"; };
 		257DB7AB1D39E0D700C2227E /* WorkFlowInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkFlowInterface.m; sourceTree = "<group>"; };
+		257DB7AD1D3C696F00C2227E /* InspectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectionViewController.h; sourceTree = "<group>"; };
+		257DB7AE1D3C696F00C2227E /* InspectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectionViewController.m; sourceTree = "<group>"; };
+		257DB7B01D3C71AF00C2227E /* InspectionReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectionReport.h; sourceTree = "<group>"; };
+		257DB7B11D3C71AF00C2227E /* InspectionReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectionReport.m; sourceTree = "<group>"; };
+		257DB7B31D3C821E00C2227E /* DynamicHeightTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicHeightTextCell.h; sourceTree = "<group>"; };
+		257DB7B41D3C821E00C2227E /* DynamicHeightTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicHeightTextCell.m; sourceTree = "<group>"; };
+		257DB7B61D3CC7FF00C2227E /* rejectionSelectableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rejectionSelectableCell.h; sourceTree = "<group>"; };
+		257DB7B71D3CC7FF00C2227E /* rejectionSelectableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rejectionSelectableCell.m; sourceTree = "<group>"; };
 		25B004911D1920E00018EEB1 /* QueueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueViewController.h; sourceTree = "<group>"; };
 		25B004921D1920E00018EEB1 /* QueueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueViewController.m; sourceTree = "<group>"; };
 		25B004971D1922970018EEB1 /* QRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeView.h; sourceTree = "<group>"; };
@@ -387,6 +399,8 @@
 			children = (
 				252EF9CF1D2E738300565D00 /* View */,
 				252EF9CB1D2E710400565D00 /* Controller */,
+				257DB7B01D3C71AF00C2227E /* InspectionReport.h */,
+				257DB7B11D3C71AF00C2227E /* InspectionReport.m */,
 			);
 			name = QualityControl;
 			sourceTree = "<group>";
@@ -404,6 +418,8 @@
 				257DB7A81D38EC0D00C2227E /* QualityCheckViewController.m */,
 				257DB7AA1D39E0D700C2227E /* WorkFlowInterface.h */,
 				257DB7AB1D39E0D700C2227E /* WorkFlowInterface.m */,
+				257DB7AD1D3C696F00C2227E /* InspectionViewController.h */,
+				257DB7AE1D3C696F00C2227E /* InspectionViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -411,6 +427,10 @@
 		252EF9CF1D2E738300565D00 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				257DB7B31D3C821E00C2227E /* DynamicHeightTextCell.h */,
+				257DB7B41D3C821E00C2227E /* DynamicHeightTextCell.m */,
+				257DB7B61D3CC7FF00C2227E /* rejectionSelectableCell.h */,
+				257DB7B71D3CC7FF00C2227E /* rejectionSelectableCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -929,11 +949,14 @@
 				252EF9E51D33407900565D00 /* MCDatePickerView.m in Sources */,
 				252EF9BB1D2E46A500565D00 /* SecurityHomePage.m in Sources */,
 				257DB7A91D38EC0D00C2227E /* QualityCheckViewController.m in Sources */,
+				257DB7B81D3CC7FF00C2227E /* rejectionSelectableCell.m in Sources */,
 				2512A1C41D111B3E00ED884B /* ServerManager.m in Sources */,
 				25CECB061D17BFC600C9CCBE /* MapViewController.m in Sources */,
 				25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */,
 				25CECB091D18DE7C00C9CCBE /* TranspotationPlanViewController.m in Sources */,
+				257DB7AF1D3C696F00C2227E /* InspectionViewController.m in Sources */,
 				25B004931D1920E00018EEB1 /* QueueViewController.m in Sources */,
+				257DB7B51D3C821E00C2227E /* DynamicHeightTextCell.m in Sources */,
 				256F39841D12847D00175E5A /* SignUpViewController.m in Sources */,
 				2534B9951D23993400A82E0A /* LoadingStats.m in Sources */,
 				256F39A81D17891A00175E5A /* MCStarView.m in Sources */,
@@ -968,6 +991,7 @@
 				252B63261D1CDC7700C108C0 /* NSString+MD5.m in Sources */,
 				2512A1C91D112FDE00ED884B /* LoginViewController.m in Sources */,
 				25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */,
+				257DB7B21D3C71AF00C2227E /* InspectionReport.m in Sources */,
 				2512A1D01D113C6200ED884B /* HomepageViewController.m in Sources */,
 				252EF9C31D2E4F2300565D00 /* CommonMenuView.m in Sources */,
 				251175461D10EB6B00C3CE91 /* UserView.m in Sources */,

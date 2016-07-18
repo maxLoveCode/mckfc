@@ -51,6 +51,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"mainTable" forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     for (UIView* subview in [cell.contentView subviews]) {
         [subview removeFromSuperview];
     }
@@ -69,7 +70,7 @@
         {
              _menu = [[CommonMenuView alloc] initWithStyle:MenuViewStyleQualityCheck];
         }
-        [_menu setFrame:CGRectOffset(_menu.frame, 0, CGRectGetMidY(cell.contentView.frame)-CGRectGetMidY(_menu.frame))];
+        [_menu setFrame:CGRectOffset(_menu.frame, 0, topMargin/2)];
         _menu.menudelegate = self;
         [cell.contentView addSubview:_menu];
     }
@@ -82,9 +83,10 @@
         return [self firstSectionHeight];
     }
     else{
-        return kScreen_Height-[self firstSectionHeight]
-        - tableView.sectionFooterHeight*2-tableView.sectionHeaderHeight*2
-        - 64 - 75;
+        return topMargin*2+2*kScreen_Width/3;
+//        return kScreen_Height-[self firstSectionHeight]
+//        - tableView.sectionFooterHeight*2-tableView.sectionHeaderHeight*2
+//        - 64 - 75;
     }
 }
 
@@ -94,7 +96,12 @@
         return 0.01;
     }
     else
-        return tableView.sectionHeaderHeight;
+        return 0.01;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 20;
 }
 
 #pragma mark firstSection

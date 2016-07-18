@@ -131,7 +131,6 @@
     [self.leftImageView setFrame:imageframe];
     [self.titleLabel setFrame:CGRectMake(CGRectGetMaxX(imageframe), 0, 90, itemHeight)];
     [self.detailLabel setFrame:CGRectMake(CGRectGetMaxX(self.titleLabel.frame), 0, kScreen_Width-CGRectGetMaxX(self.titleLabel.frame)-50, itemHeight)];
-    
     if (self.style == LoadingCellStyleTextField) {
         [self.textField setFrame:CGRectMake(k_Margin, itemHeight-10, kScreen_Width-2*k_Margin, itemHeight)];
     }else if(self.style == LoadingCellStyleDigitInput){

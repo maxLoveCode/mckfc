@@ -18,6 +18,7 @@
 
 #import "TruckUnloadProcessViewController.h"
 #import "QualityCheckViewController.h"
+#import "InspectionViewController.h"
 
 #define itemHeight 44
 
@@ -152,7 +153,7 @@
         
         if(section == 0)
         {
-            label.text = @"订单编号：003040591";
+            label.text = [NSString stringWithFormat:@"订单编号：%@",_detail.transportno];
         }
         else
         {
@@ -180,8 +181,16 @@
     else if([workFlow.type isEqualToString:@"arrive"]){
     }
     else if([workFlow.type isEqualToString:@"checkone"]){
+        InspectionViewController* inspectVC = [[InspectionViewController alloc] init];
+        [inspectVC setTransportid:self.transportid];
+        [inspectVC setWorkFlow:workFlow];
+        [self.navigationController pushViewController:inspectVC animated:YES];
     }
     else if([workFlow.type isEqualToString:@"checktwo"]){
+        InspectionViewController* inspectVC = [[InspectionViewController alloc] init];
+        [inspectVC setTransportid:self.transportid];
+        [inspectVC setWorkFlow:workFlow];
+        [self.navigationController pushViewController:inspectVC animated:YES];
     }
     else if([workFlow.type isEqualToString:@"leave"]){
     }

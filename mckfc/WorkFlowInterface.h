@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "WorkFlow.h"
 
-@interface WorkFlowInterface : UIViewController
+@interface WorkFlowInterface : UIViewController<UITableViewDelegate, UITableViewDataSource>
+
 
 @property (nonatomic, strong) WorkFlow* workFlow;
 

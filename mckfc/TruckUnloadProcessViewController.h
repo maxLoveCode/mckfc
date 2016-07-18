@@ -8,8 +8,7 @@
 
 #import "WorkFlowInterface.h"
 
-@interface TruckUnloadProcessViewController : WorkFlowInterface<UITableViewDelegate, UITableViewDataSource>
-
+@interface TruckUnloadProcessViewController : WorkFlowInterface
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) UIButton* confirm;
 
