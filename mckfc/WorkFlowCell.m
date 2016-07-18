@@ -20,6 +20,7 @@
     [self.contentView addSubview:self.indicator];
     [self.contentView addSubview:self.timeLabel];
     
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     return self;
 }
 

@@ -167,35 +167,46 @@
 #pragma mark selection
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    WorkFlow* workFlow = statusArray[indexPath.row];
-    if ([workFlow.type isEqualToString:@"enter"]) {
-        TruckUnloadProcessViewController* unloadVC = [[TruckUnloadProcessViewController alloc] init];
-        [unloadVC setWorkFlow:workFlow];
-        [self.navigationController pushViewController:unloadVC animated:YES];
-    }
-    else if([workFlow.type isEqualToString:@"unload"]){
-        QualityCheckViewController* qcVC = [[QualityCheckViewController alloc] init];
-        [qcVC setWorkFlow:workFlow];
-        [qcVC setTransportid:self.transportid];
-        [self.navigationController pushViewController:qcVC animated:YES];
-    }
-    else if([workFlow.type isEqualToString:@"arrive"]){
-    }
-    else if([workFlow.type isEqualToString:@"checkone"]){
-        InspectionViewController* inspectVC = [[InspectionViewController alloc] init];
-        [inspectVC setTransportid:self.transportid];
-        [inspectVC setWorkFlow:workFlow];
-        [self.navigationController pushViewController:inspectVC animated:YES];
-    }
-    else if([workFlow.type isEqualToString:@"checktwo"]){
-        InspectionViewController* inspectVC = [[InspectionViewController alloc] init];
-        [inspectVC setTransportid:self.transportid];
-        [inspectVC setWorkFlow:workFlow];
-        [self.navigationController pushViewController:inspectVC animated:YES];
-    }
-    else if([workFlow.type isEqualToString:@"leave"]){
-    }
+    if (indexPath.section == 2) {
+        WorkFlow* workFlow = statusArray[indexPath.row];
+        if ([workFlow.type isEqualToString:@"enter"]) {
+            TruckUnloadProcessViewController* unloadVC = [[TruckUnloadProcessViewController alloc] init];
+            [unloadVC setWorkFlow:workFlow];
+            if (workFlow.auth) {
+                [self.navigationController pushViewController:unloadVC animated:YES];
+            }
+        }
+        else if([workFlow.type isEqualToString:@"unload"]){
+            QualityCheckViewController* qcVC = [[QualityCheckViewController alloc] init];
+            [qcVC setWorkFlow:workFlow];
+            [qcVC setTransportid:self.transportid];
+            if (workFlow.auth) {
+                [self.navigationController pushViewController:qcVC animated:YES];
+            }
+        }
+        else if([workFlow.type isEqualToString:@"arrive"]){
+        }
+        else if([workFlow.type isEqualToString:@"checkone"]){
+            InspectionViewController* inspectVC = [[InspectionViewController alloc] init];
+            [inspectVC setTransportid:self.transportid];
+            [inspectVC setWorkFlow:workFlow];
+            if (workFlow.ischecked || workFlow.auth) {
+                [self.navigationController pushViewController:inspectVC animated:YES];
+            }
+        }
+        else if([workFlow.type isEqualToString:@"checktwo"]){
+            InspectionViewController* inspectVC = [[InspectionViewController alloc] init];
+            [inspectVC setTransportid:self.transportid];
+            [inspectVC setWorkFlow:workFlow];
+            if (workFlow.ischecked || workFlow.auth) {
+                [self.navigationController pushViewController:inspectVC animated:YES];
+            }
+        }
+        else if([workFlow.type isEqualToString:@"leave"]){
+        }
 
+    }
+    
 }
 
 #pragma mark request web data

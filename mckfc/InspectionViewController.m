@@ -43,6 +43,9 @@
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
+    if (!self.workFlow.auth) {
+        self.tableView.allowsSelection = NO;
+    }
     _server = [ServerManager sharedInstance];
     [self requestInspectionReport];
 }
@@ -133,6 +136,9 @@
         else if(indexPath.row ==1)
         {
             DynamicHeightTextCell* cell = [[DynamicHeightTextCell alloc] init];
+            if (!self.workFlow.auth) {
+                cell.contentLabel.userInteractionEnabled = NO;
+            }
             cell.contentLabel.delegate = self;
             cell.titleLabel.text = @"检验成果:";
             cell.contentLabel.text = _insepection.result;
@@ -147,6 +153,11 @@
         else
         {
             DynamicHeightTextCell* cell = [[DynamicHeightTextCell alloc] init];
+            
+            if (!self.workFlow.auth) {
+                cell.contentLabel.userInteractionEnabled = NO;
+            }
+            
             cell.contentLabel.delegate = self;
             cell.titleLabel.text = @"情况说明:";
             cell.contentLabel.text = _insepection.comments;

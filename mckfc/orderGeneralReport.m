@@ -17,6 +17,8 @@
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.leftImageView];
     [self.contentView addSubview:self.detailLabel];
+    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     return self;
 }
 
