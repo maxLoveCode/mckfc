@@ -14,6 +14,9 @@
 		2512A1D01D113C6200ED884B /* HomepageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2512A1CF1D113C6200ED884B /* HomepageViewController.m */; };
 		251F378B1D26447D00B423D1 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 251F378A1D26447D00B423D1 /* Report.m */; };
 		251F378F1D26698C00B423D1 /* ReportCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 251F378E1D26698C00B423D1 /* ReportCollectionView.m */; };
+		2525CF271D3CDD5000F3079F /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = 2525CF261D3CDD5000F3079F /* Store.m */; };
+		2525CF2B1D3CDF3A00F3079F /* StoreReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 2525CF2A1D3CDF3A00F3079F /* StoreReport.m */; };
+		2525CF2E1D3CE59100F3079F /* TODOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2525CF2D1D3CE59100F3079F /* TODOViewController.m */; };
 		2527ECCB1D350C8C00350DC6 /* rightNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2527ECCA1D350C8C00350DC6 /* rightNavigationItem.m */; };
 		2527ECCE1D35D8AC00350DC6 /* CarPlateRegionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2527ECCD1D35D8AC00350DC6 /* CarPlateRegionSelector.m */; };
 		252B63261D1CDC7700C108C0 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 252B63251D1CDC7700C108C0 /* NSString+MD5.m */; };
@@ -114,6 +117,12 @@
 		251F378A1D26447D00B423D1 /* Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Report.m; sourceTree = "<group>"; };
 		251F378D1D26698C00B423D1 /* ReportCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportCollectionView.h; sourceTree = "<group>"; };
 		251F378E1D26698C00B423D1 /* ReportCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportCollectionView.m; sourceTree = "<group>"; };
+		2525CF251D3CDD5000F3079F /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
+		2525CF261D3CDD5000F3079F /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
+		2525CF291D3CDF3A00F3079F /* StoreReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreReport.h; sourceTree = "<group>"; };
+		2525CF2A1D3CDF3A00F3079F /* StoreReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreReport.m; sourceTree = "<group>"; };
+		2525CF2C1D3CE59100F3079F /* TODOViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TODOViewController.h; sourceTree = "<group>"; };
+		2525CF2D1D3CE59100F3079F /* TODOViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TODOViewController.m; sourceTree = "<group>"; };
 		2527ECC91D350C8C00350DC6 /* rightNavigationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rightNavigationItem.h; sourceTree = "<group>"; };
 		2527ECCA1D350C8C00350DC6 /* rightNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rightNavigationItem.m; sourceTree = "<group>"; };
 		2527ECCC1D35D8AC00350DC6 /* CarPlateRegionSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarPlateRegionSelector.h; sourceTree = "<group>"; };
@@ -353,6 +362,19 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		2525CF281D3CDF1D00F3079F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				257DB7B01D3C71AF00C2227E /* InspectionReport.h */,
+				257DB7B11D3C71AF00C2227E /* InspectionReport.m */,
+				2525CF251D3CDD5000F3079F /* Store.h */,
+				2525CF261D3CDD5000F3079F /* Store.m */,
+				2525CF291D3CDF3A00F3079F /* StoreReport.h */,
+				2525CF2A1D3CDF3A00F3079F /* StoreReport.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		252B63231D1CDC0A00C108C0 /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,8 +421,7 @@
 			children = (
 				252EF9CF1D2E738300565D00 /* View */,
 				252EF9CB1D2E710400565D00 /* Controller */,
-				257DB7B01D3C71AF00C2227E /* InspectionReport.h */,
-				257DB7B11D3C71AF00C2227E /* InspectionReport.m */,
+				2525CF281D3CDF1D00F3079F /* Model */,
 			);
 			name = QualityControl;
 			sourceTree = "<group>";
@@ -442,6 +463,8 @@
 				252EF9D21D2F4D2800565D00 /* WorkRecordViewController.m */,
 				252EF9DA1D2FA51C00565D00 /* WorkDetailViewController.h */,
 				252EF9DB1D2FA51C00565D00 /* WorkDetailViewController.m */,
+				2525CF2C1D3CE59100F3079F /* TODOViewController.h */,
+				2525CF2D1D3CE59100F3079F /* TODOViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -943,6 +966,7 @@
 				252EF9C01D2E482400565D00 /* CommonUserView.m in Sources */,
 				2527ECCB1D350C8C00350DC6 /* rightNavigationItem.m in Sources */,
 				256F397B1D123E3900175E5A /* LoginNav.m in Sources */,
+				2525CF2E1D3CE59100F3079F /* TODOViewController.m in Sources */,
 				256F398A1D12887D00175E5A /* VerifyView.m in Sources */,
 				25F0DF141D1D2C5E007CEF17 /* MCPickerView.m in Sources */,
 				257DB79A1D38C9BF00C2227E /* WorkDetail.m in Sources */,
@@ -964,6 +988,7 @@
 				2534B9981D24ACF400A82E0A /* ReportViewController.m in Sources */,
 				25EDD78B1D0E847800AFB6F3 /* User.m in Sources */,
 				252EF9D91D2F5D2400565D00 /* WorkStatusView.m in Sources */,
+				2525CF271D3CDD5000F3079F /* Store.m in Sources */,
 				252EF9C61D2E6EED00565D00 /* QualityControlNav.m in Sources */,
 				252EF9EE1D336F4400565D00 /* Field.m in Sources */,
 				256F39811D12836900175E5A /* SignUpView.m in Sources */,
@@ -988,6 +1013,7 @@
 				25CECB001D17A9D700C9CCBE /* LoadingStatsViewController.m in Sources */,
 				256F39991D12B34D00175E5A /* DriverDetailEditorCell.m in Sources */,
 				25CECB0F1D18E28B00C9CCBE /* TransportationViewCell.m in Sources */,
+				2525CF2B1D3CDF3A00F3079F /* StoreReport.m in Sources */,
 				252B63261D1CDC7700C108C0 /* NSString+MD5.m in Sources */,
 				2512A1C91D112FDE00ED884B /* LoginViewController.m in Sources */,
 				25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */,

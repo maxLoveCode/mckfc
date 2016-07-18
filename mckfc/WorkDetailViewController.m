@@ -176,6 +176,7 @@
     else if([workFlow.type isEqualToString:@"unload"]){
         QualityCheckViewController* qcVC = [[QualityCheckViewController alloc] init];
         [qcVC setWorkFlow:workFlow];
+        [qcVC setTransportid:self.transportid];
         [self.navigationController pushViewController:qcVC animated:YES];
     }
     else if([workFlow.type isEqualToString:@"arrive"]){

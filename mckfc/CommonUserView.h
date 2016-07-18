@@ -15,6 +15,7 @@
 @protocol CommonUserViewDelegate <NSObject>
 
 -(void)navigateToWorkRecord;
+-(void)navigateToTODO;
 -(void)navigateToQRScannerWithItem:(NSInteger)item;
 -(void)didTapAvatar;
 

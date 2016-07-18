@@ -186,6 +186,11 @@
     [self.delegate navigateToQRScannerWithItem:index];
 }
 
+-(void)CommonMenuView:(CommonMenuView *)menu didSelectTODOWithType:(MenuViewStyle)style
+{
+    [self.delegate navigateToTODO];
+}
+
 -(void)tapAvtar:(id)sender
 {
     [self.delegate didTapAvatar];

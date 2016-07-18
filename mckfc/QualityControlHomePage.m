@@ -15,6 +15,8 @@
 #import "User.h"
 #import "ServerManager.h"
 
+#import "TODOViewController.h"
+
 @interface QualityControlHomePage () <CommonUserViewDelegate, QRCodeReaderDelegate>
 
 @property (nonatomic, strong) CommonUserView* userView;
@@ -85,6 +87,12 @@
     // Define the delegate receiver
     vc.delegate = self;
     
+}
+
+-(void)navigateToTODO
+{
+    TODOViewController* todoVC = [[TODOViewController alloc] init];
+    [self.navigationController pushViewController:todoVC animated:YES];
 }
 
 #pragma mark - QRCodeReader Delegate Methods

@@ -13,5 +13,6 @@
 
 
 @property (nonatomic, strong) WorkFlow* workFlow;
+@property (nonatomic, assign) NSString* transportid;
 
 @end

@@ -113,6 +113,9 @@
     if (indexPath.item == [_titleArray count] -2) {
         [self.menudelegate CommonMenuView:self didSelectWorkRecordWithType:self.style];
     }
+    if (indexPath.item == [_titleArray count] -3) {
+        [self.menudelegate CommonMenuView:self didSelectTODOWithType:self.style];
+    }
     if (self.style == MenuViewStyleSecurityCheck) {
         if (indexPath.item <3 ) {
             [self.menudelegate CommonMenuView:self didSelectScanQRCode:self.style withIndex:indexPath.item];

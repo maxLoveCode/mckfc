@@ -12,6 +12,5 @@
 
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) UIButton* confirm;
-@property (nonatomic, strong) NSString* transportid;
 
 @end

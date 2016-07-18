@@ -18,7 +18,7 @@
 #import "User.h"
 #import "ServerManager.h"
 
-
+#import "TODOViewController.h"
 
 @interface SecurityHomePage ()<CommonUserViewDelegate, QRCodeReaderDelegate, HUDViewDelegate>
 
@@ -127,6 +127,12 @@
             }];
         }
     }];
+}
+
+-(void)navigateToTODO
+{
+    TODOViewController* todoVC = [[TODOViewController alloc] init];
+    [self.navigationController pushViewController:todoVC animated:YES];
 }
 
 #pragma mark - QRCodeReader Delegate Methods
