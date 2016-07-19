@@ -19,6 +19,7 @@
 #import "EditorNav.h"
 
 #import "User.h"
+#import "JPushService.h"
 
 @interface HomepageViewController ()<UserViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -69,7 +70,7 @@
     
             [self checkIfNeedsToUpdateUser];
             [self checkIfNeedsToContinue];
-            
+            [self setAliasForNotification:data[@"userid"]];
             
             if (_user.type != [MKUSER_TYPE_DRIVER integerValue]) {
                 LoginNav* loginVC = [[LoginNav alloc] init];
@@ -187,5 +188,16 @@
         [self.navigationController pushViewController:queue animated:YES];
     }
 }
+
+-(void)setAliasForNotification:(NSString*)alias
+{
+    [JPUSHService setTags:nil alias:alias callbackSelector:@selector(notifCallback:) object:self];
+}
+
+-(void)notifCallback:(id)sender
+{
+    
+}
+
 
 @end

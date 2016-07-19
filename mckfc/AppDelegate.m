@@ -81,7 +81,13 @@
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+    NSLog(@"%@",deviceToken);
     [JPUSHService registerDeviceToken:deviceToken];
+}
+
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"did fail to register for remote notification");
 }
 
 - (void)JPushInitailizationWithOption:(NSDictionary*) options
@@ -109,12 +115,12 @@
                            appKey:@"a69a0e330940d3f164a2a82d"
                           channel:nil apsForProduction:NO];
     
-    [JPUSHService setLogOFF];
+    //[JPUSHService setLogOFF];
 }
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-  //  NSLog(@"revcieve remote notification");
+    NSLog(@"revcieve remote notification");
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationIdScan object:self userInfo:userInfo];
 }
 
