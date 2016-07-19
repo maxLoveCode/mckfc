@@ -23,6 +23,8 @@
 #import "TransportDetail.h"
 
 #import "ServerManager.h"
+#import <AMapLocationKit/AMapLocationKit.h>
+#import <AMapFoundationKit/AMapFoundationKit.h>
 
 #define itemHeight 44
 #define topMargin 60
@@ -37,6 +39,7 @@
     NSArray* vendorList;
     NSArray* cityList;
     NSArray* fieldList;
+    NSString* citycode;
 }
 
 @property (nonatomic, strong) MCPickerView* pickerView;
@@ -44,6 +47,8 @@
 
 @property (nonatomic, strong) LoadingStats* stats;
 @property (nonatomic, strong) ServerManager* server;
+
+@property (nonatomic, strong) AMapLocationManager* locationManager;
 
 @end
 
@@ -60,7 +65,50 @@
     _stats = [[LoadingStats alloc] init];
     _server = [ServerManager sharedInstance];
     
+    [AMapServices sharedServices].apiKey = MapKey;
+    self.locationManager = [[AMapLocationManager alloc] init];
+    
     [self initTitlesAndImages];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    // 带逆地理信息的一次定位（返回坐标和地址信息）
+    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+    //   定位超时时间，最低2s，此处设置为3s
+    self.locationManager.locationTimeout =3;
+    //   逆地理请求超时时间，最低2s，此处设置为3s
+    self.locationManager.reGeocodeTimeout = 3;
+    
+    // 带逆地理（返回坐标和地址信息）。将下面代码中的YES改成NO，则不会返回地址信息。
+    [self.locationManager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
+        
+        if (error)
+        {
+            NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
+            
+        }
+        
+        if (regeocode)
+        {
+            citycode = regeocode.citycode;
+            if (!cityList) {
+                [self requestCityListSuccess:^{
+                    for (City* city in cityList) {
+                        if ([city.cityid isEqualToString:citycode]) {
+                            _stats.city = city;
+                            NSMutableArray* sort = [[NSMutableArray alloc] initWithArray:cityList];
+                            [sort removeObject:city];
+                            [sort insertObject:city atIndex:0];
+                            cityList = sort;
+                            return;
+                        }
+                    }
+                }];
+            }
+        }
+    }];
 }
 
 #pragma mark titles and images
@@ -194,7 +242,6 @@
                 [self requestCityListSuccess:^{
                     City* city = [cityList objectAtIndex:0];
                     [self requestVendors:city.cityid success:^{
-                        NSLog(@"request %@%@", city.name, city.cityid);
                         MCPickerView *pickerView = [[MCPickerView alloc] init];
                         pickerView.delegate =self;
                         pickerView.index = indexPath;
@@ -213,7 +260,6 @@
             {
                 City* city = [cityList objectAtIndex:0];
                 [self requestVendors:city.cityid success:^{
-                    NSLog(@"request %@%@", city.name, city.cityid);
                     MCPickerView *pickerView = [[MCPickerView alloc] init];
                     pickerView.delegate =self;
                     pickerView.index = indexPath;
@@ -474,5 +520,4 @@
 {
     [_alert removeFromSuperview];
 }
-
 @end
