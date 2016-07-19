@@ -33,7 +33,7 @@
         self.title = @"出厂称重";
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.confirm];
-    self.weight = [NSNumber numberWithInteger:0];
+    self.weight = [NSNumber numberWithFloat:0];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     _server = [ServerManager sharedInstance];
 }
@@ -73,31 +73,19 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 1;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LoadingCell* cell = [[LoadingCell alloc] init];
-    if (indexPath.row == 0) {
-        cell.style = LoadingCellStylePlain;
-        if ([self.workFlow.type isEqualToString:@"enter"]) {
-            cell.titleLabel.text = @"进场时间";
-        }
-        else
-            cell.titleLabel.text = @"出场时间";
-        cell.leftImageView.image = [UIImage imageNamed:@"time"];
-        cell.detailLabel.text = self.workFlow.time;
-    }
-    else
-    {
+    
         cell.style = LoadingCellStyleDigitInput;
         cell.titleLabel.text = @"土豆重量";
         cell.leftImageView.image = [UIImage imageNamed:@"土豆重量"];
         cell.digitInput.text = [NSString stringWithFormat:@"%@",_weight];
         cell.digitInput.delegate = self;
         [cell.digitInput addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    }
     return cell;
 }
 
@@ -139,7 +127,7 @@
     if ([textField.text isEqualToString:@""]) {
         textField.text = @"0";
     }
-    self.weight = [NSNumber numberWithInteger: [textField.text integerValue]];
+    self.weight = [NSNumber numberWithFloat: [textField.text floatValue]];
 }
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
@@ -151,7 +139,7 @@
 
 -(void)textFieldDidChange :(UITextField *) textField{
     //your code
-    self.weight = [NSNumber numberWithInteger: [textField.text integerValue]];
+    self.weight = [NSNumber numberWithFloat: [textField.text floatValue]];
 }
 
 @end

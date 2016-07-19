@@ -51,9 +51,19 @@
         self.QCNav = [[QualityControlNav alloc] init];
         self.window.rootViewController = self.QCNav;
     }
+    
+//    // Register the supported interaction types.
+//    UIUserNotificationType types = UIUserNotificationTypeBadge |
+//    UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+//    UIUserNotificationSettings *mySettings =
+//    [UIUserNotificationSettings settingsForTypes:types categories:nil];
+//    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
+//    
+//    // Register for remote notifications.
+//    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    
 //Jpush
     [self JPushInitailizationWithOption:launchOptions];
-    
     return YES;
 }
 

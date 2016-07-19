@@ -19,7 +19,7 @@
 #define topMargin 60
 #define buttonWidth kScreen_Width-4*k_Margin
 
-@interface InspectionViewController ()<UITextViewDelegate>
+@interface InspectionViewController ()<UITextViewDelegate,UITextFieldDelegate>
 {
     CGFloat inspectionResultHeight;
     CGFloat situationDetailHeight;
@@ -204,6 +204,7 @@
             loadingcell.style = LoadingCellStyleTextField;
             loadingcell.leftImageView.image = [UIImage imageNamed:@"grayRejection"];
             loadingcell.textField.delegate = self;
+            loadingcell.textField.tag = 2;
             loadingcell.textField.text = self.insepection.refusecause;
             return loadingcell;
         }
@@ -273,7 +274,7 @@
 #pragma mark UITextview delegate
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
-    if (textView.tag != 3) {
+    if (textView.tag != 2) {
         self.navigationItem.rightBarButtonItem = self.rightItem;
     }
     NSIndexPath* indexPath;
@@ -289,7 +290,7 @@
 
 -(void)textViewDidChange:(UITextView *)textView
 {
-    if (textView.tag !=3) {
+    if (textView.tag !=2) {
         [self.tableView beginUpdates]; // This will cause an animated update of
         [self.tableView endUpdates];
         CGSize size = [textView sizeThatFits:CGSizeMake(kScreen_Width-2*k_Margin, FLT_MAX)];
@@ -308,6 +309,17 @@
             [textView layoutIfNeeded];
         }
     }
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    if (textView.tag == 2) {
+        if([text isEqualToString:@"\n"]) {
+            [textView endEditing:YES];
+            return NO;
+        }
+    }
+    return YES;
 }
 
 -(void)dismissKeyboard:(id)sender

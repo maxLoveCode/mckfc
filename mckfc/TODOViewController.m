@@ -69,7 +69,7 @@ extern NSString *const reuseIdentifier;
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     WorkRecordCell *cell = [[WorkRecordCell alloc] init];
-    cell.record = _recordArray[indexPath.row];
+    cell.record = _recordArray[indexPath.section];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 
@@ -92,7 +92,7 @@ extern NSString *const reuseIdentifier;
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell isKindOfClass:[WorkRecordCell class]]) {
         WorkDetailViewController* detail = [[WorkDetailViewController alloc] init];
-        workRecord* record = _recordArray[indexPath.row];
+        workRecord* record = _recordArray[indexPath.section];
         [detail setTransportid: [NSString stringWithFormat:@"%@",record.recordid]];
         [self.navigationController pushViewController:detail animated:YES];
     }
@@ -105,6 +105,7 @@ extern NSString *const reuseIdentifier;
     [_server GET:@"getOrderList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSError* error;
         NSArray* data = responseObject[@"data"];
+        NSLog(@"data:%@",data);
         _recordArray = [MTLJSONAdapter modelsOfClass:[workRecord class] fromJSONArray:data error:&error];
         if (error) {
             NSLog(@"%@", error);

@@ -107,7 +107,7 @@ extern NSString *const reuseIdentifier;
     else
     {
         WorkRecordCell *cell = [[WorkRecordCell alloc] init];
-        cell.record = _recordArray[indexPath.row];
+        cell.record = _recordArray[indexPath.section-1];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -130,7 +130,7 @@ extern NSString *const reuseIdentifier;
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell isKindOfClass:[WorkRecordCell class]]) {
         WorkDetailViewController* detail = [[WorkDetailViewController alloc] init];
-        workRecord* record = _recordArray[indexPath.row];
+        workRecord* record = _recordArray[indexPath.section-1];
         [detail setTransportid: [NSString stringWithFormat:@"%@",record.recordid]];
         [self.navigationController pushViewController:detail animated:YES];
     }

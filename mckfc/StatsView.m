@@ -90,7 +90,7 @@
         detailLabel.text = [NSString stringWithFormat:@"%@", _stats[@"totalMile"]];
     }
     else if (indexPath.item == 2){
-        title.text = @"总里程数";
+        title.text = @"运输总重数";
         detailLabel.text = [NSString stringWithFormat:@"%@", _stats[@"totalWeight"]];
     }
     return cell;

@@ -323,6 +323,7 @@
 #pragma mark selectors
 -(void)confirmBtn
 {
+    [self dismiss];
     NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token":_server.accessToken} copyItems:YES];
     if (_stats.supplier) {
         [params addEntriesFromDictionary:@{@"vendorid":[NSString stringWithFormat:@"%lu",(unsigned long)_stats.supplier.vendorID]}];
@@ -410,9 +411,18 @@
 #pragma mark textfield delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    UIBarButtonItem* item = [[UIBarButtonItem alloc] initWithTitle:@"完成" style: UIBarButtonItemStyleDone target:self action:@selector(dismiss)];
+    self.navigationItem.rightBarButtonItem = item;
     if ([textField.text isEqualToString:@"0"]) {
         textField.text = @"";
     }
+}
+
+-(void)dismiss
+{
+    LoadingCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    [cell.digitInput endEditing:YES];
+    self.navigationItem.rightBarButtonItem = nil;
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField

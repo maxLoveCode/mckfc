@@ -31,6 +31,7 @@
         _contentLabel = [[UITextView alloc] init];
         _contentLabel.scrollEnabled = NO;
         [_contentLabel setFrame:CGRectMake(k_Margin, itemHeight-10, kScreen_Width-2*k_Margin, itemHeight)];
+        _contentLabel.returnKeyType = UIReturnKeyNext;
     }
     return _contentLabel;
 }
