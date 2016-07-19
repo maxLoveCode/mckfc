@@ -66,6 +66,7 @@
         _confirm.layer.cornerRadius = 3;
         _confirm.layer.masksToBounds = YES;
         [_confirm setFrame:CGRectMake(2*k_Margin,topMargin+CGRectGetMaxY(self.tableView.frame),buttonWidth , buttonHeight)];
+        [_confirm addTarget:self action:@selector(didConfirm:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _confirm;
 }
@@ -216,5 +217,24 @@
 {
     _report.store = _storeList[row];
     [self.tableView reloadData];
+}
+
+#pragma mark send confirm
+-(void)didConfirm:(id)sender
+{
+    [self.tableView resignFirstResponder];
+    
+    NSMutableDictionary* params =[[NSMutableDictionary alloc] initWithDictionary: [MTLJSONAdapter JSONDictionaryFromModel:self.report error:nil]];
+//    NSDictionary* params = @{@"token":_server.accessToken,
+//                             @"enterweight":_weight,
+//                             @"transportid":self.transportid};
+    [params addEntriesFromDictionary:@{@"token":_server.accessToken,
+                                       @"storeid":[NSString stringWithFormat:@"%lu",(long) _report.store.storeID]}];
+    NSLog(@"params%@", params);
+    [_server POST:@"truckUnload" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 @end

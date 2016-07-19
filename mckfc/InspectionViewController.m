@@ -72,6 +72,7 @@
         _confirm.layer.cornerRadius = 3;
         _confirm.layer.masksToBounds = YES;
         [_confirm setFrame:CGRectMake(2*k_Margin,topMargin,buttonWidth , buttonHeight)];
+        [_confirm addTarget:self action:@selector(didConfirm:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _confirm;
 }
@@ -325,4 +326,26 @@
     self.navigationItem.rightBarButtonItem = nil;
 }
 
+#pragma mark send confirm
+-(void)didConfirm:(id)sender
+{
+    NSString* type;
+    if ([self.workFlow.type isEqualToString:@"checkone"]) {
+        type = @"1";
+    }
+    else
+        type = @"2";
+    NSDictionary* params = @{@"token":_server.accessToken,
+                             @"type":type,
+                             @"result":self.insepection.result,
+                             @"comments":self.insepection.comments,
+                             @"refusestatus":self.insepection.status,
+                             @"refusecause":self.insepection.refusecause,
+                             @"transportid":self.transportid};
+    [_server POST:@"truckCheck" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
 @end

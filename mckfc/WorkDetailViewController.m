@@ -113,6 +113,9 @@
         
         [report.leftImageView sd_setImageWithURL:[NSURL URLWithString:_detail.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         report.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        UIImageView* phone = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"phone"]];
+        [phone setFrame:CGRectMake(CGRectGetWidth(report.contentView.frame)+10, 0, itemHeight, itemHeight)];
+        [report.contentView addSubview:phone];
         return report;
     }
     else
@@ -172,6 +175,7 @@
         if ([workFlow.type isEqualToString:@"enter"]) {
             TruckUnloadProcessViewController* unloadVC = [[TruckUnloadProcessViewController alloc] init];
             [unloadVC setWorkFlow:workFlow];
+            [unloadVC setTransportid:self.transportid];
             if (workFlow.auth) {
                 [self.navigationController pushViewController:unloadVC animated:YES];
             }
@@ -203,8 +207,20 @@
             }
         }
         else if([workFlow.type isEqualToString:@"leave"]){
+            TruckUnloadProcessViewController* unloadVC = [[TruckUnloadProcessViewController alloc] init];
+            [unloadVC setWorkFlow:workFlow];
+            [unloadVC setTransportid:self.transportid];
+            if (workFlow.auth) {
+                [self.navigationController pushViewController:unloadVC animated:YES];
+            }
         }
-
+    }
+    else if(indexPath.section ==1)
+    {
+        NSString* phone = self.detail.mobile;
+        if (![phone isEqualToString:@""]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",phone]]];
+        }
     }
     
 }

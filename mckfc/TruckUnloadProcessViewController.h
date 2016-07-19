@@ -11,5 +11,6 @@
 @interface TruckUnloadProcessViewController : WorkFlowInterface
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) UIButton* confirm;
+@property (nonatomic, strong) NSNumber* weight;
 
 @end
