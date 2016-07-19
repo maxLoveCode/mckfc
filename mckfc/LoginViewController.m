@@ -105,6 +105,7 @@
     [_server POST:@"login" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         if ([responseObject[@"code"] integerValue] == 10000) {
 //saving access_token and user_type
+            NSLog(@"login: %@", responseObject);
             [[NSUserDefaults standardUserDefaults] setObject:[responseObject[@"data"] objectForKey:@"token"] forKey:@"access_token"];
             NSString* type = [NSString stringWithFormat:@"%@", [responseObject[@"data"] objectForKey:@"type"]];
             [[NSUserDefaults standardUserDefaults] setObject:type forKey:@"user_type"];
@@ -147,7 +148,7 @@
 #pragma mark app loginview
 -(BOOL)switchRootView:(NSString*)type
 {
-    
+    NSLog(@"switch view");
     UIApplication* app = [UIApplication sharedApplication];
     UIViewController*root =  app.keyWindow.rootViewController;
     if ([type isEqualToString:MKUSER_TYPE_DRIVER]) {

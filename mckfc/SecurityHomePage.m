@@ -10,12 +10,12 @@
 #import "CommonUserView.h"
 #import "CommonMenuView.h"
 #import "AlertHUDView.h"
+#import "SettingViewController.h"
 
 #import "WorkRecordViewController.h"
 #import "QRCodeReaderViewController.h"
 #import "LoginNav.h"
 
-#import "User.h"
 #import "ServerManager.h"
 
 #import "TODOViewController.h"
@@ -24,7 +24,6 @@
 
 @property (nonatomic, strong) CommonUserView* userView;
 @property (nonatomic, strong) ServerManager* server;
-@property (nonatomic, strong) User* user;
 
 @property (nonatomic, strong) AlertHUDView* alert;
 
@@ -133,6 +132,12 @@
 {
     TODOViewController* todoVC = [[TODOViewController alloc] init];
     [self.navigationController pushViewController:todoVC animated:YES];
+}
+
+-(void)navigateToSetting
+{
+    SettingViewController* setting = [[SettingViewController alloc] init];
+    [self.navigationController pushViewController:setting animated:YES];
 }
 
 #pragma mark - QRCodeReader Delegate Methods

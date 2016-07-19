@@ -191,6 +191,11 @@
     [self.delegate navigateToTODO];
 }
 
+-(void)CommonMenuView:(CommonMenuView *)menu didSelectSettingWithType:(MenuViewStyle)style
+{
+    [self.delegate navigateToSetting];
+}
+
 -(void)tapAvtar:(id)sender
 {
     [self.delegate didTapAvatar];

@@ -20,6 +20,7 @@ typedef NS_ENUM(NSInteger, MenuViewStyle) {
 -(void)CommonMenuView:(CommonMenuView*)menu didSelectWorkRecordWithType:(MenuViewStyle)style;
 -(void)CommonMenuView:(CommonMenuView*)menu didSelectTODOWithType:(MenuViewStyle)style;
 -(void)CommonMenuView:(CommonMenuView *)menu didSelectScanQRCode:(MenuViewStyle)style withIndex:(NSInteger)index;
+-(void)CommonMenuView:(CommonMenuView*)menu didSelectSettingWithType:(MenuViewStyle)style;
 
 @end
 

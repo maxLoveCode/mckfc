@@ -11,8 +11,7 @@
 #import "CommonMenuView.h"
 #import "WorkRecordViewController.h"
 #import "QRCodeReaderViewController.h"
-
-#import "User.h"
+#import "SettingViewController.h"
 #import "ServerManager.h"
 
 #import "TODOViewController.h"
@@ -21,7 +20,6 @@
 
 @property (nonatomic, strong) CommonUserView* userView;
 @property (nonatomic, strong) ServerManager* server;
-@property (nonatomic, strong) User* user;
 
 @end
 
@@ -41,6 +39,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    NSLog(@"appear");
     if (!_user) {
         [self requestUserInfo];
     }
@@ -52,6 +51,7 @@
     if (_server.accessToken) {
         NSDictionary* params = @{@"token": _server.accessToken};
         [_server GET:@"getUserInfo" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+            NSLog(@"%@",responseObject);
             NSError* error;
             NSDictionary* data = responseObject[@"data"];
             _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:data error:&error];
@@ -93,6 +93,12 @@
 {
     TODOViewController* todoVC = [[TODOViewController alloc] init];
     [self.navigationController pushViewController:todoVC animated:YES];
+}
+
+-(void)navigateToSetting
+{
+    SettingViewController* setting = [[SettingViewController alloc] init];
+    [self.navigationController pushViewController:setting animated:YES];
 }
 
 #pragma mark - QRCodeReader Delegate Methods

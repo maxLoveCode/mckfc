@@ -44,6 +44,12 @@
     titleArray = @[@"供应商名称",@"地块编号",@"土豆重量",@"发车时间",@"预计到达时间"];
     
     _server = [ServerManager sharedInstance];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
     [self requestDetail];
 }
 

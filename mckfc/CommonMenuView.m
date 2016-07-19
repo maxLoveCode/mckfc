@@ -120,11 +120,19 @@
         if (indexPath.item <3 ) {
             [self.menudelegate CommonMenuView:self didSelectScanQRCode:self.style withIndex:indexPath.item];
         }
+        else if(indexPath.item == [_titleArray count]-1)
+        {
+            [self.menudelegate CommonMenuView:self didSelectSettingWithType:self.style];
+        }
     }
     else
     {
         if (indexPath.item == 0) {
             [self.menudelegate CommonMenuView:self didSelectScanQRCode:self.style withIndex:indexPath.item];
+        }
+        else if(indexPath.item == [_titleArray count]-1)
+        {
+            [self.menudelegate CommonMenuView:self didSelectSettingWithType:self.style];
         }
     }
 }

@@ -16,6 +16,7 @@
 
 -(void)navigateToWorkRecord;
 -(void)navigateToTODO;
+-(void)navigateToSetting;
 -(void)navigateToQRScannerWithItem:(NSInteger)item;
 -(void)didTapAvatar;
 

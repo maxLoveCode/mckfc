@@ -116,7 +116,7 @@ NSString *const version = @"v1_0";
             NSLog(@"code:%@  info:%@",responseObject[@"code"],responseObject[@"msg"]);
         }
         if (animated) {
-            if ([responseObject[@"code"] integerValue] == self.successCode) {
+            if ([responseObject[@"code"] integerValue] == self.successCode){
                 [_alert dismiss:_alert];
             }
             else
