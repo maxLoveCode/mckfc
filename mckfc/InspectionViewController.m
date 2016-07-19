@@ -219,6 +219,31 @@
     }
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 1) {
+        if (indexPath.row ==0) {
+            if ([self.insepection.status integerValue]== 1) {
+                self.insepection.status = [NSNumber numberWithInteger:0];
+            }
+            else
+            {
+                self.insepection.status = [NSNumber numberWithInteger:1];
+            }
+        }
+        else if(indexPath.row == 1){
+            if ([self.insepection.status integerValue]== 2) {
+                self.insepection.status = [NSNumber numberWithInteger:0];
+            }
+            else
+            {
+                self.insepection.status = [NSNumber numberWithInteger:2];
+            }
+        }
+        [self.tableView reloadData];
+    }
+}
+
 #pragma mark header and footers
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -312,8 +337,16 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    
+    NSLog(@"%@", textView.text);
+    if (textView.tag == 0) {
+        self.insepection.result = textView.text;
+    }
+    else if(textView.tag == 1)
+    {
+        self.insepection.comments = textView.text;
+    }
     if (textView.tag == 2) {
+        self.insepection.refusecause = textView.text;
         if([text isEqualToString:@"\n"]) {
             [textView endEditing:YES];
             return NO;
@@ -354,6 +387,7 @@
                              @"refusestatus":self.insepection.status,
                              @"refusecause":self.insepection.refusecause,
                              @"transportid":self.transportid};
+    NSLog(@"%@", params);
     [_server POST:@"truckCheck" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

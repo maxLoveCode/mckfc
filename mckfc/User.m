@@ -25,7 +25,7 @@
              @"totalweight":@"totalweight",
              @"transporttime":@"transporttime",
              @"type":@"type",
-             @"transportstatus":@"transportstatus",
+             @"transportstatus":@"page",
              @"transportid":@"transportid",
              };
 }

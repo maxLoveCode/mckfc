@@ -87,7 +87,6 @@
         if (error)
         {
             NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
-            
         }
         
         if (regeocode)

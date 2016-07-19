@@ -39,6 +39,8 @@
     
     _userview.delegate = self;
     
+    UIBarButtonItem* logout = [[UIBarButtonItem alloc] initWithTitle:@"退出" style: UIBarButtonItemStylePlain target:self action:@selector(logout)];
+    self.navigationItem.rightBarButtonItem = logout;
     
     self.view = _userview;
 }
@@ -197,6 +199,13 @@
 -(void)notifCallback:(id)sender
 {
     
+}
+
+-(void)logout
+{
+    self.user = nil;
+    _server.accessToken = nil;
+    [self requestUserInfo];
 }
 
 
