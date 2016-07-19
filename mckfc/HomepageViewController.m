@@ -56,6 +56,12 @@
     if (_server.accessToken) {
         NSDictionary* params = @{@"token": _server.accessToken};
         [_server GET:@"getUserInfo" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+            
+            if ([responseObject[@"code"] integerValue] == 10003) {
+                [self navigateToEditor];
+                return;
+            }
+            
             NSError* error;
             NSDictionary* data = responseObject[@"data"];
             _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:data error:&error];
@@ -63,6 +69,7 @@
     
             [self checkIfNeedsToUpdateUser];
             [self checkIfNeedsToContinue];
+            
             
             if (_user.type != [MKUSER_TYPE_DRIVER integerValue]) {
                 LoginNav* loginVC = [[LoginNav alloc] init];
@@ -141,20 +148,25 @@
 -(void)checkIfNeedsToUpdateUser
 {
     if(![_user validation]){
-        EditorNav* editVC = [[EditorNav alloc] init];
-        DriverDetailEditorController* driverVC =(DriverDetailEditorController*)editVC.topViewController;
-        [driverVC setUser:_user];
-        [driverVC setRegisterComplete:YES];
-        [self.navigationController presentViewController:editVC animated:YES completion:^{
-            
-        }];
-        [editVC setOnDismissed:^{
-            [self.navigationController dismissViewControllerAnimated:NO completion:^
-             {
-                 //[self requestUserInfo];
-             }];
-        }];
+      
     }
+}
+
+-(void)navigateToEditor
+{
+    EditorNav* editVC = [[EditorNav alloc] init];
+    DriverDetailEditorController* driverVC =(DriverDetailEditorController*)editVC.topViewController;
+    [driverVC setUser:_user];
+    [driverVC setRegisterComplete:YES];
+    [self.navigationController presentViewController:editVC animated:YES completion:^{
+        
+    }];
+    [editVC setOnDismissed:^{
+        [self.navigationController dismissViewControllerAnimated:NO completion:^
+         {
+             //[self requestUserInfo];
+         }];
+    }];
 }
 
 -(void)checkIfNeedsToContinue

@@ -77,6 +77,12 @@ NSString *const version = @"v1_0";
         if ([responseObject[@"code"] integerValue] == self.successCode) {
             success(task, responseObject);
         }
+//special cases
+//for the only case when the succeess code is 10003 and login interface the program still
+//regard it as success. but deal it with the #navigate to editor# method
+        if ([URLString isEqualToString:@"getUserInfo"] && [responseObject[@"code"] integerValue] == 10003) {
+            success(task, responseObject);
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         failure(task, error);
         if (ServerDebugLog) {

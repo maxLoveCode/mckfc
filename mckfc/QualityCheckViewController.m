@@ -225,9 +225,6 @@
     [self.tableView resignFirstResponder];
     
     NSMutableDictionary* params =[[NSMutableDictionary alloc] initWithDictionary: [MTLJSONAdapter JSONDictionaryFromModel:self.report error:nil]];
-//    NSDictionary* params = @{@"token":_server.accessToken,
-//                             @"enterweight":_weight,
-//                             @"transportid":self.transportid};
     [params addEntriesFromDictionary:@{@"token":_server.accessToken,
                                        @"storeid":[NSString stringWithFormat:@"%lu",(long) _report.store.storeID]}];
     NSLog(@"params%@", params);
