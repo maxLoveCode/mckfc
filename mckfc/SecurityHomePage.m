@@ -19,6 +19,7 @@
 #import "ServerManager.h"
 
 #import "TODOViewController.h"
+#import "WorkDetailViewController.h"
 
 @interface SecurityHomePage ()<CommonUserViewDelegate, QRCodeReaderDelegate, HUDViewDelegate>
 
@@ -104,7 +105,6 @@
     // Instantiate the view controller
     QRCodeReaderViewController *vc = [QRCodeReaderViewController readerWithCancelButtonTitle:@"取消" codeReader:reader startScanningAtLoad:YES showSwitchCameraButton:NO showTorchButton:NO];
 
-    
     // Set the presentation style
     vc.modalPresentationStyle = UIModalPresentationFormSheet;
     [self.navigationController presentViewController:vc animated:YES completion:nil];
@@ -162,13 +162,18 @@
     NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token": _server.accessToken}];
     [params addEntriesFromDictionary:data];
     [_server POST:request parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        _ScanedTransportID = [params objectForKey:@"transportid"];
         if([request isEqualToString:@"scanArrive"])
         {
             self.alert.title.text = @"确认车辆到厂";
             self.alert.detail.text = [responseObject[@"data"] objectForKey:@"message"];
             [self.alert show:_alert];
         }
-        _ScanedTransportID = [params objectForKey:@"transportid"];
+        else
+        {
+            //navigate to detail
+            [self navigateToWorkDetail:_ScanedTransportID];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
@@ -179,10 +184,18 @@
     NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token": _server.accessToken,
                        @"transportid":_ScanedTransportID}];
     [_server POST:@"truckArrive" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        
+        //navigate to detail
+        [self navigateToWorkDetail:_ScanedTransportID];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
+}
+
+-(void)navigateToWorkDetail:(NSString*)transportid
+{
+    WorkDetailViewController* detail = [[WorkDetailViewController alloc] init];
+    [detail setTransportid: transportid];
+    [self.navigationController pushViewController:detail animated:YES];
 }
 
 

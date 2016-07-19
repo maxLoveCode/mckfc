@@ -15,11 +15,13 @@
 #import "ServerManager.h"
 
 #import "TODOViewController.h"
+#import "WorkDetailViewController.h"
 
 @interface QualityControlHomePage () <CommonUserViewDelegate, QRCodeReaderDelegate>
 
 @property (nonatomic, strong) CommonUserView* userView;
 @property (nonatomic, strong) ServerManager* server;
+@property (nonatomic, copy) NSString* ScanedTransportID;
 
 @end
 
@@ -87,6 +89,22 @@
     // Define the delegate receiver
     vc.delegate = self;
     
+    [reader setCompletionWithBlock:^(NSString *resultAsString){
+        NSLog(@"%@", resultAsString);
+        [vc dismissViewControllerAnimated:YES completion:NULL];
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[resultAsString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+        NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token": _server.accessToken}];
+        [params addEntriesFromDictionary:json];
+        [_server POST:@"scanCommon" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+            _ScanedTransportID = [params objectForKey:@"transportid"];
+
+                //navigate to detail
+            [self navigateToWorkDetail:_ScanedTransportID];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+        }];
+
+    }];
 }
 
 -(void)navigateToTODO
@@ -113,6 +131,11 @@
     
 }
 
-
+-(void)navigateToWorkDetail:(NSString*)transportid
+{
+    WorkDetailViewController* detail = [[WorkDetailViewController alloc] init];
+    [detail setTransportid: transportid];
+    [self.navigationController pushViewController:detail animated:YES];
+}
 
 @end
