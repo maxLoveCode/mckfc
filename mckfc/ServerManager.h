@@ -11,7 +11,7 @@
 
 @interface ServerManager : AFHTTPSessionManager
 
-@property (nonatomic, copy)  NSString* _Nonnull accessToken;
+@property (nonatomic, copy)  NSString*_Nullable accessToken;
 @property (nonatomic, assign) NSUInteger successCode;
 
 

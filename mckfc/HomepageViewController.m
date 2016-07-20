@@ -193,13 +193,12 @@
 
 -(void)setAliasForNotification:(NSString*)alias
 {
-    [JPUSHService setTags:nil alias:alias callbackSelector:@selector(notifCallback:) object:self];
+    NSString* aliasString = [NSString stringWithFormat:@"%@", alias];
+    [JPUSHService setTags:nil alias:aliasString fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+        NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, iTags , iAlias);
+    }];
 }
 
--(void)notifCallback:(id)sender
-{
-    
-}
 
 -(void)logout
 {

@@ -14,8 +14,12 @@
 #import "SettingViewController.h"
 #import "ServerManager.h"
 
+#import "LoginNav.h"
 #import "TODOViewController.h"
 #import "WorkDetailViewController.h"
+
+
+#import "JPushService.h"
 
 @interface QualityControlHomePage () <CommonUserViewDelegate, QRCodeReaderDelegate>
 
@@ -58,7 +62,17 @@
             NSDictionary* data = responseObject[@"data"];
             _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:data error:&error];
             _userView.user = _user;
-            [_userView.mainTableView reloadData];
+            [self setAliasForNotification:data[@"userid"]];
+            
+            if (_user.type != [MKUSER_TYPE_QUALITYCONTROL integerValue]) {
+                LoginNav* loginVC = [[LoginNav alloc] init];
+                [self presentViewController:loginVC animated:NO completion:^{
+                }];
+            }
+            else
+            {
+                [_userView.mainTableView reloadData];
+            }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
         }];
@@ -136,6 +150,14 @@
     WorkDetailViewController* detail = [[WorkDetailViewController alloc] init];
     [detail setTransportid: transportid];
     [self.navigationController pushViewController:detail animated:YES];
+}
+
+-(void)setAliasForNotification:(NSString*)alias
+{
+    NSString* aliasString = [NSString stringWithFormat:@"%@", alias];
+    [JPUSHService setTags:nil alias:aliasString fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+        NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, iTags , iAlias);
+    }];
 }
 
 @end

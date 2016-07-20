@@ -21,6 +21,8 @@
 #import "TODOViewController.h"
 #import "WorkDetailViewController.h"
 
+#import "JPushService.h"
+
 @interface SecurityHomePage ()<CommonUserViewDelegate, QRCodeReaderDelegate, HUDViewDelegate>
 
 @property (nonatomic, strong) CommonUserView* userView;
@@ -71,6 +73,8 @@
             NSDictionary* data = responseObject[@"data"];
             _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:data error:&error];
             _userView.user = _user;
+            
+            [self setAliasForNotification:data[@"userid"]];
             
             if (_user.type != [MKUSER_TYPE_SECURITY integerValue]) {
                 LoginNav* loginVC = [[LoginNav alloc] init];
@@ -199,7 +203,13 @@
 }
 
 
-
+-(void)setAliasForNotification:(NSString*)alias
+{
+    NSString* aliasString = [NSString stringWithFormat:@"%@", alias];
+    [JPUSHService setTags:nil alias:aliasString fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+        NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, iTags , iAlias);
+    }];
+}
 
 
 @end
