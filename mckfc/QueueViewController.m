@@ -45,7 +45,7 @@
     
     self.navigationItem.hidesBackButton = YES;
     
-    UIBarButtonItem* phone = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"phone"] style:UIBarButtonItemStylePlain target:self action:@selector(phoneCall:)];
+    UIBarButtonItem* phone = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"service"] style:UIBarButtonItemStylePlain target:self action:@selector(phoneCall:)];
     self.navigationItem.rightBarButtonItem = phone;
     
     return self;
@@ -74,7 +74,6 @@
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:notificationIdScan object:nil];
 }
-
 
 #pragma mark setter
 -(UITableView *)tableView

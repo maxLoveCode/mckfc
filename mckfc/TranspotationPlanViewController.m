@@ -162,8 +162,11 @@
                @"id":[NSString stringWithFormat:@"%lu",(long)_detail.transportID]};
     [_server GET:@"getTransportDetail" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject) {
         NSDictionary* data = responseObject[@"data"];
+        NSLog(@"%@", data);
         NSError* error;
+        NSInteger transportID = _detail.transportID;
         _detail = [MTLJSONAdapter modelOfClass:[TransportDetail class] fromJSONDictionary:data error:&error];
+        _detail.transportID = transportID;
         if (error) {
             NSLog(@"error %@", error);
         }

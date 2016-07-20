@@ -29,4 +29,15 @@
     return self;
 }
 
+-(void)setNilValueForKey:(NSString *)key
+{
+    if ([key isEqualToString:@"transportID"]) {
+        self.transportID = 0;
+    }
+    else
+    {
+        [super setNilValueForKey:key];
+    }
+}
+
 @end

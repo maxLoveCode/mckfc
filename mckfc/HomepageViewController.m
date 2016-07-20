@@ -59,7 +59,7 @@
     if (_server.accessToken) {
         NSDictionary* params = @{@"token": _server.accessToken};
         [_server GET:@"getUserInfo" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-            //NSLog(@"%@",responseObject);
+            NSLog(@"%@",responseObject);
             if ([responseObject[@"code"] integerValue] == 10003) {
                 [self navigateToEditor];
                 return;
