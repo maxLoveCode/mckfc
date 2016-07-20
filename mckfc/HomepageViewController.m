@@ -59,7 +59,7 @@
     if (_server.accessToken) {
         NSDictionary* params = @{@"token": _server.accessToken};
         [_server GET:@"getUserInfo" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-            NSLog(@"%@", responseObject);
+            //NSLog(@"%@",responseObject);
             if ([responseObject[@"code"] integerValue] == 10003) {
                 [self navigateToEditor];
                 return;
@@ -84,7 +84,6 @@
         }];
     }
     else{
-        NSLog(@"login");
         LoginNav* loginVC = [[LoginNav alloc] init];
         [self presentViewController:loginVC animated:NO completion:^{
             }];
@@ -195,7 +194,7 @@
 {
     NSString* aliasString = [NSString stringWithFormat:@"%@", alias];
     [JPUSHService setTags:nil alias:aliasString fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
-        NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, iTags , iAlias);
+        
     }];
 }
 

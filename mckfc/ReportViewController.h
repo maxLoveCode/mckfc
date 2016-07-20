@@ -10,4 +10,6 @@
 
 @interface ReportViewController : UIViewController
 
+@property (nonatomic, assign) NSInteger transportID;
+
 @end

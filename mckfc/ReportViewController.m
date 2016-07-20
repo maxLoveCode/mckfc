@@ -233,7 +233,7 @@ extern NSString *const reuseIdentifier;
 -(void)requestReport
 {
     NSDictionary* params = @{@"token":_server.accessToken,
-                             @"id":@"48"};
+                             @"id":[NSString stringWithFormat:@"%lu",(long)_transportID]};
     [_server GET:@"getTransportReport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSDictionary* data = responseObject[@"data"];
         NSError* error;

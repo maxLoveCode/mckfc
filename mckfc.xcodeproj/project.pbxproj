@@ -67,6 +67,7 @@
 		257DB7B21D3C71AF00C2227E /* InspectionReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7B11D3C71AF00C2227E /* InspectionReport.m */; };
 		257DB7B51D3C821E00C2227E /* DynamicHeightTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7B41D3C821E00C2227E /* DynamicHeightTextCell.m */; };
 		257DB7B81D3CC7FF00C2227E /* rejectionSelectableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7B71D3CC7FF00C2227E /* rejectionSelectableCell.m */; };
+		258F01561D3F4C4C002A58B0 /* queueViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 258F01551D3F4C4C002A58B0 /* queueViewModel.m */; };
 		25B004931D1920E00018EEB1 /* QueueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004921D1920E00018EEB1 /* QueueViewController.m */; };
 		25B004991D1922970018EEB1 /* QRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004981D1922970018EEB1 /* QRCodeView.m */; };
 		25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFC1D17A53500C9CCBE /* LoadingNav.m */; };
@@ -226,6 +227,8 @@
 		257DB7B41D3C821E00C2227E /* DynamicHeightTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicHeightTextCell.m; sourceTree = "<group>"; };
 		257DB7B61D3CC7FF00C2227E /* rejectionSelectableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rejectionSelectableCell.h; sourceTree = "<group>"; };
 		257DB7B71D3CC7FF00C2227E /* rejectionSelectableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rejectionSelectableCell.m; sourceTree = "<group>"; };
+		258F01541D3F4C4C002A58B0 /* queueViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = queueViewModel.h; sourceTree = "<group>"; };
+		258F01551D3F4C4C002A58B0 /* queueViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = queueViewModel.m; sourceTree = "<group>"; };
 		25B004911D1920E00018EEB1 /* QueueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueViewController.h; sourceTree = "<group>"; };
 		25B004921D1920E00018EEB1 /* QueueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueViewController.m; sourceTree = "<group>"; };
 		25B004971D1922970018EEB1 /* QRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeView.h; sourceTree = "<group>"; };
@@ -487,6 +490,8 @@
 				252EF9ED1D336F4400565D00 /* Field.m */,
 				252EF9EF1D337BA000565D00 /* TransportDetail.h */,
 				252EF9F01D337BA000565D00 /* TransportDetail.m */,
+				258F01541D3F4C4C002A58B0 /* queueViewModel.h */,
+				258F01551D3F4C4C002A58B0 /* queueViewModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1006,6 +1011,7 @@
 				252EF9EE1D336F4400565D00 /* Field.m in Sources */,
 				256F39811D12836900175E5A /* SignUpView.m in Sources */,
 				257DB7AC1D39E0D700C2227E /* WorkFlowInterface.m in Sources */,
+				258F01561D3F4C4C002A58B0 /* queueViewModel.m in Sources */,
 				257DB79D1D38D24000C2227E /* WorkFlow.m in Sources */,
 				257DB7A61D38E91900C2227E /* TruckUnloadProcessViewController.m in Sources */,
 				2512A1CD1D1130B100ED884B /* LoginView.m in Sources */,
@@ -1131,7 +1137,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0ebe1a01-bb93-42f0-b697-7ff55eebe0f7";
+				PROVISIONING_PROFILE = "ddb4651c-f467-4d3c-bc32-1572eb77f1fe";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1171,7 +1177,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "0ebe1a01-bb93-42f0-b697-7ff55eebe0f7";
+				PROVISIONING_PROFILE = "ddb4651c-f467-4d3c-bc32-1572eb77f1fe";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1182,13 +1188,13 @@
 			baseConfigurationReference = BC2D64BC3C296980EB6B04FB /* Pods-mckfc.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Ma (N58JN4X86Y)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cheng Ma (N58JN4X86Y)";
 				INFOPLIST_FILE = mckfc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ddb4651c-f467-4d3c-bc32-1572eb77f1fe";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1198,13 +1204,13 @@
 			baseConfigurationReference = 2C0EE5CD14F1FFCF59A0F5C5 /* Pods-mckfc.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Ma (N58JN4X86Y)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cheng Ma (N58JN4X86Y)";
 				INFOPLIST_FILE = mckfc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ddb4651c-f467-4d3c-bc32-1572eb77f1fe";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

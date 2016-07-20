@@ -13,6 +13,9 @@
 #import "ServerManager.h"
 
 #import "UIImageView+WebCache.h"
+#import "WorkStatusView.h"
+
+#import "queueViewModel.h"
 
 #define itemHeight 44
 #define topMargin 60
@@ -24,13 +27,12 @@
 
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) QRCodeView* QRCode;
+@property (nonatomic, strong) WorkStatusView* statusView;
 @property (nonatomic, strong) ServerManager* server;
 
-@property (nonatomic, copy) NSString* expecttime;
-@property (nonatomic, copy) NSString* location;
-@property (nonatomic, copy) NSString* phone;
 
 @property (nonatomic, assign) NSInteger transportID;
+@property (nonatomic, strong) queueViewModel* viewModel;
 
 @end
 
@@ -97,10 +99,19 @@
     return _QRCode;
 }
 
+-(WorkStatusView *)statusView
+{
+    if (!_statusView) {
+        _statusView = [[WorkStatusView alloc] init];
+        [_statusView setFrame:CGRectMake(k_Margin, 0, kScreen_Width - 2*k_Margin, itemHeight)];
+    }
+    return _statusView;
+}
+
 #pragma mark tableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -117,39 +128,68 @@
     if (indexPath.section == 0) {
         return itemHeight;
     }
+    else if(indexPath.section == 1){
+        return itemHeight*3;
+    }
     else
     {
-        CGFloat content = itemHeight+topMargin+QRCodeSize;
-        CGFloat screen = kScreen_Height-64-itemHeight*4;
-        if (content > screen) {
-            return content;
-        }
-        else return screen;
+        CGFloat content = itemHeight+topMargin*2+QRCodeSize;
+        return content;
     }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"Queue" forIndexPath:indexPath];
+    UITableViewCell* cell = [[UITableViewCell alloc] init];
+    
+    for (UIView* subview in [cell.contentView subviews]) {
+        [subview removeFromSuperview];
+    }
+    
     if (indexPath.section == 0) {
-        UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(44+k_Margin, 0, 150, itemHeight)];
-        titleLabel.text = titleText[indexPath.row];
-        titleLabel.font = [UIFont systemFontOfSize:13];
-        titleLabel.textColor = COLOR_TEXT_GRAY;
-        [cell.contentView addSubview:titleLabel];
-        
-        UILabel* detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame), CGRectGetMinY(titleLabel.frame), kScreen_Width-CGRectGetMaxX(titleLabel.frame), CGRectGetHeight(titleLabel.frame))];
-        detailLabel.font = [UIFont systemFontOfSize:14];
-        detailLabel.textColor = COLOR_WithHex(0x565656);
-        
-        if (indexPath.row ==0) {
-            detailLabel.text = _expecttime;
+
+        [cell.contentView addSubview:self.statusView];
+        [self.statusView setData:_viewModel.reportArray];
+        return cell;
+    }
+    else if(indexPath.section == 1)
+    {
+        UILabel* queueNo = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, itemHeight)];
+        UILabel* timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, itemHeight, kScreen_Width, itemHeight)];
+        UILabel* location = [[UILabel alloc] initWithFrame:CGRectMake(0, itemHeight*2, kScreen_Width, itemHeight)];
+        queueNo.textAlignment = NSTextAlignmentCenter;
+        timeLabel.textAlignment = NSTextAlignmentCenter;
+        location.textAlignment = NSTextAlignmentCenter;
+        if (![_viewModel.queueno isEqualToString:@""]&&_viewModel.queueno) {
+            
         }
-        else
-        {
-            detailLabel.text = _location;
+        queueNo.text = [NSString stringWithFormat:@"序号: %@", _viewModel.queueno];
+        queueNo.font = [UIFont systemFontOfSize:18];
+        queueNo.textColor = COLOR_WithHex(0x565656);
+        
+        if (![_viewModel.storename isEqualToString:@""]) {
+            NSString* locationString = [NSString stringWithFormat: @"%@: %@", _viewModel.store , _viewModel.storename];
+            NSMutableAttributedString* atrLocationStr = [[NSMutableAttributedString alloc] initWithString:locationString];
+            [atrLocationStr addAttribute:NSForegroundColorAttributeName value:COLOR_TEXT_GRAY range:NSMakeRange(0, [_viewModel.store length]+1)];
+            [atrLocationStr addAttribute:NSForegroundColorAttributeName value:COLOR_WithHex(0x565656) range:NSMakeRange([_viewModel.store length]+1, [atrLocationStr.string length]-[_viewModel.store length]-1)];
+            [atrLocationStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, [atrLocationStr.string length])];
+            
+            [location setAttributedText:atrLocationStr];
+            
+            [cell.contentView addSubview:location];
         }
-        [cell.contentView addSubview:detailLabel];
+        
+        if (![_viewModel.expecttime isEqualToString:@""]) {
+            NSString* timeString = [NSString stringWithFormat:@"%@: %@", _viewModel.time, _viewModel.expecttime];
+            NSMutableAttributedString* atrTimeStr = [[NSMutableAttributedString alloc] initWithString:timeString];
+            [atrTimeStr addAttribute:NSForegroundColorAttributeName value:COLOR_TEXT_GRAY range:NSMakeRange(0, [_viewModel.time length]+1)];
+            [atrTimeStr addAttribute:NSForegroundColorAttributeName value:COLOR_WithHex(0x565656) range:NSMakeRange([_viewModel.time length]+1, [atrTimeStr.string length]-[_viewModel.time length]-1)];
+            [atrTimeStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, [atrTimeStr.string length])];
+            [timeLabel setAttributedText:atrTimeStr];
+            [cell.contentView addSubview:timeLabel];
+        }
+        
+        [cell.contentView addSubview:queueNo];
         
         return cell;
     }
@@ -172,7 +212,7 @@
 {
     if(section ==0)
     {
-        return itemHeight;
+        return 0.01;
     }
     else
         return 20;
@@ -180,12 +220,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if(section ==0)
-    {
-        return itemHeight;
-    }
-    else
-        return 0.01;
+    return 0.01;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -216,6 +251,7 @@
 -(void)generateReport
 {
     ReportViewController* reportVC = [[ReportViewController alloc] init];
+    [reportVC setTransportID:self.transportID];
     [self.navigationController pushViewController:reportVC animated:YES];
 }
 
@@ -239,12 +275,15 @@
     [_server GET:@"getQueueDetail" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSLog(@"response:%@", responseObject);
         NSDictionary* data = responseObject[@"data"];
-        NSNumber *time = data[@"expectwaittime"];
-        NSInteger remainning = [time integerValue]/1000/60;
-        _expecttime = [NSString stringWithFormat:@"%li分钟", (long)remainning];
-        _location = data[@"storename"];
-        _phone = data[@"factoryphone"];
-        [self.tableView reloadData];
+        NSError* error;
+        _viewModel = [MTLJSONAdapter modelOfClass:[queueViewModel class] fromJSONDictionary:data error:&error];
+        if (!error) {
+            [self.tableView reloadData];
+        }
+        else
+        {
+            NSLog(@"%@", error);
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
@@ -253,19 +292,27 @@
 #pragma mark phone calls
 -(void)remoteNotification
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getNotification) name:notificationIdScan object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getNotification:) name:notificationIdScan object:nil];
+    
 }
 
--(void)getNotification
+-(void)getNotification:(NSNotification *)notification
 {
-    [self generateReport];
+    if([notification.userInfo[@"content"] isEqualToString:@"outfactory"])
+    {
+        [self generateReport];
+    }
+    else
+    {
+        [self requestQueueInfo];
+    }
 }
 
 #pragma mark navigation item
 -(void)phoneCall:(id)sender
 {
-    if (_phone) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",_phone]]];
+    if (_viewModel.factoryphone) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",_viewModel.factoryphone]]];
     }
     else
     {

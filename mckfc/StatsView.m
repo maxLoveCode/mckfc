@@ -86,16 +86,16 @@
         detailLabel.text = [NSString stringWithFormat:@"%@", _stats[@"transportTime"]];
     }
     else if (indexPath.item == 1){
-        title.text = @"总里程数";
+        title.text = @"总里程(公里)";
         detailLabel.text = [NSString stringWithFormat:@"%@", _stats[@"totalMile"]];
     }
     else if (indexPath.item == 2){
-        title.text = @"运输总重数";
+        title.text = @"运输总重(吨)";
         detailLabel.text = [NSString stringWithFormat:@"%@", _stats[@"totalWeight"]];
     }
     return cell;
 }
-
+                          
 -(void)setStatsFromDictionary:(NSDictionary *)stats
 {
     self.stats = stats;
