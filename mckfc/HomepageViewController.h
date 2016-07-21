@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
 
 @interface HomepageViewController : UIViewController
 
 @property (assign, nonatomic) BOOL didLogin;
 @property (assign, nonatomic) BOOL didEditProfile;
+
+@property (nonatomic, strong) User* user;
 
 @end

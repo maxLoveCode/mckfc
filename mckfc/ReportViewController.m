@@ -12,6 +12,7 @@
 #import "ServerManager.h"
 
 #import "Report.h"
+#import "HomepageViewController.h"
 
 #define  itemHeight 44
 
@@ -125,7 +126,6 @@ extern NSString *const reuseIdentifier;
     }
     else if(indexPath.section ==0 && indexPath.row == 1){
         UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(k_Margin*2+10, 0, 80, itemHeight)];
-        titleLabel.text = titleArray[indexPath.row];
         [cell.contentView addSubview:titleLabel];
         titleLabel.font = [UIFont systemFontOfSize:14];
         titleLabel.textColor = COLOR_TEXT_GRAY;
@@ -134,8 +134,17 @@ extern NSString *const reuseIdentifier;
         [cell.contentView addSubview:detailLabel];
         detailLabel.font = [UIFont systemFontOfSize:13];
         detailLabel.textColor = COLOR_WithHex(0x565656);
+        UIImageView* reject = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grayRejection"]];
+        [reject setFrame:CGRectMake(CGRectGetMinX(titleLabel.frame)-itemHeight, 0, itemHeight, itemHeight)];
+        [cell.contentView addSubview:reject];
+        if ([_report.refusestatus integerValue] == 1) {
+            titleLabel.text = @"部分拒收: ";
+        }
         
-        titleLabel.text = @"拒收全部:";
+        if ([_report.refusestatus integerValue] == 2) {
+            titleLabel.text = @"全部拒收: ";
+        }
+        
         detailLabel.text = _report.refusecause;
     }
     else if(indexPath.section ==1)
@@ -226,6 +235,13 @@ extern NSString *const reuseIdentifier;
 
 -(void)confirmBtn
 {
+    if([[self.navigationController.viewControllers objectAtIndex:0] isKindOfClass:[HomepageViewController class]])
+    {
+        NSLog(@"homepage view controller");
+        HomepageViewController* homepage = [self.navigationController.viewControllers objectAtIndex:0];
+        homepage.user = nil;
+    }
+
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -234,16 +250,20 @@ extern NSString *const reuseIdentifier;
 {
     NSDictionary* params = @{@"token":_server.accessToken,
                              @"id":[NSString stringWithFormat:@"%lu",(long)_transportID]};
+    NSLog(@"%@", params);
     [_server GET:@"getTransportReport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSDictionary* data = responseObject[@"data"];
+        NSLog(@"%@",data);
         NSError* error;
         _report = [MTLJSONAdapter modelOfClass:[Report class] fromJSONDictionary:data error:&error];
-        
+    
         if (error) {
             NSLog(@"%@",error);
         }
         
-        _reject = _report.isrefuse;
+        if ([_report.refusestatus integerValue] != 0) {
+            _reject = YES;
+        }
         [self.tableView reloadData];
         
         self.reportView.report = _report;

@@ -144,9 +144,16 @@
     if (self.user.type == [MKUSER_TYPE_SECURITY integerValue]) {
         Occupation.text = @"门卫";
     }
-    else
+    else if(self.user.type == [MKUSER_TYPE_QUALITYCONTROL integerValue])
     {
-        Occupation.text = @"质检人员";
+        Occupation.text = @"质检人员1";
+    }
+    else if(self.user.type == [MKUSER_TYPE_QUALITYCONTROL2 integerValue]){
+        Occupation.text = @"质检人员2";
+    }
+    else if(self.user.type == [MKUSER_TYPE_UNLOAD integerValue])
+    {
+        Occupation.text = @"卸货员";
     }
     
     UIView* leftView = [[UIView alloc] initWithFrame:CGRectMake(k_Margin, CGRectGetMidY(Occupation.frame), 94, 0.5)];

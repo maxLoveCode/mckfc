@@ -18,7 +18,8 @@
              @"refusecause":@"refusecause",
              @"totaldistance":@"totaldistance",
              @"totalTime":@"totaltime",
-             @"weight":@"weight"
+             @"weight":@"weight",
+             @"refusestatus":@"refusestatus"
              };
 }
 

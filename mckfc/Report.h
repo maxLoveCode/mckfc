@@ -22,6 +22,7 @@
 @property (nonatomic, copy) NSNumber* totaldistance;
 
 @property (nonatomic, copy) NSString* totalTime;
+@property (nonatomic, copy) NSNumber* refusestatus;
 
 
 +(NSInteger)numberOfProperties;

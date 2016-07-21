@@ -41,8 +41,10 @@
 //user type
 #define MKUSER_TYPE_DRIVER @"1"
 #define MKUSER_TYPE_SECURITY @"2"
-#define MKUSER_TYPE_QUALITYCONTROL @"3"
 
+#define MKUSER_TYPE_UNLOAD @"3"
+#define MKUSER_TYPE_QUALITYCONTROL @"4"
+#define MKUSER_TYPE_QUALITYCONTROL2 @"5"
 //notification identity
 #define notificationIdScan @"scanQR"
 

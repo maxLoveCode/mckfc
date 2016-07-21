@@ -64,7 +64,10 @@
             _userView.user = _user;
             [self setAliasForNotification:data[@"userid"]];
             
-            if (_user.type != [MKUSER_TYPE_QUALITYCONTROL integerValue]) {
+            if (_user.type != [MKUSER_TYPE_QUALITYCONTROL integerValue]
+                && _user.type != [MKUSER_TYPE_UNLOAD integerValue]
+                && _user.type != [MKUSER_TYPE_QUALITYCONTROL2 integerValue]) {
+                NSLog(@"loginnav");
                 LoginNav* loginVC = [[LoginNav alloc] init];
                 [self presentViewController:loginVC animated:NO completion:^{
                 }];

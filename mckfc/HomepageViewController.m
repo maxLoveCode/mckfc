@@ -18,14 +18,12 @@
 
 #import "EditorNav.h"
 
-#import "User.h"
 #import "JPushService.h"
 
 @interface HomepageViewController ()<UserViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UserView* userview;
 @property (nonatomic, strong) ServerManager* server;
-@property (nonatomic, strong) User* user;
 
 @end
 

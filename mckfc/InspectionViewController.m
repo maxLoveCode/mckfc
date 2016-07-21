@@ -281,9 +281,14 @@
 #pragma mark requestReport
 -(void)requestInspectionReport
 {
-    //NSString* type;
+    NSString* type;
+    if ([self.workFlow.type isEqualToString:@"checkone"]) {
+        type = @"1";
+    }
+    else
+        type = @"2";
     NSDictionary* params = @{@"token":_server.accessToken,
-                             @"type":@"1",
+                             @"type":type,
                              @"transportid":self.transportid};
     [_server GET:@"getCheckReport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSLog(@"responsObject%@", responseObject);
@@ -355,6 +360,20 @@
     return YES;
 }
 
+-(void)textViewDidEndEditing:(UITextView *)textView
+{
+    if (textView.tag == 0) {
+        self.insepection.result = textView.text;
+    }
+    else if(textView.tag == 1)
+    {
+        self.insepection.comments = textView.text;
+    }
+    if (textView.tag == 2) {
+        self.insepection.refusecause = textView.text;
+    }
+}
+
 -(void)dismissKeyboard:(id)sender
 {
     UIBarButtonItem * button = (UIBarButtonItem*)sender;
@@ -387,7 +406,6 @@
                              @"refusestatus":self.insepection.status,
                              @"refusecause":self.insepection.refusecause,
                              @"transportid":self.transportid};
-    NSLog(@"%@", params);
     [_server POST:@"truckCheck" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
