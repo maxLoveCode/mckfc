@@ -30,8 +30,9 @@
         [self addSubview:self.login];
         
         
-        [self addSubview:self.label];
+        //[self addSubview:self.label];
         [self addSubview:self.signUp];
+
         //[self addSubview:self.fogetPassword];
     }
     return self;
@@ -133,6 +134,7 @@
     
     [self.label setFrame:CGRectMake(CGRectGetMaxX(self.signUp.frame)+9, CGRectGetMinY(self.signUp.frame), 1, CGRectGetHeight(self.signUp.frame))];
     
+    self.signUp.center = CGPointMake(kScreen_Width/2, self.signUp.frame.origin.y+9);
 }
 
 
