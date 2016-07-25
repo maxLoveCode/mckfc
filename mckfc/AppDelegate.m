@@ -52,16 +52,6 @@
         self.window.rootViewController = self.QCNav;
     }
     
-//    // Register the supported interaction types.
-//    UIUserNotificationType types = UIUserNotificationTypeBadge |
-//    UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
-//    UIUserNotificationSettings *mySettings =
-//    [UIUserNotificationSettings settingsForTypes:types categories:nil];
-//    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
-//    
-//    // Register for remote notifications.
-//    [[UIApplication sharedApplication] registerForRemoteNotifications];
-    
 //Jpush
     [self JPushInitailizationWithOption:launchOptions];
     return YES;
@@ -119,10 +109,16 @@
                                               categories:nil];
 #pragma clang diagnostic pop
     }
-    
+
+#ifdef DEBUG
     [JPUSHService setupWithOption:options
-                           appKey:@"a69a0e330940d3f164a2a82d"
+                           appKey:JPushKey
                           channel:nil apsForProduction:NO];
+#else
+    [JPUSHService setupWithOption:options
+                           appKey:JPushKey
+                          channel:nil apsForProduction:YES];
+#endif
     
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
@@ -136,8 +132,6 @@
 
 - (void)networkDidReceiveMessage:(NSNotification *)notification {
     NSDictionary * userInfo = [notification userInfo];
-    NSString *content = [userInfo valueForKey:@"content"];
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationIdScan object:self userInfo:userInfo];
     
     NSLog(@"%@", userInfo);

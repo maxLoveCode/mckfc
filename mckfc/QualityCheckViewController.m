@@ -21,7 +21,7 @@
 }
 @property (nonatomic, strong) NSArray* storeList;
 @property (nonatomic, strong) ServerManager* server;
-@property (nonatomic, strong) StoreReport* report;
+@property (nonatomic, retain) StoreReport* report;
 @end
 
 @implementation QualityCheckViewController
@@ -42,6 +42,7 @@
     criteria = @[@"无异物",@"无油",@"无化学物品",@"无异味"];
     
     _report = [[StoreReport alloc] initWithTransportID:self.transportid];
+    [self requestStore];
 }
 
 -(UITableView *)tableView
@@ -91,7 +92,7 @@
     if (indexPath.section == 0) {
         cell.style = LoadingCellStyleSelection;
         cell.titleLabel.text = @"接受仓库位置";
-        if (!self.report.store.storeID||self.report.store.storeID == 0) {
+        if (_report.store == nil) {
             cell.detailLabel.text = @"请选择仓库";
         }
         else
@@ -204,8 +205,10 @@
         _storeList = [MTLJSONAdapter modelsOfClass:[Store class] fromJSONArray:jsonArray error:&error];
         if (_storeList) {
             success();
-            _report.store = _storeList[0];
-            [self.tableView reloadData];
+            if (!_report.store) {
+                _report.store = _storeList[0];
+                [self.tableView reloadData];
+            }
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -230,6 +233,24 @@
     NSLog(@"params%@", params);
     [_server POST:@"truckUnload" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         [self.navigationController popViewControllerAnimated:YES];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
+-(void)requestStore
+{
+    NSDictionary* params = @{@"token":_server.accessToken,
+                          @"transportid":self.transportid};
+    [_server GET:@"getStore" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSDictionary* data = responseObject[@"data"];
+        NSLog(@"%@", data);
+        if (data) {
+            Store* store = [MTLJSONAdapter modelOfClass:[Store class] fromJSONDictionary:data error:nil];
+            _report.store = store;
+            NSLog(@"%@", self.report.store);
+            [self.tableView reloadData];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];

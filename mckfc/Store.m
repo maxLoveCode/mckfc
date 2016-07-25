@@ -21,5 +21,14 @@
     return self.name;
 }
 
+-(void)setNilValueForKey:(NSString *)key
+{
+    if ([key isEqualToString:@"id"]) {
+        self.storeID = 0;
+    }
+    else
+        [super setNilValueForKey:key];
+}
+
 
 @end

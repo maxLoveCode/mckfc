@@ -12,7 +12,7 @@
 @interface StoreReport : MTLModel<MTLJSONSerializing>
 
 @property (nonatomic, assign) NSString* transportid;
-@property (nonatomic, assign) Store* store;
+@property (nonatomic, strong) Store* store;
 
 @property (nonatomic, assign) BOOL material;
 @property (nonatomic, assign) BOOL petrol;

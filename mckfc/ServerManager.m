@@ -12,11 +12,11 @@
 #ifdef DEBUG
 #define _BASE_URL @"http://120.26.41.98/"
 #else
-#define _BASE_URL @"http://120.26.41.98/"
+#define _BASE_URL @"http://139.196.32.98:8080/api"
 #endif
 
 NSString *const b_URL = _BASE_URL;
-NSString *const version = @"v1_0";
+NSString *const version = @"v1_01";
 
 @interface ServerManager ()<HUDViewDelegate>
 

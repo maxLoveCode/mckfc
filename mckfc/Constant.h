@@ -38,6 +38,8 @@
 //mapkey
 #define MapKey @"52b19ff48d586b5f8f3022b336f3ab02"
 
+#define JPushKey @"a69a0e330940d3f164a2a82d"
+
 //user type
 #define MKUSER_TYPE_DRIVER @"1"
 #define MKUSER_TYPE_SECURITY @"2"

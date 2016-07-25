@@ -16,7 +16,7 @@
 
 #define  itemHeight 44
 
-#define topMargin 60
+#define topMargin 30
 
 #define buttonHeight 40
 #define buttonWidth kScreen_Width-4*k_Margin
@@ -104,9 +104,7 @@ extern NSString *const reuseIdentifier;
     }
     else if(indexPath.section ==2){
         if(_reject)
-            return kScreen_Height-itemHeight*10-20*3;
-        else
-            return kScreen_Height-itemHeight*10-20*3 + itemHeight;
+            return 2*topMargin+buttonHeight;
     }
     return itemHeight;
 }

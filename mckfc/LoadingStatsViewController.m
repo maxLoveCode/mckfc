@@ -264,7 +264,15 @@
                     pickerView.index = indexPath;
                     [pickerView setGreaterOrderData:cityList];
                     [pickerView setData:vendorList];
+                    
                     [pickerView show];
+                    
+                    if (!_stats.supplier) {
+                        Vendor* vendor = vendorList[0];
+                        _stats.supplier = vendor;
+                        
+                        [self.tableView reloadData];
+                    }
                 }];
 
             }

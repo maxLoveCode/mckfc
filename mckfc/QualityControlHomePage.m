@@ -21,7 +21,7 @@
 
 #import "JPushService.h"
 
-@interface QualityControlHomePage () <CommonUserViewDelegate, QRCodeReaderDelegate>
+@interface QualityControlHomePage () <CommonUserViewDelegate,QRCodeReaderDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) CommonUserView* userView;
 @property (nonatomic, strong) ServerManager* server;
@@ -143,10 +143,55 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+#pragma mark tap avatar delegate
 -(void)didTapAvatar
 {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"更换头像" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.editing = YES;
+    [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction *UIAlertAction){
+        imagePicker.delegate = self;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"从相册中选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction *UIAlertAction){
+        imagePicker.delegate = self;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
+
+#pragma mark pick image
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(__bridge NSString *)kUTTypeImage]) {
+        UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
+        [_server upLoadImageData:img forSize:CGSizeMake(100, 100) success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+            NSString* url = responseObject[@"data"];
+            [_server POST:@"updateUserInfo" parameters:@{@"token":_server.accessToken,
+                                                         @"avatar":url} animated:NO
+                  success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject){
+                      
+                      [self.user setAvatar:url];
+                      self.userView.user = self.user;
+                      [self.userView.mainTableView reloadData];
+                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                      
+                  }];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+        }];
+    }
+    [picker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
 
 -(void)navigateToWorkDetail:(NSString*)transportid
 {

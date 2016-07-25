@@ -45,7 +45,7 @@
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.rightBarButtonItem = self.popUpMenu;
     
-    titleText = @[@"发运时间",@"运输目的地",@"计划到达时间",@"计划卸货时间"];
+    titleText = @[@"发运时间",@"运输目的地",@"计划到达时间",@"计划入场时间"];
     _server = [ServerManager sharedInstance];
     [self requestDetails];
 }
