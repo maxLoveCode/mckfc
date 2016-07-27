@@ -15,6 +15,7 @@
 
 #import "TranspotationPlanViewController.h"
 #import "QueueViewController.h"
+#import "MsgListViewController.h"
 
 #import "EditorNav.h"
 
@@ -37,7 +38,7 @@
     
     _userview.delegate = self;
     
-    UIBarButtonItem* logout = [[UIBarButtonItem alloc] initWithTitle:@"退出" style: UIBarButtonItemStylePlain target:self action:@selector(logout)];
+    UIBarButtonItem* logout = [[UIBarButtonItem alloc] initWithTitle:@"退出" style: UIBarButtonItemStylePlain target:self action:@selector(msgViewController)];
     self.navigationItem.rightBarButtonItem = logout;
     
     self.view = _userview;
@@ -202,6 +203,12 @@
     self.user = nil;
     _server.accessToken = nil;
     [self requestUserInfo];
+}
+
+-(void)msgViewController
+{
+    MsgListViewController* msgView = [[MsgListViewController alloc] init];
+    [self.navigationController pushViewController:msgView animated:YES];
 }
 
 

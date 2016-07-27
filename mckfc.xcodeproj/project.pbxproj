@@ -12,6 +12,7 @@
 		2512A1C91D112FDE00ED884B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2512A1C81D112FDE00ED884B /* LoginViewController.m */; };
 		2512A1CD1D1130B100ED884B /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2512A1CC1D1130B100ED884B /* LoginView.m */; };
 		2512A1D01D113C6200ED884B /* HomepageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2512A1CF1D113C6200ED884B /* HomepageViewController.m */; };
+		251E08881D48714400753FC2 /* MsgListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 251E08871D48714400753FC2 /* MsgListViewController.m */; };
 		251F378B1D26447D00B423D1 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 251F378A1D26447D00B423D1 /* Report.m */; };
 		251F378F1D26698C00B423D1 /* ReportCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 251F378E1D26698C00B423D1 /* ReportCollectionView.m */; };
 		2525CF271D3CDD5000F3079F /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = 2525CF261D3CDD5000F3079F /* Store.m */; };
@@ -115,6 +116,8 @@
 		2512A1CC1D1130B100ED884B /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		2512A1CE1D113C6200ED884B /* HomepageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomepageViewController.h; sourceTree = "<group>"; };
 		2512A1CF1D113C6200ED884B /* HomepageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomepageViewController.m; sourceTree = "<group>"; };
+		251E08861D48714400753FC2 /* MsgListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgListViewController.h; sourceTree = "<group>"; };
+		251E08871D48714400753FC2 /* MsgListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MsgListViewController.m; sourceTree = "<group>"; };
 		251F37891D26447D00B423D1 /* Report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Report.h; sourceTree = "<group>"; };
 		251F378A1D26447D00B423D1 /* Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Report.m; sourceTree = "<group>"; };
 		251F378D1D26698C00B423D1 /* ReportCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportCollectionView.h; sourceTree = "<group>"; };
@@ -669,6 +672,8 @@
 				25CECB051D17BFC600C9CCBE /* MapViewController.m */,
 				25CECB071D18DE7C00C9CCBE /* TranspotationPlanViewController.h */,
 				25CECB081D18DE7C00C9CCBE /* TranspotationPlanViewController.m */,
+				251E08861D48714400753FC2 /* MsgListViewController.h */,
+				251E08871D48714400753FC2 /* MsgListViewController.m */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -989,6 +994,7 @@
 				25F0DF141D1D2C5E007CEF17 /* MCPickerView.m in Sources */,
 				257DB79A1D38C9BF00C2227E /* WorkDetail.m in Sources */,
 				252EF9E51D33407900565D00 /* MCDatePickerView.m in Sources */,
+				251E08881D48714400753FC2 /* MsgListViewController.m in Sources */,
 				252EF9BB1D2E46A500565D00 /* SecurityHomePage.m in Sources */,
 				257DB7A91D38EC0D00C2227E /* QualityCheckViewController.m in Sources */,
 				257DB7B81D3CC7FF00C2227E /* rejectionSelectableCell.m in Sources */,
@@ -1188,13 +1194,13 @@
 			baseConfigurationReference = BC2D64BC3C296980EB6B04FB /* Pods-mckfc.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Ma (N58JN4X86Y)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cheng Ma (N58JN4X86Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = mckfc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2934d9e6-2881-4fae-b6c9-d4567d50d3e6";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1204,13 +1210,13 @@
 			baseConfigurationReference = 2C0EE5CD14F1FFCF59A0F5C5 /* Pods-mckfc.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Ma (N58JN4X86Y)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cheng Ma (N58JN4X86Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = mckfc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2934d9e6-2881-4fae-b6c9-d4567d50d3e6";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

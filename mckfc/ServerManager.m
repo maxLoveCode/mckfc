@@ -10,13 +10,13 @@
 #import "AlertHUDView.h"
 
 #ifdef DEBUG
-#define _BASE_URL @"http://120.26.41.98/"
+#define _BASE_URL @"http://139.196.32.98:8080/"
 #else
-#define _BASE_URL @"http://139.196.32.98:8080/api"
+#define _BASE_URL @"http://120.26.41.98/"
 #endif
 
 NSString *const b_URL = _BASE_URL;
-NSString *const version = @"v1_01";
+NSString *const version = @"v1_1";
 
 @interface ServerManager ()<HUDViewDelegate>
 
