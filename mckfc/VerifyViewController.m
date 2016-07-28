@@ -176,7 +176,7 @@
             _server.accessToken = token;
             EditorNav* EditorVC = [[EditorNav alloc] init];
             DriverDetailEditorController* driverVC =(DriverDetailEditorController*)EditorVC.topViewController;
-            [driverVC setRegisterComplete:YES];
+            [driverVC setRegisterComplete:NO];
             
             [self.navigationController presentViewController:EditorVC animated:YES completion:^{
                 

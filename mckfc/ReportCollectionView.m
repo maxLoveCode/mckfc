@@ -58,10 +58,10 @@
     label.font = [UIFont systemFontOfSize:14];
     label.textColor = COLOR_WithHex(0x565656);
     if (indexPath.item == 1) {
-        label.text = @"产地";
+        label.text = @"入场";
     }
     else if(indexPath.item == 2){
-        label.text = @"工厂";
+        label.text = @"出厂";
     }
     else if(indexPath.item == 3){
         label.text = @"重量";

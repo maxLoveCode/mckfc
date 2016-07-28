@@ -12,6 +12,7 @@
 @interface MsgListViewController ()
 
 @property (strong, nonatomic) ServerManager* server;
+@property (strong, nonatomic) UITableView* tableView;
 
 @end
 

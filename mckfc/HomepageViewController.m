@@ -38,7 +38,7 @@
     
     _userview.delegate = self;
     
-    UIBarButtonItem* logout = [[UIBarButtonItem alloc] initWithTitle:@"退出" style: UIBarButtonItemStylePlain target:self action:@selector(msgViewController)];
+    UIBarButtonItem* logout = [[UIBarButtonItem alloc] initWithTitle:@"退出" style: UIBarButtonItemStylePlain target:self action:@selector(logout)];
     self.navigationItem.rightBarButtonItem = logout;
     
     self.view = _userview;
@@ -158,7 +158,7 @@
     EditorNav* editVC = [[EditorNav alloc] init];
     DriverDetailEditorController* driverVC =(DriverDetailEditorController*)editVC.topViewController;
     [driverVC setUser:_user];
-    [driverVC setRegisterComplete:YES];
+    [driverVC setRegisterComplete:NO];
     [self.navigationController presentViewController:editVC animated:YES completion:^{
         
     }];
@@ -202,6 +202,11 @@
 {
     self.user = nil;
     _server.accessToken = nil;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"user_type"];
+    [defaults removeObjectForKey:@"access_token"];
+    
     [self requestUserInfo];
 }
 

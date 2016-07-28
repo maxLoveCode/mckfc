@@ -6,6 +6,10 @@
 //  Copyright © 2016年 Shanghai Impression Culture Communication Co.,Ltd. All rights reserved.
 //
 
+//  这个修改司机的页面， 从 verif 的验证码页面和 homepage 首页都能跳进来，根据 registercomplete（详见.h 文件）来改变调用的接口
+//  一共有两种接口，后台大哥规定是要登记完车辆信息才可以调用 update 改变头像，所以注意先后和 flag 值
+
+
 #import "DriverDetailEditorController.h"
 #import "DriverDetailEditorCell.h"
 #import "ServerManager.h"
@@ -278,11 +282,11 @@
     NSString* url;
     
     if (self.registerComplete) {
-        url = @"registerComplete";
+        url = @"updateUserInfo";
     }
-    else
+    else //verifyview navs
     {
-        url =@"updateUserInfo";
+        url =@"registerComplete";
     }
     
     
@@ -293,7 +297,7 @@
                               @"licenseno":_driver.licenseno};
         [params addEntriesFromDictionary:dic];
         [_server POST:url parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-            if (_registerComplete) {
+            if (_driver.avatar) {
                 [_server POST:@"updateUserInfo" parameters:@{@"token":_server.accessToken,
                                                              @"avatar":_driver.avatar} animated:NO
                       success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject){

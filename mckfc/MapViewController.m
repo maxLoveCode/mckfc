@@ -48,6 +48,11 @@
     _mapView.delegate = self;
     _mapView.showsUserLocation = YES;
     [_mapView setUserTrackingMode: MAUserTrackingModeFollow animated:YES];
+    
+    _mapView.pausesLocationUpdatesAutomatically = NO;
+    
+    _mapView.allowsBackgroundLocationUpdates = YES;//iOS9以上系统必须配置
+    
     //[self terminateHarBin];
     [self.view addSubview:_mapView];
 }

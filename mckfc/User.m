@@ -47,6 +47,8 @@
         self.transporttime = 0;
     } else if([key isEqualToString:@"transportid"]){
         self.transportid = -1;
+    }else if([key isEqualToString:@"transportstatus"]){
+        self.transportstatus = 0;
     }else {
         [super setNilValueForKey:key];
     }
