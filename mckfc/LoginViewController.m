@@ -148,7 +148,6 @@
 #pragma mark app loginview
 -(BOOL)switchRootView:(NSString*)type
 {
-    NSLog(@"switch view");
     UIApplication* app = [UIApplication sharedApplication];
     UIViewController*root =  app.keyWindow.rootViewController;
     if ([type isEqualToString:MKUSER_TYPE_DRIVER]) {
@@ -166,7 +165,9 @@
             return YES;
         }
     }
-    else{
+    else if([type isEqualToString:MKUSER_TYPE_UNLOAD] ||
+            [type isEqualToString:MKUSER_TYPE_QUALITYCONTROL] ||
+            [type isEqualToString:MKUSER_TYPE_QUALITYCONTROL2]){
         if(![root isKindOfClass:[QualityControlNav class]]){
             QualityControlNav* QCNav = [[QualityControlNav alloc] init];
             app.keyWindow.rootViewController = QCNav;

@@ -52,7 +52,7 @@
     _mapView.pausesLocationUpdatesAutomatically = NO;
     
     _mapView.allowsBackgroundLocationUpdates = YES;//iOS9以上系统必须配置
-    
+
     //[self terminateHarBin];
     [self.view addSubview:_mapView];
 }

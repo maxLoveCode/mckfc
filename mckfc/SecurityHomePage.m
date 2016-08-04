@@ -118,18 +118,19 @@
     
     [reader setCompletionWithBlock:^(NSString *resultAsString) {
         NSLog(@"result :%@", resultAsString);
-        [vc dismissViewControllerAnimated:YES completion:NULL];
-        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[resultAsString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
-        if (item == 0) {
-            [self scanDataToServer:json request:@"scanArrive" success:^{
-                
-            }];
-        }
-        else{
-            [self scanDataToServer:json request:@"scanCommon" success:^{
-                
-            }];
-        }
+        [vc dismissViewControllerAnimated:YES completion:^{
+            NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[resultAsString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+            if (item == 0) {
+                [self scanDataToServer:json request:@"scanArrive" success:^{
+                    
+                }];
+            }
+            else{
+                [self scanDataToServer:json request:@"scanCommon" success:^{
+                    
+                }];
+            }
+        }];
     }];
 }
 

@@ -47,6 +47,8 @@
 #define MKUSER_TYPE_UNLOAD @"3"
 #define MKUSER_TYPE_QUALITYCONTROL @"4"
 #define MKUSER_TYPE_QUALITYCONTROL2 @"5"
+#define MKUSER_TYPE_FARMER @"6"
+
 //notification identity
 #define notificationIdScan @"scanQR"
 

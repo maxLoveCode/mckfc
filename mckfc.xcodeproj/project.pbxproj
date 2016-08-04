@@ -39,6 +39,8 @@
 		252EF9EB1D3369E900565D00 /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9EA1D3369E900565D00 /* City.m */; };
 		252EF9EE1D336F4400565D00 /* Field.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9ED1D336F4400565D00 /* Field.m */; };
 		252EF9F11D337BA000565D00 /* TransportDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9F01D337BA000565D00 /* TransportDetail.m */; };
+		252FADB01D530DA30072E26D /* FarmerPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 252FADAF1D530DA30072E26D /* FarmerPlanViewController.m */; };
+		252FADB31D5311F10072E26D /* FarmerPlanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 252FADB21D5311F10072E26D /* FarmerPlanView.m */; };
 		2534B9951D23993400A82E0A /* LoadingStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 2534B9941D23993400A82E0A /* LoadingStats.m */; };
 		2534B9981D24ACF400A82E0A /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2534B9971D24ACF400A82E0A /* ReportViewController.m */; };
 		253BF5801D0D49F40006086D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF57F1D0D49F40006086D /* main.m */; };
@@ -71,6 +73,8 @@
 		258F01561D3F4C4C002A58B0 /* queueViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 258F01551D3F4C4C002A58B0 /* queueViewModel.m */; };
 		25B004931D1920E00018EEB1 /* QueueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004921D1920E00018EEB1 /* QueueViewController.m */; };
 		25B004991D1922970018EEB1 /* QRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004981D1922970018EEB1 /* QRCodeView.m */; };
+		25CB81981D53449600EDD05C /* FarmerQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CB81971D53449600EDD05C /* FarmerQRCodeVC.m */; };
+		25CB819B1D5344C400EDD05C /* FarmerQRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CB819A1D5344C400EDD05C /* FarmerQRCodeView.m */; };
 		25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFC1D17A53500C9CCBE /* LoadingNav.m */; };
 		25CECB001D17A9D700C9CCBE /* LoadingStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFF1D17A9D700C9CCBE /* LoadingStatsViewController.m */; };
 		25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECB021D17ACF900C9CCBE /* LoadingCell.m */; };
@@ -170,6 +174,10 @@
 		252EF9ED1D336F4400565D00 /* Field.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Field.m; sourceTree = "<group>"; };
 		252EF9EF1D337BA000565D00 /* TransportDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransportDetail.h; sourceTree = "<group>"; };
 		252EF9F01D337BA000565D00 /* TransportDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransportDetail.m; sourceTree = "<group>"; };
+		252FADAE1D530DA30072E26D /* FarmerPlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FarmerPlanViewController.h; sourceTree = "<group>"; };
+		252FADAF1D530DA30072E26D /* FarmerPlanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FarmerPlanViewController.m; sourceTree = "<group>"; };
+		252FADB11D5311F10072E26D /* FarmerPlanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FarmerPlanView.h; sourceTree = "<group>"; };
+		252FADB21D5311F10072E26D /* FarmerPlanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FarmerPlanView.m; sourceTree = "<group>"; };
 		2534B9931D23993400A82E0A /* LoadingStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingStats.h; sourceTree = "<group>"; };
 		2534B9941D23993400A82E0A /* LoadingStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingStats.m; sourceTree = "<group>"; };
 		2534B9961D24ACF400A82E0A /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController.h; sourceTree = "<group>"; };
@@ -236,6 +244,10 @@
 		25B004921D1920E00018EEB1 /* QueueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueViewController.m; sourceTree = "<group>"; };
 		25B004971D1922970018EEB1 /* QRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeView.h; sourceTree = "<group>"; };
 		25B004981D1922970018EEB1 /* QRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeView.m; sourceTree = "<group>"; };
+		25CB81961D53449600EDD05C /* FarmerQRCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FarmerQRCodeVC.h; sourceTree = "<group>"; };
+		25CB81971D53449600EDD05C /* FarmerQRCodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FarmerQRCodeVC.m; sourceTree = "<group>"; };
+		25CB81991D5344C400EDD05C /* FarmerQRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FarmerQRCodeView.h; sourceTree = "<group>"; };
+		25CB819A1D5344C400EDD05C /* FarmerQRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FarmerQRCodeView.m; sourceTree = "<group>"; };
 		25CECAFB1D17A53500C9CCBE /* LoadingNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingNav.h; sourceTree = "<group>"; };
 		25CECAFC1D17A53500C9CCBE /* LoadingNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingNav.m; sourceTree = "<group>"; };
 		25CECAFE1D17A9D700C9CCBE /* LoadingStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingStatsViewController.h; sourceTree = "<group>"; };
@@ -480,6 +492,37 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
+		252FADAB1D530D580072E26D /* Farmer */ = {
+			isa = PBXGroup;
+			children = (
+				252FADAD1D530D7A0072E26D /* View */,
+				252FADAC1D530D6C0072E26D /* Controller */,
+			);
+			name = Farmer;
+			sourceTree = "<group>";
+		};
+		252FADAC1D530D6C0072E26D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				252FADAE1D530DA30072E26D /* FarmerPlanViewController.h */,
+				252FADAF1D530DA30072E26D /* FarmerPlanViewController.m */,
+				25CB81961D53449600EDD05C /* FarmerQRCodeVC.h */,
+				25CB81971D53449600EDD05C /* FarmerQRCodeVC.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		252FADAD1D530D7A0072E26D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				252FADB11D5311F10072E26D /* FarmerPlanView.h */,
+				252FADB21D5311F10072E26D /* FarmerPlanView.m */,
+				25CB81991D5344C400EDD05C /* FarmerQRCodeView.h */,
+				25CB819A1D5344C400EDD05C /* FarmerQRCodeView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		2534B9921D23990800A82E0A /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -560,6 +603,7 @@
 				256F399D1D13D7DF00175E5A /* DetailEditor */,
 				252EF9CA1D2E70EE00565D00 /* QualityControl */,
 				252EF9B51D2E3A3200565D00 /* Security */,
+				252FADAB1D530D580072E26D /* Farmer */,
 				25EDD78C1D0E848A00AFB6F3 /* Model */,
 				251175471D10EB7500C3CE91 /* View */,
 				252EF9D01D2F4CFF00565D00 /* Controller */,
@@ -992,6 +1036,7 @@
 				2525CF2E1D3CE59100F3079F /* TODOViewController.m in Sources */,
 				256F398A1D12887D00175E5A /* VerifyView.m in Sources */,
 				25F0DF141D1D2C5E007CEF17 /* MCPickerView.m in Sources */,
+				25CB81981D53449600EDD05C /* FarmerQRCodeVC.m in Sources */,
 				257DB79A1D38C9BF00C2227E /* WorkDetail.m in Sources */,
 				252EF9E51D33407900565D00 /* MCDatePickerView.m in Sources */,
 				251E08881D48714400753FC2 /* MsgListViewController.m in Sources */,
@@ -1020,6 +1065,7 @@
 				258F01561D3F4C4C002A58B0 /* queueViewModel.m in Sources */,
 				257DB79D1D38D24000C2227E /* WorkFlow.m in Sources */,
 				257DB7A61D38E91900C2227E /* TruckUnloadProcessViewController.m in Sources */,
+				252FADB01D530DA30072E26D /* FarmerPlanViewController.m in Sources */,
 				2512A1CD1D1130B100ED884B /* LoginView.m in Sources */,
 				2527ECCE1D35D8AC00350DC6 /* CarPlateRegionSelector.m in Sources */,
 				252EF9F11D337BA000565D00 /* TransportDetail.m in Sources */,
@@ -1027,6 +1073,7 @@
 				252EF9E21D30AF9F00565D00 /* WorkFlowCell.m in Sources */,
 				252EF9C91D2E6F1000565D00 /* QualityControlHomePage.m in Sources */,
 				252EF9DF1D30AC1B00565D00 /* orderGeneralReport.m in Sources */,
+				25CB819B1D5344C400EDD05C /* FarmerQRCodeView.m in Sources */,
 				256F399C1D13A32000175E5A /* StatsView.m in Sources */,
 				253BF5831D0D49F40006086D /* AppDelegate.m in Sources */,
 				256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */,
@@ -1035,6 +1082,7 @@
 				251F378F1D26698C00B423D1 /* ReportCollectionView.m in Sources */,
 				25B004991D1922970018EEB1 /* QRCodeView.m in Sources */,
 				256F39A21D13D83200175E5A /* EditorNav.m in Sources */,
+				252FADB31D5311F10072E26D /* FarmerPlanView.m in Sources */,
 				25CECB001D17A9D700C9CCBE /* LoadingStatsViewController.m in Sources */,
 				256F39991D12B34D00175E5A /* DriverDetailEditorCell.m in Sources */,
 				25CECB0F1D18E28B00C9CCBE /* TransportationViewCell.m in Sources */,
@@ -1194,13 +1242,13 @@
 			baseConfigurationReference = BC2D64BC3C296980EB6B04FB /* Pods-mckfc.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Ma (N58JN4X86Y)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cheng Ma (N58JN4X86Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = mckfc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bc1a005d-92f2-436a-84b0-5a5c6d2d7468";
+				PROVISIONING_PROFILE = "03cf3499-efb0-4cf1-957b-024779d078d0";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1210,13 +1258,13 @@
 			baseConfigurationReference = 2C0EE5CD14F1FFCF59A0F5C5 /* Pods-mckfc.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Ma (N58JN4X86Y)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cheng Ma (N58JN4X86Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = mckfc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bc1a005d-92f2-436a-84b0-5a5c6d2d7468";
+				PROVISIONING_PROFILE = "03cf3499-efb0-4cf1-957b-024779d078d0";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

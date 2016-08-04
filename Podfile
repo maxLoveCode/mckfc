@@ -14,6 +14,7 @@ def default_pods
 	pod 'QRCodeReaderViewController', '~> 4.0.1'
 	pod 'JPush-iOS-SDK', '~> 2.1.8'
 	pod 'AMapLocation' #定位SDK
+	pod 'Masonry'
 end
 
 target 'mckfc' do

@@ -8,7 +8,6 @@
 
 #import "CommonMenuView.h"
 
-#define menuItemWidth kScreen_Width/3 -2*k_Margin
 #define imageSize 44
 
 @interface CommonMenuView ()<UICollectionViewDelegate, UICollectionViewDataSource>

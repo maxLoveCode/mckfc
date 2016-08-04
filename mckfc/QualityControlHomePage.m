@@ -108,19 +108,19 @@
     
     [reader setCompletionWithBlock:^(NSString *resultAsString){
         NSLog(@"%@", resultAsString);
-        [vc dismissViewControllerAnimated:YES completion:NULL];
-        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[resultAsString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
-        NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token": _server.accessToken}];
-        [params addEntriesFromDictionary:json];
-        [_server POST:@"scanCommon" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-            _ScanedTransportID = [params objectForKey:@"transportid"];
-
+        [vc dismissViewControllerAnimated:YES completion:^{
+            NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[resultAsString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+            NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token": _server.accessToken}];
+            [params addEntriesFromDictionary:json];
+            [_server POST:@"scanCommon" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+                _ScanedTransportID = [params objectForKey:@"transportid"];
+                
                 //navigate to detail
-            [self navigateToWorkDetail:_ScanedTransportID];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            
+                [self navigateToWorkDetail:_ScanedTransportID];
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                
+            }];
         }];
-
     }];
 }
 
