@@ -77,6 +77,10 @@
     NSLog(@"saveSheet");
 }
 
+-(void)setQRData:(NSString*)data
+{
+    [self.QRView.qrcode setQRCode:data];
+}
 
 
 @end

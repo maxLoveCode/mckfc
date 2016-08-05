@@ -122,6 +122,7 @@
         _farmerPlanview.type = FarmerPlanViewTypeQRCode;
         _QRVC = [[FarmerQRCodeVC alloc] init];
         [self addChildViewController:_QRVC];
+        [_QRVC setQRData:@""];
         _farmerPlanview.qrCodeView = (FarmerQRCodeView*)_QRVC.view;
         [self reload];
     }
@@ -303,6 +304,10 @@
 #pragma mark reload shorthand
 -(void)reload
 {
+    if (self.farmerPlanview.type == FarmerPlanViewTypeQRCode)
+    {
+        
+    }
     [_farmerPlanview.mainTableView reloadData];
 }
 

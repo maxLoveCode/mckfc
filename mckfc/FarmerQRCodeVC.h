@@ -10,4 +10,6 @@
 
 @interface FarmerQRCodeVC : UIViewController
 
+-(void)setQRData:(NSString*)data;
+
 @end
