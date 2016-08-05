@@ -122,4 +122,16 @@
     [self removeFromSuperview];
 }
 
+-(void)setData:(NSArray *)data
+{
+    if (self.data) {
+        self->_data = data;
+        [self.picker reloadAllComponents];
+    }
+    else
+    {
+        self->_data = data;
+    }
+}
+
 @end

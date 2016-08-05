@@ -13,6 +13,7 @@
 #import "AddRecordViewController.h"
 #import "MCPickerView.h"
 #import "MCDatePickerView.h"
+#import "AlertHUDView.h"
 
 #import "ServerManager.h"
 
@@ -23,7 +24,7 @@
 
 #define buttonHeight 40
 
-@interface FarmerPlanViewController ()<FarmerPlanViewDelegate, MCPickerViewDelegate>
+@interface FarmerPlanViewController ()<FarmerPlanViewDelegate, MCPickerViewDelegate,HUDViewDelegate>
 {
     NSArray* vendorList;
     NSArray* cityList;
@@ -41,6 +42,8 @@
 @property (nonatomic, strong) UIButton* botButton;
 
 @property (nonatomic, strong) MCPickerView* pickerView;
+@property (nonatomic, strong) AlertHUDView* alert;
+
 
 @end
 
@@ -69,6 +72,16 @@
         _pickerView.delegate = self;
     }
     return _pickerView;
+}
+
+-(AlertHUDView *)alert
+{
+    if (!_alert) {
+        _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
+        _alert.delegate = self;
+        _alert.title.text = @"错误";
+    }
+    return _alert;
 }
 
 -(UIButton *)botButton
@@ -100,6 +113,7 @@
     self.navigationItem.leftBarButtonItem = nil;
 }
 
+#pragma mark menu selection
 -(void)menu:(FarmerPlanView *)Menu DidSelectIndex:(NSInteger)index
 {
     NSLog(@"%ld", (long)index);
@@ -139,10 +153,11 @@
     }
 }
 
+#pragma mark table selection
 -(void)tableStats:(UITableView *)table DidSelectIndex:(NSInteger)index
 {
+    self.pickerView.index = [NSIndexPath indexPathForRow:index inSection:0];
     if (index == 0) {
-        self.pickerView.index = [NSIndexPath indexPathForRow:index inSection:0];
         
         if (cityList == nil || [cityList count] == 0) {
             [self requestCityListSuccess:^{
@@ -160,29 +175,38 @@
         }
     }
     else if (index == 1){
-        if (cityList == nil || [cityList count] == 0) {
-            [self requestCityListSuccess:^{
-                [self.pickerView setData:cityList];
-                [self.pickerView show];
-            }];
+        
+        City* city = _farmerPlanview.stats.city;
+        if (!city) {
+            self.alert.detail.text = @"请先选择城市";
+            [self.alert show:self.alert];
         }
         else
         {
-            [self.pickerView setData:cityList];
-            [self.pickerView show];
+            [self requestVendors:city.cityid success:^{
+                [self.pickerView setData:vendorList];
+                [self.pickerView show];
+            
+                _farmerPlanview.stats.supplier = vendorList[0];
+                [self reload];
+            }];
         }
     }
     else if (index == 2){
-        if (cityList == nil || [cityList count] == 0) {
-            [self requestCityListSuccess:^{
-                [self.pickerView setData:cityList];
-                [self.pickerView show];
-            }];
+        Vendor* vendor = _farmerPlanview.stats.supplier;
+        if (!vendor) {
+            self.alert.detail.text = @"请先选择供应商";
+            [self.alert show:self.alert];
         }
         else
         {
-            [self.pickerView setData:cityList];
-            [self.pickerView show];
+            [self requestFields:[NSString stringWithFormat:@"%lu", (long)vendor.vendorID] success:^{
+                [self.pickerView setData:fieldList];
+                [self.pickerView show];
+                
+                _farmerPlanview.stats.field = fieldList[0];
+                [self reload];
+            }];
         }
     }
     else if (index == 3){
@@ -244,14 +268,36 @@
     }];
 }
 
+-(void)requestFields:(NSString*)vendor success:(void (^)(void))success
+{
+    NSDictionary* params = @{@"token":_server.accessToken,
+                             @"vendorid":vendor};
+    [_server GET:@"getFieldList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSArray* data = responseObject[@"data"];
+        fieldList = [MTLJSONAdapter modelsOfClass:[Vendor class] fromJSONArray:data error:nil];
+        if (fieldList && [fieldList count] >0) {
+            success();
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
+
 #pragma mark MCPickerView delegate
 -(void)pickerView:(MCPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     //select city
     if (pickerView.index.row == 0) {
         _farmerPlanview.stats.city = cityList[row];
-        [self reload];
     }
+    else if(pickerView.index.row == 1){
+        _farmerPlanview.stats.supplier = vendorList[row];
+    }
+    else if(pickerView.index.row == 2){
+        _farmerPlanview.stats.field = fieldList[row];
+    }
+    [self reload];
 }
 
 #pragma mark reload shorthand
@@ -260,5 +306,10 @@
     [_farmerPlanview.mainTableView reloadData];
 }
 
+#pragma mark alerts delegates
+-(void)didSelectConfirm
+{
+    [_alert removeFromSuperview];
+}
 
 @end
