@@ -9,17 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "FarmerQRCodeView.h"
 
+#import "LoadingStats.h"
+
 @class FarmerPlanView;
 
 typedef NS_ENUM(NSUInteger, PlanViewType) {
-    FarmerPlanViewTypeMenu,
-    FarmerPlanViewTypeQRCode,
-    FarmerPlanViewTypeOrder,
+    FarmerPlanViewTypeMenu, //菜单
+    FarmerPlanViewTypeQRCode, //二维码页面
+    FarmerPlanViewTypeOrder,  //添加运输单页
+    FarmerPlanViewTypeRecordList, //运输单页列表
 };
 
 @protocol FarmerPlanViewDelegate <NSObject>
 
--(void)menuDidSelectIndex:(NSInteger)index;
+-(void)menu:(FarmerPlanView*)Menu DidSelectIndex:(NSInteger)index;
+-(void)tableStats:(UITableView*)table DidSelectIndex:(NSInteger)index;
 
 @end
        
@@ -28,7 +32,12 @@ typedef NS_ENUM(NSUInteger, PlanViewType) {
 
 @property (nonatomic, strong) UITableView* mainTableView;
 @property (nonatomic) PlanViewType type;
+
 @property (nonatomic, strong) FarmerQRCodeView* qrCodeView;
+@property (nonatomic, strong) UITableView* addRecordView;
+
 @property (nonatomic, weak) id<FarmerPlanViewDelegate> delegate;
+
+@property (nonatomic, strong) LoadingStats* stats;
 
 @end

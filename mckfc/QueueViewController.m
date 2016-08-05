@@ -165,6 +165,14 @@
         queueNo.text = [NSString stringWithFormat:@"序号: %@", _viewModel.queueno];
         queueNo.font = [UIFont systemFontOfSize:18];
         queueNo.textColor = COLOR_WithHex(0x565656);
+        if([_viewModel.queueno isEqualToString:@""])
+        {
+            queueNo.hidden = YES;
+        }
+        else
+        {
+            queueNo.hidden = NO;
+        }
         
         if (![_viewModel.storename isEqualToString:@""]) {
             NSString* locationString = [NSString stringWithFormat: @"%@: %@", _viewModel.store , _viewModel.storename];

@@ -92,12 +92,42 @@
     return _digitInput;
 }
 
+-(UITextField *)textInput
+{
+    if (!_textInput) {
+        _textInput = [[UITextField alloc] init];
+        _textInput.textColor = COLOR_TEXT_GRAY;
+        _textInput.font = [UIFont systemFontOfSize:14];
+    }
+    return _textInput;
+}
+
+-(UIButton *)popUpBtn
+{
+    if (!_popUpBtn) {
+        _popUpBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_popUpBtn setTitle:@"填写省份" forState:UIControlStateNormal];
+        [_popUpBtn setTitleColor:COLOR_TEXT_GRAY forState:UIControlStateNormal];
+        [_popUpBtn setTitleColor:COLOR_WithHex(0x565656) forState:UIControlStateSelected];
+        _popUpBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        [_popUpBtn setImage:[UIImage imageNamed:@"arrow"] forState:UIControlStateNormal];
+        [_popUpBtn setImage:[UIImage imageNamed:@"arrow"] forState:UIControlStateSelected];
+        _popUpBtn.transform = CGAffineTransformMakeScale(-1.0, 1.0);
+        _popUpBtn.titleLabel.transform = CGAffineTransformMakeScale(-1.0, 1.0);
+        _popUpBtn.imageView.transform = CGAffineTransformMakeScale(-1.0, 1.0);
+        
+        _popUpBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    return _popUpBtn;
+}
+
 -(void)setStyle:(LoadingCellStyle)style
 {
     self->_style = style;
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.leftImageView];
-    if(style == LoadingCellStyleSelection || style == LoadingCellStyleDatePicker){
+    if(style == LoadingCellStyleSelection ||
+       style == LoadingCellStyleDatePicker){
         [self.contentView addSubview:self.detailLabel];
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
@@ -121,6 +151,15 @@
     {
         [self addSubview:self.detailLabel];
     }
+    else if(style == LoadingCellStyleTextInput)
+    {
+        [self addSubview:self.textInput];
+    }
+    else if(style == LoadingCellStyleCarPlateInput)
+    {
+        [self addSubview:self.popUpBtn];
+        [self addSubview:self.textInput];
+    }
 }
 
 #pragma mark layouts
@@ -138,6 +177,17 @@
     }
     else if(self.style == LoadingCellStylePlain){
         [self.detailLabel setFrame:CGRectMake(CGRectGetMaxX(self.titleLabel.frame), 0, kScreen_Width-CGRectGetMaxX(self.titleLabel.frame)-k_Margin, itemHeight)];
+    }
+    else if(self.style == LoadingCellStyleTextInput)
+    {
+        [self.textInput setFrame:self.detailLabel.frame];
+    }
+    else if(self.style == LoadingCellStyleCarPlateInput)
+    {
+        CGFloat detailX = CGRectGetMaxX(_titleLabel.frame)+20;
+        [self.textInput setFrame:
+         CGRectMake(detailX+100, 0, kScreen_Width-detailX-90, itemHeight)];
+        [self.popUpBtn setFrame:CGRectMake(detailX, 0, 90, itemHeight)];
     }
 }
 

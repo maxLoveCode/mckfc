@@ -75,6 +75,9 @@
 		25B004991D1922970018EEB1 /* QRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B004981D1922970018EEB1 /* QRCodeView.m */; };
 		25CB81981D53449600EDD05C /* FarmerQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CB81971D53449600EDD05C /* FarmerQRCodeVC.m */; };
 		25CB819B1D5344C400EDD05C /* FarmerQRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CB819A1D5344C400EDD05C /* FarmerQRCodeView.m */; };
+		25CB819E1D5423CB00EDD05C /* FarmerNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CB819D1D5423CB00EDD05C /* FarmerNav.m */; };
+		25CB81A11D54513F00EDD05C /* AddRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CB81A01D54513F00EDD05C /* AddRecordViewController.m */; };
+		25CB81A41D546CD800EDD05C /* AddRecordTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CB81A31D546CD800EDD05C /* AddRecordTable.m */; };
 		25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFC1D17A53500C9CCBE /* LoadingNav.m */; };
 		25CECB001D17A9D700C9CCBE /* LoadingStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFF1D17A9D700C9CCBE /* LoadingStatsViewController.m */; };
 		25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECB021D17ACF900C9CCBE /* LoadingCell.m */; };
@@ -248,6 +251,12 @@
 		25CB81971D53449600EDD05C /* FarmerQRCodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FarmerQRCodeVC.m; sourceTree = "<group>"; };
 		25CB81991D5344C400EDD05C /* FarmerQRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FarmerQRCodeView.h; sourceTree = "<group>"; };
 		25CB819A1D5344C400EDD05C /* FarmerQRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FarmerQRCodeView.m; sourceTree = "<group>"; };
+		25CB819C1D5423CB00EDD05C /* FarmerNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FarmerNav.h; sourceTree = "<group>"; };
+		25CB819D1D5423CB00EDD05C /* FarmerNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FarmerNav.m; sourceTree = "<group>"; };
+		25CB819F1D54513F00EDD05C /* AddRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddRecordViewController.h; sourceTree = "<group>"; };
+		25CB81A01D54513F00EDD05C /* AddRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddRecordViewController.m; sourceTree = "<group>"; };
+		25CB81A21D546CD800EDD05C /* AddRecordTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddRecordTable.h; sourceTree = "<group>"; };
+		25CB81A31D546CD800EDD05C /* AddRecordTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddRecordTable.m; sourceTree = "<group>"; };
 		25CECAFB1D17A53500C9CCBE /* LoadingNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingNav.h; sourceTree = "<group>"; };
 		25CECAFC1D17A53500C9CCBE /* LoadingNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingNav.m; sourceTree = "<group>"; };
 		25CECAFE1D17A9D700C9CCBE /* LoadingStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingStatsViewController.h; sourceTree = "<group>"; };
@@ -508,6 +517,10 @@
 				252FADAF1D530DA30072E26D /* FarmerPlanViewController.m */,
 				25CB81961D53449600EDD05C /* FarmerQRCodeVC.h */,
 				25CB81971D53449600EDD05C /* FarmerQRCodeVC.m */,
+				25CB819C1D5423CB00EDD05C /* FarmerNav.h */,
+				25CB819D1D5423CB00EDD05C /* FarmerNav.m */,
+				25CB819F1D54513F00EDD05C /* AddRecordViewController.h */,
+				25CB81A01D54513F00EDD05C /* AddRecordViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -519,6 +532,8 @@
 				252FADB21D5311F10072E26D /* FarmerPlanView.m */,
 				25CB81991D5344C400EDD05C /* FarmerQRCodeView.h */,
 				25CB819A1D5344C400EDD05C /* FarmerQRCodeView.m */,
+				25CB81A21D546CD800EDD05C /* AddRecordTable.h */,
+				25CB81A31D546CD800EDD05C /* AddRecordTable.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1076,10 +1091,13 @@
 				25CB819B1D5344C400EDD05C /* FarmerQRCodeView.m in Sources */,
 				256F399C1D13A32000175E5A /* StatsView.m in Sources */,
 				253BF5831D0D49F40006086D /* AppDelegate.m in Sources */,
+				25CB819E1D5423CB00EDD05C /* FarmerNav.m in Sources */,
 				256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */,
 				252EF9EB1D3369E900565D00 /* City.m in Sources */,
+				25CB81A11D54513F00EDD05C /* AddRecordViewController.m in Sources */,
 				256F39961D12B2A000175E5A /* DriverDetailEditorController.m in Sources */,
 				251F378F1D26698C00B423D1 /* ReportCollectionView.m in Sources */,
+				25CB81A41D546CD800EDD05C /* AddRecordTable.m in Sources */,
 				25B004991D1922970018EEB1 /* QRCodeView.m in Sources */,
 				256F39A21D13D83200175E5A /* EditorNav.m in Sources */,
 				252FADB31D5311F10072E26D /* FarmerPlanView.m in Sources */,

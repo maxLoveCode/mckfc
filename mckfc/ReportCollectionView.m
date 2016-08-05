@@ -58,7 +58,7 @@
     label.font = [UIFont systemFontOfSize:14];
     label.textColor = COLOR_WithHex(0x565656);
     if (indexPath.item == 1) {
-        label.text = @"入场";
+        label.text = @"入厂";
     }
     else if(indexPath.item == 2){
         label.text = @"出厂";

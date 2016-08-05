@@ -10,7 +10,7 @@
 #import "LoadingNav.h"
 #import "SecurityNav.h"
 #import "QualityControlNav.h"
-#import "FarmerPlanViewController.h"
+#import "FarmerNav.h"
 
 #import "JPushService.h"
 
@@ -19,7 +19,7 @@
 @property (nonatomic, strong) LoadingNav* loadingNav;
 @property (nonatomic, strong) SecurityNav* securityNav;
 @property (nonatomic, strong) QualityControlNav* QCNav;
-@property (nonatomic, strong) FarmerPlanViewController* FarmerNav;
+@property (nonatomic, strong) FarmerNav* FarmerNav;
 
 @end
 
@@ -39,7 +39,6 @@
 //the usertype flag, needs to be cleared if logout
     NSString* user_type = [defaults objectForKey:@"user_type"];
     NSLog(@"user_type %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"]);
-    user_type = MKUSER_TYPE_FARMER;
     if (user_type == nil || [user_type isEqualToString:MKUSER_TYPE_DRIVER] || [user_type isEqualToString:@""]) {
 //装载导视图（default）
         self.loadingNav = [[LoadingNav alloc] init];
@@ -50,7 +49,7 @@
         self.window.rootViewController = self.securityNav;
     }
     else if([user_type isEqualToString:MKUSER_TYPE_FARMER]) {
-        self.FarmerNav = [[FarmerPlanViewController alloc] init];
+        self.FarmerNav = [[FarmerNav alloc] init];
         self.window.rootViewController = self.FarmerNav;
     }
     else

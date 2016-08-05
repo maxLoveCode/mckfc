@@ -16,7 +16,11 @@ typedef NS_ENUM(NSUInteger, LoadingCellStyle) {
     LoadingCellStyleImagePicker, //点击上传图片，暂时不需要了
     LoadingCellStyleDigitInput, //填写重要，accessoryview 是 KG
     LoadingCellStyleBoolean, //左边是一个点击切换布尔值的 cell，现在也不需要了
-    LoadingCellStyleDatePicker //需求又改了，现在要专门选择年月日
+    LoadingCellStyleDatePicker, //需求又改了，现在要专门选择年月日
+    //豆农端更新
+    //需求一直改，所以这个类区分越来越多。。。 
+    LoadingCellStyleTextInput,
+    LoadingCellStyleCarPlateInput,
 };
 
 @interface LoadingCell : UITableViewCell
@@ -27,6 +31,9 @@ typedef NS_ENUM(NSUInteger, LoadingCellStyle) {
 
 @property (nonatomic, strong) UITextView* textField;
 @property (nonatomic, strong) UITextField* digitInput;
+
+@property (nonatomic, strong) UITextField* textInput;
+@property (nonatomic, strong) UIButton* popUpBtn;
 
 @property (nonatomic, assign) LoadingCellStyle style;
 

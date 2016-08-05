@@ -16,6 +16,7 @@
 #import "LoadingNav.h"
 #import "SecurityNav.h"
 #import "QualityControlNav.h"
+#import "FarmerNav.h"
 
 @interface LoginViewController()<UITextFieldDelegate, LoginViewDelegate>
 {
@@ -112,15 +113,18 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             _server.accessToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"];
             
-            if([self switchRootView: type])
-            {
-                
-            }
-            else
-            {
-                [self dismissViewControllerAnimated:YES completion:^{
-                }];
-            }
+//            if([self switchRootView: type])
+//            {
+//                
+//            }
+//            else
+//            {
+//                [self dismissViewControllerAnimated:YES completion:^{
+//                }];
+//            }
+            [self dismissViewControllerAnimated:NO completion:^{
+                [self switchRootView:type];
+            }];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -173,6 +177,13 @@
             app.keyWindow.rootViewController = QCNav;
             
             return YES;
+        }
+    }
+    else if([type isEqualToString:MKUSER_TYPE_FARMER])
+    {
+        if (![root isKindOfClass:[FarmerNav class]]) {
+            FarmerNav* farmerNav = [[FarmerNav alloc] init];
+            app.keyWindow.rootViewController = farmerNav;
         }
     }
     return NO;

@@ -103,7 +103,6 @@ extern NSString *const reuseIdentifier;
         }
     }
     else if(indexPath.section ==2){
-        if(_reject)
             return 2*topMargin+buttonHeight;
     }
     return itemHeight;

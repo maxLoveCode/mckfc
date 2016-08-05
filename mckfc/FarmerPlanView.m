@@ -31,7 +31,7 @@
 {
     self = [super init];
     self.type = FarmerPlanViewTypeMenu;
-    
+    self.stats = [[LoadingStats alloc] init];
     [self addSubview:self.mainTableView];
     
     return self;
@@ -41,7 +41,7 @@
 -(UITableView *)mainTableView
 {
     if (!_mainTableView) {
-        _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height) style:UITableViewStyleGrouped];
+        _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height-64) style:UITableViewStyleGrouped];
         _mainTableView.delegate = self;
         _mainTableView.dataSource = self;
         [_mainTableView registerClass:[LoadingCell class] forCellReuseIdentifier:@"loadingStats"];
@@ -70,7 +70,10 @@
 #pragma mark tableviewdelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    if(self.type == FarmerPlanViewTypeRecordList)
+        return 3;
+    else
+        return 2;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -96,23 +99,70 @@
         
         cell.titleLabel.text = titleText[indexPath.row];
         cell.leftImageView.image = [UIImage imageNamed:titleText[indexPath.row]];
+        
+        if (indexPath.row == 0) {
+            cell.detailLabel.text = _stats.city.name;
+        }
+        else if(indexPath.row == 1){
+            cell.detailLabel.text = _stats.supplier.name;
+        }
+        else if(indexPath.row == 2){
+            cell.detailLabel.text = _stats.field.name;
+        }
+        
         return cell;
     }
-    else
+    else if (indexPath.section == 1)
     {
         UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"menu"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (self.type == FarmerPlanViewTypeMenu) {
             [cell.contentView addSubview:self.menuView];
         }
         else if(self.type == FarmerPlanViewTypeQRCode)
         {
-            [cell.contentView addSubview:self.qrCodeView];
-//            [self.qrCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.top.equalTo(@20);
-//                make.centerX.equalTo(cell.contentView);
-//            }];
+            if (self.qrCodeView != nil) {
+                [cell.contentView addSubview:self.qrCodeView];
+            }
+        }
+        else if(self.type == FarmerPlanViewTypeOrder)
+        {
+            if (self.addRecordView != nil) {
+                [cell.contentView addSubview:self.addRecordView];
+            }
+        }
+        else if(self.type == FarmerPlanViewTypeRecordList)
+        {
+            UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, itemHeight, itemHeight)];
+            imageView.image = [UIImage imageNamed:@"menuCancel"];
+            UILabel* label = [[UILabel alloc] init];
+            label.text = @"添加运输单";
+            label.textColor = COLOR_WithHex(0x565656);
+            [label sizeToFit];
+            UIView* wrapper = [[UIView alloc] init];
+            
+            [wrapper addSubview:imageView];
+            [wrapper addSubview:label];
+            
+            [label mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(imageView.right).with.offset(10);
+                make.centerY.equalTo(imageView);
+            }];
+            
+            [wrapper sizeToFit];
+            [cell.contentView addSubview:wrapper];
+            
+            [wrapper mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.size.equalTo(CGSizeMake(imageView.frame.size.width+label.frame.size.width+10, itemHeight));
+                make.center.equalTo(cell.contentView);
+            }];
             
         }
+        return cell;
+    }
+    else if(indexPath.section == 2)
+    {
+        UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"list"];
         return cell;
     }
     return nil;
@@ -161,11 +211,22 @@
     else{
         
         if (self.type == FarmerPlanViewTypeMenu) {
-            return 2*kScreen_Width/3+20;
+            return 2*kScreen_Width/3+19;
         }
         else if(self.type == FarmerPlanViewTypeQRCode)
         {
-            return 300;
+            return 350;
+        }
+        else if(self.type == FarmerPlanViewTypeOrder)
+        {
+            return itemHeight*5;
+        }
+        else if(self.type == FarmerPlanViewTypeRecordList)
+        {
+            if (indexPath.section == 1) {
+                return itemHeight*2;
+            }
+            else return itemHeight;
         }
         else
             return itemHeight;
@@ -184,14 +245,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.delegate tableStats:tableView DidSelectIndex:indexPath.row];
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"tap");
-    self.type = FarmerPlanViewTypeQRCode;
-    
-    [self.delegate menuDidSelectIndex:indexPath.section];
+    [self.delegate menu:self DidSelectIndex:indexPath.item];
 }
 
 

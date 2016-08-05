@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QRCodeView.h"
 
 @interface FarmerQRCodeView : UIView
+
+@property (nonatomic, strong) UIButton* screenShot;
+@property (nonatomic, strong) UIButton* saveSheet;
+@property (nonatomic, strong) QRCodeView* qrcode;
+
+-(CGFloat)viewHeight;
 
 @end
