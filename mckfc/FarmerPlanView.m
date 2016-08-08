@@ -271,12 +271,12 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0)
-        [self.delegate tableStats:tableView DidSelectIndex:indexPath.row];
+        [self.planViewDelegate tableStats:tableView DidSelectIndex:indexPath.row];
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.delegate menu:self DidSelectIndex:indexPath.item];
+    [self.planViewDelegate menu:self DidSelectIndex:indexPath.item];
 }
 
 @end

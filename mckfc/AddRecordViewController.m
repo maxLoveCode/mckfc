@@ -11,13 +11,15 @@
 #import "LoadingCell.h"
 #import "ServerManager.h"
 #import "CarPlateRegionSelector.h"
+#import "User.h"
 
-@interface AddRecordViewController ()<UITableViewDelegate, UITableViewDataSource>\
+@interface AddRecordViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 {
     NSArray* titleArray;
 }
 
 @property (nonatomic, strong) ServerManager* server;
+@property (nonatomic, strong) User* user;
 
 @end
 
@@ -26,6 +28,7 @@
 -(void)viewDidLoad
 {
     self.view = self.tableView;
+    _user = [[User alloc] init];
 }
 
 -(AddRecordTable *)tableView
@@ -64,15 +67,22 @@
     if (indexPath.row == 0) {
         cell.style = LoadingCellStyleCarPlateInput;
         [cell.popUpBtn addTarget:self action:@selector(popUpRegions:) forControlEvents:UIControlEventTouchUpInside];
+        cell.textInput.delegate = self;
+        cell.textInput.text = _user.cardigits;
     }
     else if(indexPath.row == 1){
         cell.style = LoadingCellStyleTextInput;
+        cell.textInput.delegate = self;
+        cell.textInput.text = _user.driver;
     }
     else if(indexPath.row == 2){
         cell.style = LoadingCellStyleTextInput;
+        cell.textInput.delegate = self;
+        cell.textInput.text = _user.mobile;
     }
     else if(indexPath.row == 3){
         cell.style = LoadingCellStyleDigitInput;
+        cell.digitInput.delegate = self;
     }
     else if(indexPath.row == 4){
         cell.style =LoadingCellStyleDatePicker;
@@ -107,9 +117,21 @@
                  button.selected = YES;
                  [_tableView reloadData];
              }];
-         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-             
-         }];
+         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
+    }];
+}
+
+#pragma mark- textfield delegate
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self.tableView scrollsToTop];
+    [self.delegate addRecordView:self.tableView];
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    NSLog(@"end");
+    [self.delegate endEditing:self.tableView];
 }
 
 

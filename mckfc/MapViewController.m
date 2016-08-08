@@ -83,7 +83,11 @@ updatingLocation:(BOOL)updatingLocation
         if (_userLocation)
         {
             if (!_timer) {
-                _timer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(repeatTimer) userInfo:nil repeats:YES];
+                float timer = 10.0f;
+                if (_locationTime != 0) {
+                    timer = _locationTime/1000;
+                }
+                _timer = [NSTimer scheduledTimerWithTimeInterval:timer target:self selector:@selector(repeatTimer) userInfo:nil repeats:YES];
                 [_timer fire];
             }
         }

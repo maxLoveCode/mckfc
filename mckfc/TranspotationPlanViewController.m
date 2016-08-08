@@ -13,15 +13,16 @@
 #import "rightNavigationItem.h"
 
 #import "ServerManager.h"
+#import "AlertHUDView.h"
 
 #define itemHeight 44
 
-@interface TranspotationPlanViewController()<mapViewDelegate,menuDelegate>
+@interface TranspotationPlanViewController()<mapViewDelegate,menuDelegate,HUDViewDelegate>
 
 @property (nonatomic, strong) MapViewController* mapVC;
 @property (nonatomic, strong) ServerManager* server;
 @property (nonatomic, strong) rightNavigationItem* popUpMenu;
-
+@property (nonatomic, strong) AlertHUDView* alert;
 @property (nonatomic, strong) UIButton* confirm;
 
 
@@ -48,12 +49,25 @@
     titleText = @[@"发运时间",@"运输目的地",@"计划到达时间",@"计划入场时间"];
     _server = [ServerManager sharedInstance];
     [self requestDetails];
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"locationPrompt"])
+        [self locationServicePrompt];
+}
+
+#pragma mark - setter properties
+-(AlertHUDView *)alert
+{
+    if (!_alert) {
+        _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
+        _alert.delegate = self;
+    }
+    return _alert;
 }
 
 -(MapViewController *)mapVC
 {
     if (!_mapVC && _detail.pointx!= nil && _detail.pointy!=nil) {
         _mapVC = [[MapViewController alloc] initWithTerminateLong:[_detail.pointx doubleValue] Lat:[_detail.pointy doubleValue]];
+        _mapVC.locationTime = [_detail.autoLocationTime floatValue];
         _mapVC.delegate = self;
         [self addChildViewController:_mapVC];
     }
@@ -101,11 +115,26 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row != 4) {
-        
         return itemHeight;
     }
     else
         return kScreen_Height-itemHeight*6-20;
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    if (indexPath.row == 1) {
+//        TransportationViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+//        UIFont* font = cell.detailLabel.font;
+//        NSDictionary* attribute = @{NSFontAttributeName:font};
+//        const CGSize textSize = [cell.detailLabel.text sizeWithAttributes: attribute];
+//        if (textSize.width > cell.detailTextLabel.frame.size.width && cell.detailLabel.numberOfLines == 1) {
+//            NSLog(@"%lf, %lf, %lu", cell.detailLabel.frame.size.width, textSize.width, (long)cell.detailLabel.numberOfLines);
+//            cell.detailTextLabel.font = [UIFont systemFontOfSize:5];
+//            cell.detailTextLabel.numberOfLines = 2;
+//            [cell setNeedsLayout];
+//        }
+//    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -119,6 +148,7 @@
         }
         else if(indexPath.row == 1){
             cell.detailLabel.text = _detail.destination;
+
         }
         else if(indexPath.row == 2){
             cell.detailLabel.text = _detail.planarrivetime;
@@ -140,7 +170,6 @@
     else
     {
         UITableViewCell* cell =[tableView dequeueReusableCellWithIdentifier:@"plan" forIndexPath:indexPath];
-        
 
         [cell.contentView addSubview:self.confirm];
         [self.confirm setFrame: cell.contentView.frame];
@@ -160,9 +189,10 @@
     NSDictionary* params;
     params = @{@"token":_server.accessToken,
                @"id":[NSString stringWithFormat:@"%lu",(long)_detail.transportID]};
+    NSLog(@"%@", params);
     [_server GET:@"getTransportDetail" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject) {
         NSDictionary* data = responseObject[@"data"];
-        NSLog(@"%@", data);
+        NSLog(@"data: %@", data);
         NSError* error;
         NSInteger transportID = _detail.transportID;
         _detail = [MTLJSONAdapter modelOfClass:[TransportDetail class] fromJSONDictionary:data error:&error];
@@ -184,9 +214,7 @@
                              @"expecttime":[NSString stringWithFormat:@"%ld",expecttime],
                              @"token":_server.accessToken};
     [_server POST:@"location" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
         if ([[responseObject[@"data"] objectForKey:@"isbefore"] integerValue] == 1) {
-            
             [self.mapVC.timer invalidate];
             [self.popUpMenu dismiss];
             QueueViewController* queueVC = [[QueueViewController alloc] initWithID:_detail.transportID];
@@ -235,5 +263,20 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
+}
+
+#pragma mark -alertview delegate
+-(void)didSelectConfirm
+{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"locationPrompt"];
+    [self.alert removeFromSuperview];
+}
+
+-(void)locationServicePrompt
+{
+    self.alert.title.text = @"使用位置信息";
+    self.alert.detail.text = @"我们将在后台关注你的位置消息用来监管";
+    self.alert.detail.numberOfLines = 0;
+    [self.alert show:_alert];
 }
 @end

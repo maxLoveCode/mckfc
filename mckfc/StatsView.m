@@ -88,10 +88,16 @@
     else if (indexPath.item == 1){
         title.text = @"总里程(公里)";
         detailLabel.text = [NSString stringWithFormat:@"%@", _stats[@"totalMile"]];
+        if (! _stats[@"totalWeight"]) {
+            detailLabel.text = @"0";
+        }
     }
     else if (indexPath.item == 2){
         title.text = @"运输总重(吨)";
         detailLabel.text = [NSString stringWithFormat:@"%@", _stats[@"totalWeight"]];
+        if (! _stats[@"totalWeight"]) {
+            detailLabel.text = @"0";
+        }
     }
     return cell;
 }

@@ -17,14 +17,12 @@
 
 #import "ServerManager.h"
 
-#import "Vendor.h"
-#import "City.h"
-#import "Field.h"
 
 
 #define buttonHeight 40
+#define itemHeight 44
 
-@interface FarmerPlanViewController ()<FarmerPlanViewDelegate, MCPickerViewDelegate,HUDViewDelegate>
+@interface FarmerPlanViewController ()<FarmerPlanViewDelegate, MCPickerViewDelegate,HUDViewDelegate,DatePickerDelegate, AddRecordTableDelegate>
 {
     NSArray* vendorList;
     NSArray* cityList;
@@ -43,7 +41,7 @@
 
 @property (nonatomic, strong) MCPickerView* pickerView;
 @property (nonatomic, strong) AlertHUDView* alert;
-
+@property (nonatomic, strong) MCDatePickerView* datePicker;
 
 @end
 
@@ -56,11 +54,12 @@
     _server = [ServerManager sharedInstance];
 }
 
+#pragma mark -property setters
 -(FarmerPlanView *)farmerPlanview
 {
     if (!_farmerPlanview) {
         _farmerPlanview = [[FarmerPlanView alloc] init];
-        _farmerPlanview.delegate = self;
+        _farmerPlanview.planViewDelegate = self;
     }
     return _farmerPlanview;
 }
@@ -82,6 +81,15 @@
         _alert.title.text = @"错误";
     }
     return _alert;
+}
+
+-(MCDatePickerView *)datePicker
+{
+    if (!_datePicker) {
+        _datePicker = [[MCDatePickerView alloc] init];
+        _datePicker.delegate = self;
+    }
+    return _datePicker;
 }
 
 -(UIButton *)botButton
@@ -133,6 +141,7 @@
         _farmerPlanview.type = FarmerPlanViewTypeOrder;
         _addRecordVC = [[AddRecordViewController alloc] init];
         [self addChildViewController:_addRecordVC];
+        _addRecordVC.delegate = self;
         _farmerPlanview.addRecordView = _addRecordVC.tableView;
         [self reload];
     }
@@ -212,7 +221,8 @@
         }
     }
     else if (index == 3){
-        
+        NSLog(@"tap");
+        [self.datePicker show];
     }
 }
 
@@ -239,7 +249,7 @@
     }
 }
 
-#pragma mark web data requests
+#pragma mark -web data requests
 -(void)requestCityListSuccess:(void (^)(void))success
 {
     NSDictionary* params = @{@"token": _server.accessToken};
@@ -330,7 +340,7 @@
         [params addEntriesFromDictionary:@{@"provider":_farmerPlanview.stats.supplier.name}];
     }
     if (_farmerPlanview.stats.field) {
-        [params addEntriesFromDictionary:@{@"landid":[NSString stringWithFormat:@"%lu",(unsigned long)_farmerPlanview.stats.field.fieldID]}];        [params addEntriesFromDictionary:@{@"land":_farmerPlanview.stats.field.name}];
+        [params addEntriesFromDictionary:@{@"landId":[NSString stringWithFormat:@"%lu",(unsigned long)_farmerPlanview.stats.field.fieldID]}];        [params addEntriesFromDictionary:@{@"land":_farmerPlanview.stats.field.name}];
     }
     if (_farmerPlanview.stats.city) {
         [params addEntriesFromDictionary:@{@"city":[NSString stringWithFormat:@"%@",_farmerPlanview.stats.city.cityid]}];
@@ -338,8 +348,26 @@
     if (_farmerPlanview.stats.departuretime) {
         [params addEntriesFromDictionary:@{@"time":[NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:_farmerPlanview.stats.departuretime]]}];
     }
-    NSLog(@"params %@", params);
     [self.QRVC setQRData:[NSString stringWithFormat:@"%@", params]];
+}
+
+#pragma mark datePicker delegate
+-(void)datePickerViewDidSelectDate:(NSDate *)date
+{
+    _farmerPlanview.stats.departuretime = date;
+    [self reload];
+}
+
+#pragma mark addRecord delegate
+-(void)addRecordView:(AddRecordTable *)viewdidBeginEditing
+{
+    NSLog(@"begin");
+    [self.farmerPlanview setContentOffset:CGPointMake(0, itemHeight*4+40) animated:YES];
+}
+
+-(void)endEditing:(AddRecordTable *)viewEndEditing
+{
+    [self.farmerPlanview setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 @end

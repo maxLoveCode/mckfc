@@ -19,6 +19,8 @@
 
 @property (nonatomic, assign) NSInteger transportID; //id
 
+@property (nonatomic, assign) NSNumber* autoLocationTime; //locaiton period
+
 @property (nonatomic, copy) NSString *factoryphone;
 
 -(instancetype)initWithID:(NSInteger)transportID;

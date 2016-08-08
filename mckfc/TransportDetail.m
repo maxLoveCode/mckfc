@@ -18,7 +18,8 @@
              @"pointx":@"pointx",
              @"pointy":@"pointy",
              @"transportID":@"id",
-             @"factoryphone":@"factoryphone"};
+             @"factoryphone":@"factoryphone",
+             @"autoLocationTime":@"autolocationtime"};
 }
 
 -(instancetype)initWithID:(NSInteger)transportID

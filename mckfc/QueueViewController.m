@@ -165,7 +165,7 @@
         queueNo.text = [NSString stringWithFormat:@"序号: %@", _viewModel.queueno];
         queueNo.font = [UIFont systemFontOfSize:18];
         queueNo.textColor = COLOR_WithHex(0x565656);
-        if([_viewModel.queueno isEqualToString:@""])
+        if([_viewModel.queueno isEqualToString:@""]|| _viewModel.queueno)
         {
             queueNo.hidden = YES;
         }
@@ -174,7 +174,7 @@
             queueNo.hidden = NO;
         }
         
-        if (![_viewModel.storename isEqualToString:@""]) {
+        if (![_viewModel.storename isEqualToString:@""] || _viewModel.storename) {
             NSString* locationString = [NSString stringWithFormat: @"%@: %@", _viewModel.store , _viewModel.storename];
             NSMutableAttributedString* atrLocationStr = [[NSMutableAttributedString alloc] initWithString:locationString];
             [atrLocationStr addAttribute:NSForegroundColorAttributeName value:COLOR_TEXT_GRAY range:NSMakeRange(0, [_viewModel.store length]+1)];
@@ -186,7 +186,7 @@
             [cell.contentView addSubview:location];
         }
         
-        if (![_viewModel.expecttime isEqualToString:@""]) {
+        if (![_viewModel.expecttime isEqualToString:@""] || _viewModel.expecttime) {
             NSString* timeString = [NSString stringWithFormat:@"%@: %@", _viewModel.time, _viewModel.expecttime];
             NSMutableAttributedString* atrTimeStr = [[NSMutableAttributedString alloc] initWithString:timeString];
             [atrTimeStr addAttribute:NSForegroundColorAttributeName value:COLOR_TEXT_GRAY range:NSMakeRange(0, [_viewModel.time length]+1)];

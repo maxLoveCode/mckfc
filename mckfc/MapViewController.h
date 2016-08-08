@@ -27,6 +27,7 @@
 
 @property (nonatomic, weak) id<mapViewDelegate> delegate;
 @property (nonatomic,strong) NSTimer* timer;
+@property (nonatomic,assign) float locationTime;
 
 -(instancetype)initWithTerminateLong:(double)longtitude Lat:(double)latitude;
 

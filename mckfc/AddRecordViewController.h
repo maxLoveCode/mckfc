@@ -8,9 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "AddRecordTable.h"
+@class AddRecordTable;
+
+@protocol AddRecordTableDelegate <NSObject>
+
+-(void)addRecordView:(AddRecordTable*)viewdidBeginEditing;
+-(void)endEditing:(AddRecordTable*)viewEndEditing;
+
+@end
 
 @interface AddRecordViewController : UIViewController
 
 @property (nonatomic, strong) AddRecordTable* tableView;
+
+@property (nonatomic, weak) id<AddRecordTableDelegate> delegate;
 
 @end

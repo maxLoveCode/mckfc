@@ -202,7 +202,7 @@
     }];
 }
 
-
+#pragma mark -alertview delegate
 -(void)didSelectConfirm
 {
     [self.alert removeFromSuperview];

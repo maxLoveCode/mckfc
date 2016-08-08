@@ -28,7 +28,7 @@ typedef NS_ENUM(NSUInteger, PlanViewType) {
 @end
        
 
-@interface FarmerPlanView : UIView
+@interface FarmerPlanView : UIScrollView
 
 @property (nonatomic, strong) UITableView* mainTableView;
 @property (nonatomic) PlanViewType type;
@@ -36,7 +36,7 @@ typedef NS_ENUM(NSUInteger, PlanViewType) {
 @property (nonatomic, strong) FarmerQRCodeView* qrCodeView;
 @property (nonatomic, strong) UITableView* addRecordView;
 
-@property (nonatomic, weak) id<FarmerPlanViewDelegate> delegate;
+@property (nonatomic, weak) id<FarmerPlanViewDelegate> planViewDelegate;
 
 @property (nonatomic, strong) LoadingStats* stats;
 

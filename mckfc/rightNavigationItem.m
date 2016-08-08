@@ -34,6 +34,7 @@
         _popMenu.dataSource = self;
         _popMenu.delegate = self;
         [_popMenu setBackgroundColor:COLOR_WithHex(0xf3f3f3)];
+        _popMenu.scrollEnabled = NO;
     }
     return _popMenu;
 }

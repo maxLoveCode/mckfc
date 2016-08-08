@@ -21,6 +21,11 @@
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    [self.titleLabel setFrame:CGRectMake(k_Margin, 0 ,100, itemHeight)];
+    CGFloat detailX = CGRectGetMaxX(_titleLabel.frame)+20;
+    [self.detailLabel setFrame:
+     CGRectMake(detailX, 0, kScreen_Width-detailX, itemHeight)];
+    
     return self;
 }
 
@@ -40,6 +45,9 @@
     if (!_detailLabel) {
         _detailLabel = [[UILabel alloc] init];
         _detailLabel.textColor = COLOR_WithHex(0x565656);
+        
+        self.detailTextLabel.numberOfLines = 2;
+        //_detailLabel.font = [UIFont systemFontOfSize:14];
     }
     return _detailLabel;
 }
@@ -47,10 +55,6 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    [self.titleLabel setFrame:CGRectMake(k_Margin, 0 ,100, itemHeight)];
-    CGFloat detailX = CGRectGetMaxX(_titleLabel.frame)+20;
-    [self.detailLabel setFrame:
-     CGRectMake(detailX, 0, kScreen_Width-detailX, itemHeight)];
 }
+
 @end
