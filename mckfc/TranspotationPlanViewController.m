@@ -203,6 +203,7 @@
     [_confirm setBackgroundColor:COLOR_THEME];
 }
 
+#pragma mark right menu delegate
 -(void)MenuView:(rightNavigationItem *)Menu selectIndexPath:(NSIndexPath *)indexPath
 {
     [_popUpMenu dismiss];

@@ -46,9 +46,10 @@
 {
     if (!_screenShot) {
         _screenShot = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_screenShot setBackgroundColor:COLOR_WithHex(0x565656)];
+        //[_screenShot setBackgroundColor:[UIColor colorWithWhite:0.5 alpha:0.5]];
         _screenShot.layer.cornerRadius = itemHeight/2;
         _screenShot.layer.masksToBounds = YES;
+        [_screenShot setImage:[UIImage imageNamed:@"saveQRcode"] forState:UIControlStateNormal];
     }
     return _screenShot;
 }
@@ -57,9 +58,11 @@
 {
     if (!_saveSheet) {
         _saveSheet = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_saveSheet setBackgroundColor:COLOR_WithHex(0x565656)];
+        //[_saveSheet setBackgroundColor:COLOR_WithHex(0x565656)];
         _saveSheet.layer.cornerRadius = itemHeight/2;
+        [_saveSheet setImage:[UIImage imageNamed:@"saveSheet"] forState:UIControlStateNormal];
         _saveSheet.layer.masksToBounds = YES;
+        
     }
     return _saveSheet;
 }

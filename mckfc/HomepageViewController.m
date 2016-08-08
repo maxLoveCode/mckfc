@@ -21,10 +21,17 @@
 
 #import "JPushService.h"
 
-@interface HomepageViewController ()<UserViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+#import "rightNavigationItem.h"
+#import "QRCodeReaderViewController.h"
+
+#import "LoadingStats.h"
+
+@interface HomepageViewController ()<UserViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,menuDelegate,QRCodeReaderDelegate>
 
 @property (nonatomic, strong) UserView* userview;
 @property (nonatomic, strong) ServerManager* server;
+@property (nonatomic, strong) rightNavigationItem* popUpMenu;
+@property (nonatomic, strong) LoadingStats* stats;
 
 @end
 
@@ -38,9 +45,7 @@
     
     _userview.delegate = self;
     
-    UIBarButtonItem* logout = [[UIBarButtonItem alloc] initWithTitle:@"退出" style: UIBarButtonItemStylePlain target:self action:@selector(logout)];
-    self.navigationItem.rightBarButtonItem = logout;
-    
+    self.navigationItem.rightBarButtonItem = self.popUpMenu;
     self.view = _userview;
 }
 
@@ -50,6 +55,16 @@
     if (!_user) {
         [self requestUserInfo];
     }
+}
+
+-(rightNavigationItem *)popUpMenu
+{
+    if (!_popUpMenu) {
+        _popUpMenu = [[rightNavigationItem alloc] initCutomItem];
+        _popUpMenu.ItemStyle = navItemStyleHomepage;
+        _popUpMenu.delegate =self;
+    }
+    return _popUpMenu;
 }
 
 -(void)requestUserInfo
@@ -214,6 +229,68 @@
 {
     MsgListViewController* msgView = [[MsgListViewController alloc] init];
     [self.navigationController pushViewController:msgView animated:YES];
+}
+
+#pragma mark right menu delegate
+-(void)MenuView:(rightNavigationItem *)Menu selectIndexPath:(NSIndexPath *)indexPath
+{
+    [_popUpMenu dismiss];
+    if (indexPath.row == 0) {
+        [self navigateToQRScanner];
+    }
+    else
+    {
+        [self logout];
+    }
+}
+
+-(void)navigateToQRScanner
+{
+    // Create the reader object
+    QRCodeReader *reader = [QRCodeReader readerWithMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
+    
+    // Instantiate the view controller
+    QRCodeReaderViewController *vc = [QRCodeReaderViewController readerWithCancelButtonTitle:@"取消" codeReader:reader startScanningAtLoad:YES showSwitchCameraButton:NO showTorchButton:NO];
+    
+    // Set the presentation style
+    vc.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self.navigationController presentViewController:vc animated:YES completion:nil];
+    // Define the delegate receiver
+    vc.delegate = self;
+    
+    [reader setCompletionWithBlock:^(NSString *resultAsString) {
+        [vc dismissViewControllerAnimated:YES completion:^{
+            NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[resultAsString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+            _stats = [[LoadingStats alloc] init];
+            
+            if ([json objectForKey:@"city"]) {
+                _stats.city = [[City alloc] init];
+                _stats.city.cityid = [json objectForKey:@"city"];
+            }
+            if([json objectForKey:@"land"] && [json objectForKey:@"landId"])
+            {
+                _stats.field = [[Field alloc] init];
+                _stats.field.fieldID = [[json objectForKey:@"landId"] integerValue];
+                _stats.field.name = [json objectForKey:@"land"];
+            }
+            if([json objectForKey:@"provider"] && [json objectForKey:@"providerId"])
+            {
+                _stats.supplier = [[Vendor alloc] init];
+                _stats.supplier.name = [json objectForKey:@"provider"];
+                _stats.supplier.vendorID = [[json objectForKey:@"providerId"] integerValue];
+                NSLog(@"%@, %@", [json objectForKey:@"provider"],_stats.supplier.name);
+            }
+            LoadingStatsViewController *loadingStats = [[LoadingStatsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            loadingStats.stats = _stats;
+            [self.navigationController pushViewController:loadingStats animated:YES];
+        }];
+    }];
+}
+
+#pragma mark - QRCodeReader Delegate Methods
+- (void)readerDidCancel:(QRCodeReaderViewController *)reader
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 

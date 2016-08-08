@@ -16,10 +16,6 @@
 #import "AlertHUDView.h"
 
 //models
-#import "LoadingStats.h"
-#import "Vendor.h"
-#import "City.h"
-#import "Field.h"
 #import "TransportDetail.h"
 
 #import "ServerManager.h"
@@ -45,7 +41,6 @@
 @property (nonatomic, strong) MCPickerView* pickerView;
 @property (nonatomic, strong) AlertHUDView* alert;
 
-@property (nonatomic, strong) LoadingStats* stats;
 @property (nonatomic, strong) ServerManager* server;
 
 @property (nonatomic, strong) AMapLocationManager* locationManager;
@@ -62,7 +57,9 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    _stats = [[LoadingStats alloc] init];
+    if (!_stats) {
+        _stats = [[LoadingStats alloc] init];
+    }
     _server = [ServerManager sharedInstance];
     
     [AMapServices sharedServices].apiKey = MapKey;
@@ -526,5 +523,11 @@
 -(void)didSelectConfirm
 {
     [_alert removeFromSuperview];
+}
+
+-(void)setStats:(LoadingStats *)stats
+{
+    self->_stats = stats;
+    [self.tableView reloadData];
 }
 @end

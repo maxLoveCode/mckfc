@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 @class rightNavigationItem;
 
+typedef NS_ENUM(NSUInteger, rightNavigationItemStyle) {
+    navItemStyleHomepage, //homepage
+    navItemStyleTransport, //default
+};
+
 @protocol menuDelegate <NSObject>
 
 -(void)MenuView:(rightNavigationItem*)Menu selectIndexPath:(NSIndexPath*)indexPath;
@@ -22,6 +27,7 @@
 @property (nonatomic, strong) UITableView* popMenu;
 @property (nonatomic, strong) UIView* mask;
 @property (nonatomic, weak) id<menuDelegate> delegate;
+@property (nonatomic, assign) rightNavigationItemStyle ItemStyle;
 
 -(void)dismiss;
 

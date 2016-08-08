@@ -13,9 +13,10 @@
 
 @interface LoadingStats : MTLModel<MTLJSONSerializing>
 
-@property (nonatomic, copy) Vendor *supplier; //供应商名称
-@property (nonatomic, copy) City *city;
-@property (nonatomic, copy) Field *field; //地块编号
+@property (nonatomic, strong) Field *field; //地块编号
+@property (nonatomic, strong) Vendor *supplier; //供应商名称
+@property (nonatomic, strong) City *city;
+
 @property (nonatomic, copy) NSNumber *weight;
 @property (nonatomic, copy) NSDate *departuretime; //开始日期
 @property (nonatomic, copy) NSString *extraInfo; //额外信息

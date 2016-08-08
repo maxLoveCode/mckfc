@@ -101,13 +101,38 @@
         cell.leftImageView.image = [UIImage imageNamed:titleText[indexPath.row]];
         
         if (indexPath.row == 0) {
-            cell.detailLabel.text = _stats.city.name;
+            if (!_stats.city) {
+                cell.detailLabel.text = @"请选择城市";
+            }
+            else
+                cell.detailLabel.text = _stats.city.name;
         }
         else if(indexPath.row == 1){
-            cell.detailLabel.text = _stats.supplier.name;
+            if (!_stats.supplier) {
+                cell.detailLabel.text = @"请选择供应商";
+            }
+            else
+                cell.detailLabel.text = _stats.supplier.name;
         }
         else if(indexPath.row == 2){
-            cell.detailLabel.text = _stats.field.name;
+            if (!_stats.field) {
+                cell.detailLabel.text = @"请选择地块";
+            }
+            else
+                cell.detailLabel.text = _stats.field.name;
+        }
+        else
+        {
+            NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+            if(!_stats.departuretime)
+            {
+                cell.detailLabel.text = @"请选择时间";
+            }
+            else
+            {
+                cell.detailLabel.text = [dateFormatter stringFromDate:_stats.departuretime];
+            }
         }
         
         return cell;

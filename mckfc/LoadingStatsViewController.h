@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LoadingStats.h"
 
 @interface LoadingStatsViewController : UITableViewController
+
+@property (nonatomic, strong) LoadingStats* stats;
 
 @end

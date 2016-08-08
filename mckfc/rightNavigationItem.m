@@ -22,6 +22,7 @@
 {
     self = [super initWithImage:[UIImage imageNamed:@"popUp"] style:UIBarButtonItemStyleDone target:self action:@selector(selectBtn:)];
     _show = NO;
+    self.ItemStyle = navItemStyleTransport;
     return self;
 }
 
@@ -43,7 +44,6 @@
         _mask = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kScreen_Width, kScreen_Height-64)];
         [_mask setBackgroundColor:[UIColor colorWithWhite:0.3 alpha:0.7]];
         UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
-        //tap.delegate = self;
         [_mask addGestureRecognizer:tap];
     }
     return _mask;
@@ -61,22 +61,42 @@
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(k_Margin/2, 0, itemHeight, itemHeight)];
     
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, menuWidth-k_Margin, itemHeight)];
-    if (indexPath.row == 0) {
-        label.text = @"取消订单";
-        imageView.image = [UIImage imageNamed:@"menuCancel"];
+    if (self.ItemStyle == navItemStyleTransport) {
+        if (indexPath.row == 0) {
+            label.text = @"取消订单";
+            imageView.image = [UIImage imageNamed:@"menuCancel"];
+        }
+        else
+        {
+            label.text = @"联系工厂";
+            imageView.image = [UIImage imageNamed:@"menuPhone"];
+        }
+
     }
     else
     {
-        label.text = @"联系工厂";
-        imageView.image = [UIImage imageNamed:@"menuPhone"];
+        if (indexPath.row == 0) {
+            label.text = @"扫二维码";
+            imageView.image = [UIImage imageNamed:@"生成二维码"];
+        }
+        else
+        {
+            label.text = @"退出登录";
+            imageView.image = [UIImage imageNamed:@"menuPhone"];
+        }
     }
     label.font = [UIFont systemFontOfSize:15];
     label.textColor = COLOR_WithHex(0x565656);
     label.textAlignment = NSTextAlignmentRight;
-
+    cell.backgroundColor = [UIColor clearColor];
     [cell.contentView addSubview:label];
     [cell.contentView addSubview:imageView];
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return itemHeight;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

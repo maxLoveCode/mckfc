@@ -206,6 +206,7 @@
                 [self.pickerView show];
                 
                 _farmerPlanview.stats.field = fieldList[0];
+                NSLog(@"%@", _farmerPlanview.stats.field);
                 [self reload];
             }];
         }
@@ -275,7 +276,7 @@
                              @"vendorid":vendor};
     [_server GET:@"getFieldList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* data = responseObject[@"data"];
-        fieldList = [MTLJSONAdapter modelsOfClass:[Vendor class] fromJSONArray:data error:nil];
+        fieldList = [MTLJSONAdapter modelsOfClass:[Field class] fromJSONArray:data error:nil];
         if (fieldList && [fieldList count] >0) {
             success();
         }
@@ -304,9 +305,10 @@
 #pragma mark reload shorthand
 -(void)reload
 {
+    
     if (self.farmerPlanview.type == FarmerPlanViewTypeQRCode)
     {
-        
+        [self generateQRCode];
     }
     [_farmerPlanview.mainTableView reloadData];
 }
@@ -315,6 +317,29 @@
 -(void)didSelectConfirm
 {
     [_alert removeFromSuperview];
+}
+
+#pragma mark generate qrcode
+-(void)generateQRCode
+{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    if (_farmerPlanview.stats.supplier) {
+        [params addEntriesFromDictionary:@{@"providerId":[NSString stringWithFormat:@"%lu",(unsigned long)_farmerPlanview.stats.supplier.vendorID]}];
+        [params addEntriesFromDictionary:@{@"provider":_farmerPlanview.stats.supplier.name}];
+    }
+    if (_farmerPlanview.stats.field) {
+        [params addEntriesFromDictionary:@{@"landid":[NSString stringWithFormat:@"%lu",(unsigned long)_farmerPlanview.stats.field.fieldID]}];        [params addEntriesFromDictionary:@{@"land":_farmerPlanview.stats.field.name}];
+    }
+    if (_farmerPlanview.stats.city) {
+        [params addEntriesFromDictionary:@{@"city":[NSString stringWithFormat:@"%@",_farmerPlanview.stats.city.cityid]}];
+    }
+    if (_farmerPlanview.stats.departuretime) {
+        [params addEntriesFromDictionary:@{@"time":[NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:_farmerPlanview.stats.departuretime]]}];
+    }
+    NSLog(@"params %@", params);
+    [self.QRVC setQRData:[NSString stringWithFormat:@"%@", params]];
 }
 
 @end
