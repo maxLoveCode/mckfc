@@ -221,7 +221,7 @@
         }
     }
     else if (index == 3){
-        NSLog(@"tap");
+
         [self.datePicker show];
     }
 }
@@ -340,7 +340,8 @@
         [params addEntriesFromDictionary:@{@"provider":_farmerPlanview.stats.supplier.name}];
     }
     if (_farmerPlanview.stats.field) {
-        [params addEntriesFromDictionary:@{@"landId":[NSString stringWithFormat:@"%lu",(unsigned long)_farmerPlanview.stats.field.fieldID]}];        [params addEntriesFromDictionary:@{@"land":_farmerPlanview.stats.field.name}];
+        [params addEntriesFromDictionary:@{@"landId":[NSString stringWithFormat:@"%lu",(unsigned long)_farmerPlanview.stats.field.fieldID]}];
+        [params addEntriesFromDictionary:@{@"land":_farmerPlanview.stats.field.name}];
     }
     if (_farmerPlanview.stats.city) {
         [params addEntriesFromDictionary:@{@"city":[NSString stringWithFormat:@"%@",_farmerPlanview.stats.city.cityid]}];
@@ -363,11 +364,20 @@
 {
     NSLog(@"begin");
     [self.farmerPlanview setContentOffset:CGPointMake(0, itemHeight*4+40) animated:YES];
+    UIBarButtonItem* save = [[UIBarButtonItem alloc] initWithTitle:@"保存" style: UIBarButtonItemStylePlain target:self action:@selector(save)];
+    self.navigationItem.rightBarButtonItem = save;
 }
 
 -(void)endEditing:(AddRecordTable *)viewEndEditing
 {
     [self.farmerPlanview setContentOffset:CGPointMake(0, 0) animated:YES];
+    self.navigationItem.rightBarButtonItem = nil;
+}
+
+-(void)save
+{
+    [self.farmerPlanview endEditing:YES];
+    [self endEditing:self.addRecordVC.tableView];
 }
 
 @end

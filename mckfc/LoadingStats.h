@@ -20,6 +20,7 @@
 @property (nonatomic, copy) NSNumber *weight;
 @property (nonatomic, copy) NSDate *departuretime; //开始日期
 @property (nonatomic, copy) NSString *extraInfo; //额外信息
+@property (nonatomic, copy) NSString *serialno;
 
 -(instancetype)init;
 

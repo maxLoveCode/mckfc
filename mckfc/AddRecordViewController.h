@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "AddRecordTable.h"
+#import "User.h"
+#import "LoadingStats.h"
 @class AddRecordTable;
 
 @protocol AddRecordTableDelegate <NSObject>
@@ -20,6 +22,8 @@
 @interface AddRecordViewController : UIViewController
 
 @property (nonatomic, strong) AddRecordTable* tableView;
+@property (nonatomic, strong) User* user;
+@property (nonatomic, strong) LoadingStats* stats;
 
 @property (nonatomic, weak) id<AddRecordTableDelegate> delegate;
 

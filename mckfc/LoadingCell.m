@@ -159,6 +159,7 @@
     {
         [self addSubview:self.popUpBtn];
         [self addSubview:self.textInput];
+        self.textInput.keyboardType = UIKeyboardTypeDecimalPad;
     }
 }
 

@@ -110,7 +110,7 @@
 #pragma mark titles and images
 -(void)initTitlesAndImages
 {
-    titleText = @[@"供应商名称",@"地块编号",@"土豆重量", @"发车时间"];
+    titleText = @[@"供应商名称",@"地块编号",@"土豆重量", @"发车时间", @"发运单号"];
 }
 
 #pragma mark tableViewDelegate
@@ -134,7 +134,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 4;
+        return 5;
     }
     else if(section == 1)
     {
@@ -150,7 +150,7 @@
     if (indexPath.section == 0) {
         LoadingCell* cell = [[LoadingCell alloc] init];
         
-        if (indexPath.row != 2 && indexPath.row != 3) {
+        if (indexPath.row != 2 && indexPath.row != 3 && indexPath.row != 4) {
             [cell setStyle:LoadingCellStyleSelection];
             if (indexPath.row == 0) {
                 if (!_stats.supplier) {
@@ -180,7 +180,7 @@
             }
             
         }
-        else
+        else if(indexPath.row == 3)
         {
             [cell setStyle:LoadingCellStyleDatePicker];
             dateFormatter = [[NSDateFormatter alloc] init];
@@ -193,6 +193,20 @@
             {
                 cell.detailLabel.text = [dateFormatter stringFromDate:_stats.departuretime];
             }
+        }
+        else if(indexPath.row == 4)
+        {
+            [cell setStyle:LoadingCellStyleTextInput];
+            cell.textInput.textAlignment = NSTextAlignmentRight;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.textInput.tag = 1;
+            cell.textInput.delegate = self;
+            cell.textInput.keyboardType = UIKeyboardTypeNumberPad;
+            if (!_stats.serialno || [_stats.serialno isEqualToString:@""]) {
+                cell.textInput.text = @"请输入订单号";
+            }
+            else
+                cell.textInput.text = _stats.serialno;
         }
         
         cell.titleLabel.text = titleText[indexPath.row];
@@ -390,6 +404,9 @@
     if (_stats.extraInfo) {
         [params addEntriesFromDictionary:@{@"remark":_stats.extraInfo}];
     }
+    if (_stats.serialno) {
+        [params addEntriesFromDictionary:@{@"serialno":_stats.serialno}];
+    }
     NSLog(@"%@", params);
     [_server POST:@"transport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSDictionary* data = responseObject[@"data"];
@@ -463,21 +480,27 @@
 {
     UIBarButtonItem* item = [[UIBarButtonItem alloc] initWithTitle:@"完成" style: UIBarButtonItemStyleDone target:self action:@selector(dismiss)];
     self.navigationItem.rightBarButtonItem = item;
-    if ([textField.text isEqualToString:@"0"]) {
+    if ([textField.text isEqualToString:@"0"] ||[textField.text isEqualToString:@"请输入订单号"] ) {
         textField.text = @"";
     }
 }
 
 -(void)dismiss
 {
-    LoadingCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-    [cell.digitInput endEditing:YES];
+   // LoadingCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    [self.view endEditing:YES];
     self.navigationItem.rightBarButtonItem = nil;
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    [_stats setWeight:[NSNumber numberWithFloat:[textField.text floatValue]]];
+    if (textField.tag == 0) {
+        [_stats setWeight:[NSNumber numberWithFloat:[textField.text floatValue]]];
+    }
+    else
+    {
+        [_stats setSerialno:textField.text];
+    }
 }
 
 #pragma mark datePicker delegate

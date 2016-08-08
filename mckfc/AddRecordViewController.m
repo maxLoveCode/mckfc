@@ -11,15 +11,15 @@
 #import "LoadingCell.h"
 #import "ServerManager.h"
 #import "CarPlateRegionSelector.h"
-#import "User.h"
+#import "MCDatePickerView.h"
 
-@interface AddRecordViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface AddRecordViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,DatePickerDelegate>
 {
     NSArray* titleArray;
 }
 
 @property (nonatomic, strong) ServerManager* server;
-@property (nonatomic, strong) User* user;
+@property (nonatomic, strong) MCDatePickerView* datePicker;
 
 @end
 
@@ -28,7 +28,6 @@
 -(void)viewDidLoad
 {
     self.view = self.tableView;
-    _user = [[User alloc] init];
 }
 
 -(AddRecordTable *)tableView
@@ -40,11 +39,26 @@
         _tableView.scrollEnabled = NO;
         titleArray = @[@"车牌号", @"司机姓名", @"手机号码", @"土豆重量", @"运输时间"];
         
+        if (!_user) {
+            _user = [[User alloc] init];
+        }
+        if (!_stats) {
+            _stats = [[LoadingStats alloc] init];
+        }
+        
         _server = [ServerManager sharedInstance];
     }
     return _tableView;
 }
 
+-(MCDatePickerView *)datePicker
+{
+    if (!_datePicker) {
+        _datePicker = [[MCDatePickerView alloc] init];
+        _datePicker.delegate = self;
+    }
+    return _datePicker;
+}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -67,22 +81,32 @@
     if (indexPath.row == 0) {
         cell.style = LoadingCellStyleCarPlateInput;
         [cell.popUpBtn addTarget:self action:@selector(popUpRegions:) forControlEvents:UIControlEventTouchUpInside];
+        if (!_user.region || [_user.region isEqualToString:@""]) {
+            [cell.popUpBtn setTitle:@"选择省份" forState: UIControlStateNormal];
+        }
+        else
+        [cell.popUpBtn setTitle:_user.region forState:UIControlStateNormal];
         cell.textInput.delegate = self;
+        cell.textInput.tag = 0;
         cell.textInput.text = _user.cardigits;
     }
     else if(indexPath.row == 1){
         cell.style = LoadingCellStyleTextInput;
         cell.textInput.delegate = self;
+        cell.textInput.tag = 1;
         cell.textInput.text = _user.driver;
     }
     else if(indexPath.row == 2){
         cell.style = LoadingCellStyleTextInput;
         cell.textInput.delegate = self;
+        cell.textInput.tag = 2;
         cell.textInput.text = _user.mobile;
     }
     else if(indexPath.row == 3){
         cell.style = LoadingCellStyleDigitInput;
+        cell.digitInput.tag = 3;
         cell.digitInput.delegate = self;
+        cell.digitInput.text = [NSString stringWithFormat:@"%@", _stats.weight];
     }
     else if(indexPath.row == 4){
         cell.style =LoadingCellStyleDatePicker;
@@ -94,7 +118,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if (indexPath.row == 4) {
+        [self.datePicker show];
+    }
 }
 
 #pragma mark popUp menu
@@ -110,9 +136,10 @@
              [selector show];
              
              //return block
-             //__weak User* weakref = self.driver;
+             __weak User* weakref = self.user;
              [selector setSelectBlock:^(NSString *result) {
-                 //weakref.region = result;
+                 weakref.region = result;
+                 
                  UIButton* button = sender;
                  button.selected = YES;
                  [_tableView reloadData];
@@ -130,9 +157,30 @@
 
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    NSLog(@"end");
     [self.delegate endEditing:self.tableView];
+    switch (textField.tag) {
+        case 0:
+            _user.cardigits = textField.text;
+            break;
+        case 1:
+            _user.driver = textField.text;
+            break;
+        case 2:
+            _user.mobile = textField.text;
+            break;
+        case 3:
+            _stats.weight =
+                [NSNumber numberWithInteger:[textField.text integerValue]];
+            break;
+        default:
+            break;
+    }
+    [self.tableView reloadData];
 }
 
-
+#pragma mark datePicker delegate
+-(void)datePickerViewDidSelectDate:(NSDate *)date
+{
+    _stats.departuretime = date;
+}
 @end

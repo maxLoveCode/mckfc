@@ -16,7 +16,8 @@
              @"field":@"placeNo",
              @"departuretime":@"departuretime",
              @"extraInfo":@"extraInfo",
-             @"weight":@"weight"};
+             @"weight":@"weight",
+             @"serialno":@"serialno"};
 }
 
 -(instancetype)init
@@ -25,6 +26,7 @@
     
     if (!self.departuretime) {
         self.departuretime = [NSDate date];
+        self.weight = [NSNumber numberWithInteger:0];
     }
     
     return self;
