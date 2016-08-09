@@ -18,6 +18,8 @@ typedef NS_ENUM(NSUInteger, PlanViewType) {
     FarmerPlanViewTypeQRCode, //二维码页面
     FarmerPlanViewTypeOrder,  //添加运输单页
     FarmerPlanViewTypeRecordList, //运输单页列表
+    
+    FarmerPlanViewTypeDetail, //详情页面
 };
 
 @protocol FarmerPlanViewDelegate <NSObject>

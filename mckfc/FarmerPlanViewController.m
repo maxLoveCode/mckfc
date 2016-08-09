@@ -14,7 +14,6 @@
 #import "MCPickerView.h"
 #import "MCDatePickerView.h"
 #import "AlertHUDView.h"
-
 #import "ServerManager.h"
 
 
@@ -28,6 +27,7 @@
     NSArray* cityList;
     NSArray* fieldList;
     NSArray* DateList;
+    NSArray* uploadList;
 }
 
 //main tableview of the homepage
@@ -55,7 +55,7 @@
     self.view = self.farmerPlanview;
     
     _server = [ServerManager sharedInstance];
-    
+    self.title = @"运输计划";
     if (!_transportationList) {
         _transportationList = [[NSMutableArray alloc] init];
     }
@@ -134,6 +134,7 @@
     NSLog(@"%ld", (long)index);
     
     if (index == 0) {
+        
         _farmerPlanview.type = FarmerPlanViewTypeQRCode;
         _QRVC = [[FarmerQRCodeVC alloc] init];
         [self addChildViewController:_QRVC];
@@ -145,7 +146,7 @@
     {
         [[UIApplication sharedApplication].keyWindow addSubview:self.botButton];
         
-        _farmerPlanview.type = FarmerPlanViewTypeOrder;
+        _farmerPlanview.type = FarmerPlanViewTypeRecordList;
         _addRecordVC = [[AddRecordViewController alloc] init];
         [self addChildViewController:_addRecordVC];
         _addRecordVC.delegate = self;
@@ -154,7 +155,11 @@
     }
     else if (index == 2)
     {
-        
+#pragma mark warnings
+        [self requestUploadListsuccess:^{
+            
+        }];
+        [self reload];
     }
     else
     {
@@ -352,6 +357,26 @@
     }];
 }
 
+-(void)requestUploadListsuccess:(void (^)(void))success
+{
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString* dateString = [dateFormatter stringFromDate:_farmerPlanview.stats.departuretime];
+    NSDictionary* params = @{@"token":_server.accessToken,
+                             @"departuretime":dateString,
+                             @"fieldid":[NSString stringWithFormat:@"%lu",(long)_farmerPlanview.stats.field.fieldID]};
+    [_server GET:@"getUploadList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSArray* data = responseObject[@"data"];
+        NSLog(@"data%@",data);
+        uploadList = data;
+        if (uploadList) {
+            success();
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
 -(void)uploadDatas
 {
     NSMutableArray* unions = [[NSMutableArray alloc] init];
@@ -373,7 +398,7 @@
     NSString* data = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString* dateString = [dateFormatter stringFromDate:_farmerPlanview.stats.departuretime];
     NSDictionary* params = @{@"token":_server.accessToken,
                              @"vendorid":[NSString stringWithFormat:@"%lu",(long)_farmerPlanview.stats.supplier.vendorID],

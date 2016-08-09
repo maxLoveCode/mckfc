@@ -17,6 +17,8 @@
 {
     [super viewDidLoad];
     self.view = self.tableView;
+    
+    self.title = @"系统设置";
 }
 
 -(UITableView *)tableView

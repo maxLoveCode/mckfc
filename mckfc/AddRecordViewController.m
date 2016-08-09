@@ -87,15 +87,24 @@
         [cell.popUpBtn setTitle:_user.region forState:UIControlStateNormal];
         cell.textInput.delegate = self;
         cell.textInput.tag = 0;
-        cell.textInput.textAlignment = NSTextAlignmentRight;
+        cell.textInput.textColor = COLOR_WithHex(0x565656);
         cell.textInput.text = _user.cardigits;
+        if (!_user.cardigits) {
+            cell.textInput.textColor = COLOR_TEXT_GRAY;
+            cell.textInput.text = @"请填写车牌号";
+        }
     }
     else if(indexPath.row == 1){
         cell.style = LoadingCellStyleTextInput;
         cell.textInput.delegate = self;
         cell.textInput.tag = 1;
+        cell.textInput.textColor = COLOR_WithHex(0x565656);
         cell.textInput.textAlignment = NSTextAlignmentRight;
         cell.textInput.text = _user.driver;
+        if (!_user.driver) {
+            cell.textInput.textColor = COLOR_TEXT_GRAY;
+            cell.textInput.text = @"请填写司机姓名";
+        }
     }
     else if(indexPath.row == 2){
         cell.style = LoadingCellStyleTextInput;
@@ -103,7 +112,12 @@
         cell.textInput.tag = 2;
         cell.textInput.textAlignment = NSTextAlignmentRight;
         cell.textInput.keyboardType = UIKeyboardTypePhonePad;
+        cell.textInput.textColor = COLOR_WithHex(0x565656);
         cell.textInput.text = _user.mobile;
+        if (!_user.mobile) {
+            cell.textInput.textColor = COLOR_TEXT_GRAY;
+            cell.textInput.text = @"请填写司机手机号";
+        }
     }
     else if(indexPath.row == 3){
         cell.style = LoadingCellStyleDigitInput;
@@ -118,7 +132,12 @@
          cell.textInput.tag = 4;
          cell.textInput.textAlignment = NSTextAlignmentRight;
          cell.textInput.keyboardType = UIKeyboardTypePhonePad;
+         cell.textInput.textColor = COLOR_WithHex(0x565656);
          cell.textInput.text = _stats.serialno;
+         if (!_stats.serialno) {
+             cell.textInput.textColor = COLOR_TEXT_GRAY;
+             cell.textInput.text = @"请填写运输单号";
+         }
      }
     else if(indexPath.row == 5){
         cell.style =LoadingCellStyleDatePicker;
@@ -151,11 +170,12 @@
              
              //return block
              __weak User* weakref = self.user;
+             __weak UIButton* weakbtn = sender;
              [selector setSelectBlock:^(NSString *result) {
+                 
                  weakref.region = result;
                  weakref.truckno = [NSString stringWithFormat:@"%@%@", weakref.region, weakref.cardigits];
-                 UIButton* button = sender;
-                 button.selected = YES;
+                 [weakbtn setTitleColor:COLOR_WithHex(0x565656) forState:UIControlStateNormal];
                  [_tableView reloadData];
              }];
          } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
@@ -165,6 +185,7 @@
 #pragma mark- textfield delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    textField.text = @"";
     [self.delegate addRecordView:self.tableView];
 }
 
