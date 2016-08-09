@@ -27,6 +27,7 @@
     NSArray* vendorList;
     NSArray* cityList;
     NSArray* fieldList;
+    NSArray* DateList;
 }
 
 //main tableview of the homepage
@@ -43,6 +44,8 @@
 @property (nonatomic, strong) AlertHUDView* alert;
 @property (nonatomic, strong) MCDatePickerView* datePicker;
 
+@property (nonatomic, strong) NSMutableArray* transportationList;
+
 @end
 
 @implementation FarmerPlanViewController
@@ -52,9 +55,13 @@
     self.view = self.farmerPlanview;
     
     _server = [ServerManager sharedInstance];
+    
+    if (!_transportationList) {
+        _transportationList = [[NSMutableArray alloc] init];
+    }
 }
 
-#pragma mark -property setters
+#pragma mark- property setters
 -(FarmerPlanView *)farmerPlanview
 {
     if (!_farmerPlanview) {
@@ -188,6 +195,7 @@
         
         City* city = _farmerPlanview.stats.city;
         if (!city) {
+           self.alert.title.text = @"错误";
             self.alert.detail.text = @"请先选择城市";
             [self.alert show:self.alert];
         }
@@ -205,6 +213,7 @@
     else if (index == 2){
         Vendor* vendor = _farmerPlanview.stats.supplier;
         if (!vendor) {
+            self.alert.title.text = @"错误";
             self.alert.detail.text = @"请先选择供应商";
             [self.alert show:self.alert];
         }
@@ -215,14 +224,37 @@
                 [self.pickerView show];
                 
                 _farmerPlanview.stats.field = fieldList[0];
-                NSLog(@"%@", _farmerPlanview.stats.field);
                 [self reload];
             }];
         }
     }
     else if (index == 3){
-
-        [self.datePicker show];
+        Field* field = _farmerPlanview.stats.field;
+        if (!field) {
+            self.alert.title.text = @"错误";
+            self.alert.detail.text = @"请先选择地块";
+            [self.alert show:self.alert];
+        }
+        else
+        {
+            [self requestDates:[NSString stringWithFormat:@"%lu", (long)field.fieldID] success:^{
+                [self.pickerView setData:DateList];
+                [self.pickerView show];
+                NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                
+                _farmerPlanview.stats.departuretime = [dateFormatter dateFromString:DateList[0]];
+                [self reload];
+            }];
+        }
+    }
+    else if (index == 10){
+        self.farmerPlanview.type = FarmerPlanViewTypeOrder;
+        self.addRecordVC.user = [[User alloc] init];
+        self.addRecordVC.stats = [[LoadingStats alloc] init];
+        [self.addRecordVC.tableView reloadData];
+        [_botButton setTitle:@"确认并保存" forState:UIControlStateNormal];
+        [self reload];
     }
 }
 
@@ -234,22 +266,31 @@
     [self.farmerPlanview.mainTableView reloadData];
 }
 
+#pragma mark uploads and data operations
 -(void)botButton:(id)sender
 {
     if (_farmerPlanview.type == FarmerPlanViewTypeOrder) {
-        [_botButton setTitle:@"上传全部" forState:UIControlStateNormal];
-        _farmerPlanview.type = FarmerPlanViewTypeRecordList;
-        [self reload];
+        if ([self validation]) {
+            NSDictionary* data = @{@"user":self.addRecordVC.user,
+                                   @"stat":self.addRecordVC.stats};
+            
+            NSLog(@"%@",self.transportationList);
+            [self.transportationList addObject:data];
+            NSLog(@"%@",self.transportationList);
+            self.farmerPlanview.datasource = self.transportationList;
+            
+            [_botButton setTitle:@"上传全部" forState:UIControlStateNormal];
+            _farmerPlanview.type = FarmerPlanViewTypeRecordList;
+            [self reload];
+        }
     }
     else
     {
-        [_botButton setTitle:@"确认并保存" forState:UIControlStateNormal];
-        _farmerPlanview.type = FarmerPlanViewTypeOrder;
-        [self reload];
+        [self uploadDatas];
     }
 }
 
-#pragma mark -web data requests
+#pragma mark- web data requests
 -(void)requestCityListSuccess:(void (^)(void))success
 {
     NSDictionary* params = @{@"token": _server.accessToken};
@@ -295,8 +336,67 @@
     }];
 }
 
+-(void)requestDates:(NSString*)field success:(void (^)(void))success
+{
+    NSDictionary* params = @{@"token":_server.accessToken,
+                             @"fieldid":field};
+    [_server GET:@"getPlanDateList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSArray* data = responseObject[@"data"];
+        NSLog(@"data%@",data);
+        DateList = data;
+        if (DateList && [DateList count] >0) {
+            success();
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
 
-#pragma mark MCPickerView delegate
+-(void)uploadDatas
+{
+    NSMutableArray* unions = [[NSMutableArray alloc] init];
+    for (NSDictionary* trucks in _transportationList) {
+        User* user = [trucks objectForKey:@"user"];
+        LoadingStats* stat = [trucks objectForKey:@"stat"];
+        NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"HH:mm"];
+        NSString* dateString = [dateFormatter stringFromDate:stat.departuretime];
+        NSDictionary* unionDic = @{@"driver":user.driver,
+                                   @"mobile":user.mobile,
+                                   @"truckno":user.truckno,
+                                   @"serialno":stat.serialno,
+                                   @"departuretime":dateString,
+                                   @"weight":stat.weight};
+        [unions addObject:unionDic];
+    }
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:unions options:NSJSONWritingPrettyPrinted error:nil];
+    NSString* data = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSString* dateString = [dateFormatter stringFromDate:_farmerPlanview.stats.departuretime];
+    NSDictionary* params = @{@"token":_server.accessToken,
+                             @"vendorid":[NSString stringWithFormat:@"%lu",(long)_farmerPlanview.stats.supplier.vendorID],
+                             @"fieldid":[NSString stringWithFormat:@"%lu",(long)_farmerPlanview.stats.field.fieldID],
+                             @"trucks":data,
+                             @"departureday":dateString
+                             };
+    NSLog(@"%@", params);
+    
+    [_server POST:@"uploadTransport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+        self.alert.title.text = @"成功";
+        self.alert.detail.text = @"上传完成";
+        [self.alert show:self.alert];
+        self.transportationList = [[NSMutableArray alloc] init];
+        self.farmerPlanview.datasource = self.transportationList;
+        [self reload];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
+#pragma mark- MCPickerView delegate
 -(void)pickerView:(MCPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     //select city
@@ -309,13 +409,18 @@
     else if(pickerView.index.row == 2){
         _farmerPlanview.stats.field = fieldList[row];
     }
+    else if(pickerView.index.row ==3){
+        NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        
+        _farmerPlanview.stats.departuretime = [dateFormatter dateFromString:DateList[row]];
+    }
     [self reload];
 }
 
 #pragma mark reload shorthand
 -(void)reload
 {
-    
     if (self.farmerPlanview.type == FarmerPlanViewTypeQRCode)
     {
         [self generateQRCode];
@@ -349,7 +454,11 @@
     if (_farmerPlanview.stats.departuretime) {
         [params addEntriesFromDictionary:@{@"time":[NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:_farmerPlanview.stats.departuretime]]}];
     }
-    [self.QRVC setQRData:[NSString stringWithFormat:@"%@", params]];
+    
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:nil];
+    NSString* data = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    [self.QRVC setQRData:[NSString stringWithFormat:@"%@", data]];
 }
 
 #pragma mark datePicker delegate
@@ -362,22 +471,73 @@
 #pragma mark addRecord delegate
 -(void)addRecordView:(AddRecordTable *)viewdidBeginEditing
 {
-    NSLog(@"begin");
     [self.farmerPlanview setContentOffset:CGPointMake(0, itemHeight*4+40) animated:YES];
     UIBarButtonItem* save = [[UIBarButtonItem alloc] initWithTitle:@"保存" style: UIBarButtonItemStylePlain target:self action:@selector(save)];
     self.navigationItem.rightBarButtonItem = save;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(save)];
+    UIView* mask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height)];
+    mask.tag = 88;
+    [mask addGestureRecognizer:tap];
+    [[UIApplication sharedApplication].keyWindow addSubview:mask];
 }
 
 -(void)endEditing:(AddRecordTable *)viewEndEditing
 {
+    [self.farmerPlanview endEditing:YES];
+    [self.farmerPlanview.addRecordView endEditing:YES];
     [self.farmerPlanview setContentOffset:CGPointMake(0, 0) animated:YES];
     self.navigationItem.rightBarButtonItem = nil;
 }
 
 -(void)save
 {
-    [self.farmerPlanview endEditing:YES];
+    for (UIView* view in [[UIApplication sharedApplication].keyWindow subviews]) {
+        if (view.tag == 88) {
+            [view removeFromSuperview];
+        }
+    }
     [self endEditing:self.addRecordVC.tableView];
+}
+
+- (BOOL)disablesAutomaticKeyboardDismissal {
+    return NO;
+}
+
+#pragma mark- validation
+- (BOOL)validation
+{
+    User* user = self.addRecordVC.user;
+    LoadingStats* stat = self.addRecordVC.stats;
+    self.alert.title.text = @"错误";
+    if (!user.region || !user.cardigits) {
+        self.alert.detail.text = @"请正确填写车牌号";
+        [self.alert show:self.alert];
+        return NO;
+    }
+    if (!user.driver) {
+        self.alert.detail.text = @"请先填写司机姓名";
+        [self.alert show:self.alert];
+        return NO;
+    }
+    if (!user.mobile) {
+        self.alert.detail.text = @"请先填写司机手机号";
+        [self.alert show:self.alert];
+        return NO;
+    }
+    if (!stat.serialno) {
+        self.alert.detail.text = @"请先填写运输单号";
+        [self.alert show:self.alert];
+        return NO;
+    }
+    if (!stat.departuretime) {
+        self.alert.detail.text = @"请先选择运输时间";
+        [self.alert show:self.alert];
+        return NO;
+    }
+    return YES;
 }
 
 @end

@@ -187,7 +187,7 @@
     {
         CGFloat detailX = CGRectGetMaxX(_titleLabel.frame)+20;
         [self.textInput setFrame:
-         CGRectMake(detailX+100, 0, kScreen_Width-detailX-90, itemHeight)];
+         CGRectMake(detailX+100, 0, kScreen_Width-detailX-90-k_Margin*2, itemHeight)];
         [self.popUpBtn setFrame:CGRectMake(detailX, 0, 90, itemHeight)];
     }
 }

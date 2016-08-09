@@ -12,6 +12,7 @@
 
 #import "FarmerPlanView.h"
 #import "LoadingCell.h"
+#import "FarmerRecordCell.h"
 
 #import "Masonry.h"
 
@@ -81,7 +82,13 @@
     if (section == 0) {
         return 4;
     }
-    else
+    else if(self.type == FarmerPlanViewTypeRecordList)
+    {
+        if (section == 1) {
+            return 1;
+        }
+        else return self.datasource.count;
+    }else
         return 1;
 }
 
@@ -89,13 +96,7 @@
 {
     if (indexPath.section == 0) {
         LoadingCell* cell = [[LoadingCell alloc] init];
-        if (indexPath.row != 3) {
             cell.style = LoadingCellStyleSelection;
-        }
-        else
-        {
-            cell.style = LoadingCellStyleDatePicker;
-        }
         
         cell.titleLabel.text = titleText[indexPath.row];
         cell.leftImageView.image = [UIImage imageNamed:titleText[indexPath.row]];
@@ -124,7 +125,7 @@
         else
         {
             NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
             if(!_stats.departuretime)
             {
                 cell.detailLabel.text = @"请选择时间";
@@ -187,7 +188,8 @@
     }
     else if(indexPath.section == 2)
     {
-        UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"list"];
+        FarmerRecordCell* cell = [[FarmerRecordCell alloc] init];
+        cell.content = self.datasource[indexPath.row];
         return cell;
     }
     return nil;
@@ -244,7 +246,7 @@
         }
         else if(self.type == FarmerPlanViewTypeOrder)
         {
-            return itemHeight*5;
+            return itemHeight*6;
         }
         else if(self.type == FarmerPlanViewTypeRecordList)
         {
@@ -270,8 +272,14 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 0)
+    if(indexPath.section == 0){
         [self.planViewDelegate tableStats:tableView DidSelectIndex:indexPath.row];
+    }
+    else if(self.type == FarmerPlanViewTypeRecordList && indexPath.section == 1)
+    {
+//index = 10 when add record
+        [self.planViewDelegate tableStats:tableView DidSelectIndex:10];
+    }
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath

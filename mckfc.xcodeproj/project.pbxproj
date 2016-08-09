@@ -19,6 +19,7 @@
 		2525CF2B1D3CDF3A00F3079F /* StoreReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 2525CF2A1D3CDF3A00F3079F /* StoreReport.m */; };
 		2525CF2E1D3CE59100F3079F /* TODOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2525CF2D1D3CE59100F3079F /* TODOViewController.m */; };
 		2525CF311D3DCF3800F3079F /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2525CF301D3DCF3800F3079F /* SettingViewController.m */; };
+		2526B05E1D59994600271D16 /* FarmerRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2526B05D1D59994600271D16 /* FarmerRecordCell.m */; };
 		2527ECCB1D350C8C00350DC6 /* rightNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2527ECCA1D350C8C00350DC6 /* rightNavigationItem.m */; };
 		2527ECCE1D35D8AC00350DC6 /* CarPlateRegionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2527ECCD1D35D8AC00350DC6 /* CarPlateRegionSelector.m */; };
 		252B63261D1CDC7700C108C0 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 252B63251D1CDC7700C108C0 /* NSString+MD5.m */; };
@@ -137,6 +138,8 @@
 		2525CF2D1D3CE59100F3079F /* TODOViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TODOViewController.m; sourceTree = "<group>"; };
 		2525CF2F1D3DCF3800F3079F /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		2525CF301D3DCF3800F3079F /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		2526B05C1D59994600271D16 /* FarmerRecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FarmerRecordCell.h; sourceTree = "<group>"; };
+		2526B05D1D59994600271D16 /* FarmerRecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FarmerRecordCell.m; sourceTree = "<group>"; };
 		2527ECC91D350C8C00350DC6 /* rightNavigationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rightNavigationItem.h; sourceTree = "<group>"; };
 		2527ECCA1D350C8C00350DC6 /* rightNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rightNavigationItem.m; sourceTree = "<group>"; };
 		2527ECCC1D35D8AC00350DC6 /* CarPlateRegionSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarPlateRegionSelector.h; sourceTree = "<group>"; };
@@ -534,6 +537,8 @@
 				25CB819A1D5344C400EDD05C /* FarmerQRCodeView.m */,
 				25CB81A21D546CD800EDD05C /* AddRecordTable.h */,
 				25CB81A31D546CD800EDD05C /* AddRecordTable.m */,
+				2526B05C1D59994600271D16 /* FarmerRecordCell.h */,
+				2526B05D1D59994600271D16 /* FarmerRecordCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1074,6 +1079,7 @@
 				252EF9D91D2F5D2400565D00 /* WorkStatusView.m in Sources */,
 				2525CF271D3CDD5000F3079F /* Store.m in Sources */,
 				252EF9C61D2E6EED00565D00 /* QualityControlNav.m in Sources */,
+				2526B05E1D59994600271D16 /* FarmerRecordCell.m in Sources */,
 				252EF9EE1D336F4400565D00 /* Field.m in Sources */,
 				256F39811D12836900175E5A /* SignUpView.m in Sources */,
 				257DB7AC1D39E0D700C2227E /* WorkFlowInterface.m in Sources */,
@@ -1266,7 +1272,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "687f1c38-53e8-45e8-9fa1-d542d46baeb1";
+				PROVISIONING_PROFILE = "1f98e991-5187-4079-bd43-d3bb5b8e4d9c";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1282,7 +1288,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "687f1c38-53e8-45e8-9fa1-d542d46baeb1";
+				PROVISIONING_PROFILE = "1f98e991-5187-4079-bd43-d3bb5b8e4d9c";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
