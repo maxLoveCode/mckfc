@@ -51,11 +51,11 @@
     self.navigationItem.rightBarButtonItem = self.popUpMenu;
     
     
-    [[UIApplication sharedApplication].keyWindow addSubview:self.botBtn];
+    [_userview addSubview:self.botBtn];
     [self.botBtn sizeToFit];
     [self.botBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo([UIApplication sharedApplication].keyWindow).with.offset(-10);
-        make.centerX.equalTo([UIApplication sharedApplication].keyWindow);
+        make.bottom.equalTo(_userview).with.offset(-10);
+        make.centerX.equalTo(_userview);
     }];
     
     self.view = _userview;
@@ -85,7 +85,7 @@
         _botBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         NSLog(@"add");
         
-        [_botBtn setTitle:@"司机须知" forState: UIControlStateNormal];
+        [_botBtn setTitle:@"入场须知" forState: UIControlStateNormal];
         [_botBtn setTitleColor:COLOR_WithHex(0x565656) forState:UIControlStateNormal];
         [_botBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [_botBtn setBackgroundColor:[UIColor clearColor]];

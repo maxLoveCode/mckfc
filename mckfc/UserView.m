@@ -35,6 +35,13 @@
 
 @implementation UserView
 
+-(instancetype)init
+{
+    self = [super init];
+    [self addSubview:self.mainTableView];
+    return self;
+}
+
 #pragma mark setters
 -(UITableView *)mainTableView
 {
@@ -118,7 +125,6 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    [self addSubview:self.mainTableView];
 }
 
 #pragma mark total itemHeight

@@ -25,6 +25,7 @@
 @property (nonatomic, strong) AlertHUDView* alert;
 @property (nonatomic, strong) UIButton* confirm;
 
+@property (nonatomic, assign)
 
 @end
 
