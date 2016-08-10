@@ -276,6 +276,16 @@
     }
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if (self.type == FarmerPlanViewTypeDetail || self.type == FarmerPlanViewTypeOrder) {
+        if (section == 1) {
+            return 60;
+        }
+    }
+    return 0.01;
+}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return CGSizeMake((kScreen_Width-2*k_Margin)/2-1, kScreen_Width/3-1);
@@ -303,7 +313,7 @@
     }
     else if(self.type == FarmerPlanViewTypeHistory && indexPath.section == 1)
     {
-        NSLog(@"select %ld", indexPath.row);
+        NSLog(@"select %ld", (long)indexPath.row);
         [self.planViewDelegate tableStats:tableView DidSelectIndex:3001+indexPath.row];
     }
 }

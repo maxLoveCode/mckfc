@@ -26,6 +26,14 @@
     return self;
 }
 
+-(instancetype)initCutomItemAtHomepage
+{
+    self = [super initWithImage:[UIImage imageNamed:@"scan"] style:UIBarButtonItemStyleDone target:self action:@selector(selectBtn:)];
+    _show = NO;
+    self.ItemStyle = navItemStyleHomepage;
+    return self;
+}
+
 -(UITableView *)popMenu
 {
     if (!_popMenu) {
@@ -70,7 +78,7 @@
         else
         {
             label.text = @"联系工厂";
-            imageView.image = [UIImage imageNamed:@"menuPhone"];
+            imageView.image = [UIImage imageNamed:@"司机姓名"];
         }
 
     }
@@ -78,12 +86,12 @@
     {
         if (indexPath.row == 0) {
             label.text = @"扫二维码";
-            imageView.image = [UIImage imageNamed:@"生成二维码"];
+            imageView.image = [UIImage imageNamed:@"scanSmall"];
         }
         else
         {
             label.text = @"退出登录";
-            imageView.image = [UIImage imageNamed:@"menuPhone"];
+            imageView.image = [UIImage imageNamed:@"司机姓名"];
         }
     }
     label.font = [UIFont systemFontOfSize:15];

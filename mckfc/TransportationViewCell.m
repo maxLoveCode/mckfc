@@ -46,8 +46,6 @@
         _detailLabel = [[UILabel alloc] init];
         _detailLabel.textColor = COLOR_WithHex(0x565656);
         
-        self.detailTextLabel.numberOfLines = 2;
-        //_detailLabel.font = [UIFont systemFontOfSize:14];
     }
     return _detailLabel;
 }

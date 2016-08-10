@@ -49,8 +49,11 @@
     titleText = @[@"发运时间",@"运输目的地",@"计划到达时间",@"计划入场时间"];
     _server = [ServerManager sharedInstance];
     [self requestDetails];
-    if([[NSUserDefaults standardUserDefaults] objectForKey:@"locationPrompt"])
+    BOOL prompt = [[NSUserDefaults standardUserDefaults] objectForKey:@"locationPrompt"];
+    if(!prompt)
+    {
         [self locationServicePrompt];
+    }
 }
 
 #pragma mark - setter properties
@@ -121,22 +124,6 @@
         return kScreen_Height-itemHeight*6-20;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    if (indexPath.row == 1) {
-//        TransportationViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-//        UIFont* font = cell.detailLabel.font;
-//        NSDictionary* attribute = @{NSFontAttributeName:font};
-//        const CGSize textSize = [cell.detailLabel.text sizeWithAttributes: attribute];
-//        if (textSize.width > cell.detailTextLabel.frame.size.width && cell.detailLabel.numberOfLines == 1) {
-//            NSLog(@"%lf, %lf, %lu", cell.detailLabel.frame.size.width, textSize.width, (long)cell.detailLabel.numberOfLines);
-//            cell.detailTextLabel.font = [UIFont systemFontOfSize:5];
-//            cell.detailTextLabel.numberOfLines = 2;
-//            [cell setNeedsLayout];
-//        }
-//    }
-}
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row < 4)
@@ -148,7 +135,13 @@
         }
         else if(indexPath.row == 1){
             cell.detailLabel.text = _detail.destination;
-
+            UIFont* font = cell.detailLabel.font;
+            NSDictionary* attribute = @{NSFontAttributeName:font};
+            const CGSize textSize = [cell.detailLabel.text sizeWithAttributes: attribute];
+                if (textSize.width > cell.detailTextLabel.frame.size.width) {
+                    cell.detailLabel.font = [UIFont systemFontOfSize:12];
+                    cell.detailLabel.numberOfLines = 2;
+            }
         }
         else if(indexPath.row == 2){
             cell.detailLabel.text = _detail.planarrivetime;

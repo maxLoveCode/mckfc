@@ -35,7 +35,7 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.scrollEnabled = NO;
-        titleArray = @[@"车牌号", @"司机姓名", @"手机号码", @"土豆重量", @"运输单号",@"运输时间"];
+        titleArray = @[@"车牌号", @"司机姓名", @"手机号码", @"土豆重量", @"运单号",@"运输时间"];
         
         if (!_user) {
             _user = [[User alloc] init];

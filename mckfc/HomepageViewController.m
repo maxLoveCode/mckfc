@@ -25,6 +25,7 @@
 #import "QRCodeReaderViewController.h"
 
 #import "LoadingStats.h"
+#import "nofityViewController.h"
 
 @interface HomepageViewController ()<UserViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,menuDelegate,QRCodeReaderDelegate>
 
@@ -32,6 +33,8 @@
 @property (nonatomic, strong) ServerManager* server;
 @property (nonatomic, strong) rightNavigationItem* popUpMenu;
 @property (nonatomic, strong) LoadingStats* stats;
+
+@property (nonatomic, strong) UIButton* botBtn;
 
 @end
 
@@ -46,6 +49,15 @@
     _userview.delegate = self;
     
     self.navigationItem.rightBarButtonItem = self.popUpMenu;
+    
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:self.botBtn];
+    [self.botBtn sizeToFit];
+    [self.botBtn makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo([UIApplication sharedApplication].keyWindow).with.offset(-10);
+        make.centerX.equalTo([UIApplication sharedApplication].keyWindow);
+    }];
+    
     self.view = _userview;
 }
 
@@ -60,11 +72,27 @@
 -(rightNavigationItem *)popUpMenu
 {
     if (!_popUpMenu) {
-        _popUpMenu = [[rightNavigationItem alloc] initCutomItem];
+        _popUpMenu = [[rightNavigationItem alloc] initCutomItemAtHomepage];
         _popUpMenu.ItemStyle = navItemStyleHomepage;
         _popUpMenu.delegate =self;
     }
     return _popUpMenu;
+}
+
+-(UIButton *)botBtn
+{
+    if (!_botBtn) {
+        _botBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        NSLog(@"add");
+        
+        [_botBtn setTitle:@"司机须知" forState: UIControlStateNormal];
+        [_botBtn setTitleColor:COLOR_WithHex(0x565656) forState:UIControlStateNormal];
+        [_botBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [_botBtn setBackgroundColor:[UIColor clearColor]];
+        
+        [_botBtn addTarget:self action:@selector(notifypage:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _botBtn;
 }
 
 -(void)requestUserInfo
@@ -291,6 +319,12 @@
 - (void)readerDidCancel:(QRCodeReaderViewController *)reader
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+-(void)notifypage:(id)sender
+{
+    nofityViewController* notify = [[nofityViewController alloc] init];
+    [self.navigationController pushViewController:notify animated:YES];
 }
 
 

@@ -185,9 +185,10 @@
     }
     else if(self.style == LoadingCellStyleCarPlateInput)
     {
+        [self.titleLabel setFrame:CGRectMake(CGRectGetMaxX(imageframe), 0, 45, itemHeight)];
         CGFloat detailX = CGRectGetMaxX(_titleLabel.frame)+20;
         [self.textInput setFrame:
-         CGRectMake(detailX+100, 0, kScreen_Width-detailX-90-k_Margin*2, itemHeight)];
+         CGRectMake(detailX+100, 0, kScreen_Width-detailX-90-k_Margin, itemHeight)];
         [self.popUpBtn setFrame:CGRectMake(detailX, 0, 90, itemHeight)];
     }
 }

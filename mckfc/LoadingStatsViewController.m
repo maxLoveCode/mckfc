@@ -110,7 +110,7 @@
 #pragma mark titles and images
 -(void)initTitlesAndImages
 {
-    titleText = @[@"供应商名称",@"地块编号",@"土豆重量", @"发车时间", @"发运单号"];
+    titleText = @[@"供应商名称",@"地块编号",@"土豆重量", @"发车时间", @"运单号"];
 }
 
 #pragma mark tableViewDelegate
@@ -202,8 +202,9 @@
             cell.textInput.tag = 1;
             cell.textInput.delegate = self;
             cell.textInput.keyboardType = UIKeyboardTypeNumberPad;
+            cell.textInput.textColor = COLOR_WithHex(0x565656);
             if (!_stats.serialno || [_stats.serialno isEqualToString:@""]) {
-                cell.textInput.text = @"请输入订单号";
+                cell.textInput.text = @"请输入运单号";
             }
             else
                 cell.textInput.text = _stats.serialno;
@@ -480,7 +481,7 @@
 {
     UIBarButtonItem* item = [[UIBarButtonItem alloc] initWithTitle:@"完成" style: UIBarButtonItemStyleDone target:self action:@selector(dismiss)];
     self.navigationItem.rightBarButtonItem = item;
-    if ([textField.text isEqualToString:@"0"] ||[textField.text isEqualToString:@"请输入订单号"] ) {
+    if ([textField.text isEqualToString:@"0"] ||[textField.text isEqualToString:@"请输入运单号"] ) {
         textField.text = @"";
     }
 }

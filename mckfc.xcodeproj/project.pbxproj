@@ -79,6 +79,7 @@
 		25CB819E1D5423CB00EDD05C /* FarmerNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CB819D1D5423CB00EDD05C /* FarmerNav.m */; };
 		25CB81A11D54513F00EDD05C /* AddRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CB81A01D54513F00EDD05C /* AddRecordViewController.m */; };
 		25CB81A41D546CD800EDD05C /* AddRecordTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CB81A31D546CD800EDD05C /* AddRecordTable.m */; };
+		25CE35B91D5AF03D005ADBA7 /* nofityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CE35B81D5AF03D005ADBA7 /* nofityViewController.m */; };
 		25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFC1D17A53500C9CCBE /* LoadingNav.m */; };
 		25CECB001D17A9D700C9CCBE /* LoadingStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECAFF1D17A9D700C9CCBE /* LoadingStatsViewController.m */; };
 		25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECB021D17ACF900C9CCBE /* LoadingCell.m */; };
@@ -260,6 +261,8 @@
 		25CB81A01D54513F00EDD05C /* AddRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddRecordViewController.m; sourceTree = "<group>"; };
 		25CB81A21D546CD800EDD05C /* AddRecordTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddRecordTable.h; sourceTree = "<group>"; };
 		25CB81A31D546CD800EDD05C /* AddRecordTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddRecordTable.m; sourceTree = "<group>"; };
+		25CE35B71D5AF03D005ADBA7 /* nofityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nofityViewController.h; sourceTree = "<group>"; };
+		25CE35B81D5AF03D005ADBA7 /* nofityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = nofityViewController.m; sourceTree = "<group>"; };
 		25CECAFB1D17A53500C9CCBE /* LoadingNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingNav.h; sourceTree = "<group>"; };
 		25CECAFC1D17A53500C9CCBE /* LoadingNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingNav.m; sourceTree = "<group>"; };
 		25CECAFE1D17A9D700C9CCBE /* LoadingStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingStatsViewController.h; sourceTree = "<group>"; };
@@ -738,6 +741,8 @@
 				25CECB081D18DE7C00C9CCBE /* TranspotationPlanViewController.m */,
 				251E08861D48714400753FC2 /* MsgListViewController.h */,
 				251E08871D48714400753FC2 /* MsgListViewController.m */,
+				25CE35B71D5AF03D005ADBA7 /* nofityViewController.h */,
+				25CE35B81D5AF03D005ADBA7 /* nofityViewController.m */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -1090,6 +1095,7 @@
 				2512A1CD1D1130B100ED884B /* LoginView.m in Sources */,
 				2527ECCE1D35D8AC00350DC6 /* CarPlateRegionSelector.m in Sources */,
 				252EF9F11D337BA000565D00 /* TransportDetail.m in Sources */,
+				25CE35B91D5AF03D005ADBA7 /* nofityViewController.m in Sources */,
 				252EF9D31D2F4D2800565D00 /* WorkRecordViewController.m in Sources */,
 				252EF9E21D30AF9F00565D00 /* WorkFlowCell.m in Sources */,
 				252EF9C91D2E6F1000565D00 /* QualityControlHomePage.m in Sources */,

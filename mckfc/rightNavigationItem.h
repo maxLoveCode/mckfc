@@ -23,6 +23,7 @@ typedef NS_ENUM(NSUInteger, rightNavigationItemStyle) {
 @interface rightNavigationItem : UIBarButtonItem <UITableViewDataSource, UITableViewDelegate>
 
 -(instancetype)initCutomItem;
+-(instancetype)initCutomItemAtHomepage;
 
 @property (nonatomic, strong) UITableView* popMenu;
 @property (nonatomic, strong) UIView* mask;
