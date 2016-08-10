@@ -11,7 +11,6 @@
 #import "LoadingCell.h"
 #import "ServerManager.h"
 #import "CarPlateRegionSelector.h"
-#import "MCDatePickerView.h"
 
 @interface AddRecordViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,DatePickerDelegate>
 {
@@ -19,7 +18,6 @@
 }
 
 @property (nonatomic, strong) ServerManager* server;
-@property (nonatomic, strong) MCDatePickerView* datePicker;
 
 @end
 
@@ -55,6 +53,7 @@
     if (!_datePicker) {
         _datePicker = [[MCDatePickerView alloc] init];
         _datePicker.delegate = self;
+        NSLog(@"init");
     }
     return _datePicker;
 }
@@ -84,7 +83,10 @@
             [cell.popUpBtn setTitle:@"选择省份" forState: UIControlStateNormal];
         }
         else
-        [cell.popUpBtn setTitle:_user.region forState:UIControlStateNormal];
+        {
+            [cell.popUpBtn setTitle:_user.region forState:UIControlStateNormal];
+            [cell.popUpBtn setTitleColor:COLOR_WithHex(0x565656) forState:UIControlStateNormal];
+        }
         cell.textInput.delegate = self;
         cell.textInput.tag = 0;
         cell.textInput.textColor = COLOR_WithHex(0x565656);
@@ -142,7 +144,7 @@
     else if(indexPath.row == 5){
         cell.style =LoadingCellStyleDatePicker;
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+        [dateFormatter setDateFormat:@"HH:mm"];
         cell.detailLabel.text = [dateFormatter stringFromDate:_stats.departuretime];
     }
     cell.titleLabel.text = titleArray[indexPath.row];
@@ -153,6 +155,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 5) {
+        [self.delegate requestDate:self];
         [self.datePicker show];
     }
 }
@@ -224,5 +227,11 @@
     [self.tableView reloadData];
 }
 
-
+-(void)setDate:(NSDate*)date
+{
+    NSLog(@"set");
+    [self.datePicker.picker setDate:date];
+    [self.datePicker.picker setMinimumDate:date];
+    [self.datePicker.picker setMaximumDate:[NSDate dateWithTimeInterval:24*60*60 sinceDate:date]];
+}
 @end

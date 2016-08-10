@@ -165,8 +165,10 @@
     {
         [[UIApplication sharedApplication].keyWindow addSubview:self.botButton];
         
+        if (!_addRecordVC) {
+            _addRecordVC = [[AddRecordViewController alloc] init];
+        }
         _farmerPlanview.type = FarmerPlanViewTypeRecordList;
-        _addRecordVC = [[AddRecordViewController alloc] init];
         [self addChildViewController:_addRecordVC];
         _addRecordVC.delegate = self;
         _farmerPlanview.datasource = self.transportationList;
@@ -316,6 +318,7 @@
     [self.botButton removeFromSuperview];
     self.farmerPlanview.type = FarmerPlanViewTypeMenu;
     [self.farmerPlanview.mainTableView reloadData];
+    [self.backToHistoryButton removeFromSuperview];
 }
 
 #pragma mark uploads and data operations
@@ -427,6 +430,10 @@
             [dateFormatter setDateFormat:@"HH:mm"];
             [stats setDeparturetime:[dateFormatter dateFromString:[data[i] objectForKey:@"departuretime"]]];
             [stats setWeight:[data[i] objectForKey:@"weight"]];
+            [stats setSerialno:[data[i] objectForKey:@"serialno"]];
+            User* user = userPart[i];
+            user.region = [user.truckno substringWithRange:NSMakeRange(0, 1)];
+            user.cardigits = [user.truckno substringWithRange:NSMakeRange(1, [user.truckno length]-1)];
             NSDictionary* data = @{@"user": userPart[i],
                                    @"stat": stats};
             [records addObject:data];
@@ -499,7 +506,10 @@
         NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
         
-        _farmerPlanview.stats.departuretime = [dateFormatter dateFromString:DateList[row]];
+        NSDate* date = [dateFormatter dateFromString:DateList[row]];
+        _farmerPlanview.stats.departuretime =date;
+        
+        [self.addRecordVC setDate:date];
     }
     [self reload];
 }
@@ -576,6 +586,11 @@
     [self.farmerPlanview.addRecordView endEditing:YES];
     [self.farmerPlanview setContentOffset:CGPointMake(0, 0) animated:YES];
     self.navigationItem.rightBarButtonItem = nil;
+}
+
+-(void)requestDate:(AddRecordViewController *)vc
+{
+    [vc setDate:_farmerPlanview.stats.departuretime];
 }
 
 -(void)save

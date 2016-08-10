@@ -10,12 +10,16 @@
 #import "AddRecordTable.h"
 #import "User.h"
 #import "LoadingStats.h"
+
+#import "MCDatePickerView.h"
+@class AddRecordViewController;
 @class AddRecordTable;
 
 @protocol AddRecordTableDelegate <NSObject>
 
 -(void)addRecordView:(AddRecordTable*)viewdidBeginEditing;
 -(void)endEditing:(AddRecordTable*)viewEndEditing;
+-(void)requestDate:(AddRecordViewController*)vc;
 
 @end
 
@@ -25,6 +29,11 @@
 @property (nonatomic, strong) User* user;
 @property (nonatomic, strong) LoadingStats* stats;
 
+
+@property (nonatomic, strong) MCDatePickerView* datePicker;
+
 @property (nonatomic, weak) id<AddRecordTableDelegate> delegate;
+
+-(void)setDate:(NSDate*)date;
 
 @end
