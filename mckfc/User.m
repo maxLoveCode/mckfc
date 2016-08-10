@@ -27,6 +27,7 @@
              @"type":@"type",
              @"transportstatus":@"page",
              @"transportid":@"transportid",
+             @"factorynotes":@"factorynotes",
              };
 }
 

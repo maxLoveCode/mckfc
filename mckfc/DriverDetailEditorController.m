@@ -38,19 +38,27 @@
 -(void)viewDidLoad
 {
     self.title = @"车主信息";
-    titleText = @[@"头像",
-                  @"车牌号",
-                  @"司机姓名",
-                  @"身份证",
-                  @"驾驶证号",
-                  @"行驶证号"];
+//    titleText = @[@"头像",
+//                  @"车牌号",
+//                  @"司机姓名",
+//                  @"身份证",
+//                  @"驾驶证号",
+//                  @"行驶证号"];
+//    
+//    detailText = @[@"",
+//                   @"请输入6位车牌号",
+//                   @"请输入司机姓名",
+//                   @"请输入18位身份证号(选填)",
+//                   @"请输入驾驶证号",
+//                   @"请输入行驶证号(选填)"];
     
-    detailText = @[@"",
+    titleText = @[@"车牌号",
+                  @"司机姓名",
+                  @"驾驶证号"];
+    detailText = @[
                    @"请输入6位车牌号",
                    @"请输入司机姓名",
-                   @"请输入18位身份证号(选填)",
-                   @"请输入驾驶证号",
-                   @"请输入行驶证号(选填)"];
+                   @"请输入驾驶证号",];
     
     _server = [ServerManager sharedInstance];
     
@@ -77,7 +85,7 @@
 -(UITableView *)tableView
 {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, [DriverDetailEditorCell heightForCell]*6) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, [DriverDetailEditorCell heightForCell]*3) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.scrollEnabled = NO;
@@ -93,7 +101,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return 3;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -104,12 +112,13 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DriverDetailEditorCell* cell;
-    if (indexPath.row ==0 ) {
-        cell = [[DriverDetailEditorCell alloc] initWithStyle: DriverDetailCellStyleAvatar reuseIdentifier:@"editor"];
-        [cell.avatar sd_setImageWithURL:[NSURL URLWithString:_driver.avatar] placeholderImage:
-         [UIImage imageNamed:@"default_avatar"]];
-    }
-    else if(indexPath.row ==1){
+//    if (indexPath.row ==0 ) {
+//        cell = [[DriverDetailEditorCell alloc] initWithStyle: DriverDetailCellStyleAvatar reuseIdentifier:@"editor"];
+//        [cell.avatar sd_setImageWithURL:[NSURL URLWithString:_driver.avatar] placeholderImage:
+//         [UIImage imageNamed:@"default_avatar"]];
+//    }
+//    else
+    if(indexPath.row ==0){
         cell = [[DriverDetailEditorCell alloc] initWithStyle: DriverDetailCellStyleCarNumber reuseIdentifier:@"editor"];
         [cell.popUpBtn addTarget:self action:@selector(popUpRegions:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -125,7 +134,7 @@
     cell.detailLabel.tag = indexPath.row;
     cell.detailLabel.textColor = COLOR_WithHex(0x565656);
     
-    if (indexPath.row == 1) {
+    if (indexPath.row == 0) {
         NSLog(@"reload %@", _driver.region);
         cell.detailLabel.text = _driver.cardigits;
         cell.detailLabel.keyboardType = UIKeyboardTypeASCIICapable;
@@ -139,7 +148,7 @@
             NSLog(@"%@",cell.popUpBtn);
         }
     }
-    else if(indexPath.row == 2){
+    else if(indexPath.row == 1){
         cell.detailLabel.text = _driver.driver;
     }
     else if(indexPath.row == 3){
@@ -149,8 +158,7 @@
     else if(indexPath.row == 4){
         cell.detailLabel.text = _driver.driverno;
         cell.detailLabel.keyboardType = UIKeyboardTypeNumberPad;
-    }else
-    {
+    }else{
          cell.detailLabel.text = _driver.licenseno;
         cell.detailLabel.keyboardType = UIKeyboardTypeNumberPad;
     }
@@ -218,26 +226,27 @@
     DriverDetailEditorCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     NSString* result = cell.detailLabel.text;
     
-        if(index == 1) //car no
+        if(index == 0) //car no
         {
             _driver.cardigits = result;
         }
-        else if(index ==2)
+        else if(index ==1)
         {
             _driver.driver = result;
         }
-        else if(index ==3)
-        {
-            _driver.idcard = result;
-        }
-        else if(index ==4)
+//        else if(index ==3)
+//        {
+//            _driver.idcard = result;
+//        }
+        else if(index ==2)
         {
             _driver.driverno = result;
         }
-        else
-        {
-            _driver.licenseno = result;
-        }
+//        else
+//        {
+//            NSLog(@"%@", result);
+//            _driver.licenseno = result;
+//        }
 }
 
 #pragma mark gesture
@@ -296,6 +305,7 @@
                               @"driverno":_driver.driverno,
                               @"licenseno":_driver.licenseno};
         [params addEntriesFromDictionary:dic];
+    NSLog(@"params:%@", params);
         [_server POST:url parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
             if (_driver.avatar) {
                 [_server POST:@"updateUserInfo" parameters:@{@"token":_server.accessToken,

@@ -10,9 +10,21 @@
 
 @implementation nofityViewController
 
+-(instancetype)initWithString:(NSString*)source
+{
+    self.title = @"入场须知";
+    self = [super init];
+    self.source = source;
+    return self;
+}
+
 -(void)viewDidLoad
 {
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    UIWebView* webview =[[UIWebView alloc] init];
+    [webview setFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height-64)];
+    [webview loadHTMLString:_source baseURL:nil];
+    [self.view addSubview:webview];
     //UIWebView
 }
 

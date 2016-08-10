@@ -37,6 +37,8 @@
 @property (nonatomic, assign) NSUInteger transportstatus;
 @property (nonatomic, assign) NSUInteger transportid;
 
+@property (nonatomic, copy) NSString* factorynotes;
+
 -(instancetype)init;
 
 -(BOOL)validation;

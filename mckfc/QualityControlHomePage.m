@@ -67,7 +67,6 @@
             if (_user.type != [MKUSER_TYPE_QUALITYCONTROL integerValue]
                 && _user.type != [MKUSER_TYPE_UNLOAD integerValue]
                 && _user.type != [MKUSER_TYPE_QUALITYCONTROL2 integerValue]) {
-                NSLog(@"loginnav");
                 LoginNav* loginVC = [[LoginNav alloc] init];
                 [self presentViewController:loginVC animated:NO completion:^{
                 }];
@@ -75,6 +74,7 @@
             else
             {
                 [_userView.mainTableView reloadData];
+
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             

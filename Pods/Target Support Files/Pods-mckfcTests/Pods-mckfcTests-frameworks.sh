@@ -82,3 +82,24 @@ strip_invalid_archs() {
   fi
 }
 
+
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-mckfcTests/AFNetworking.framework"
+  install_framework "Pods-mckfcTests/GDQrCode.framework"
+  install_framework "Pods-mckfcTests/JTCalendar.framework"
+  install_framework "Pods-mckfcTests/Mantle.framework"
+  install_framework "Pods-mckfcTests/Masonry.framework"
+  install_framework "Pods-mckfcTests/QRCodeReaderViewController.framework"
+  install_framework "Pods-mckfcTests/RichEditorView.framework"
+  install_framework "Pods-mckfcTests/SDWebImage.framework"
+fi
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-mckfcTests/AFNetworking.framework"
+  install_framework "Pods-mckfcTests/GDQrCode.framework"
+  install_framework "Pods-mckfcTests/JTCalendar.framework"
+  install_framework "Pods-mckfcTests/Mantle.framework"
+  install_framework "Pods-mckfcTests/Masonry.framework"
+  install_framework "Pods-mckfcTests/QRCodeReaderViewController.framework"
+  install_framework "Pods-mckfcTests/RichEditorView.framework"
+  install_framework "Pods-mckfcTests/SDWebImage.framework"
+fi

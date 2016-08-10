@@ -26,13 +26,16 @@
 
 #import "LoadingStats.h"
 #import "nofityViewController.h"
+#import "AlertHUDView.h"
 
-@interface HomepageViewController ()<UserViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,menuDelegate,QRCodeReaderDelegate>
+@interface HomepageViewController ()<UserViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,menuDelegate,QRCodeReaderDelegate,HUDViewDelegate>
 
 @property (nonatomic, strong) UserView* userview;
 @property (nonatomic, strong) ServerManager* server;
 @property (nonatomic, strong) rightNavigationItem* popUpMenu;
 @property (nonatomic, strong) LoadingStats* stats;
+
+@property (nonatomic, strong) AlertHUDView* alert;
 
 @property (nonatomic, strong) UIButton* botBtn;
 
@@ -69,6 +72,16 @@
     }
 }
 
+#pragma mark - setter properties
+-(AlertHUDView *)alert
+{
+    if (!_alert) {
+        _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
+        _alert.delegate = self;
+    }
+    return _alert;
+}
+
 -(rightNavigationItem *)popUpMenu
 {
     if (!_popUpMenu) {
@@ -83,7 +96,6 @@
 {
     if (!_botBtn) {
         _botBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        NSLog(@"add");
         
         [_botBtn setTitle:@"入场须知" forState: UIControlStateNormal];
         [_botBtn setTitleColor:COLOR_WithHex(0x565656) forState:UIControlStateNormal];
@@ -120,6 +132,13 @@
                 LoginNav* loginVC = [[LoginNav alloc] init];
                 [self presentViewController:loginVC animated:NO completion:^{
                 }];
+            }
+            else
+            {
+                NSString* isRead = [[NSUserDefaults standardUserDefaults] objectForKey:isReadFactoryNotification];
+                if ( [isRead isEqualToString:@"0"] || isRead == nil) {
+                    [self readBookletPrompt];
+                }
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
@@ -323,9 +342,25 @@
 
 -(void)notifypage:(id)sender
 {
-    nofityViewController* notify = [[nofityViewController alloc] init];
-    [self.navigationController pushViewController:notify animated:YES];
+    if (_user.factorynotes != nil) {
+        nofityViewController* notify = [[nofityViewController alloc] initWithString:_user.factorynotes];
+        [self.navigationController pushViewController:notify animated:YES];
+    }
 }
 
+#pragma mark -alertview delegate
+-(void)didSelectConfirm
+{
+    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:isReadFactoryNotification];
+    [self notifypage:nil];
+    [self.alert removeFromSuperview];
+}
 
+-(void)readBookletPrompt
+{
+    self.alert.title.text = @"入场须知";
+    self.alert.detail.text = @"司机请查看入场须知";
+    self.alert.detail.numberOfLines = 0;
+    [self.alert show:_alert];
+}
 @end

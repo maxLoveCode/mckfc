@@ -10,4 +10,7 @@
 
 @interface nofityViewController : UIViewController
 
+-(instancetype)initWithString:(NSString*)source;
+@property (nonatomic, copy) NSString* source;
+
 @end
