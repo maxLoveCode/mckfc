@@ -88,7 +88,9 @@
             return 1;
         }
         else return self.datasource.count;
-    }else
+    }else if(self.type == FarmerPlanViewTypeHistory)
+        return self.datasource.count;
+    else
         return 1;
 }
 
@@ -151,10 +153,18 @@
                 [cell.contentView addSubview:self.qrCodeView];
             }
         }
-        else if(self.type == FarmerPlanViewTypeOrder)
+        else if(self.type == FarmerPlanViewTypeOrder || self.type == FarmerPlanViewTypeDetail)
         {
             if (self.addRecordView != nil) {
                 [cell.contentView addSubview:self.addRecordView];
+            }
+            if(self.type == FarmerPlanViewTypeDetail)
+            {
+                self.addRecordView.userInteractionEnabled = NO;
+            }
+            else
+            {
+                self.addRecordView.userInteractionEnabled = YES;
             }
         }
         else if(self.type == FarmerPlanViewTypeRecordList)
@@ -183,7 +193,13 @@
                 make.center.equalTo(cell.contentView);
             }];
             
-        }
+         }
+         else if(self.type == FarmerPlanViewTypeHistory)
+         {
+             FarmerRecordCell* cell = [[FarmerRecordCell alloc] init];
+             cell.content = self.datasource[indexPath.row];
+             return cell;
+         }
         return cell;
     }
     else if(indexPath.section == 2)
@@ -270,6 +286,7 @@
     return 1.0;
 }
 
+#pragma mark -selection
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0){
@@ -279,6 +296,15 @@
     {
 //index = 10 when add record
         [self.planViewDelegate tableStats:tableView DidSelectIndex:10];
+    }
+    else if(self.type == FarmerPlanViewTypeRecordList && indexPath.section == 2)
+    {
+        [self.planViewDelegate tableStats:tableView DidSelectIndex:201+indexPath.row];
+    }
+    else if(self.type == FarmerPlanViewTypeHistory && indexPath.section == 1)
+    {
+        NSLog(@"select %ld", indexPath.row);
+        [self.planViewDelegate tableStats:tableView DidSelectIndex:3001+indexPath.row];
     }
 }
 

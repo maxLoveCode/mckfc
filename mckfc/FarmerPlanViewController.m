@@ -6,6 +6,10 @@
 //  Copyright © 2016年 Shanghai Impression Culture Communication Co.,Ltd. All rights reserved.
 //
 
+
+// 啊啊啊奇怪的需求和不匹配的设计导致了这个模块是整块代码里最垃圾的一块
+// 头痛
+
 #import "FarmerPlanViewController.h"
 #import "FarmerPlanView.h"
 #import "FarmerQRCodeVC.h"
@@ -38,13 +42,16 @@
 @property (nonatomic, strong) AddRecordViewController* addRecordVC;
 
 @property (nonatomic, strong) ServerManager* server;
+
 @property (nonatomic, strong) UIButton* botButton;
+@property (nonatomic, strong) UIButton* backToHistoryButton;
 
 @property (nonatomic, strong) MCPickerView* pickerView;
 @property (nonatomic, strong) AlertHUDView* alert;
 @property (nonatomic, strong) MCDatePickerView* datePicker;
 
-@property (nonatomic, strong) NSMutableArray* transportationList;
+@property (nonatomic, strong) NSMutableArray* transportationList; //发运订单
+@property (nonatomic, strong) NSMutableArray* historyList; //历史订单
 
 @end
 
@@ -113,6 +120,19 @@
     return _botButton;
 }
 
+-(UIButton *)backToHistoryButton
+{
+    if (!_backToHistoryButton) {
+        _backToHistoryButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_backToHistoryButton setTitle:@"返回" forState:UIControlStateNormal];
+        [_backToHistoryButton setBackgroundColor:COLOR_THEME];
+        [_backToHistoryButton setTitleColor:COLOR_THEME_CONTRAST forState:UIControlStateNormal];
+        [_backToHistoryButton setFrame:CGRectMake(0, kScreen_Height-buttonHeight, kScreen_Width, buttonHeight)];
+        
+        [_backToHistoryButton addTarget:self action:@selector(backToHistory:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _backToHistoryButton;
+}
 
 -(void)addReturnButton
 {
@@ -131,7 +151,6 @@
 #pragma mark menu selection
 -(void)menu:(FarmerPlanView *)Menu DidSelectIndex:(NSInteger)index
 {
-    NSLog(@"%ld", (long)index);
     
     if (index == 0) {
         
@@ -150,16 +169,23 @@
         _addRecordVC = [[AddRecordViewController alloc] init];
         [self addChildViewController:_addRecordVC];
         _addRecordVC.delegate = self;
+        _farmerPlanview.datasource = self.transportationList;
         _farmerPlanview.addRecordView = _addRecordVC.tableView;
         [self reload];
     }
     else if (index == 2)
     {
-#pragma mark warnings
-        [self requestUploadListsuccess:^{
-            
+        [self requestUploadListsuccess:^(NSMutableArray *result) {
+            _farmerPlanview.type = FarmerPlanViewTypeHistory;
+            self.historyList = result;
+            _farmerPlanview.datasource = result;
+            _addRecordVC = [[AddRecordViewController alloc] init];
+            [self addChildViewController:_addRecordVC];
+            _addRecordVC.delegate = self;
+            _farmerPlanview.addRecordView = _addRecordVC.tableView;
+            [self addReturnButton];
+            [self reload];
         }];
-        [self reload];
     }
     else
     {
@@ -261,6 +287,27 @@
         [_botButton setTitle:@"确认并保存" forState:UIControlStateNormal];
         [self reload];
     }
+    else if (index >= 201 && self.farmerPlanview.type == FarmerPlanViewTypeRecordList) //看不懂了吗，没错，实在太混乱了，参照 farmerplanview
+    {
+        NSInteger i = index-201; //data index
+        NSDictionary* data = _transportationList[i];
+        self.addRecordVC.user = data[@"user"];
+        self.addRecordVC.stats = data[@"stat"];
+        self.farmerPlanview.type = FarmerPlanViewTypeDetail;
+        [_botButton setTitle:@"返回" forState:UIControlStateNormal];
+        [self reload];
+    }
+    else if(self.farmerPlanview.type == FarmerPlanViewTypeHistory && index >3000)
+    {
+        NSInteger i = index-3001; //data index
+        NSDictionary* data = _historyList[i];
+        self.addRecordVC.user = data[@"user"];
+        self.addRecordVC.stats = data[@"stat"];
+        self.farmerPlanview.type = FarmerPlanViewTypeDetail;
+        [[UIApplication sharedApplication].keyWindow addSubview:self.backToHistoryButton];
+        [self reload];
+    }
+
 }
 
 -(void)popToMenu:(id)sender
@@ -279,9 +326,7 @@
             NSDictionary* data = @{@"user":self.addRecordVC.user,
                                    @"stat":self.addRecordVC.stats};
             
-            NSLog(@"%@",self.transportationList);
             [self.transportationList addObject:data];
-            NSLog(@"%@",self.transportationList);
             self.farmerPlanview.datasource = self.transportationList;
             
             [_botButton setTitle:@"上传全部" forState:UIControlStateNormal];
@@ -289,9 +334,15 @@
             [self reload];
         }
     }
-    else
+    else if (_farmerPlanview.type == FarmerPlanViewTypeRecordList)
     {
         [self uploadDatas];
+    }
+    else if (_farmerPlanview.type == FarmerPlanViewTypeDetail)
+    {
+        _farmerPlanview.type = FarmerPlanViewTypeRecordList;
+        [_botButton setTitle:@"上传全部" forState:UIControlStateNormal];
+        [self reload];
     }
 }
 
@@ -349,6 +400,7 @@
         NSArray* data = responseObject[@"data"];
         NSLog(@"data%@",data);
         DateList = data;
+        
         if (DateList && [DateList count] >0) {
             success();
         }
@@ -357,7 +409,7 @@
     }];
 }
 
--(void)requestUploadListsuccess:(void (^)(void))success
+-(void)requestUploadListsuccess:(void (^)(NSMutableArray *result))success
 {
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
@@ -367,10 +419,20 @@
                              @"fieldid":[NSString stringWithFormat:@"%lu",(long)_farmerPlanview.stats.field.fieldID]};
     [_server GET:@"getUploadList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* data = responseObject[@"data"];
-        NSLog(@"data%@",data);
-        uploadList = data;
-        if (uploadList) {
-            success();
+        NSArray* userPart = [MTLJSONAdapter modelsOfClass:[User class] fromJSONArray:data error:nil];
+        NSMutableArray* records = [[NSMutableArray alloc] init];
+        for (NSInteger i=0 ; i<[data count] ;i ++) {
+            LoadingStats* stats = [[LoadingStats alloc] init];
+            NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"HH:mm"];
+            [stats setDeparturetime:[dateFormatter dateFromString:[data[i] objectForKey:@"departuretime"]]];
+            [stats setWeight:[data[i] objectForKey:@"weight"]];
+            NSDictionary* data = @{@"user": userPart[i],
+                                   @"stat": stats};
+            [records addObject:data];
+        }
+        if (records) {
+            success(records);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -406,7 +468,6 @@
                              @"trucks":data,
                              @"departureday":dateString
                              };
-    NSLog(@"%@", params);
     
     [_server POST:@"uploadTransport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject);
@@ -527,10 +588,6 @@
     [self endEditing:self.addRecordVC.tableView];
 }
 
-- (BOOL)disablesAutomaticKeyboardDismissal {
-    return NO;
-}
-
 #pragma mark- validation
 - (BOOL)validation
 {
@@ -565,4 +622,10 @@
     return YES;
 }
 
+- (void)backToHistory:(id)sender
+{
+    [self.backToHistoryButton removeFromSuperview];
+    _farmerPlanview.type = FarmerPlanViewTypeHistory;
+    [self reload];
+}
 @end

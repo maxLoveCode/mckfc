@@ -20,6 +20,8 @@ typedef NS_ENUM(NSUInteger, PlanViewType) {
     FarmerPlanViewTypeRecordList, //运输单页列表
     
     FarmerPlanViewTypeDetail, //详情页面
+    
+    FarmerPlanViewTypeHistory,
 };
 
 @protocol FarmerPlanViewDelegate <NSObject>
