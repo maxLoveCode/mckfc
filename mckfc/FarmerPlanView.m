@@ -170,7 +170,7 @@
         else if(self.type == FarmerPlanViewTypeRecordList)
         {
             UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, itemHeight, itemHeight)];
-            imageView.image = [UIImage imageNamed:@"menuCancel"];
+            imageView.image = [UIImage imageNamed:@"add"];
             UILabel* label = [[UILabel alloc] init];
             label.text = @"添加运输单";
             label.textColor = COLOR_WithHex(0x565656);
