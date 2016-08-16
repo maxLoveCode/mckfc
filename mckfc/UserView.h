@@ -20,7 +20,9 @@
 
 @interface UserView : UIView
 
+@property (nonatomic, strong) UIButton* botBtn;
 @property (weak, nonatomic) id <UserViewDelegate> delegate;
 
 -(void)setContentByUser:(User* )user;
+
 @end

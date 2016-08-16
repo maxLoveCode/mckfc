@@ -15,8 +15,6 @@ def default_pods
 	pod 'JPush-iOS-SDK', '~> 2.1.8'
 	pod 'AMapLocation' #定位SDK
 	pod 'Masonry'
-	pod 'RichEditorView'
-	use_frameworks!
 end
 
 target 'mckfc' do

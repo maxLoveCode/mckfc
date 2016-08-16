@@ -29,7 +29,6 @@
 {
     if (!_QRView) {
         _QRView = [[FarmerQRCodeView alloc] init];
-        //[_QRView setFrame:CGRectMake(0, 0, kScreen_Width, 400)];
         [_QRView.screenShot addTarget:self action:@selector(screenShot:) forControlEvents:UIControlEventTouchUpInside];
         [_QRView.saveSheet addTarget:self action:@selector(saveSheet:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -74,7 +73,7 @@
 
 -(void)saveSheet:(id)sender
 {
-    NSLog(@"saveSheet");
+    [self.delegate QRCodeViewDidSelectRecord:self];
 }
 
 -(void)setQRData:(NSString*)data

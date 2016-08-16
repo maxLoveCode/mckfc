@@ -54,11 +54,11 @@
     
     titleText = @[@"车牌号",
                   @"司机姓名",
-                  @"驾驶证号"];
+                  @"身份证号"];
     detailText = @[
                    @"请输入6位车牌号",
                    @"请输入司机姓名",
-                   @"请输入驾驶证号",];
+                   @"请输入18位身份证号",];
     
     _server = [ServerManager sharedInstance];
     
@@ -151,7 +151,7 @@
     else if(indexPath.row == 1){
         cell.detailLabel.text = _driver.driver;
     }
-    else if(indexPath.row == 3){
+    else if(indexPath.row == 2){
         cell.detailLabel.text = _driver.idcard;
         cell.detailLabel.keyboardType = UIKeyboardTypeAlphabet;
     }
@@ -234,14 +234,14 @@
         {
             _driver.driver = result;
         }
-//        else if(index ==3)
-//        {
-//            _driver.idcard = result;
-//        }
         else if(index ==2)
         {
-            _driver.driverno = result;
+            _driver.idcard = result;
         }
+//        else if(index ==2)
+//        {
+//            _driver.driverno = result;
+//        }
 //        else
 //        {
 //            NSLog(@"%@", result);

@@ -49,11 +49,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>RichEditorView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -62,57 +57,52 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0CE21AFEEC30A8F846748CB17FDF2184</key>
+		<key>24E0437CF5E2E683586174F68958517E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1C3436CEA5C3D39764C5F54374794ECB</key>
+		<key>426BC4549A625B5E1E4200D5261A98BF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>252B39BF7E77E02B761AFEFDD984B337</key>
+		<key>53480ED0BE09FF49E34B1702D485CAAB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2D60598E4A93350018137F80061CEBC6</key>
+		<key>5A0A940417D7EA67F31912BCFA93FA7C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>39B5CF86C5D5526023BFA614CD6D37DC</key>
+		<key>928353533005A4198EBDA5B700D37B64</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4CC168552068ADC30710E8DD45C462BB</key>
+		<key>93A2564B7025901EF717C78877361726</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>814D7F0C846B4DCB10FE73B71013FF5D</key>
+		<key>BADF01D37637A5A12678E7F536F604F0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A9A83F63385AA43314397B8DD375464B</key>
+		<key>C3AD7E342840A1BEA026D1D3A2D9C1A7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AD1407E9422C2D4DF0F8E6801CBE8CCD</key>
+		<key>E81DAD2D75FA499E09E6B4BB4747CE2D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DFD7EA5BB3F9764C8FB30FE9C55A40C2</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FB19C9EAB91AFB5B9C9EE748A3984E38</key>
+		<key>F247DB7FF54092F72F82C83EF9D1481B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

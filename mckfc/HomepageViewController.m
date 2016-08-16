@@ -37,7 +37,7 @@
 
 @property (nonatomic, strong) AlertHUDView* alert;
 
-@property (nonatomic, strong) UIButton* botBtn;
+
 
 @end
 
@@ -50,16 +50,9 @@
     _server = [ServerManager sharedInstance];
     
     _userview.delegate = self;
-    
+    [_userview.botBtn addTarget:self action:@selector(notifypage:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = self.popUpMenu;
     
-    
-    [_userview addSubview:self.botBtn];
-    [self.botBtn sizeToFit];
-    [self.botBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(_userview).with.offset(-10);
-        make.centerX.equalTo(_userview);
-    }];
     
     self.view = _userview;
 }
@@ -92,20 +85,6 @@
     return _popUpMenu;
 }
 
--(UIButton *)botBtn
-{
-    if (!_botBtn) {
-        _botBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        
-        [_botBtn setTitle:@"入场须知" forState: UIControlStateNormal];
-        [_botBtn setTitleColor:COLOR_WithHex(0x565656) forState:UIControlStateNormal];
-        [_botBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [_botBtn setBackgroundColor:[UIColor clearColor]];
-        
-        [_botBtn addTarget:self action:@selector(notifypage:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _botBtn;
-}
 
 -(void)requestUserInfo
 {
@@ -124,9 +103,6 @@
             _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:data error:&error];
             [_userview setContentByUser:_user];
     
-            [self checkIfNeedsToUpdateUser];
-            [self checkIfNeedsToContinue];
-            [self setAliasForNotification:data[@"userid"]];
             
             if (_user.type != [MKUSER_TYPE_DRIVER integerValue]) {
                 LoginNav* loginVC = [[LoginNav alloc] init];
@@ -135,10 +111,10 @@
             }
             else
             {
-                NSString* isRead = [[NSUserDefaults standardUserDefaults] objectForKey:isReadFactoryNotification];
-                if ( [isRead isEqualToString:@"0"] || isRead == nil) {
-                    [self readBookletPrompt];
-                }
+                
+                [self checkIfNeedsToUpdateUser];
+                [self checkIfNeedsToContinue];
+                [self setAliasForNotification:data[@"userid"]];
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
@@ -236,6 +212,10 @@
 {
     NSUInteger transportStatus = _user.transportstatus;
     if (transportStatus == 0) {
+        NSString* isRead = [[NSUserDefaults standardUserDefaults] objectForKey:isReadFactoryNotification];
+        if ( [isRead isEqualToString:@"0"] || isRead == nil) {
+            [self readBookletPrompt];
+        }
         return;
     }
     else if (transportStatus == 1){

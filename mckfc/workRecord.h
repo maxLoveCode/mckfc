@@ -17,4 +17,6 @@
 @property (nonatomic, strong) NSString* transportno;
 @property (nonatomic, strong) NSString* truckno;
 
+-(BOOL)matchAccordingToKey:(NSString*)key;
+
 @end

@@ -20,4 +20,13 @@
              @"truckno":@"truckno"};
 }
 
+-(BOOL)matchAccordingToKey:(NSString*)key
+{
+    return [self.driver containsString:key] ||
+            ([self.recordid integerValue] == [key integerValue]) ||
+            [self.storename containsString:key] ||
+            [self.transportno containsString:key] ||
+            [self.truckno containsString:key];
+}
+
 @end

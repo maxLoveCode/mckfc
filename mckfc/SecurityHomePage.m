@@ -235,6 +235,7 @@
 {
     NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token": _server.accessToken,
                        @"transportid":_ScanedTransportID}];
+    NSLog(@"%@", params);
     [_server POST:@"truckArrive" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         //navigate to detail
         [self navigateToWorkDetail:_ScanedTransportID];

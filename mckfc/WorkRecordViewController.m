@@ -18,7 +18,10 @@
 
 extern NSString *const reuseIdentifier;
 
-@interface WorkRecordViewController()<UITableViewDelegate, UITableViewDataSource,JTCalendarDelegate>
+@interface WorkRecordViewController()<UITableViewDelegate, UITableViewDataSource,JTCalendarDelegate, UISearchBarDelegate>
+{
+    NSString* keyWord;
+}
 
 @property (nonatomic, strong) UITableView* tableView;
 
@@ -33,6 +36,7 @@ extern NSString *const reuseIdentifier;
 @property (strong, nonatomic) ServerManager* server;
 
 @property (nonatomic, strong) NSArray* recordArray;
+@property (nonatomic, strong) NSMutableArray* searchResult;
 @end
 
 @implementation WorkRecordViewController
@@ -48,6 +52,9 @@ extern NSString *const reuseIdentifier;
     {
         [self requestListWithDate:_selected];
     }
+    
+    keyWord = nil;
+    [self addSearchController];
 }
 
 #pragma mark setter
@@ -88,7 +95,12 @@ extern NSString *const reuseIdentifier;
 #pragma mark UITableview controller
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1+[_recordArray count];
+    if(keyWord!= nil && ![keyWord isEqualToString:@""] )
+    {
+        return 1+[_searchResult count];
+    }
+    else
+        return 1+[_recordArray count];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -107,7 +119,14 @@ extern NSString *const reuseIdentifier;
     else
     {
         WorkRecordCell *cell = [[WorkRecordCell alloc] init];
-        cell.record = _recordArray[indexPath.section-1];
+        if(keyWord!= nil && ![keyWord isEqualToString:@""])
+        {
+            cell.record = _searchResult[indexPath.section-1];
+        }
+        else
+        {
+            cell.record = _recordArray[indexPath.section-1];
+        }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -240,4 +259,93 @@ extern NSString *const reuseIdentifier;
         
     }];
 }
+
+#pragma mark - Add Search controller
+-(void)addSearchController
+{
+    UIButton*rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0,0,25,25)];
+    [rightButton setImage:[UIImage imageNamed:@"search"]forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(searchBarAnimate:)forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem*rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem= rightItem;
+    UISearchBar* searchBar = [[UISearchBar alloc] init];
+    self.tableView.tableHeaderView = searchBar;
+    searchBar.delegate = self;
+}
+
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSLog(@"%@",searchText);
+    keyWord = searchText;
+    if (keyWord && ![keyWord isEqualToString:@""]) {
+        [self search];
+    }
+}
+
+-(void)search
+{
+    _searchResult = [[NSMutableArray alloc] init];
+    for (workRecord* record in _recordArray) {
+        if ([record matchAccordingToKey:keyWord]) {
+            [_searchResult addObject:record];
+        }
+    }
+    [self.tableView reloadData];
+}
+
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(tap)];
+    UIView* mask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height)];
+    mask.tag = 88;
+    [mask addGestureRecognizer:tap];
+    [[UIApplication sharedApplication].keyWindow addSubview:mask];
+}
+
+-(void)tap
+{
+    for (UIView* view in [[UIApplication sharedApplication].keyWindow subviews]) {
+        if (view.tag == 88) {
+            [view removeFromSuperview];
+        }
+    }
+    [self.navigationController.view endEditing:YES];
+}
+
+
+-(void)searchBarAnimate:(id)sender
+{
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(5.0, 0.0, 300.0, 44.0)];
+    if ([self.navigationItem.titleView isKindOfClass:[UIView class]]) {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.navigationItem.titleView = NULL;
+        }];
+        keyWord = nil;
+        [self.tableView reloadData];
+    }
+    else
+    {
+        searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        UIView *searchBarView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 310.0, 44.0)];
+        searchBarView.autoresizingMask = 0;
+        [searchBar setTranslucent:YES];
+        [searchBar setTintColor:[UIColor clearColor]];
+        searchBar.backgroundImage = [UIImage new];
+        [searchBar setBackgroundColor:[UIColor clearColor]];
+        searchBar.delegate = self;
+        [searchBarView addSubview:searchBar];
+        [searchBar setFrame:CGRectMake(250.0, 0.0, 50.0, 44.0)];
+        [UIView animateWithDuration:0.5 animations:^{
+            [searchBar setFrame:CGRectMake(5.0, 0.0, 300.0, 44.0)];
+        }];
+        if(keyWord!= nil && ![keyWord isEqualToString:@""] )
+        {
+            searchBar.text = keyWord;
+        }
+        self.navigationItem.titleView = searchBarView;
+    }
+}
+
 @end

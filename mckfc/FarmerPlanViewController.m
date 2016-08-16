@@ -25,7 +25,7 @@
 #define buttonHeight 40
 #define itemHeight 44
 
-@interface FarmerPlanViewController ()<FarmerPlanViewDelegate, MCPickerViewDelegate,HUDViewDelegate,DatePickerDelegate, AddRecordTableDelegate>
+@interface FarmerPlanViewController ()<FarmerPlanViewDelegate, MCPickerViewDelegate,HUDViewDelegate,DatePickerDelegate, AddRecordTableDelegate, FarmerQRCodeVCDelegate>
 {
     NSArray* vendorList;
     NSArray* cityList;
@@ -156,6 +156,7 @@
         
         _farmerPlanview.type = FarmerPlanViewTypeQRCode;
         _QRVC = [[FarmerQRCodeVC alloc] init];
+        _QRVC.delegate = self;
         [self addChildViewController:_QRVC];
         [_QRVC setQRData:@""];
         _farmerPlanview.qrCodeView = (FarmerQRCodeView*)_QRVC.view;
@@ -167,10 +168,10 @@
         
         if (!_addRecordVC) {
             _addRecordVC = [[AddRecordViewController alloc] init];
+            [self addChildViewController:_addRecordVC];
+            _addRecordVC.delegate = self;
         }
         _farmerPlanview.type = FarmerPlanViewTypeRecordList;
-        [self addChildViewController:_addRecordVC];
-        _addRecordVC.delegate = self;
         _farmerPlanview.datasource = self.transportationList;
         _farmerPlanview.addRecordView = _addRecordVC.tableView;
         [self reload];
@@ -305,6 +306,7 @@
         NSDictionary* data = _historyList[i];
         self.addRecordVC.user = data[@"user"];
         self.addRecordVC.stats = data[@"stat"];
+        [self.addRecordVC.tableView reloadData];
         self.farmerPlanview.type = FarmerPlanViewTypeDetail;
         [[UIApplication sharedApplication].keyWindow addSubview:self.backToHistoryButton];
         [self reload];
@@ -521,6 +523,14 @@
     {
         [self generateQRCode];
     }
+    else if(self.farmerPlanview.type == FarmerPlanViewTypeHistory)
+    {
+        [self requestUploadListsuccess:^(NSMutableArray *result) {
+            self.historyList = result;
+             _farmerPlanview.datasource = result;
+            [_farmerPlanview.mainTableView reloadData];
+        }];
+    }
     [_farmerPlanview.mainTableView reloadData];
 }
 
@@ -603,6 +613,21 @@
     [self endEditing:self.addRecordVC.tableView];
 }
 
+#pragma mark- qrcodeView delegate
+-(void)QRCodeViewDidSelectRecord:(FarmerQRCodeVC *)vc
+{
+    self.farmerPlanview.type = FarmerPlanViewTypeOrder;
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:self.botButton];
+    
+    _addRecordVC = [[AddRecordViewController alloc] init];
+    [self addChildViewController:_addRecordVC];
+    _addRecordVC.delegate = self;
+    _farmerPlanview.addRecordView = _addRecordVC.tableView;
+    
+    [self reload];
+}
+
 #pragma mark- validation
 - (BOOL)validation
 {
@@ -642,5 +667,11 @@
     [self.backToHistoryButton removeFromSuperview];
     _farmerPlanview.type = FarmerPlanViewTypeHistory;
     [self reload];
+}
+
+-(void)list:(UITableView *)table DidDeleteRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    [self.transportationList removeObjectAtIndex:indexPath.row];
+    [table deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 @end

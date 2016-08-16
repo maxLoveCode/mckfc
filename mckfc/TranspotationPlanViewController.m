@@ -48,11 +48,11 @@
     titleText = @[@"发运时间",@"运输目的地",@"计划到达时间",@"计划入场时间"];
     _server = [ServerManager sharedInstance];
     [self requestDetails];
-    BOOL prompt = [[NSUserDefaults standardUserDefaults] objectForKey:@"locationPrompt"];
-    if(!prompt)
-    {
-        [self locationServicePrompt];
-    }
+//    BOOL prompt = [[NSUserDefaults standardUserDefaults] objectForKey:@"locationPrompt"];
+//    if(!prompt)
+//    {
+//        [self locationServicePrompt];
+//    }
 }
 
 #pragma mark - setter properties

@@ -313,7 +313,6 @@
     }
     else if(self.type == FarmerPlanViewTypeHistory && indexPath.section == 1)
     {
-        NSLog(@"select %ld", (long)indexPath.row);
         [self.planViewDelegate tableStats:tableView DidSelectIndex:3001+indexPath.row];
     }
 }
@@ -321,6 +320,22 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.planViewDelegate menu:self DidSelectIndex:indexPath.item];
+}
+
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.type == FarmerPlanViewTypeRecordList && indexPath.section == 2) {
+        return YES;
+    }
+    else
+        return NO;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //add code here for when you hit delete
+        [self.planViewDelegate list:tableView DidDeleteRowAtIndexPath:indexPath];
+    }
 }
 
 @end

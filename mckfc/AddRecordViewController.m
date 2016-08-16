@@ -53,7 +53,6 @@
     if (!_datePicker) {
         _datePicker = [[MCDatePickerView alloc] init];
         _datePicker.delegate = self;
-        NSLog(@"init");
     }
     return _datePicker;
 }
@@ -229,7 +228,6 @@
 
 -(void)setDate:(NSDate*)date
 {
-    NSLog(@"set");
     [self.datePicker.picker setDate:date];
     [self.datePicker.picker setMinimumDate:date];
     [self.datePicker.picker setMaximumDate:[NSDate dateWithTimeInterval:24*60*60 sinceDate:date]];

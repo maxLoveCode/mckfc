@@ -133,8 +133,17 @@
 
 -(void)didSelectSignUp
 {
+    
+    UIApplication* app = [UIApplication sharedApplication];
+    UIViewController*root =  app.keyWindow.rootViewController;
+    if(![root isKindOfClass:[LoadingNav class]]){
+        LoadingNav* loadingNav = [[LoadingNav alloc] init];
+        app.keyWindow.rootViewController = loadingNav;
+    }
+    
     SignUpViewController* SignUpVC = [[SignUpViewController alloc] init];
     [self.navigationController pushViewController:SignUpVC animated:YES];
+    
 }
 
 -(void)didSelectReclaimPassword

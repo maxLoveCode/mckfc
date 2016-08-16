@@ -56,6 +56,20 @@
     return _mainTableView;
 }
 
+-(UIButton *)botBtn
+{
+    if (!_botBtn) {
+        _botBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        [_botBtn setTitle:@"《入厂须知》" forState: UIControlStateNormal];
+        [_botBtn setTitleColor:COLOR_WithHex(0x565656) forState:UIControlStateNormal];
+        [_botBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [_botBtn setBackgroundColor:[UIColor clearColor]];
+        
+    }
+    return _botBtn;
+}
+
 #pragma mark UITableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -117,6 +131,14 @@
         [confirm setFrame:CGRectMake(2*k_Margin, topMargin,buttonWidth , buttonHeight)];
         [confirm addTarget:self action:@selector(confirmBtn) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:confirm];
+        
+        
+        [cell.contentView addSubview:self.botBtn];
+        [self.botBtn sizeToFit];
+        [self.botBtn makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(confirm.bottom).with.offset(10);
+            make.centerX.equalTo(confirm);
+        }];
     }
     return cell;
 }

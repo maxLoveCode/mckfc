@@ -7,9 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+@class FarmerQRCodeVC;
+
+@protocol FarmerQRCodeVCDelegate <NSObject>
+
+-(void)QRCodeViewDidSelectRecord:(FarmerQRCodeVC*)vc;
+
+@end
 
 @interface FarmerQRCodeVC : UIViewController
 
+@property (nonatomic, weak) id<FarmerQRCodeVCDelegate> delegate;
 -(void)setQRData:(NSString*)data;
 
 @end
