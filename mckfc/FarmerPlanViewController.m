@@ -620,9 +620,11 @@
     
     [[UIApplication sharedApplication].keyWindow addSubview:self.botButton];
     
-    _addRecordVC = [[AddRecordViewController alloc] init];
-    [self addChildViewController:_addRecordVC];
-    _addRecordVC.delegate = self;
+    if (_addRecordVC) {
+        _addRecordVC = [[AddRecordViewController alloc] init];
+        [self addChildViewController:_addRecordVC];
+        _addRecordVC.delegate = self;
+    }
     _farmerPlanview.addRecordView = _addRecordVC.tableView;
     
     [self reload];

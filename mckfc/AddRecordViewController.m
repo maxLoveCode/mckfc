@@ -232,4 +232,16 @@
     [self.datePicker.picker setMinimumDate:date];
     [self.datePicker.picker setMaximumDate:[NSDate dateWithTimeInterval:24*60*60 sinceDate:date]];
 }
+
+-(void)setUser:(User *)user
+{
+    self->_user = user;
+    [self.tableView reloadData];
+}
+
+-(void)setStats:(LoadingStats *)stats
+{
+    self->_stats = stats;
+    [self.tableView reloadData];
+}
 @end
