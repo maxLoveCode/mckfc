@@ -149,7 +149,15 @@ extern NSString *const reuseIdentifier;
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell isKindOfClass:[WorkRecordCell class]]) {
         WorkDetailViewController* detail = [[WorkDetailViewController alloc] init];
-        workRecord* record = _recordArray[indexPath.section-1];
+        workRecord* record;
+        if(keyWord!= nil && ![keyWord isEqualToString:@""])
+        {
+            record = _searchResult[indexPath.section-1];
+        }
+        else
+        {
+            record = _recordArray[indexPath.section-1];
+        }
         [detail setTransportid: [NSString stringWithFormat:@"%@",record.recordid]];
         [self.navigationController pushViewController:detail animated:YES];
     }
@@ -275,12 +283,22 @@ extern NSString *const reuseIdentifier;
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    NSLog(@"%@",searchText);
     keyWord = searchText;
     if (keyWord && ![keyWord isEqualToString:@""]) {
         [self search];
     }
+    else
+    {
+        [self.tableView reloadData];
+    }
 }
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    keyWord = nil;
+    [self.tableView reloadData];
+}
+
 
 -(void)search
 {
