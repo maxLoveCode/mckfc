@@ -116,7 +116,7 @@
 #pragma mark titles and images
 -(void)initTitlesAndImages
 {
-    titleText = @[@"供应商名称",@"地块编号",@"土豆重量", @"发车时间", @"运单号", @"装载类型"];
+    titleText = @[@"供应商名称",@"地块编号",@"土豆重量", @"发车时间", @"运单号", @"包装类型"];
 }
 
 #pragma mark tableViewDelegate
@@ -449,7 +449,7 @@
         [params addEntriesFromDictionary:@{@"serialno":_stats.serialno}];
     }
     if (_stats.package) {
-        [params addEntriesFromDictionary:@{@"packageid":_stats.package}];
+        [params addEntriesFromDictionary:@{@"packageid":_stats.package.packageid}];
     }
     NSLog(@"%@", params);
     [_server POST:@"transport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {

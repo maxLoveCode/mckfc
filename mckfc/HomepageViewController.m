@@ -266,20 +266,20 @@
             NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[resultAsString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
             _stats = [[LoadingStats alloc] init];
             
-            if([json objectForKey:@"mobile"])
-            {
-                if(![[json objectForKey:@"mobile"] isEqualToString:_user.mobile])
-                {
-                    return;
-                }
-            }
-            if([json objectForKey:@"truckno"])
-            {
-                if(![[json objectForKey:@"truckno"] isEqualToString:_user.truckno])
-                {
-                    return;
-                }
-            }
+//            if([json objectForKey:@"mobile"])
+//            {
+//                if(![[json objectForKey:@"mobile"] isEqualToString:_user.mobile])
+//                {
+//                    return;
+//                }
+//            }
+//            if([json objectForKey:@"truckno"])
+//            {
+//                if(![[json objectForKey:@"truckno"] isEqualToString:_user.truckno])
+//                {
+//                    return;
+//                }
+//            }
             //如果有城市
             if ([json objectForKey:@"city"]) {
                 _stats.city = [[City alloc] init];
@@ -312,10 +312,10 @@
                 [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
                 _stats.departuretime = [dateFormatter dateFromString:[json objectForKey:@"departuretime"]];
             }
-            if ([json objectForKey:@"packageTypeId"] && [json objectForKey:@"packageTypeName"] )
+            if ([json objectForKey:@"packageTypeId"] && [json objectForKey:@"packageType"] )
             {
                 _stats.package = [[Package alloc] init];
-                _stats.package.name = [json objectForKey:@"packageTypeName"];
+                _stats.package.name = [json objectForKey:@"packageType"];
                 _stats.package.packageid = [json objectForKey:@"packageTypeId"];
             }
             
