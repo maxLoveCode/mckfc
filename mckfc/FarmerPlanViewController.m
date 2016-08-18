@@ -475,7 +475,7 @@
                                    @"serialno":stat.serialno,
                                    @"departuretime":dateString,
                                    @"weight":stat.weight,
-                                   @"packageid":stat.package.packageid};
+                                   @"packageid": [NSNumber numberWithInteger: [stat.package.packageid integerValue]]};
         [unions addObject:unionDic];
     }
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:unions options:NSJSONWritingPrettyPrinted error:nil];
@@ -490,7 +490,7 @@
                              @"trucks":data,
                              @"departureday":dateString
                              };
-    
+    NSLog(@"%@",params);
     [_server POST:@"uploadTransport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject);
         self.alert.title.text = @"成功";

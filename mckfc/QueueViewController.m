@@ -110,7 +110,7 @@
 #pragma mark tableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -126,9 +126,6 @@
 {
     if (indexPath.section == 0) {
         return itemHeight;
-    }
-    else if(indexPath.section == 1){
-        return itemHeight*3;
     }
     else
     {
@@ -151,53 +148,53 @@
         [self.statusView setData:_viewModel.reportArray];
         return cell;
     }
-    else if(indexPath.section == 1)
-    {
-        UILabel* queueNo = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, itemHeight)];
-        UILabel* timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, itemHeight, kScreen_Width, itemHeight)];
-        UILabel* location = [[UILabel alloc] initWithFrame:CGRectMake(0, itemHeight*2, kScreen_Width, itemHeight)];
-        queueNo.textAlignment = NSTextAlignmentCenter;
-        timeLabel.textAlignment = NSTextAlignmentCenter;
-        location.textAlignment = NSTextAlignmentCenter;
-        
-        queueNo.text = [NSString stringWithFormat:@"序号: %@", _viewModel.queueno];
-        queueNo.font = [UIFont systemFontOfSize:18];
-        queueNo.textColor = COLOR_WithHex(0x565656);
-        if([_viewModel.queueno isEqualToString:@""]|| !_viewModel.queueno)
-        {
-            queueNo.hidden = YES;
-        }
-        else
-        {
-            queueNo.hidden = NO;
-        }
-        
-        if ( !([_viewModel.storename isEqualToString:@""] || !_viewModel.storename)) {
-            NSString* locationString = [NSString stringWithFormat: @"%@: %@", _viewModel.store , _viewModel.storename];
-            NSMutableAttributedString* atrLocationStr = [[NSMutableAttributedString alloc] initWithString:locationString];
-            [atrLocationStr addAttribute:NSForegroundColorAttributeName value:COLOR_TEXT_GRAY range:NSMakeRange(0, [_viewModel.store length]+1)];
-            [atrLocationStr addAttribute:NSForegroundColorAttributeName value:COLOR_WithHex(0x565656) range:NSMakeRange([_viewModel.store length]+1, [atrLocationStr.string length]-[_viewModel.store length]-1)];
-            [atrLocationStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, [atrLocationStr.string length])];
-            
-            [location setAttributedText:atrLocationStr];
-            
-            [cell.contentView addSubview:location];
-        }
-        
-        if ( !([_viewModel.expecttime isEqualToString:@""] || !_viewModel.expecttime)) {
-            NSString* timeString = [NSString stringWithFormat:@"%@: %@", _viewModel.time, _viewModel.expecttime];
-            NSMutableAttributedString* atrTimeStr = [[NSMutableAttributedString alloc] initWithString:timeString];
-            [atrTimeStr addAttribute:NSForegroundColorAttributeName value:COLOR_TEXT_GRAY range:NSMakeRange(0, [_viewModel.time length]+1)];
-            [atrTimeStr addAttribute:NSForegroundColorAttributeName value:COLOR_WithHex(0x565656) range:NSMakeRange([_viewModel.time length]+1, [atrTimeStr.string length]-[_viewModel.time length]-1)];
-            [atrTimeStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, [atrTimeStr.string length])];
-            [timeLabel setAttributedText:atrTimeStr];
-            [cell.contentView addSubview:timeLabel];
-        }
-        
-        [cell.contentView addSubview:queueNo];
-        
-        return cell;
-    }
+//    else if(indexPath.section == 1)
+//    {
+//        UILabel* queueNo = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, itemHeight)];
+//        UILabel* timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, itemHeight, kScreen_Width, itemHeight)];
+//        UILabel* location = [[UILabel alloc] initWithFrame:CGRectMake(0, itemHeight*2, kScreen_Width, itemHeight)];
+//        queueNo.textAlignment = NSTextAlignmentCenter;
+//        timeLabel.textAlignment = NSTextAlignmentCenter;
+//        location.textAlignment = NSTextAlignmentCenter;
+//        
+//        queueNo.text = [NSString stringWithFormat:@"序号: %@", _viewModel.queueno];
+//        queueNo.font = [UIFont systemFontOfSize:18];
+//        queueNo.textColor = COLOR_WithHex(0x565656);
+//        if([_viewModel.queueno isEqualToString:@""]|| !_viewModel.queueno)
+//        {
+//            queueNo.hidden = YES;
+//        }
+//        else
+//        {
+//            queueNo.hidden = NO;
+//        }
+//        
+//        if ( !([_viewModel.storename isEqualToString:@""] || !_viewModel.storename)) {
+//            NSString* locationString = [NSString stringWithFormat: @"%@: %@", _viewModel.store , _viewModel.storename];
+//            NSMutableAttributedString* atrLocationStr = [[NSMutableAttributedString alloc] initWithString:locationString];
+//            [atrLocationStr addAttribute:NSForegroundColorAttributeName value:COLOR_TEXT_GRAY range:NSMakeRange(0, [_viewModel.store length]+1)];
+//            [atrLocationStr addAttribute:NSForegroundColorAttributeName value:COLOR_WithHex(0x565656) range:NSMakeRange([_viewModel.store length]+1, [atrLocationStr.string length]-[_viewModel.store length]-1)];
+//            [atrLocationStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, [atrLocationStr.string length])];
+//            
+//            [location setAttributedText:atrLocationStr];
+//            
+//            [cell.contentView addSubview:location];
+//        }
+//        
+//        if ( !([_viewModel.expecttime isEqualToString:@""] || !_viewModel.expecttime)) {
+//            NSString* timeString = [NSString stringWithFormat:@"%@: %@", _viewModel.time, _viewModel.expecttime];
+//            NSMutableAttributedString* atrTimeStr = [[NSMutableAttributedString alloc] initWithString:timeString];
+//            [atrTimeStr addAttribute:NSForegroundColorAttributeName value:COLOR_TEXT_GRAY range:NSMakeRange(0, [_viewModel.time length]+1)];
+//            [atrTimeStr addAttribute:NSForegroundColorAttributeName value:COLOR_WithHex(0x565656) range:NSMakeRange([_viewModel.time length]+1, [atrTimeStr.string length]-[_viewModel.time length]-1)];
+//            [atrTimeStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, [atrTimeStr.string length])];
+//            [timeLabel setAttributedText:atrTimeStr];
+//            [cell.contentView addSubview:timeLabel];
+//        }
+//        
+//        [cell.contentView addSubview:queueNo];
+//        
+//        return cell;
+//    }
     else
     {
         UILabel* label =[[UILabel alloc] initWithFrame:CGRectMake(k_Margin, 0, kScreen_Width-k_Margin*2, itemHeight*2)];
@@ -240,11 +237,11 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if (section == 0) {
-        UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, itemHeight)];
-        [view setBackgroundColor:[UIColor whiteColor]];
-        return view;
-    }
+//    if (section == 0) {
+//        UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, itemHeight)];
+//        [view setBackgroundColor:[UIColor whiteColor]];
+//        return view;
+//    }
     return nil;
 }
 

@@ -314,11 +314,11 @@
                 [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
                 _stats.departuretime = [dateFormatter dateFromString:[json objectForKey:@"departuretime"]];
             }
-            if ([json objectForKey:@"packageTypeId"] && [json objectForKey:@"packageType"] )
+            if ([json objectForKey:@"packageid"] && [json objectForKey:@"packageType"] )
             {
                 _stats.package = [[Package alloc] init];
                 _stats.package.name = [json objectForKey:@"packageType"];
-                _stats.package.packageid = [json objectForKey:@"packageTypeId"];
+                _stats.package.packageid = [json objectForKey:@"packageid"];
             }
             
             LoadingStatsViewController *loadingStats = [[LoadingStatsViewController alloc] initWithStyle:UITableViewStyleGrouped];
