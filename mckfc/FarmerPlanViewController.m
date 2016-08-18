@@ -262,7 +262,9 @@
         }
         else
         {
-            [self requestFields:[NSString stringWithFormat:@"%lu", (long)vendor.vendorID] success:^{
+            [self requestFields:[NSString stringWithFormat:@"%lu", (long)vendor.vendorID]
+             City:_farmerPlanview.stats.city.cityid
+                success:^{
                 [self.pickerView setData:fieldList];
                 [self.pickerView show];
                 
@@ -368,7 +370,7 @@
         NSArray* jsonArray = responseObject[@"data"];
         NSError* error;
         cityList = [MTLJSONAdapter modelsOfClass:[City class] fromJSONArray:jsonArray error:&error];
-        if (cityList) {
+        if (cityList && [cityList count] != 0) {
             success();
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -391,10 +393,11 @@
     }];
 }
 
--(void)requestFields:(NSString*)vendor success:(void (^)(void))success
+-(void)requestFields:(NSString*)vendor City:(NSString*)cityid success:(void (^)(void))success
 {
     NSDictionary* params = @{@"token":_server.accessToken,
-                             @"vendorid":vendor};
+                             @"vendorid":vendor,
+                             @"city":cityid};
     [_server GET:@"getFieldList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* data = responseObject[@"data"];
         fieldList = [MTLJSONAdapter modelsOfClass:[Field class] fromJSONArray:data error:nil];
@@ -471,7 +474,8 @@
                                    @"truckno":user.truckno,
                                    @"serialno":stat.serialno,
                                    @"departuretime":dateString,
-                                   @"weight":stat.weight};
+                                   @"weight":stat.weight,
+                                   @"packageid":stat.package.packageid};
         [unions addObject:unionDic];
     }
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:unions options:NSJSONWritingPrettyPrinted error:nil];
@@ -519,7 +523,7 @@
         
         NSDate* date = [dateFormatter dateFromString:DateList[row]];
         _farmerPlanview.stats.departuretime =date;
-        
+        NSLog(@"selection %@", _farmerPlanview.stats.departuretime);
         [self.addRecordVC setDate:date];
     }
     [self reload];
@@ -545,18 +549,21 @@
         self.addRecordVC.stats.supplier = self.farmerPlanview.stats.supplier;
         self.addRecordVC.stats.field = self.farmerPlanview.stats.field;
         //self.addRecordVC.stats.de
-        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd"];
-        NSDateFormatter* formatter2 = [[NSDateFormatter alloc] init];
-        [formatter2 setDateFormat:@"HH:mm"];
-        NSDateFormatter* formatter3 = [[NSDateFormatter alloc] init];
-        [formatter3 setDateFormat:@"yyyy-MM-dd HH:mm"];
-        NSString* substring1 = [formatter stringFromDate:self.farmerPlanview.stats.departuretime];
-        NSString* substring2 = [formatter2 stringFromDate:self.addRecordVC.stats.departuretime];
-        NSString* compond = [NSString stringWithFormat:@"%@ %@", substring1, substring2 ];
-        NSDate* comDate = [formatter3 dateFromString:compond];
-        self.addRecordVC.stats.departuretime = comDate;
-        self.farmerPlanview.stats.departuretime = comDate;
+        if (self.addRecordVC.stats.departuretime != nil
+            && self.farmerPlanview.stats.departuretime != nil) {
+            NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy-MM-dd"];
+            NSDateFormatter* formatter2 = [[NSDateFormatter alloc] init];
+            [formatter2 setDateFormat:@"HH:mm"];
+            NSDateFormatter* formatter3 = [[NSDateFormatter alloc] init];
+            [formatter3 setDateFormat:@"yyyy-MM-dd HH:mm"];
+            NSString* substring1 = [formatter stringFromDate:self.farmerPlanview.stats.departuretime];
+            NSString* substring2 = [formatter2 stringFromDate:self.addRecordVC.stats.departuretime];
+            NSString* compond = [NSString stringWithFormat:@"%@ %@", substring1, substring2 ];
+            NSDate* comDate = [formatter3 dateFromString:compond];
+            self.addRecordVC.stats.departuretime = comDate;
+            self.farmerPlanview.stats.departuretime = comDate;
+        }
     }
     [_farmerPlanview.mainTableView reloadData];
 }
@@ -627,7 +634,14 @@
 
 -(void)requestDate:(AddRecordViewController *)vc
 {
-    [vc setDate:_farmerPlanview.stats.departuretime];
+    if (_farmerPlanview.stats.departuretime) {
+        [vc setDate:_farmerPlanview.stats.departuretime];
+        [vc showDatePicker];
+    }
+    else
+    {
+        
+    }
 }
 
 -(void)save

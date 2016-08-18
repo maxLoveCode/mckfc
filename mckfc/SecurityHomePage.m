@@ -122,7 +122,7 @@
             NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[resultAsString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
             if (item == 0) {
                 [self scanDataToServer:json request:@"scanArrive" success:^{
-                    
+                     
                 }];
             }
             else{

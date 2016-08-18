@@ -26,16 +26,37 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.view addSubview:self.tableView];
+    [self.view addSubview:self.confirm];
+    [self.confirm makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.tableView.bottom).with.offset(20);
+        make.size.equalTo(CGSizeMake(buttonWidth, buttonHeight));
+        make.centerX.equalTo(self.view);
+    }];
     if ([self.workFlow.type isEqualToString:@"enter"]) {
         self.title = @"进厂称重";
     }
     else
+    {
         self.title = @"出厂称重";
-    [self.view addSubview:self.tableView];
-    [self.view addSubview:self.confirm];
+        self.netWeight = [NSNumber numberWithFloat:0];
+        self.finalWeight = [NSNumber numberWithFloat:0];
+        [self.tableView setFrame:CGRectMake(0, 0, kScreen_Width, itemHeight*3+40)];
+    }
     self.weight = [NSNumber numberWithFloat:0];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     _server = [ServerManager sharedInstance];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if ([self.workFlow.type isEqualToString:@"leave"]) {
+        [self requestEnterWeightSuccess:^{
+            [self.tableView reloadData];
+        }];
+    }
 }
 
 -(UITableView *)tableView
@@ -59,7 +80,7 @@
         [_confirm setTitleColor:COLOR_THEME_CONTRAST forState:UIControlStateNormal];
         _confirm.layer.cornerRadius = 3;
         _confirm.layer.masksToBounds = YES;
-        [_confirm setFrame:CGRectMake(2*k_Margin,topMargin+CGRectGetMaxY(self.tableView.frame),buttonWidth , buttonHeight)];
+        //[_confirm setFrame:CGRectMake(2*k_Margin,topMargin+CGRectGetMaxY(self.tableView.frame),buttonWidth , buttonHeight)];
         [_confirm addTarget:self action:@selector(didConfirm:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _confirm;
@@ -68,24 +89,68 @@
 #pragma mark tableview delegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    if ([self.workFlow.type isEqualToString:@"enter"]) {
+        return 1;
+    }
+    else
+    {
+        return 2;
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    if ([self.workFlow.type isEqualToString:@"enter"]) {
+        return 1;
+    }
+    else
+    {
+        if (section ==0) {
+            return 1;
+        }
+        else
+        {
+            return 2;
+        }
+    }
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LoadingCell* cell = [[LoadingCell alloc] init];
-    
-        cell.style = LoadingCellStyleDigitInput;
+    cell.style = LoadingCellStyleDigitInput;
+    if ([self.workFlow.type isEqualToString:@"enter"]) {
         cell.titleLabel.text = @"土豆重量";
-        cell.leftImageView.image = [UIImage imageNamed:@"土豆重量"];
+        cell.digitInput.tag = 1;
         cell.digitInput.text = [NSString stringWithFormat:@"%@",_weight];
-        cell.digitInput.delegate = self;
-        [cell.digitInput addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    }
+    else
+    {
+        if(indexPath.section == 0)
+        {
+            cell.titleLabel.text = @"进厂重量";
+            cell.digitInput.tag = 1;
+            cell.digitInput.text = [NSString stringWithFormat:@"%@",_weight];
+        }
+        else
+        {
+            if (indexPath.row == 0) {
+                cell.titleLabel.text = @"出厂重量";
+                cell.digitInput.tag = 2;
+                
+                cell.digitInput.text = [NSString stringWithFormat:@"%@",_finalWeight];
+            }
+            else
+            {
+                cell.titleLabel.text = @"净重";
+                cell.digitInput.tag = 3;
+                cell.digitInput.text = [NSString stringWithFormat:@"%@",_netWeight];
+            }
+        }
+    }
+    cell.leftImageView.image = [UIImage imageNamed:@"土豆重量"];
+    cell.digitInput.delegate = self;
+    [cell.digitInput addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     return cell;
 }
 
@@ -105,14 +170,22 @@
 {
     [self.tableView resignFirstResponder];
     NSString* type;
+    NSDictionary* params;
     if ([self.workFlow.type isEqualToString:@"enter"]) {
         type = @"truckEnter";
+        params = @{@"token":_server.accessToken,
+                   @"enterweight":_weight,
+                   @"transportid":self.transportid};
     }
     else
+    {
         type = @"truckLeave";
-    NSDictionary* params = @{@"token":_server.accessToken,
-                             @"enterweight":_weight,
-                             @"transportid":self.transportid};
+        params = @{@"token":_server.accessToken,
+                   @"enterweight":_weight,
+                   @"leaveweight":_finalWeight,
+                   @"netweight":_netWeight,
+                   @"transportid":self.transportid};
+    }
     NSLog(@"params%@", params);
     [_server POST:type parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         [self.navigationController popViewControllerAnimated:YES];
@@ -127,7 +200,20 @@
     if ([textField.text isEqualToString:@""]) {
         textField.text = @"0";
     }
-    self.weight = [NSNumber numberWithFloat: [textField.text floatValue]];
+    float weight = [textField.text floatValue];
+    switch (textField.tag) {
+        case 1:
+            self.weight = [NSNumber numberWithFloat:weight];
+            break;
+        case 3:
+            self.finalWeight = [NSNumber numberWithFloat:weight];
+            break;
+        case 2:
+            self.netWeight = [NSNumber numberWithFloat:weight];
+            break;
+        default:
+            break;
+    }
 }
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
@@ -139,7 +225,31 @@
 
 -(void)textFieldDidChange :(UITextField *) textField{
     //your code
-    self.weight = [NSNumber numberWithFloat: [textField.text floatValue]];
+    float weight = [textField.text floatValue];
+    switch (textField.tag) {
+        case 1:
+            self.weight = [NSNumber numberWithFloat:weight];
+            break;
+        case 3:
+            self.finalWeight = [NSNumber numberWithFloat:weight];
+            break;
+        case 2:
+            self.netWeight = [NSNumber numberWithFloat:weight];
+            break;
+        default:
+            break;
+    }
+}
+
+-(void)requestEnterWeightSuccess:(void(^)(void))success
+{
+    [_server GET:@"getEnterWeight" parameters:@{@"transportid":self.transportid,
+                                               @"token":_server.accessToken} animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+                                                   if ((self.weight = [responseObject[@"data"] objectForKey:@"enterweight"])) {
+                                                       success();
+                                                   }
+                                               } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                                   }];
 }
 
 @end

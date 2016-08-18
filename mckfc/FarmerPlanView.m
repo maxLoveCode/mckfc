@@ -32,6 +32,7 @@
     self = [super init];
     self.type = FarmerPlanViewTypeMenu;
     self.stats = [[LoadingStats alloc] init];
+    self.stats.departuretime = nil;
     [self addSubview:self.mainTableView];
     
     return self;
@@ -263,7 +264,7 @@
         {
             return 350;
         }
-        else if(self.type == FarmerPlanViewTypeOrder)
+        else if(self.type == FarmerPlanViewTypeOrder || self.type == FarmerPlanViewTypeDetail)
         {
             return itemHeight*7;
         }
@@ -283,6 +284,11 @@
 {
     if (self.type == FarmerPlanViewTypeDetail || self.type == FarmerPlanViewTypeOrder) {
         if (section == 1) {
+            return 60;
+        }
+    }
+    if (self.type == FarmerPlanViewTypeRecordList ) {
+        if (section == 2) {
             return 60;
         }
     }

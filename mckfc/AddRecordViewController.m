@@ -170,7 +170,6 @@
 {
     if (indexPath.row == 5) {
         [self.delegate requestDate:self];
-        [self.datePicker show];
     }
     else if(indexPath.row == 6)
     {
@@ -269,6 +268,7 @@
 
 -(void)setDate:(NSDate*)date
 {
+    NSLog(@"set date%@", date);
     [self.datePicker.picker setDate:date];
     [self.datePicker.picker setMinimumDate:date];
     [self.datePicker.picker setMaximumDate:[NSDate dateWithTimeInterval:24*60*60 sinceDate:date]];
@@ -315,5 +315,10 @@
         _stats.package = pkg;
         [self.tableView reloadData];
     }
+}
+
+-(void)showDatePicker
+{
+    [self.datePicker show];
 }
 @end

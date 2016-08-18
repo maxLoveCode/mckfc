@@ -266,20 +266,22 @@
             NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[resultAsString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
             _stats = [[LoadingStats alloc] init];
             
-//            if([json objectForKey:@"mobile"])
-//            {
-//                if(![[json objectForKey:@"mobile"] isEqualToString:_user.mobile])
-//                {
-//                    return;
-//                }
-//            }
-//            if([json objectForKey:@"truckno"])
-//            {
-//                if(![[json objectForKey:@"truckno"] isEqualToString:_user.truckno])
-//                {
-//                    return;
-//                }
-//            }
+            if([json objectForKey:@"mobile"])
+            {
+                if(![[json objectForKey:@"mobile"] isEqualToString:_user.mobile])
+                {
+                    NSLog(@"%@   %@",[json objectForKey:@"mobile"],_user.mobile);
+                    return;
+                }
+            }
+            if([json objectForKey:@"truckno"])
+            {
+                if(![[json objectForKey:@"truckno"] isEqualToString:_user.truckno])
+                {
+                    NSLog(@"%@   %@",[json objectForKey:@"truckno"],_user.truckno);
+                    return;
+                }
+            }
             //如果有城市
             if ([json objectForKey:@"city"]) {
                 _stats.city = [[City alloc] init];

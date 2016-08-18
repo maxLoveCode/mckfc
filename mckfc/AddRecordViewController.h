@@ -35,5 +35,6 @@
 @property (nonatomic, weak) id<AddRecordTableDelegate> delegate;
 
 -(void)setDate:(NSDate*)date;
+-(void)showDatePicker;
 
 @end

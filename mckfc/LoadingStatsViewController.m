@@ -182,7 +182,6 @@
                 else
                     cell.detailLabel.text = _stats.package.name;
             }
-
         }
         else if(indexPath.row == 2)
         {
@@ -195,7 +194,6 @@
             {
                 cell.digitInput.text = [NSString stringWithFormat:@"%@",_stats.weight];
             }
-            
         }
         else if(indexPath.row == 3)
         {
@@ -305,34 +303,25 @@
         }
         else if(indexPath.row == 1)
         {
-            if (!_stats.supplier) {
-                _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
-                _alert.delegate = self;
-                _alert.title.text = @"错误";
-                _alert.detail.text = @"请先选择供应商";
-                [_alert show:_alert];
+            Vendor* vendor = _stats.supplier;
+            if (!vendor) {
+                self.alert.title.text = @"错误";
+                self.alert.detail.text = @"请先选择供应商";
+                [self.alert show:self.alert];
             }
             else
             {
-                NSDictionary* params = @{@"token":_server.accessToken,
-                                         @"vendorid":[NSString stringWithFormat:@"%lu", (unsigned long)_stats.supplier.vendorID]};
-                [_server GET:@"getFieldList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-                    NSArray* data = responseObject[@"data"];
-                    fieldList = [MTLJSONAdapter modelsOfClass:[Field class] fromJSONArray:data error:nil];
-                    MCPickerView *pickerView = [[MCPickerView alloc] init];
-                    pickerView.delegate = self;
-                    [pickerView setData:fieldList];
-                    pickerView.index = indexPath;
-                    [pickerView show];
-                    
-                    Field* field = fieldList[0];
-                    _stats.field = field;
-                    [self.tableView reloadData];
-                    
-                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    
-                }];
+                [self requestFields:[NSString stringWithFormat:@"%lu", (long)vendor.vendorID]
+                               City:_stats.city.cityid
+                            success:^{
+                                [self.pickerView setData:fieldList];
+                                [self.pickerView show];
+                                
+                                _stats.field = fieldList[0];
+                                [self.tableView reloadData];
+                            }];
             }
+
         }
         else if(indexPath.row == 5)
         {
@@ -592,6 +581,22 @@
             NSLog(@"error %@", error);
         }
         if (vendorList && [vendorList count] >0) {
+            success();
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
+-(void)requestFields:(NSString*)vendor City:(NSString*)cityid success:(void (^)(void))success
+{
+    NSDictionary* params = @{@"token":_server.accessToken,
+                             @"vendorid":vendor,
+                             @"city":cityid};
+    [_server GET:@"getFieldList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSArray* data = responseObject[@"data"];
+        fieldList = [MTLJSONAdapter modelsOfClass:[Field class] fromJSONArray:data error:nil];
+        if (fieldList && [fieldList count] >0) {
             success();
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
