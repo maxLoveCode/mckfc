@@ -213,7 +213,7 @@
 {
     NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token": _server.accessToken}];
     [params addEntriesFromDictionary:data];
-    [_server POST:request parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+    [_server POST:@"scanCommon" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         _ScanedTransportID = [params objectForKey:@"transportid"];
         if([request isEqualToString:@"scanArrive"])
         {

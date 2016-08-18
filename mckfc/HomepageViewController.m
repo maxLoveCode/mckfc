@@ -314,10 +314,10 @@
                 [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
                 _stats.departuretime = [dateFormatter dateFromString:[json objectForKey:@"departuretime"]];
             }
-            if ([json objectForKey:@"packageid"] && [json objectForKey:@"packageType"] )
+            if ([json objectForKey:@"packageid"] && [json objectForKey:@"packagename"] )
             {
                 _stats.package = [[Package alloc] init];
-                _stats.package.name = [json objectForKey:@"packageType"];
+                _stats.package.name = [json objectForKey:@"packagename"];
                 _stats.package.packageid = [json objectForKey:@"packageid"];
             }
             

@@ -90,7 +90,7 @@
                    @"mobile":user.mobile,
                    @"truckno":user.truckno,
                    @"packageid":stats.package.packageid,
-                   @"packageType":stats.package.name
+                   @"packagename":stats.package.name
                    };
         NSLog(@"qrcode %@", qrcode);
         return qrcode;

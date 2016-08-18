@@ -51,6 +51,7 @@
 		253BF58E1D0D49F40006086D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 253BF58C1D0D49F40006086D /* LaunchScreen.storyboard */; };
 		253BF5991D0D49F40006086D /* mckfcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5981D0D49F40006086D /* mckfcTests.m */; };
 		253BF5A41D0D49F40006086D /* mckfcUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5A31D0D49F40006086D /* mckfcUITests.m */; };
+		256E873D1D65C9F800C82521 /* InspectDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256E873C1D65C9F800C82521 /* InspectDetailView.m */; };
 		256F397B1D123E3900175E5A /* LoginNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F397A1D123E3900175E5A /* LoginNav.m */; };
 		256F39811D12836900175E5A /* SignUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39801D12836900175E5A /* SignUpView.m */; };
 		256F39841D12847D00175E5A /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39831D12847D00175E5A /* SignUpViewController.m */; };
@@ -204,6 +205,8 @@
 		253BF5A31D0D49F40006086D /* mckfcUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mckfcUITests.m; sourceTree = "<group>"; };
 		253BF5A51D0D49F40006086D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25522BE71D376A450098E4B7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		256E873B1D65C9F800C82521 /* InspectDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectDetailView.h; sourceTree = "<group>"; };
+		256E873C1D65C9F800C82521 /* InspectDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectDetailView.m; sourceTree = "<group>"; };
 		256F39791D123E3900175E5A /* LoginNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginNav.h; sourceTree = "<group>"; };
 		256F397A1D123E3900175E5A /* LoginNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginNav.m; sourceTree = "<group>"; };
 		256F397F1D12836900175E5A /* SignUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpView.h; sourceTree = "<group>"; };
@@ -454,6 +457,8 @@
 				252EF9BF1D2E482400565D00 /* CommonUserView.m */,
 				252EF9C11D2E4F2300565D00 /* CommonMenuView.h */,
 				252EF9C21D2E4F2300565D00 /* CommonMenuView.m */,
+				256E873B1D65C9F800C82521 /* InspectDetailView.h */,
+				256E873C1D65C9F800C82521 /* InspectDetailView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1083,6 +1088,7 @@
 				25CECB061D17BFC600C9CCBE /* MapViewController.m in Sources */,
 				25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */,
 				25CECB091D18DE7C00C9CCBE /* TranspotationPlanViewController.m in Sources */,
+				256E873D1D65C9F800C82521 /* InspectDetailView.m in Sources */,
 				257DB7AF1D3C696F00C2227E /* InspectionViewController.m in Sources */,
 				25B004931D1920E00018EEB1 /* QueueViewController.m in Sources */,
 				257DB7B51D3C821E00C2227E /* DynamicHeightTextCell.m in Sources */,
