@@ -8,6 +8,26 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
+#import "UserView.h"
+#import "ServerManager.h"
+#import "LoginNav.h"
+#import "LoadingStatsViewController.h"
+#import "DriverDetailEditorController.h"
+
+#import "TranspotationPlanViewController.h"
+#import "QueueViewController.h"
+#import "MsgListViewController.h"
+
+#import "EditorNav.h"
+
+#import "JPushService.h"
+
+#import "rightNavigationItem.h"
+#import "QRCodeReaderViewController.h"
+
+#import "LoadingStats.h"
+#import "nofityViewController.h"
+#import "AlertHUDView.h"
 
 @interface HomepageViewController : UIViewController
 

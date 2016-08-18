@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FarmerQRCodeView.h"
-
+#import "FarmerRecordCell.h"
 #import "LoadingStats.h"
 
 @class FarmerPlanView;
@@ -29,6 +29,7 @@ typedef NS_ENUM(NSUInteger, PlanViewType) {
 -(void)menu:(FarmerPlanView*)Menu DidSelectIndex:(NSInteger)index;
 -(void)tableStats:(UITableView*)table DidSelectIndex:(NSInteger)index;
 -(void)list:(UITableView*)table DidDeleteRowAtIndexPath:(NSIndexPath*)indexPath;
+-(void)tableView:(UITableView*)tableview DidSelectFarmerCell:(FarmerRecordCell*)cell;
 
 @end
        

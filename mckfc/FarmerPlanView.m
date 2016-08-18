@@ -12,7 +12,6 @@
 
 #import "FarmerPlanView.h"
 #import "LoadingCell.h"
-#import "FarmerRecordCell.h"
 
 #import "Masonry.h"
 
@@ -198,6 +197,8 @@
          {
              FarmerRecordCell* cell = [[FarmerRecordCell alloc] init];
              cell.content = self.datasource[indexPath.row];
+             [cell.accessoryImage addTarget:self action:@selector(tapQrcode:) forControlEvents:UIControlEventTouchUpInside];
+             cell.accessoryImage.tag = indexPath.row;
              return cell;
          }
         return cell;
@@ -206,6 +207,8 @@
     {
         FarmerRecordCell* cell = [[FarmerRecordCell alloc] init];
         cell.content = self.datasource[indexPath.row];
+        [cell.accessoryImage addTarget:self action:@selector(tapQrcode:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryImage.tag = indexPath.row;
         return cell;
     }
     return nil;
@@ -262,7 +265,7 @@
         }
         else if(self.type == FarmerPlanViewTypeOrder)
         {
-            return itemHeight*6;
+            return itemHeight*7;
         }
         else if(self.type == FarmerPlanViewTypeRecordList)
         {
@@ -336,6 +339,24 @@
         //add code here for when you hit delete
         [self.planViewDelegate list:tableView DidDeleteRowAtIndexPath:indexPath];
     }
+}
+
+-(void)tapQrcode:(id)sender
+{
+    FarmerRecordCell* cell;
+    NSIndexPath* indexPath;
+    UIButton* btn = (UIButton*)sender;
+    if(self.type == FarmerPlanViewTypeHistory)
+    {
+        indexPath = [NSIndexPath indexPathForRow:btn.tag inSection:1];
+        cell = [self.mainTableView cellForRowAtIndexPath:indexPath];
+    }
+    else
+    {
+        indexPath = [NSIndexPath indexPathForRow:btn.tag inSection:2];
+        cell = [self.mainTableView cellForRowAtIndexPath:indexPath];
+    }
+    [self.planViewDelegate tableView:self.mainTableView DidSelectFarmerCell:cell];
 }
 
 @end

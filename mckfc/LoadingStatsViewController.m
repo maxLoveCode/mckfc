@@ -7,6 +7,8 @@
 //  这个页面可能需要缓存
 //  考虑到司机们开到荒山野外的沟沟里面
 
+//  装载页面
+
 #import "LoadingStatsViewController.h"
 #import "TranspotationPlanViewController.h"
 #import "LoadingCell.h"
@@ -35,6 +37,7 @@
     NSArray* vendorList;
     NSArray* cityList;
     NSArray* fieldList;
+    NSArray* packageList;
     NSString* citycode;
 }
 
@@ -60,6 +63,9 @@
     if (!_stats) {
         _stats = [[LoadingStats alloc] init];
     }
+    
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     _server = [ServerManager sharedInstance];
     
     [AMapServices sharedServices].apiKey = MapKey;
@@ -110,7 +116,7 @@
 #pragma mark titles and images
 -(void)initTitlesAndImages
 {
-    titleText = @[@"供应商名称",@"地块编号",@"土豆重量", @"发车时间", @"运单号"];
+    titleText = @[@"供应商名称",@"地块编号",@"土豆重量", @"发车时间", @"运单号", @"装载类型"];
 }
 
 #pragma mark tableViewDelegate
@@ -134,7 +140,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 5;
+        return [titleText count];
     }
     else if(section == 1)
     {
@@ -166,6 +172,17 @@
                 else
                     cell.detailLabel.text = _stats.field.name;
             }
+            else if(indexPath.row == 5)
+            {
+                [cell setStyle:LoadingCellStyleSelection];
+                
+                if (!_stats.package) {
+                    cell.detailLabel.text = @"请选择包装类型";
+                }
+                else
+                    cell.detailLabel.text = _stats.package.name;
+            }
+
         }
         else if(indexPath.row == 2)
         {
@@ -183,8 +200,6 @@
         else if(indexPath.row == 3)
         {
             [cell setStyle:LoadingCellStyleDatePicker];
-            dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
             if(!_stats.departuretime)
             {
                 cell.detailLabel.text = @"请选择时间";
@@ -209,7 +224,6 @@
             else
                 cell.textInput.text = _stats.serialno;
         }
-        
         cell.titleLabel.text = titleText[indexPath.row];
         cell.leftImageView.image = [UIImage imageNamed:titleText[indexPath.row]];
         return cell;
@@ -320,6 +334,32 @@
                 }];
             }
         }
+        else if(indexPath.row == 5)
+        {
+            if (!packageList || [packageList count] == 0) {
+                [self requestPackageListSuccess:^{
+                    MCPickerView *pickerView = [[MCPickerView alloc] init];
+                    pickerView.delegate = self;
+                    [pickerView setData:packageList];
+                    pickerView.index = indexPath;
+                    [pickerView show];
+                    
+                    _stats.package = packageList[0];
+                    [self.tableView reloadData];
+                }];
+            }
+            else
+            {
+                MCPickerView *pickerView = [[MCPickerView alloc] init];
+                pickerView.delegate = self;
+                [pickerView setData:packageList];
+                pickerView.index = indexPath;
+                [pickerView show];
+                
+                _stats.package = packageList[0];
+                [self.tableView reloadData];
+            }
+        }
     }
     else if(cell.style == LoadingCellStyleDatePicker)
     {
@@ -385,7 +425,7 @@
     return 0.01;
 }
 
-#pragma mark selectors
+#pragma mark - POST loading stats check correctness
 -(void)confirmBtn
 {
     [self dismiss];
@@ -408,6 +448,9 @@
     if (_stats.serialno) {
         [params addEntriesFromDictionary:@{@"serialno":_stats.serialno}];
     }
+    if (_stats.package) {
+        [params addEntriesFromDictionary:@{@"packageid":_stats.package}];
+    }
     NSLog(@"%@", params);
     [_server POST:@"transport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSDictionary* data = responseObject[@"data"];
@@ -421,7 +464,7 @@
     }];
 }
 
-#pragma mark MCPickerView delegate
+#pragma mark - MCPickerView delegate
 -(void)pickerView:(MCPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     NSIndexPath *indexPath = pickerView.index;
@@ -449,6 +492,11 @@
         else if (indexPath.row ==1){
             Field* field = fieldList[row];
             _stats.field = field;
+            [self.tableView reloadData];
+        }
+        else if (indexPath.row ==5){
+            Package* pkg = packageList[row];
+            _stats.package = pkg;
             [self.tableView reloadData];
         }
     }
@@ -511,7 +559,7 @@
     [self.tableView reloadData];
 }
 
-#pragma mark web data requests
+#pragma mark - web data requests
 -(void)requestCityListSuccess:(void (^)(void))success
 {
     NSDictionary* params = @{@"token": _server.accessToken};
@@ -519,6 +567,9 @@
         NSArray* jsonArray = responseObject[@"data"];
         NSError* error;
         cityList = [MTLJSONAdapter modelsOfClass:[City class] fromJSONArray:jsonArray error:&error];
+        if (error) {
+            
+        }
         _stats.city = cityList[0];
         if (cityList) {
             success();
@@ -534,8 +585,32 @@
                              @"city":city};
     [_server GET:@"getVendorList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* data = responseObject[@"data"];
-        vendorList = [MTLJSONAdapter modelsOfClass:[Vendor class] fromJSONArray:data error:nil];
+        NSLog(@"%@",data);
+        NSError* error;
+        vendorList = [MTLJSONAdapter modelsOfClass:[Vendor class] fromJSONArray:data error:&error];
+        if (error) {
+            NSLog(@"error %@", error);
+        }
         if (vendorList && [vendorList count] >0) {
+            success();
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
+-(void)requestPackageListSuccess:(void (^)(void))success
+{
+    NSDictionary* params = @{@"token": _server.accessToken};
+    [_server GET:@"getPackageList" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSArray* jsonArray = responseObject[@"data"];
+        NSError* error;
+        packageList = [MTLJSONAdapter modelsOfClass:[Package class] fromJSONArray:jsonArray error:&error];
+        if (error) {
+            NSLog(@"error %@", error);
+        }
+        _stats.package = packageList[0];
+        if (packageList) {
             success();
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

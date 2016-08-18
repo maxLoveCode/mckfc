@@ -16,6 +16,8 @@
 
 @property (nonatomic, strong) NSDictionary* content;
 
+@property (nonatomic, strong) UIButton* accessoryImage;
+@property (nonatomic, strong) NSDictionary* json;
 +(CGFloat)cellHeight;
 
 @end

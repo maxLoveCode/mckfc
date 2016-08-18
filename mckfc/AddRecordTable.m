@@ -18,7 +18,7 @@
 -(instancetype)init
 {
     self = [super init];
-    [self setFrame:CGRectMake(0, 0, kScreen_Width, itemHeight*6)];
+    [self setFrame:CGRectMake(0, 0, kScreen_Width, itemHeight*7)];
     return self;
 }
 

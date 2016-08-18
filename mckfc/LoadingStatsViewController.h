@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) LoadingStats* stats;
 
+-(void)confirmBtn;
+
 @end

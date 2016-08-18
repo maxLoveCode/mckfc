@@ -5,28 +5,7 @@
 //  Created by 华印mac-001 on 16/6/15.
 //  Copyright © 2016年 Shanghai Impression Culture Communication Co.,Ltd. All rights reserved.
 //
-
 #import "HomepageViewController.h"
-#import "UserView.h"
-#import "ServerManager.h"
-#import "LoginNav.h"
-#import "LoadingStatsViewController.h"
-#import "DriverDetailEditorController.h"
-
-#import "TranspotationPlanViewController.h"
-#import "QueueViewController.h"
-#import "MsgListViewController.h"
-
-#import "EditorNav.h"
-
-#import "JPushService.h"
-
-#import "rightNavigationItem.h"
-#import "QRCodeReaderViewController.h"
-
-#import "LoadingStats.h"
-#import "nofityViewController.h"
-#import "AlertHUDView.h"
 
 @interface HomepageViewController ()<UserViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,menuDelegate,QRCodeReaderDelegate,HUDViewDelegate>
 
@@ -36,8 +15,6 @@
 @property (nonatomic, strong) LoadingStats* stats;
 
 @property (nonatomic, strong) AlertHUDView* alert;
-
-
 
 @end
 
@@ -111,7 +88,6 @@
             }
             else
             {
-                
                 [self checkIfNeedsToUpdateUser];
                 [self checkIfNeedsToContinue];
                 [self setAliasForNotification:data[@"userid"]];
@@ -290,26 +266,66 @@
             NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[resultAsString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
             _stats = [[LoadingStats alloc] init];
             
+            if([json objectForKey:@"mobile"])
+            {
+                if(![[json objectForKey:@"mobile"] isEqualToString:_user.mobile])
+                {
+                    return;
+                }
+            }
+            if([json objectForKey:@"truckno"])
+            {
+                if(![[json objectForKey:@"truckno"] isEqualToString:_user.truckno])
+                {
+                    return;
+                }
+            }
+            //如果有城市
             if ([json objectForKey:@"city"]) {
                 _stats.city = [[City alloc] init];
                 _stats.city.cityid = [json objectForKey:@"city"];
             }
+            //如果有地块
             if([json objectForKey:@"land"] && [json objectForKey:@"landId"])
             {
                 _stats.field = [[Field alloc] init];
                 _stats.field.fieldID = [[json objectForKey:@"landId"] integerValue];
                 _stats.field.name = [json objectForKey:@"land"];
             }
+            //如果有供应商
             if([json objectForKey:@"provider"] && [json objectForKey:@"providerId"])
             {
                 _stats.supplier = [[Vendor alloc] init];
                 _stats.supplier.name = [json objectForKey:@"provider"];
                 _stats.supplier.vendorID = [[json objectForKey:@"providerId"] integerValue];
-                NSLog(@"%@, %@", [json objectForKey:@"provider"],_stats.supplier.name);
             }
+            //还差重量，发运时间，和运单号
+            if ([json objectForKey:@"weight"]) {
+                _stats.weight = [json objectForKey:@"weight"];
+            }
+            if ([json objectForKey:@"serialno"] || ![[json objectForKey:@"serialno"] isEqualToString:@""]) {
+                _stats.serialno = [json objectForKey:@"serialno"];
+            }
+            if ([json objectForKey:@"departuretime"])
+            {
+                NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+                _stats.departuretime = [dateFormatter dateFromString:[json objectForKey:@"departuretime"]];
+            }
+            if ([json objectForKey:@"packageTypeId"] && [json objectForKey:@"packageTypeName"] )
+            {
+                _stats.package = [[Package alloc] init];
+                _stats.package.name = [json objectForKey:@"packageTypeName"];
+                _stats.package.packageid = [json objectForKey:@"packageTypeId"];
+            }
+            
             LoadingStatsViewController *loadingStats = [[LoadingStatsViewController alloc] initWithStyle:UITableViewStyleGrouped];
             loadingStats.stats = _stats;
             [self.navigationController pushViewController:loadingStats animated:YES];
+            if([loadingStats.stats validForStartingTransport])
+            {
+                [loadingStats confirmBtn];
+            }
         }];
     }];
 }

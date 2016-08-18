@@ -43,4 +43,29 @@
 {
     return [NSString stringWithFormat:@"stats: %@", [MTLJSONAdapter JSONDictionaryFromModel:self error:nil]];
 }
+
+-(BOOL)validForStartingTransport
+{
+    if (self.weight == 0) {
+        return NO;
+    }
+    if (!self.supplier || self.supplier.vendorID == 0) {
+        return NO;
+    }
+    if (!self.field || self.field.fieldID == 0){
+        return NO;
+    }
+    if (!self.serialno || [self.serialno isEqualToString:@""]) {
+        return NO;
+    }
+    if (!self.departuretime) {
+        return NO;
+    }
+    if (!self.package)
+    {
+        return NO;
+    }
+    NSLog(@"short cut");
+    return YES;
+}
 @end

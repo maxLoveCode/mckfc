@@ -62,6 +62,8 @@
 		256F39A21D13D83200175E5A /* EditorNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A11D13D83200175E5A /* EditorNav.m */; };
 		256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A41D13E8A900175E5A /* AlertHUDView.m */; };
 		256F39A81D17891A00175E5A /* MCStarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A71D17891A00175E5A /* MCStarView.m */; };
+		2574C03E1D640E5F00940C95 /* QRDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2574C03D1D640E5F00940C95 /* QRDetailController.m */; };
+		2574C0411D646AF100940C95 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 2574C0401D646AF100940C95 /* Package.m */; };
 		257DB7971D38B4C400C2227E /* workRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7961D38B4C400C2227E /* workRecord.m */; };
 		257DB79A1D38C9BF00C2227E /* WorkDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7991D38C9BF00C2227E /* WorkDetail.m */; };
 		257DB79D1D38D24000C2227E /* WorkFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB79C1D38D24000C2227E /* WorkFlow.m */; };
@@ -224,6 +226,10 @@
 		256F39A41D13E8A900175E5A /* AlertHUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertHUDView.m; sourceTree = "<group>"; };
 		256F39A61D17891A00175E5A /* MCStarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCStarView.h; sourceTree = "<group>"; };
 		256F39A71D17891A00175E5A /* MCStarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCStarView.m; sourceTree = "<group>"; };
+		2574C03C1D640E5F00940C95 /* QRDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRDetailController.h; sourceTree = "<group>"; };
+		2574C03D1D640E5F00940C95 /* QRDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRDetailController.m; sourceTree = "<group>"; };
+		2574C03F1D646AF100940C95 /* Package.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Package.h; sourceTree = "<group>"; };
+		2574C0401D646AF100940C95 /* Package.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Package.m; sourceTree = "<group>"; };
 		257DB7951D38B4C400C2227E /* workRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = workRecord.h; sourceTree = "<group>"; };
 		257DB7961D38B4C400C2227E /* workRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = workRecord.m; sourceTree = "<group>"; };
 		257DB7981D38C9BF00C2227E /* WorkDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkDetail.h; sourceTree = "<group>"; };
@@ -527,6 +533,8 @@
 				25CB819D1D5423CB00EDD05C /* FarmerNav.m */,
 				25CB819F1D54513F00EDD05C /* AddRecordViewController.h */,
 				25CB81A01D54513F00EDD05C /* AddRecordViewController.m */,
+				2574C03C1D640E5F00940C95 /* QRDetailController.h */,
+				2574C03D1D640E5F00940C95 /* QRDetailController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -561,6 +569,8 @@
 				252EF9F01D337BA000565D00 /* TransportDetail.m */,
 				258F01541D3F4C4C002A58B0 /* queueViewModel.h */,
 				258F01551D3F4C4C002A58B0 /* queueViewModel.m */,
+				2574C03F1D646AF100940C95 /* Package.h */,
+				2574C0401D646AF100940C95 /* Package.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1066,6 +1076,7 @@
 				252EF9E51D33407900565D00 /* MCDatePickerView.m in Sources */,
 				251E08881D48714400753FC2 /* MsgListViewController.m in Sources */,
 				252EF9BB1D2E46A500565D00 /* SecurityHomePage.m in Sources */,
+				2574C03E1D640E5F00940C95 /* QRDetailController.m in Sources */,
 				257DB7A91D38EC0D00C2227E /* QualityCheckViewController.m in Sources */,
 				257DB7B81D3CC7FF00C2227E /* rejectionSelectableCell.m in Sources */,
 				2512A1C41D111B3E00ED884B /* ServerManager.m in Sources */,
@@ -1132,6 +1143,7 @@
 				251F378B1D26447D00B423D1 /* Report.m in Sources */,
 				253BF5801D0D49F40006086D /* main.m in Sources */,
 				256F39871D12885B00175E5A /* VerifyViewController.m in Sources */,
+				2574C0411D646AF100940C95 /* Package.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

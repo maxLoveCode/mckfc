@@ -19,8 +19,7 @@
 #import "MCDatePickerView.h"
 #import "AlertHUDView.h"
 #import "ServerManager.h"
-
-
+#import "QRDetailController.h"
 
 #define buttonHeight 40
 #define itemHeight 44
@@ -68,6 +67,16 @@
     }
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.botButton.hidden = YES;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.botButton.hidden = NO;
+}
 #pragma mark- property setters
 -(FarmerPlanView *)farmerPlanview
 {
@@ -531,6 +540,24 @@
             [_farmerPlanview.mainTableView reloadData];
         }];
     }
+    if (self.addRecordVC.stats != nil) {
+        self.addRecordVC.stats.city = self.farmerPlanview.stats.city;
+        self.addRecordVC.stats.supplier = self.farmerPlanview.stats.supplier;
+        self.addRecordVC.stats.field = self.farmerPlanview.stats.field;
+        //self.addRecordVC.stats.de
+        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+        NSDateFormatter* formatter2 = [[NSDateFormatter alloc] init];
+        [formatter2 setDateFormat:@"HH:mm"];
+        NSDateFormatter* formatter3 = [[NSDateFormatter alloc] init];
+        [formatter3 setDateFormat:@"yyyy-MM-dd HH:mm"];
+        NSString* substring1 = [formatter stringFromDate:self.farmerPlanview.stats.departuretime];
+        NSString* substring2 = [formatter2 stringFromDate:self.addRecordVC.stats.departuretime];
+        NSString* compond = [NSString stringWithFormat:@"%@ %@", substring1, substring2 ];
+        NSDate* comDate = [formatter3 dateFromString:compond];
+        self.addRecordVC.stats.departuretime = comDate;
+        self.farmerPlanview.stats.departuretime = comDate;
+    }
     [_farmerPlanview.mainTableView reloadData];
 }
 
@@ -620,7 +647,7 @@
     
     [[UIApplication sharedApplication].keyWindow addSubview:self.botButton];
     
-    if (_addRecordVC) {
+    if (!_addRecordVC) {
         _addRecordVC = [[AddRecordViewController alloc] init];
         [self addChildViewController:_addRecordVC];
         _addRecordVC.delegate = self;
@@ -675,5 +702,15 @@
 {
     [self.transportationList removeObjectAtIndex:indexPath.row];
     [table deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+-(void)tableView:(UITableView *)tableview DidSelectFarmerCell:(FarmerRecordCell *)cell
+{
+    if(cell.json)
+    {
+        QRDetailController* QRDetail = [[QRDetailController alloc] init];
+        [QRDetail setData:cell.json];
+        [self.navigationController pushViewController:QRDetail animated:YES];
+    }
 }
 @end

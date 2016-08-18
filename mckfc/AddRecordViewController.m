@@ -11,10 +11,12 @@
 #import "LoadingCell.h"
 #import "ServerManager.h"
 #import "CarPlateRegionSelector.h"
+#import "MCPickerView.h"
 
-@interface AddRecordViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,DatePickerDelegate>
+@interface AddRecordViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,DatePickerDelegate,MCPickerViewDelegate>
 {
     NSArray* titleArray;
+    NSArray* packageList;
 }
 
 @property (nonatomic, strong) ServerManager* server;
@@ -35,7 +37,7 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.scrollEnabled = NO;
-        titleArray = @[@"车牌号", @"司机姓名", @"手机号码", @"土豆重量", @"运单号",@"运输时间"];
+        titleArray = @[@"车牌号", @"司机姓名", @"手机号码", @"土豆重量", @"运单号",@"运输时间",@"包装类型"];
         
         if (!_user) {
             _user = [[User alloc] init];
@@ -59,7 +61,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return [titleArray count];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -94,6 +96,7 @@
             cell.textInput.textColor = COLOR_TEXT_GRAY;
             cell.textInput.text = @"请填写车牌号";
         }
+        cell.textInput.keyboardType = UIKeyboardTypeASCIICapable;
     }
     else if(indexPath.row == 1){
         cell.style = LoadingCellStyleTextInput;
@@ -146,6 +149,18 @@
         [dateFormatter setDateFormat:@"HH:mm"];
         cell.detailLabel.text = [dateFormatter stringFromDate:_stats.departuretime];
     }
+    else if(indexPath.row == 6){
+        cell.style =LoadingCellStyleSelection;
+        if (!_stats.package) {
+            cell.detailLabel.text = @"请选择包装类型";
+            cell.detailLabel.textColor = COLOR_TEXT_GRAY;
+        }
+        else
+        {
+            cell.detailLabel.textColor = COLOR_WithHex(0x565656);
+            cell.detailLabel.text = _stats.package.name;
+        }
+    }
     cell.titleLabel.text = titleArray[indexPath.row];
     cell.leftImageView.image = [UIImage imageNamed:titleArray[indexPath.row]];
     return cell;
@@ -156,6 +171,32 @@
     if (indexPath.row == 5) {
         [self.delegate requestDate:self];
         [self.datePicker show];
+    }
+    else if(indexPath.row == 6)
+    {
+        if (!packageList || [packageList count] == 0) {
+            [self requestPackageListSuccess:^{
+                MCPickerView *pickerView = [[MCPickerView alloc] init];
+                pickerView.delegate = self;
+                [pickerView setData:packageList];
+                pickerView.index = indexPath;
+                [pickerView show];
+                
+                _stats.package = packageList[0];
+                [self.tableView reloadData];
+            }];
+        }
+        else
+        {
+            MCPickerView *pickerView = [[MCPickerView alloc] init];
+            pickerView.delegate = self;
+            [pickerView setData:packageList];
+            pickerView.index = indexPath;
+            [pickerView show];
+            
+            _stats.package = packageList[0];
+            [self.tableView reloadData];
+        }
     }
 }
 
@@ -243,5 +284,36 @@
 {
     self->_stats = stats;
     [self.tableView reloadData];
+}
+
+#pragma mark - web data requests
+-(void)requestPackageListSuccess:(void (^)(void))success
+{
+    NSDictionary* params = @{@"token": _server.accessToken};
+    [_server GET:@"getPackageList" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSArray* jsonArray = responseObject[@"data"];
+        NSError* error;
+        packageList = [MTLJSONAdapter modelsOfClass:[Package class] fromJSONArray:jsonArray error:&error];
+        if (error) {
+            NSLog(@"error %@", error);
+        }
+        _stats.package = packageList[0];
+        if (packageList) {
+            success();
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
+#pragma mark - MCPickerView delegate
+-(void)pickerView:(MCPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    NSIndexPath *indexPath = pickerView.index;
+    if (indexPath.row ==6){
+        Package* pkg = packageList[row];
+        _stats.package = pkg;
+        [self.tableView reloadData];
+    }
 }
 @end

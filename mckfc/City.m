@@ -7,6 +7,7 @@
 //
 
 #import "City.h"
+#import "MTLJSONAdapter.h"
 
 @implementation City
 
@@ -21,6 +22,19 @@
     self = [super init];
     self.name = name;
     return self;
+}
+
++(NSValueTransformer *)cityidJSONTransformer
+{
+    return [MTLValueTransformer transformerUsingReversibleBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
+        if([value isKindOfClass:[NSNumber class]])
+        {
+            NSNumber* number = (NSNumber*)value;
+            return [NSString stringWithFormat:@"%@",number];
+        }
+        else
+            return value;
+    }];
 }
 
 -(NSString *)description

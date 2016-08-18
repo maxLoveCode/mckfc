@@ -130,5 +130,4 @@
     return CGRectGetHeight(self.frame);
 }
 
-
 @end
