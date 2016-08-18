@@ -20,5 +20,6 @@
 @property (nonatomic, strong) NSString* store;
 @property (nonatomic, strong) NSString* storename;
 @property (nonatomic, strong) NSString* time;
+@property (nonatomic, strong) NSString* queuenotes;
 
 @end

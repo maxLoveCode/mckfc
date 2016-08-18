@@ -21,6 +21,7 @@
              @"store":@"store",
              @"storename":@"storename",
              @"time":@"time",
+             @"queuenotes":@"queuenotes",
              };
 }
 

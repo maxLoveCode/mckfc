@@ -16,11 +16,13 @@
 #import "WorkStatusView.h"
 
 #import "queueViewModel.h"
+#import "nofityViewController.h"
+#import "AlertHUDView.h"
 
 #define itemHeight 44
 #define topMargin 60
 
-@interface QueueViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface QueueViewController ()<UITableViewDelegate, UITableViewDataSource,HUDViewDelegate>
 {
     NSArray* titleText;
 }
@@ -33,6 +35,8 @@
 
 @property (nonatomic, assign) NSInteger transportID;
 @property (nonatomic, strong) queueViewModel* viewModel;
+@property (nonatomic, strong) AlertHUDView* alert;
+@property (nonatomic, strong) UIButton* botBtn;
 
 @end
 
@@ -47,7 +51,6 @@
     
     UIBarButtonItem* phone = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"service"] style:UIBarButtonItemStylePlain target:self action:@selector(phoneCall:)];
     self.navigationItem.rightBarButtonItem = phone;
-    
     return self;
 }
 
@@ -55,8 +58,9 @@
 {
     self.title = @"厂前排队";
     titleText = @[@"预计厂前等待时间：",@"仓库位置："];
-    self.view = self.tableView;
     
+    [self.view addSubview: self.tableView];
+    self.view.backgroundColor = [UIColor whiteColor];
     _server = [ServerManager sharedInstance];
     [self requestQueueInfo];
     [self requestQRCode];
@@ -66,6 +70,8 @@
 {
     [[UIScreen mainScreen] setBrightness:0.8];
     [super viewDidAppear:animated];
+    
+    
     [self remoteNotification];
 }
 
@@ -75,7 +81,16 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:notificationIdScan object:nil];
 }
 
-#pragma mark setter
+#pragma mark - setter properties
+-(AlertHUDView *)alert
+{
+    if (!_alert) {
+        _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
+        _alert.delegate = self;
+    }
+    return _alert;
+}
+
 -(UITableView *)tableView
 {
     if (!_tableView) {
@@ -85,6 +100,9 @@
         [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Queue"];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.allowsSelection = NO;
+        
+        [self.tableView addSubview: self.botBtn];
+        
     }
     return _tableView;
 }
@@ -105,6 +123,22 @@
         [_statusView setFrame:CGRectMake(k_Margin, 0, kScreen_Width - 2*k_Margin, itemHeight)];
     }
     return _statusView;
+}
+
+-(UIButton *)botBtn
+{
+    if (!_botBtn) {
+        _botBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        [_botBtn setTitle:@"《厂前排队须知》" forState: UIControlStateNormal];
+        [_botBtn setTitleColor:COLOR_WithHex(0x565656) forState:UIControlStateNormal];
+        [_botBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [_botBtn setBackgroundColor:[UIColor clearColor]];
+        [_botBtn addTarget:self action:@selector(notifypage:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [_botBtn sizeToFit];
+    }
+    return _botBtn;
 }
 
 #pragma mark tableViewDelegate
@@ -281,6 +315,10 @@
         _viewModel = [MTLJSONAdapter modelOfClass:[queueViewModel class] fromJSONDictionary:data error:&error];
         if (!error) {
             [self.tableView reloadData];
+            NSString* isRead = [[NSUserDefaults standardUserDefaults] objectForKey:isReadQueueNotification];
+            if ( [isRead isEqualToString:@"0"] || isRead == nil) {
+                [self readBookletPrompt];
+            }
         }
         else
         {
@@ -321,5 +359,38 @@
         
     }
 }
- 
+
+#pragma mark - notifypage
+-(void)notifypage:(id)sender
+{
+    if (_viewModel.queuenotes != nil) {
+        nofityViewController* notify = [[nofityViewController alloc] initWithString:_viewModel.queuenotes];
+        [self.navigationController pushViewController:notify animated:YES];
+    }
+}
+
+#pragma mark-alertview delegate
+-(void)didSelectConfirm
+{
+    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:isReadQueueNotification];
+    [self notifypage:nil];
+    [self.alert removeFromSuperview];
+}
+
+-(void)readBookletPrompt
+{
+    self.alert.title.text = @"长期排队须知";
+    self.alert.detail.text = @"司机请查看厂前排队须知";
+    self.alert.detail.numberOfLines = 0;
+    [self.alert show:_alert];
+}
+
+-(void)viewWillLayoutSubviews
+{
+    [self.botBtn makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.tableView.bottom).with.offset(kScreen_Height-80);
+        make.centerX.equalTo(self.tableView);
+    }];
+}
+
 @end

@@ -338,6 +338,7 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+#pragma mark - notifypage
 -(void)notifypage:(id)sender
 {
     if (_user.factorynotes != nil) {
@@ -346,7 +347,7 @@
     }
 }
 
-#pragma mark -alertview delegate
+#pragma mark-alertview delegate
 -(void)didSelectConfirm
 {
     [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:isReadFactoryNotification];

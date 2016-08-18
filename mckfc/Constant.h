@@ -54,7 +54,7 @@
 
 //bookelet viewer identity
 #define isReadFactoryNotification @"isReadFactoryNotification"
-
+#define isReadQueueNotification @"isReadQueueNotification"
 //define this constant if you want to use Masonry without the 'mas_' prefix
 #define MAS_SHORTHAND
 
