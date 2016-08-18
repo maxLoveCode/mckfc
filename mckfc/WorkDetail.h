@@ -25,5 +25,6 @@
 @property (nonatomic, copy) NSString* transportno;
 @property (nonatomic, copy) NSString* truckno;
 @property (nonatomic, copy) NSString* vendorname;
+@property (nonatomic, copy) NSString* serialno;
 
 @end

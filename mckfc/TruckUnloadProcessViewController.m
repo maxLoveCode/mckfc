@@ -168,7 +168,7 @@
 #pragma mark send confirm
 -(void)didConfirm:(id)sender
 {
-    [self.tableView resignFirstResponder];
+    [self.tableView endEditing:YES];
     NSString* type;
     NSDictionary* params;
     if ([self.workFlow.type isEqualToString:@"enter"]) {

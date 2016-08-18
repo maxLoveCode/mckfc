@@ -162,7 +162,7 @@
         
         if(section == 0)
         {
-            label.text = [NSString stringWithFormat:@"订单编号：%@",_detail.transportno];
+            label.text = [NSString stringWithFormat:@"订单编号：%@",_detail.serialno];
         }
         else
         {

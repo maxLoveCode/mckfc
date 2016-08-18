@@ -24,6 +24,7 @@
              @"transportno":@"transportno",
              @"truckno":@"truckno",
              @"vendorname":@"vendorname",
+             @"serialno":@"serialno",
              };
 }
 
