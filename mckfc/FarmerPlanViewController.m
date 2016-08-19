@@ -31,6 +31,7 @@
     NSArray* fieldList;
     NSArray* DateList;
     NSArray* uploadList;
+    NSArray* factoryList;
 }
 
 //main tableview of the homepage
@@ -157,7 +158,7 @@
     self.navigationItem.leftBarButtonItem = nil;
 }
 
-#pragma mark menu selection
+#pragma mark - menu selection
 -(void)menu:(FarmerPlanView *)Menu DidSelectIndex:(NSInteger)index
 {
     
@@ -213,7 +214,7 @@
     }
 }
 
-#pragma mark table selection
+#pragma mark - table selection
 -(void)tableStats:(UITableView *)table DidSelectIndex:(NSInteger)index
 {
     self.pickerView.index = [NSIndexPath indexPathForRow:index inSection:0];
@@ -224,7 +225,9 @@
                 [self.pickerView setData:cityList];
                 [self.pickerView show];
                 
-                _farmerPlanview.stats.city = cityList[0];
+                if (!_farmerPlanview.stats.city) {
+                    _farmerPlanview.stats.city = cityList[0];
+                }
                 [self reload];
             }];
         }
@@ -248,7 +251,9 @@
                 [self.pickerView setData:vendorList];
                 [self.pickerView show];
             
-                _farmerPlanview.stats.supplier = vendorList[0];
+                if (!_farmerPlanview.stats.supplier) {
+                    _farmerPlanview.stats.supplier = vendorList[0];
+                }
                 [self reload];
             }];
         }
@@ -268,12 +273,34 @@
                 [self.pickerView setData:fieldList];
                 [self.pickerView show];
                 
-                _farmerPlanview.stats.field = fieldList[0];
+                    if (!_farmerPlanview.stats.field) {
+                        _farmerPlanview.stats.field = fieldList[0];
+                    }
                 [self reload];
             }];
         }
     }
     else if (index == 3){
+        if (!factoryList || [factoryList count] == 0) {
+            [self requestFactoryListSuccess:^{
+                [self.pickerView setData:factoryList];
+                [self.pickerView show];
+                
+                _farmerPlanview.stats.factory = factoryList[0];
+                [self reload];
+            }];
+        }
+        else
+        {
+            [self.pickerView setData:factoryList];
+            [self.pickerView show];
+            
+            _farmerPlanview.stats.factory = factoryList[0];
+            [self reload];
+        }
+
+    }
+    else if (index == 4){
         Field* field = _farmerPlanview.stats.field;
         if (!field) {
             self.alert.title.text = @"错误";
@@ -287,8 +314,9 @@
                 [self.pickerView show];
                 NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
                 [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-                
-                _farmerPlanview.stats.departuretime = [dateFormatter dateFromString:DateList[0]];
+                if (!_farmerPlanview.stats.departuretime) {
+                    _farmerPlanview.stats.departuretime = [dateFormatter dateFromString:DateList[0]];
+                }
                 [self reload];
             }];
         }
@@ -426,6 +454,24 @@
     }];
 }
 
+-(void)requestFactoryListSuccess:(void (^)(void))success
+{
+    NSDictionary* params = @{@"token": _server.accessToken};
+    [_server GET:@"getFactoryList" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSArray* jsonArray = responseObject[@"data"];
+        NSError* error;
+        factoryList = [MTLJSONAdapter modelsOfClass:[Factory class] fromJSONArray:jsonArray error:&error];
+        if (error) {
+            NSLog(@"error %@", error);
+        }
+        if (factoryList || [factoryList count] != 0) {
+            success();
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
 -(void)requestUploadListsuccess:(void (^)(NSMutableArray *result))success
 {
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
@@ -488,7 +534,8 @@
                              @"vendorid":[NSString stringWithFormat:@"%lu",(long)_farmerPlanview.stats.supplier.vendorID],
                              @"fieldid":[NSString stringWithFormat:@"%lu",(long)_farmerPlanview.stats.field.fieldID],
                              @"trucks":data,
-                             @"departureday":dateString
+                             @"departureday":dateString,
+                             @"factoryid":[NSNumber numberWithInteger: [_farmerPlanview.stats.factory.factoryid integerValue]]
                              };
     NSLog(@"%@",params);
     [_server POST:@"uploadTransport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
@@ -517,7 +564,10 @@
     else if(pickerView.index.row == 2){
         _farmerPlanview.stats.field = fieldList[row];
     }
-    else if(pickerView.index.row ==3){
+    else if(pickerView.index.row == 3){
+        _farmerPlanview.stats.factory = factoryList[row];
+    }
+    else if(pickerView.index.row ==4){
         NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
         

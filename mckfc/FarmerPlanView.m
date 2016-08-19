@@ -47,7 +47,7 @@
         _mainTableView.dataSource = self;
         [_mainTableView registerClass:[LoadingCell class] forCellReuseIdentifier:@"loadingStats"];
         
-        titleText = @[@"供货城市",@"供应商名称",@"地块编号",@"运输时间"];
+        titleText = @[@"供货城市",@"供应商名称",@"地块编号",@"工厂名称",@"运输时间"];
     }
     return _mainTableView;
 }
@@ -80,7 +80,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 4;
+        return [titleText count];
     }
     else if(self.type == FarmerPlanViewTypeRecordList)
     {
@@ -123,6 +123,13 @@
             }
             else
                 cell.detailLabel.text = _stats.field.name;
+        }
+        else if(indexPath.row == 3){
+            if (!_stats.factory) {
+                cell.detailLabel.text = @"请选择工厂";
+            }
+            else
+                cell.detailLabel.text = _stats.factory.name;
         }
         else
         {

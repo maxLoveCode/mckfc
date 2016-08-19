@@ -11,6 +11,7 @@
 #import "Field.h"
 #import "City.h"
 #import "Package.h"
+#import "Factory.h"
 
 @interface LoadingStats : MTLModel<MTLJSONSerializing>
 
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) Vendor *supplier; //供应商名称
 @property (nonatomic, strong) City *city;
 @property (nonatomic, strong) Package *package;
+@property (nonatomic, strong) Factory *factory;
 
 @property (nonatomic, copy) NSNumber *weight;
 @property (nonatomic, copy) NSDate *departuretime; //开始日期

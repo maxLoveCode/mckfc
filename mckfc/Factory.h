@@ -1,17 +1,17 @@
 //
-//  Package.h
+//  Factory.h
 //  mckfc
 //
-//  Created by 华印mac-001 on 16/8/17.
+//  Created by 华印mac-001 on 16/8/19.
 //  Copyright © 2016年 Shanghai Impression Culture Communication Co.,Ltd. All rights reserved.
 //
 
 #import <Mantle/Mantle.h>
 
-@interface Package : MTLModel<MTLJSONSerializing>
+@interface Factory : MTLModel<MTLJSONSerializing>
 
 @property (nonatomic, copy) NSString *name; 
-@property (nonatomic, copy) NSString* packageid;
+@property (nonatomic, copy) NSString* factoryid;
 
 
 @end

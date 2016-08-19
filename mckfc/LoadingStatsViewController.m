@@ -38,6 +38,8 @@
     NSArray* cityList;
     NSArray* fieldList;
     NSArray* packageList;
+    NSArray* factoryList;
+    
     NSString* citycode;
 }
 
@@ -78,45 +80,13 @@
 {
     [super viewDidAppear:animated];
     // 带逆地理信息的一次定位（返回坐标和地址信息）
-    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
-    //   定位超时时间，最低2s，此处设置为3s
-    self.locationManager.locationTimeout =3;
-    //   逆地理请求超时时间，最低2s，此处设置为3s
-    self.locationManager.reGeocodeTimeout = 3;
-    
-    // 带逆地理（返回坐标和地址信息）。将下面代码中的YES改成NO，则不会返回地址信息。
-    [self.locationManager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
-        
-        if (error)
-        {
-            NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
-        }
-        
-        if (regeocode)
-        {
-            citycode = regeocode.citycode;
-            if (!cityList) {
-                [self requestCityListSuccess:^{
-                    for (City* city in cityList) {
-                        if ([city.cityid isEqualToString:citycode]) {
-                            _stats.city = city;
-                            NSMutableArray* sort = [[NSMutableArray alloc] initWithArray:cityList];
-                            [sort removeObject:city];
-                            [sort insertObject:city atIndex:0];
-                            cityList = sort;
-                            return;
-                        }
-                    }
-                }];
-            }
-        }
-    }];
+    [self locating];
 }
 
 #pragma mark titles and images
 -(void)initTitlesAndImages
 {
-    titleText = @[@"供应商名称",@"地块编号",@"土豆重量", @"发车时间", @"运单号", @"包装类型"];
+    titleText = @[@"供应商名称",@"地块编号",@"工厂名称",@"土豆重量", @"发车时间", @"运单号", @"包装类型"];
 }
 
 #pragma mark tableViewDelegate
@@ -156,7 +126,7 @@
     if (indexPath.section == 0) {
         LoadingCell* cell = [[LoadingCell alloc] init];
         
-        if (indexPath.row != 2 && indexPath.row != 3 && indexPath.row != 4) {
+        if (indexPath.row != 3 && indexPath.row != 4 && indexPath.row != 5) {
             [cell setStyle:LoadingCellStyleSelection];
             if (indexPath.row == 0) {
                 if (!_stats.supplier) {
@@ -172,10 +142,16 @@
                 else
                     cell.detailLabel.text = _stats.field.name;
             }
-            else if(indexPath.row == 5)
+            else if(indexPath.row == 2)
             {
-                [cell setStyle:LoadingCellStyleSelection];
-                
+                if (!_stats.factory) {
+                    cell.detailLabel.text = @"请选择工厂";
+                }
+                else
+                    cell.detailLabel.text = _stats.factory.name;
+            }
+            else if(indexPath.row == 6)
+            {
                 if (!_stats.package) {
                     cell.detailLabel.text = @"请选择包装类型";
                 }
@@ -183,7 +159,7 @@
                     cell.detailLabel.text = _stats.package.name;
             }
         }
-        else if(indexPath.row == 2)
+        else if(indexPath.row == 3)
         {
             [cell setStyle:LoadingCellStyleDigitInput];
             cell.digitInput.delegate = self;
@@ -195,7 +171,7 @@
                 cell.digitInput.text = [NSString stringWithFormat:@"%@",_stats.weight];
             }
         }
-        else if(indexPath.row == 3)
+        else if(indexPath.row == 4)
         {
             [cell setStyle:LoadingCellStyleDatePicker];
             if(!_stats.departuretime)
@@ -207,7 +183,7 @@
                 cell.detailLabel.text = [dateFormatter stringFromDate:_stats.departuretime];
             }
         }
-        else if(indexPath.row == 4)
+        else if(indexPath.row == 5)
         {
             [cell setStyle:LoadingCellStyleTextInput];
             cell.textInput.textAlignment = NSTextAlignmentRight;
@@ -305,6 +281,10 @@
         {
             Vendor* vendor = _stats.supplier;
             if (!vendor) {
+                if (!_alert) {
+                    _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
+                    _alert.delegate = self;
+                }
                 self.alert.title.text = @"错误";
                 self.alert.detail.text = @"请先选择供应商";
                 [self.alert show:self.alert];
@@ -314,16 +294,47 @@
                 [self requestFields:[NSString stringWithFormat:@"%lu", (long)vendor.vendorID]
                                City:_stats.city.cityid
                             success:^{
+                                if(!self.pickerView)
+                                {
+                                    self.pickerView = [[MCPickerView alloc] init];
+                                    self.pickerView.delegate = self;
+                                    self.pickerView.index = indexPath;
+                                }
                                 [self.pickerView setData:fieldList];
                                 [self.pickerView show];
-                                
                                 _stats.field = fieldList[0];
                                 [self.tableView reloadData];
-                            }];
+                    }];
             }
-
         }
-        else if(indexPath.row == 5)
+        
+        else if(indexPath.row == 2)
+        {
+            if (!factoryList || [factoryList count] == 0) {
+                [self requestFactoryListSuccess:^{
+                    MCPickerView *pickerView = [[MCPickerView alloc] init];
+                    pickerView.delegate = self;
+                    [pickerView setData:factoryList];
+                    pickerView.index = indexPath;
+                    [pickerView show];
+                    
+                    _stats.factory = factoryList[0];
+                    [self.tableView reloadData];
+                }];
+            }
+            else
+            {
+                MCPickerView *pickerView = [[MCPickerView alloc] init];
+                pickerView.delegate = self;
+                [pickerView setData:factoryList];
+                pickerView.index = indexPath;
+                [pickerView show];
+                
+                _stats.factory = factoryList[0];
+                [self.tableView reloadData];
+            }
+        }
+        else if(indexPath.row == 6)
         {
             if (!packageList || [packageList count] == 0) {
                 [self requestPackageListSuccess:^{
@@ -440,6 +451,9 @@
     if (_stats.package) {
         [params addEntriesFromDictionary:@{@"packageid":_stats.package.packageid}];
     }
+    if (_stats.factory) {
+        [params addEntriesFromDictionary:@{@"factoryid":_stats.factory.factoryid}];
+    }
     NSLog(@"%@", params);
     [_server POST:@"transport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSDictionary* data = responseObject[@"data"];
@@ -483,7 +497,12 @@
             _stats.field = field;
             [self.tableView reloadData];
         }
-        else if (indexPath.row ==5){
+        else if (indexPath.row ==2){
+            Factory* factory = factoryList[row];
+            _stats.factory = factory;
+            [self.tableView reloadData];
+        }
+        else if (indexPath.row ==6){
             Package* pkg = packageList[row];
             _stats.package = pkg;
             [self.tableView reloadData];
@@ -596,6 +615,7 @@
     [_server GET:@"getFieldList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* data = responseObject[@"data"];
         fieldList = [MTLJSONAdapter modelsOfClass:[Field class] fromJSONArray:data error:nil];
+        NSLog(@"%@",data);
         if (fieldList && [fieldList count] >0) {
             success();
         }
@@ -623,7 +643,26 @@
     }];
 }
 
-#pragma mark alerts
+-(void)requestFactoryListSuccess:(void (^)(void))success
+{
+    NSDictionary* params = @{@"token": _server.accessToken};
+    [_server GET:@"getFactoryList" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSArray* jsonArray = responseObject[@"data"];
+        NSError* error;
+        factoryList = [MTLJSONAdapter modelsOfClass:[Factory class] fromJSONArray:jsonArray error:&error];
+        if (error) {
+            NSLog(@"error %@", error);
+        }
+        _stats.factory = factoryList[0];
+        if (factoryList || [factoryList count] != 0) {
+            success();
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
+#pragma mark - alerts
 -(void)didSelectConfirm
 {
     [_alert removeFromSuperview];
@@ -633,5 +672,42 @@
 {
     self->_stats = stats;
     [self.tableView reloadData];
+}
+
+-(void)locating
+{
+    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+    //   定位超时时间，最低2s，此处设置为3s
+    self.locationManager.locationTimeout =3;
+    //   逆地理请求超时时间，最低2s，此处设置为3s
+    self.locationManager.reGeocodeTimeout = 3;
+    
+    // 带逆地理（返回坐标和地址信息）。将下面代码中的YES改成NO，则不会返回地址信息。
+    [self.locationManager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
+        
+        if (error)
+        {
+            NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
+        }
+        
+        if (regeocode)
+        {
+            citycode = regeocode.citycode;
+            if (!cityList) {
+                [self requestCityListSuccess:^{
+                    for (City* city in cityList) {
+                        if ([city.cityid isEqualToString:citycode]) {
+                            _stats.city = city;
+                            NSMutableArray* sort = [[NSMutableArray alloc] initWithArray:cityList];
+                            [sort removeObject:city];
+                            [sort insertObject:city atIndex:0];
+                            cityList = sort;
+                            return;
+                        }
+                    }
+                }];
+            }
+        }
+    }];
 }
 @end

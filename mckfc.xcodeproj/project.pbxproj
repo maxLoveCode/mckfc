@@ -23,6 +23,7 @@
 		2526B05E1D59994600271D16 /* FarmerRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2526B05D1D59994600271D16 /* FarmerRecordCell.m */; };
 		2527ECCB1D350C8C00350DC6 /* rightNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2527ECCA1D350C8C00350DC6 /* rightNavigationItem.m */; };
 		2527ECCE1D35D8AC00350DC6 /* CarPlateRegionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2527ECCD1D35D8AC00350DC6 /* CarPlateRegionSelector.m */; };
+		252905891D66DAAF00ECC9EC /* Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 252905881D66DAAF00ECC9EC /* Factory.m */; };
 		252B63261D1CDC7700C108C0 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 252B63251D1CDC7700C108C0 /* NSString+MD5.m */; };
 		252EF9B81D2E3C4C00565D00 /* SecurityNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9B71D2E3C4C00565D00 /* SecurityNav.m */; };
 		252EF9BB1D2E46A500565D00 /* SecurityHomePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9BA1D2E46A500565D00 /* SecurityHomePage.m */; };
@@ -147,6 +148,8 @@
 		2527ECCA1D350C8C00350DC6 /* rightNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rightNavigationItem.m; sourceTree = "<group>"; };
 		2527ECCC1D35D8AC00350DC6 /* CarPlateRegionSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarPlateRegionSelector.h; sourceTree = "<group>"; };
 		2527ECCD1D35D8AC00350DC6 /* CarPlateRegionSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarPlateRegionSelector.m; sourceTree = "<group>"; };
+		252905871D66DAAF00ECC9EC /* Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Factory.h; sourceTree = "<group>"; };
+		252905881D66DAAF00ECC9EC /* Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Factory.m; sourceTree = "<group>"; };
 		252B63241D1CDC7700C108C0 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		252B63251D1CDC7700C108C0 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		252EF9B61D2E3C4C00565D00 /* SecurityNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityNav.h; sourceTree = "<group>"; };
@@ -570,6 +573,8 @@
 				252EF9EA1D3369E900565D00 /* City.m */,
 				252EF9EC1D336F4400565D00 /* Field.h */,
 				252EF9ED1D336F4400565D00 /* Field.m */,
+				252905871D66DAAF00ECC9EC /* Factory.h */,
+				252905881D66DAAF00ECC9EC /* Factory.m */,
 				252EF9EF1D337BA000565D00 /* TransportDetail.h */,
 				252EF9F01D337BA000565D00 /* TransportDetail.m */,
 				258F01541D3F4C4C002A58B0 /* queueViewModel.h */,
@@ -1107,6 +1112,7 @@
 				257DB7AC1D39E0D700C2227E /* WorkFlowInterface.m in Sources */,
 				258F01561D3F4C4C002A58B0 /* queueViewModel.m in Sources */,
 				257DB79D1D38D24000C2227E /* WorkFlow.m in Sources */,
+				252905891D66DAAF00ECC9EC /* Factory.m in Sources */,
 				257DB7A61D38E91900C2227E /* TruckUnloadProcessViewController.m in Sources */,
 				252FADB01D530DA30072E26D /* FarmerPlanViewController.m in Sources */,
 				2512A1CD1D1130B100ED884B /* LoginView.m in Sources */,

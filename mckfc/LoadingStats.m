@@ -65,6 +65,10 @@
     {
         return NO;
     }
+    if (!self.factory)
+    {
+        return NO;
+    }
     NSLog(@"short cut");
     return YES;
 }

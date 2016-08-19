@@ -320,7 +320,12 @@
                 _stats.package.name = [json objectForKey:@"packagename"];
                 _stats.package.packageid = [json objectForKey:@"packageid"];
             }
-            
+            if ([json objectForKey:@"factoryid"] && [json objectForKey:@"factoryname"] )
+            {
+                _stats.factory = [[Factory alloc] init];
+                _stats.factory.name = [json objectForKey:@"factoryname"];
+                _stats.factory.factoryid = [json objectForKey:@"factoryid"];
+            }
             LoadingStatsViewController *loadingStats = [[LoadingStatsViewController alloc] initWithStyle:UITableViewStyleGrouped];
             loadingStats.stats = _stats;
             [self.navigationController pushViewController:loadingStats animated:YES];
