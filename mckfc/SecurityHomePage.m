@@ -47,7 +47,6 @@
     
     self.view = _userView;
     
-
 }
 
 -(void)viewDidAppear:(BOOL)animated

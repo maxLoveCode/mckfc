@@ -29,7 +29,7 @@
 {
     self.view = self.tableView;
     self.title = @"记录详情";  
-    titleArray = @[@"供应商名称",@"地块编号",@"土豆重量",@"发车时间",@"预计到达时间"];
+    titleArray = @[@"供应商名称",@"地块编号",@"土豆重量",@"发车时间",@"预计到达时间",@"运单号"];
     
     _server = [ServerManager sharedInstance];
 }
@@ -64,7 +64,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(section == 0)
-        return 5;
+        return [titleArray count];
     else if(section ==2)
         return [statusArray count];
     else
@@ -93,6 +93,9 @@
         }
         else if(indexPath.row ==4){
             report.detailLabel.text = _detail.planarrivetime;
+        }
+        else if(indexPath.row ==5){
+            report.detailLabel.text = _detail.serialno;
         }
         return report;
     }
