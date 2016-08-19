@@ -7,11 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WorkDetail.h"
+#import "orderGeneralReport.h"
+#import "WorkStatusView.h"
 
-@interface InspectDetailView : UIView
+@interface InspectDetailView : UIView<UITableViewDelegate, UITableViewDataSource>
+{
+    NSArray* titleArray;
+}
 
 @property (nonatomic, strong) UITableView* detailView;
 @property (nonatomic, strong) UIButton* confirm;
 @property (nonatomic, strong) UIButton* cancel;
+@property (nonatomic, strong) WorkStatusView* status;
+
+@property (nonatomic,strong) WorkDetail* detail;
 
 @end

@@ -7,6 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WorkDetailViewController.h"
+#import "orderGeneralReport.h"
+#import "WorkFlowCell.h"
+#import "WorkFlow.h"
+
+#import "ServerManager.h"
+#import "WorkDetail.h"
+
+#import "UIImageView+Webcache.h"
+
+#import "TruckUnloadProcessViewController.h"
+#import "QualityCheckViewController.h"
+#import "InspectionViewController.h"
 
 @interface WorkDetailViewController : UIViewController
 

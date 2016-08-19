@@ -14,6 +14,7 @@
 @interface WorkStatusView()
 {
     NSArray *titleArray;
+    CGFloat width;
 }
 
 @end
@@ -33,7 +34,10 @@
     self->_data = data;
     
     CGFloat labelWidth = 34;
-    CGFloat viewWidth = kScreen_Width - 2*k_Margin;
+    if (width == 0) {
+        width = kScreen_Width - 2*k_Margin;
+    }
+    CGFloat viewWidth = width;
     CGFloat spacing = (viewWidth-labelWidth*[data count])/([data count]-1);
     for (NSInteger i =0; i<[data count] ; i++) {
         UILabel* label = [[UILabel alloc] init];
@@ -66,6 +70,12 @@
             [self addSubview:cons];
         }
     }
+}
+
+-(void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    width = frame.size.width;
 }
 
 @end

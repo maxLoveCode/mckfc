@@ -22,6 +22,7 @@
 #import "WorkDetailViewController.h"
 
 #import "JPushService.h"
+#import "InspectDetailView.h"
 
 @interface SecurityHomePage ()<CommonUserViewDelegate, QRCodeReaderDelegate, HUDViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -30,7 +31,7 @@
 @property (nonatomic, strong) ServerManager* server;
 
 @property (nonatomic, strong) AlertHUDView* alert;
-
+@property (nonatomic, strong) InspectDetailView* inspectView;
 @property (nonatomic, copy) NSString* ScanedTransportID;
 
 @end
@@ -45,6 +46,8 @@
     _server = [ServerManager sharedInstance];
     
     self.view = _userView;
+    
+
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -217,9 +220,12 @@
         _ScanedTransportID = [params objectForKey:@"transportid"];
         if([request isEqualToString:@"scanArrive"])
         {
-            self.alert.title.text = @"确认车辆到厂";
-            self.alert.detail.text = [responseObject[@"data"] objectForKey:@"message"];
-            [self.alert show:_alert];
+//            self.alert.title.text = @"确认车辆到厂";
+//            self.alert.detail.text = [responseObject[@"data"] objectForKey:@"message"];
+//            [self.alert show:_alert];
+            [self requestTruckDetail:_ScanedTransportID success:^{
+                
+            }];
         }
         else
         {
@@ -233,10 +239,15 @@
 
 - (void)inspectArrivedTruck
 {
+    
     NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token": _server.accessToken,
                        @"transportid":_ScanedTransportID}];
     NSLog(@"%@", params);
     [_server POST:@"truckArrive" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        if(_inspectView)
+        {
+            [_inspectView removeFromSuperview];
+        }
         //navigate to detail
         [self navigateToWorkDetail:_ScanedTransportID];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -258,6 +269,42 @@
     [JPUSHService setTags:nil alias:aliasString fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
         NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, iTags , iAlias);
     }];
+}
+
+-(void)requestTruckDetail:(NSString*)transid success:(void(^)(void))success
+{
+    NSDictionary* params = @{@"token":_server.accessToken,
+                             @"transportid":transid};
+    
+    [_server GET:@"getOrderDetail" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSDictionary* data = responseObject[@"data"];
+        
+        NSLog(@"response%@", data);
+        [self popupDetails:data];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+
+}
+
+-(void)popupDetails:(NSDictionary*)data
+{
+    UIWindow* keyWindow = [UIApplication sharedApplication].keyWindow;
+    _inspectView =[[InspectDetailView alloc] init];
+    [keyWindow addSubview: _inspectView];
+    [_inspectView makeConstraints:^(MASConstraintMaker *make) {
+        make.size.equalTo(keyWindow);
+        make.edges.equalTo(keyWindow);
+    }];
+    
+    NSError* error;
+    WorkDetail* detail = [MTLJSONAdapter modelOfClass:[WorkDetail class] fromJSONDictionary:data error:&error];
+    if (error) {
+        NSLog(@"%@",error);
+    }
+
+    [_inspectView setDetail:detail];
+    [_inspectView.confirm addTarget:self action:@selector(inspectArrivedTruck) forControlEvents:UIControlEventTouchUpInside];
 }
 
 

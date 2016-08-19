@@ -28,4 +28,13 @@
              };
 }
 
+-(void)setNilValueForKey:(NSString *)key
+{
+    if ([key isEqualToString:@"weight"]) {
+        self.weight = 0;
+    }
+    else
+        [super setNilValueForKey:key];
+}
+
 @end
