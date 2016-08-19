@@ -319,6 +319,7 @@
             if ( [isRead isEqualToString:@"0"] || isRead == nil) {
                 [self readBookletPrompt];
             }
+            self.title = [_viewModel generateTitle];
         }
         else
         {

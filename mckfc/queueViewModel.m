@@ -25,4 +25,15 @@
              };
 }
 
+-(NSString*)generateTitle
+{
+    NSString* title = @"厂前排队";
+    for (NSDictionary* status in self.reportArray) {
+        if ([status[@"ischecked"] integerValue]== 1) {
+            title = status[@"title"];
+        }
+    }
+    return title;
+}
+
 @end
