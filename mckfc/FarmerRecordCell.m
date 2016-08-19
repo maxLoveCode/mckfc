@@ -92,7 +92,7 @@
                    @"packageid":stats.package.packageid,
                    @"packagename":stats.package.name,
                    @"factoryname":stats.factory.name,
-                   @"factoryid":stats.factory.name,
+                   @"factoryid":stats.factory.factoryid,
                    };
         NSLog(@"qrcode %@", qrcode);
         return qrcode;

@@ -271,6 +271,12 @@
                 if(![[json objectForKey:@"mobile"] isEqualToString:_user.mobile])
                 {
                     NSLog(@"%@   %@",[json objectForKey:@"mobile"],_user.mobile);
+                    
+                    self.alert.title.text = @"扫码错误";
+                    self.alert.detail.text = @"司机手机号不匹配";
+                    self.alert.detail.numberOfLines = 0;
+                    [self.alert show:_alert];
+                    
                     return;
                 }
             }
@@ -279,6 +285,12 @@
                 if(![[json objectForKey:@"truckno"] isEqualToString:_user.truckno])
                 {
                     NSLog(@"%@   %@",[json objectForKey:@"truckno"],_user.truckno);
+                    
+                    self.alert.title.text = @"扫码错误";
+                    self.alert.detail.text = @"司机车牌号不匹配";
+                    self.alert.detail.numberOfLines = 0;
+                    [self.alert show:_alert];
+                    
                     return;
                 }
             }

@@ -86,7 +86,7 @@
 #pragma mark titles and images
 -(void)initTitlesAndImages
 {
-    titleText = @[@"供应商名称",@"地块编号",@"工厂名称",@"土豆重量", @"发车时间", @"运单号", @"包装类型"];
+    titleText = @[@"供应商名称",@"地块编号",@"目的地",@"土豆重量", @"发车时间", @"运单号", @"包装类型"];
 }
 
 #pragma mark tableViewDelegate

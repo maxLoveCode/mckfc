@@ -597,6 +597,7 @@
     if (self.addRecordVC.stats != nil) {
         self.addRecordVC.stats.city = self.farmerPlanview.stats.city;
         self.addRecordVC.stats.supplier = self.farmerPlanview.stats.supplier;
+        self.addRecordVC.stats.factory = self.farmerPlanview.stats.factory;
         self.addRecordVC.stats.field = self.farmerPlanview.stats.field;
         //self.addRecordVC.stats.de
         if (self.addRecordVC.stats.departuretime != nil

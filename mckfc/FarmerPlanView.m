@@ -47,7 +47,7 @@
         _mainTableView.dataSource = self;
         [_mainTableView registerClass:[LoadingCell class] forCellReuseIdentifier:@"loadingStats"];
         
-        titleText = @[@"供货城市",@"供应商名称",@"地块编号",@"工厂名称",@"运输时间"];
+        titleText = @[@"供货城市",@"供应商名称",@"地块编号",@"目的地",@"运输时间"];
     }
     return _mainTableView;
 }
