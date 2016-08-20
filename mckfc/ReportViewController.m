@@ -101,6 +101,8 @@ extern NSString *const reuseIdentifier;
         if (indexPath.row == 0) {
             return itemHeight*2;
         }
+        else
+            return itemHeight+20;
     }
     else if(indexPath.section ==2){
             return 2*topMargin+buttonHeight;
@@ -122,18 +124,18 @@ extern NSString *const reuseIdentifier;
         return cell;
     }
     else if(indexPath.section ==0 && indexPath.row == 1){
-        UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(k_Margin*2+10, 0, 80, itemHeight)];
+        UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(k_Margin*2+10, 0, 80, itemHeight+20)];
         [cell.contentView addSubview:titleLabel];
         titleLabel.font = [UIFont boldSystemFontOfSize:14];
         titleLabel.textColor = [UIColor redColor];
         
-        UILabel* detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame), 0, kScreen_Width-CGRectGetMaxX(titleLabel.frame), itemHeight)];
+        UILabel* detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame), 0, kScreen_Width-CGRectGetMaxX(titleLabel.frame), itemHeight+20)];
         [cell.contentView addSubview:detailLabel];
         detailLabel.font = [UIFont systemFontOfSize:13];
-        detailLabel.textColor = COLOR_WithHex(0x565656);
+        detailLabel.textColor = [UIColor redColor];
         detailLabel.numberOfLines = 0;
         UIImageView* reject = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grayRejection"]];
-        [reject setFrame:CGRectMake(CGRectGetMinX(titleLabel.frame)-itemHeight, 0, itemHeight, itemHeight)];
+        [reject setFrame:CGRectMake(CGRectGetMinX(titleLabel.frame)-itemHeight, 0, itemHeight+20, itemHeight+20)];
         [cell.contentView addSubview:reject];
         if ([_report.refusestatus integerValue] == 1) {
             titleLabel.text = @"部分拒收: ";

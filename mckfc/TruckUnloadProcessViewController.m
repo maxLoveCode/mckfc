@@ -205,10 +205,10 @@
         case 1:
             self.weight = [NSNumber numberWithFloat:weight];
             break;
-        case 3:
+        case 2:
             self.finalWeight = [NSNumber numberWithFloat:weight];
             break;
-        case 2:
+        case 3:
             self.netWeight = [NSNumber numberWithFloat:weight];
             break;
         default:
@@ -230,10 +230,10 @@
         case 1:
             self.weight = [NSNumber numberWithFloat:weight];
             break;
-        case 3:
+        case 2:
             self.finalWeight = [NSNumber numberWithFloat:weight];
             break;
-        case 2:
+        case 3:
             self.netWeight = [NSNumber numberWithFloat:weight];
             break;
         default:

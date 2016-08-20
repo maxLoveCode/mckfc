@@ -29,7 +29,7 @@
 {
     self.view = self.tableView;
     self.title = @"记录详情";  
-    titleArray = @[@"供应商名称",@"地块编号",@"土豆重量",@"发车时间",@"预计到达时间",@"运单号"];
+    titleArray = @[@"供应商名称",@"地块编号",@"土豆重量",@"发车时间",@"预计到达时间",@"运单号",@"包装类型",@"土豆种类",@"储存期"];
     
     _server = [ServerManager sharedInstance];
 }
@@ -77,7 +77,7 @@
     if (indexPath.section == 0) {
         orderGeneralReport* report = [[orderGeneralReport alloc] init];
         report.titleLabel.text = titleArray[indexPath.row];
-        report.detailLabel.text = @"meiyoushuju";
+        report.detailLabel.text = @"未填写";
         report.leftImageView.image = [UIImage imageNamed:titleArray[indexPath.row]];
         if (indexPath.row == 0) {
             report.detailLabel.text = _detail.vendorname;
@@ -96,6 +96,15 @@
         }
         else if(indexPath.row ==5){
             report.detailLabel.text = _detail.serialno;
+        }
+        else if(indexPath.row ==6){
+            report.detailLabel.text = _detail.packagename;
+        }
+        else if(indexPath.row ==7){
+            report.detailLabel.text = _detail.varietyname;
+        }
+        else if(indexPath.row ==8){
+            report.detailLabel.text = _detail.storagetime;
         }
         return report;
     }

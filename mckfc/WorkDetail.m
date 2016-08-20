@@ -26,6 +26,8 @@
              @"vendorname":@"vendorname",
              @"serialno":@"serialno",
              @"packagename":@"packagename",
+             @"varietyname":@"varietyname",
+             @"storagetime":@"storagetime",
              };
 }
 

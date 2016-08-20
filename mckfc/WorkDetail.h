@@ -27,5 +27,8 @@
 @property (nonatomic, copy) NSString* vendorname;
 @property (nonatomic, copy) NSString* serialno;
 @property (nonatomic, copy) NSString* packagename;
+@property (nonatomic, copy) NSString* varietyname;
+
+@property (nonatomic, copy) NSString* storagetime;
 
 @end

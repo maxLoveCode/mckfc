@@ -130,7 +130,7 @@
     if (!_botBtn) {
         _botBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        [_botBtn setTitle:@"《厂前排队须知》" forState: UIControlStateNormal];
+        [_botBtn setTitle:@"《入场注意事项》" forState: UIControlStateNormal];
         [_botBtn setTitleColor:COLOR_WithHex(0x565656) forState:UIControlStateNormal];
         [_botBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [_botBtn setBackgroundColor:[UIColor clearColor]];
@@ -232,7 +232,7 @@
     else
     {
         UILabel* label =[[UILabel alloc] initWithFrame:CGRectMake(k_Margin, 0, kScreen_Width-k_Margin*2, itemHeight*2)];
-        label.text = @"卸货时请出示下列二维码，收货人员可快速验收货物信息，提高您的卸货速度";
+        label.text = @"到厂后请出示下列二维码，厂前人员可快速验收运输信息";
         label.font = [UIFont systemFontOfSize:13];
         label.textColor = COLOR_TEXT_GRAY;
         label.numberOfLines = 2;
@@ -380,8 +380,8 @@
 
 -(void)readBookletPrompt
 {
-    self.alert.title.text = @"长期排队须知";
-    self.alert.detail.text = @"司机请查看厂前排队须知";
+    self.alert.title.text = @"入场注意事项";
+    self.alert.detail.text = @"司机请查看入场注意事项";
     self.alert.detail.numberOfLines = 0;
     [self.alert show:_alert];
 }

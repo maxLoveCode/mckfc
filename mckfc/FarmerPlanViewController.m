@@ -176,7 +176,7 @@
     else if (index == 1)
     {
         [[UIApplication sharedApplication].keyWindow addSubview:self.botButton];
-        
+        [_botButton setTitle:@"上传全部" forState:UIControlStateNormal];
         if (!_addRecordVC) {
             _addRecordVC = [[AddRecordViewController alloc] init];
             [self addChildViewController:_addRecordVC];
@@ -386,7 +386,8 @@
             NSDictionary* data = @{@"user":self.addRecordVC.user,
                                    @"stat":self.addRecordVC.stats};
             
-            [self.transportationList addObject:data];
+            //[self.transportationList addObject:data];
+            [self.transportationList insertObject:data atIndex:0];
             self.farmerPlanview.datasource = self.transportationList;
             
             [_botButton setTitle:@"上传全部" forState:UIControlStateNormal];
@@ -497,9 +498,18 @@
     if (!dateString) {
         dateString = @"";
     }
+    NSString* factoryid = [NSString stringWithFormat:@"%lu", (long)[_farmerPlanview.stats.factory.factoryid integerValue]];
+    
     NSDictionary* params = @{@"token":_server.accessToken,
                              @"departuretime":dateString,
-                             @"fieldid":[NSString stringWithFormat:@"%lu",(long)_farmerPlanview.stats.field.fieldID]};
+                             @"fieldid":[NSString stringWithFormat:@"%lu",(long)_farmerPlanview.stats.field.fieldID],
+                             @"factoryid":factoryid};
+    NSLog(@"%@",params);
+    if ([factoryid isEqualToString:@"0"]) {
+        return;
+    }
+    else
+    {
     [_server GET:@"getUploadList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* data = responseObject[@"data"];
         NSLog(@"%@",data);
@@ -508,10 +518,17 @@
         for (NSInteger i=0 ; i<[data count] ;i ++) {
             LoadingStats* stats = [[LoadingStats alloc] init];
             NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"HH:mm"];
-            [stats setDeparturetime:[dateFormatter dateFromString:[data[i] objectForKey:@"departuretime"]]];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+            [stats setDeparturetime:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ %@", dateString, [data[i] objectForKey:@"departuretime"]]]];
             [stats setWeight:[data[i] objectForKey:@"weight"]];
             [stats setSerialno:[data[i] objectForKey:@"serialno"]];
+            stats.package = [[Package alloc]init];
+            stats.package.packageid = [data[i] objectForKey:@"packageid"];
+            stats.package.name = [data[i] objectForKey:@"packagename"];
+            stats.supplier =  _farmerPlanview.stats.supplier;
+            stats.field = _farmerPlanview.stats.field;
+            stats.factory = _farmerPlanview.stats.factory;
+            
             User* user = userPart[i];
             user.region = [user.truckno substringWithRange:NSMakeRange(0, 1)];
             user.cardigits = [user.truckno substringWithRange:NSMakeRange(1, [user.truckno length]-1)];
@@ -525,6 +542,7 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
+    }
 }
 
 -(void)uploadDatas
@@ -772,6 +790,11 @@
     }
     if (!stat.departuretime) {
         self.alert.detail.text = @"请先选择运输时间";
+        [self.alert show:self.alert];
+        return NO;
+    }
+    if (!stat.package) {
+        self.alert.detail.text = @"请先选择包装类型";
         [self.alert show:self.alert];
         return NO;
     }
