@@ -164,13 +164,14 @@
     
     if (index == 0) {
         
-        _farmerPlanview.type = FarmerPlanViewTypeQRCode;
-        _QRVC = [[FarmerQRCodeVC alloc] init];
-        _QRVC.delegate = self;
-        [self addChildViewController:_QRVC];
-        [_QRVC setQRData:@""];
-        _farmerPlanview.qrCodeView = (FarmerQRCodeView*)_QRVC.view;
-        [self reload];
+//        _farmerPlanview.type = FarmerPlanViewTypeQRCode;
+//        _QRVC = [[FarmerQRCodeVC alloc] init];
+//        _QRVC.delegate = self;
+//        [self addChildViewController:_QRVC];
+//        [_QRVC setQRData:@""];
+//        _farmerPlanview.qrCodeView = (FarmerQRCodeView*)_QRVC.view;
+//        [self reload];
+        [self menu:Menu DidSelectIndex:1];
     }
     else if (index == 1)
     {
@@ -281,35 +282,46 @@
         }
     }
     else if (index == 3){
-        if (!factoryList || [factoryList count] == 0) {
-            [self requestFactoryListSuccess:^{
-                [self.pickerView setData:factoryList];
-                [self.pickerView show];
-                
-                _farmerPlanview.stats.factory = factoryList[0];
-                [self reload];
-            }];
-        }
-        else
-        {
-            [self.pickerView setData:factoryList];
-            [self.pickerView show];
-            
-            _farmerPlanview.stats.factory = factoryList[0];
-            [self reload];
-        }
-
-    }
-    else if (index == 4){
         Field* field = _farmerPlanview.stats.field;
+        //如果没有地块先选地块
         if (!field) {
             self.alert.title.text = @"错误";
             self.alert.detail.text = @"请先选择地块";
             [self.alert show:self.alert];
         }
+        else //加载网络
+        {
+            [self requestFactoryList:[NSString stringWithFormat:@"%lu", (long)field.fieldID] success:^{
+                
+                [self.pickerView setData:factoryList];
+                [self.pickerView show];
+                
+                if (!_farmerPlanview.stats.factory) {
+                    _farmerPlanview.stats.factory = factoryList[0];
+                }
+                [self reload];
+            }];
+        }
+    }
+    else if (index == 4){
+        Field* field = _farmerPlanview.stats.field;
+        Factory* factory = _farmerPlanview.stats.factory;
+        if (!field) {
+            self.alert.title.text = @"错误";
+            self.alert.detail.text = @"请先选择地块";
+            [self.alert show:self.alert];
+        }
+        else if(!factory)
+        {
+            self.alert.title.text = @"错误";
+            self.alert.detail.text = @"请先选择工厂";
+            [self.alert show:self.alert];
+        }
         else
         {
-            [self requestDates:[NSString stringWithFormat:@"%lu", (long)field.fieldID] success:^{
+            [self requestDates:[NSString stringWithFormat:@"%lu", (long)field.fieldID]
+                       factory:[NSString stringWithFormat:@"%lu", (long)[factory.factoryid integerValue]]
+                       success:^{
                 [self.pickerView setData:DateList];
                 [self.pickerView show];
                 NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
@@ -325,6 +337,10 @@
         self.farmerPlanview.type = FarmerPlanViewTypeOrder;
         self.addRecordVC.user = [[User alloc] init];
         self.addRecordVC.stats = [[LoadingStats alloc] init];
+        NSDateFormatter* formatter2 = [[NSDateFormatter alloc] init];
+        [formatter2 setDateFormat:@"HH:mm"];
+        NSDate* date = [formatter2 dateFromString:@"00:00"];
+        self.addRecordVC.stats.departuretime = date;
         [self.addRecordVC.tableView reloadData];
         [_botButton setTitle:@"确认并保存" forState:UIControlStateNormal];
         [self reload];
@@ -437,13 +453,13 @@
     }];
 }
 
--(void)requestDates:(NSString*)field success:(void (^)(void))success
+-(void)requestDates:(NSString*)field factory:(NSString*)factory success:(void (^)(void))success
 {
     NSDictionary* params = @{@"token":_server.accessToken,
-                             @"fieldid":field};
+                             @"fieldid":field,
+                             @"factoryid":factory};
     [_server GET:@"getPlanDateList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* data = responseObject[@"data"];
-        NSLog(@"data%@",data);
         DateList = data;
         
         if (DateList && [DateList count] >0) {
@@ -454,9 +470,10 @@
     }];
 }
 
--(void)requestFactoryListSuccess:(void (^)(void))success
+-(void)requestFactoryList:(NSString*)field success:(void (^)(void))success
 {
-    NSDictionary* params = @{@"token": _server.accessToken};
+    NSDictionary* params = @{@"token": _server.accessToken,
+                             @"fieldid":field};
     [_server GET:@"getFactoryList" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* jsonArray = responseObject[@"data"];
         NSError* error;
@@ -477,11 +494,15 @@
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString* dateString = [dateFormatter stringFromDate:_farmerPlanview.stats.departuretime];
+    if (!dateString) {
+        dateString = @"";
+    }
     NSDictionary* params = @{@"token":_server.accessToken,
                              @"departuretime":dateString,
                              @"fieldid":[NSString stringWithFormat:@"%lu",(long)_farmerPlanview.stats.field.fieldID]};
     [_server GET:@"getUploadList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* data = responseObject[@"data"];
+        NSLog(@"%@",data);
         NSArray* userPart = [MTLJSONAdapter modelsOfClass:[User class] fromJSONArray:data error:nil];
         NSMutableArray* records = [[NSMutableArray alloc] init];
         for (NSInteger i=0 ; i<[data count] ;i ++) {
@@ -686,6 +707,7 @@
 -(void)requestDate:(AddRecordViewController *)vc
 {
     if (_farmerPlanview.stats.departuretime) {
+        NSLog(@"%@", _farmerPlanview.stats.departuretime);
         [vc setDate:_farmerPlanview.stats.departuretime];
         [vc showDatePicker];
     }

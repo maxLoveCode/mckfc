@@ -63,7 +63,7 @@
         [_menuView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
         [_menuView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"menu"];
         
-        menuText =  @[@"生成二维码",@"录入运输单",@"工作记录",@"系统设置"];
+        menuText =  @[@"计划二维码",@"录入运输单",@"工作记录",@"系统设置"];
     }
     return _menuView;
 }

@@ -232,9 +232,7 @@
 #pragma mark UITableview selection delegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     LoadingCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-  
     if (cell.style == LoadingCellStyleSelection){
         if (indexPath.row == 0) {
             if (!cityList) {
@@ -310,28 +308,30 @@
         
         else if(indexPath.row == 2)
         {
-            if (!factoryList || [factoryList count] == 0) {
-                [self requestFactoryListSuccess:^{
+            Field* field = _stats.field;
+            //如果没有地块先选地块
+            if (!field) {
+                if (!_alert) {
+                    _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
+                    _alert.delegate = self;
+                }
+                self.alert.title.text = @"错误";
+                self.alert.detail.text = @"请先选择地块";
+                [self.alert show:self.alert];
+            }
+            else //加载网络
+            {
+                [self requestFactoryList:[NSString stringWithFormat:@"%lu", (long)field.fieldID] success:^{
                     MCPickerView *pickerView = [[MCPickerView alloc] init];
-                    pickerView.delegate = self;
-                    [pickerView setData:factoryList];
+                    pickerView.delegate =self;
                     pickerView.index = indexPath;
+                    [pickerView setData:factoryList];
                     [pickerView show];
-                    
-                    _stats.factory = factoryList[0];
+                    if (!_stats.factory) {
+                        _stats.factory = factoryList[0];
+                    }
                     [self.tableView reloadData];
                 }];
-            }
-            else
-            {
-                MCPickerView *pickerView = [[MCPickerView alloc] init];
-                pickerView.delegate = self;
-                [pickerView setData:factoryList];
-                pickerView.index = indexPath;
-                [pickerView show];
-                
-                _stats.factory = factoryList[0];
-                [self.tableView reloadData];
             }
         }
         else if(indexPath.row == 6)
@@ -643,9 +643,10 @@
     }];
 }
 
--(void)requestFactoryListSuccess:(void (^)(void))success
+-(void)requestFactoryList:(NSString*)field success:(void (^)(void))success
 {
-    NSDictionary* params = @{@"token": _server.accessToken};
+    NSDictionary* params = @{@"token": _server.accessToken,
+                             @"fieldid":field};
     [_server GET:@"getFactoryList" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* jsonArray = responseObject[@"data"];
         NSError* error;

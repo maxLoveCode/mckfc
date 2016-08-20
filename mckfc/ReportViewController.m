@@ -124,13 +124,14 @@ extern NSString *const reuseIdentifier;
     else if(indexPath.section ==0 && indexPath.row == 1){
         UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(k_Margin*2+10, 0, 80, itemHeight)];
         [cell.contentView addSubview:titleLabel];
-        titleLabel.font = [UIFont systemFontOfSize:14];
-        titleLabel.textColor = COLOR_TEXT_GRAY;
+        titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        titleLabel.textColor = [UIColor redColor];
         
         UILabel* detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame), 0, kScreen_Width-CGRectGetMaxX(titleLabel.frame), itemHeight)];
         [cell.contentView addSubview:detailLabel];
         detailLabel.font = [UIFont systemFontOfSize:13];
         detailLabel.textColor = COLOR_WithHex(0x565656);
+        detailLabel.numberOfLines = 0;
         UIImageView* reject = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grayRejection"]];
         [reject setFrame:CGRectMake(CGRectGetMinX(titleLabel.frame)-itemHeight, 0, itemHeight, itemHeight)];
         [cell.contentView addSubview:reject];

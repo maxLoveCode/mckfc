@@ -44,6 +44,11 @@
         }
         if (!_stats) {
             _stats = [[LoadingStats alloc] init];
+            
+            NSDateFormatter* formatter2 = [[NSDateFormatter alloc] init];
+            [formatter2 setDateFormat:@"HH:mm"];
+            NSDate* date = [formatter2 dateFromString:@"00:00"];
+            _stats.departuretime = date;
         }
         _server = [ServerManager sharedInstance];
     }
@@ -271,7 +276,7 @@
     NSLog(@"set date%@", date);
     [self.datePicker.picker setDate:date];
     [self.datePicker.picker setMinimumDate:date];
-    [self.datePicker.picker setMaximumDate:[NSDate dateWithTimeInterval:24*60*60 sinceDate:date]];
+    [self.datePicker.picker setMaximumDate:[NSDate dateWithTimeInterval:24*60*60-1 sinceDate:date]];
 }
 
 -(void)setUser:(User *)user

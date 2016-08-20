@@ -275,6 +275,7 @@
                     self.alert.title.text = @"扫码错误";
                     self.alert.detail.text = @"司机手机号不匹配";
                     self.alert.detail.numberOfLines = 0;
+                    self.alert.tag = 1;
                     [self.alert show:_alert];
                     
                     return;
@@ -289,6 +290,7 @@
                     self.alert.title.text = @"扫码错误";
                     self.alert.detail.text = @"司机车牌号不匹配";
                     self.alert.detail.numberOfLines = 0;
+                    self.alert.tag = 1;
                     [self.alert show:_alert];
                     
                     return;
@@ -367,8 +369,15 @@
 #pragma mark-alertview delegate
 -(void)didSelectConfirm
 {
-    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:isReadFactoryNotification];
-    [self notifypage:nil];
+    if (self.alert.tag == 0) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:isReadFactoryNotification];
+        [self notifypage:nil];
+    }
+    else
+    {
+        
+    }
+    
     [self.alert removeFromSuperview];
 }
 
@@ -377,6 +386,7 @@
     self.alert.title.text = @"入场须知";
     self.alert.detail.text = @"司机请查看入场须知";
     self.alert.detail.numberOfLines = 0;
+    self.alert.tag = 0;
     [self.alert show:_alert];
 }
 @end
