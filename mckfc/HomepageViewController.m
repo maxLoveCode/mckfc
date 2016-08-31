@@ -32,6 +32,9 @@
     
     
     self.view = _userview;
+    
+    RedPocketButton* redPocket = [[RedPocketButton alloc] init];
+    [redPocket attachToView:self.view];
 }
 
 -(void)viewDidAppear:(BOOL)animated

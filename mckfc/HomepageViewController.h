@@ -29,6 +29,8 @@
 #import "nofityViewController.h"
 #import "AlertHUDView.h"
 
+#import "RedPocketButton.h"
+
 @interface HomepageViewController : UIViewController
 
 @property (assign, nonatomic) BOOL didLogin;

@@ -52,6 +52,7 @@
 		253BF58E1D0D49F40006086D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 253BF58C1D0D49F40006086D /* LaunchScreen.storyboard */; };
 		253BF5991D0D49F40006086D /* mckfcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5981D0D49F40006086D /* mckfcTests.m */; };
 		253BF5A41D0D49F40006086D /* mckfcUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5A31D0D49F40006086D /* mckfcUITests.m */; };
+		254E95971D765A430085E7AF /* RedPocketButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 254E95961D765A430085E7AF /* RedPocketButton.m */; };
 		256E873D1D65C9F800C82521 /* InspectDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256E873C1D65C9F800C82521 /* InspectDetailView.m */; };
 		256F397B1D123E3900175E5A /* LoginNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F397A1D123E3900175E5A /* LoginNav.m */; };
 		256F39811D12836900175E5A /* SignUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39801D12836900175E5A /* SignUpView.m */; };
@@ -207,6 +208,8 @@
 		253BF59F1D0D49F40006086D /* mckfcUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mckfcUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		253BF5A31D0D49F40006086D /* mckfcUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mckfcUITests.m; sourceTree = "<group>"; };
 		253BF5A51D0D49F40006086D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		254E95951D765A430085E7AF /* RedPocketButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPocketButton.h; sourceTree = "<group>"; };
+		254E95961D765A430085E7AF /* RedPocketButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPocketButton.m; sourceTree = "<group>"; };
 		25522BE71D376A450098E4B7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		256E873B1D65C9F800C82521 /* InspectDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectDetailView.h; sourceTree = "<group>"; };
 		256E873C1D65C9F800C82521 /* InspectDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectDetailView.m; sourceTree = "<group>"; };
@@ -351,6 +354,8 @@
 				2527ECCA1D350C8C00350DC6 /* rightNavigationItem.m */,
 				2527ECCC1D35D8AC00350DC6 /* CarPlateRegionSelector.h */,
 				2527ECCD1D35D8AC00350DC6 /* CarPlateRegionSelector.m */,
+				254E95951D765A430085E7AF /* RedPocketButton.h */,
+				254E95961D765A430085E7AF /* RedPocketButton.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1104,6 +1109,7 @@
 				2534B9981D24ACF400A82E0A /* ReportViewController.m in Sources */,
 				25EDD78B1D0E847800AFB6F3 /* User.m in Sources */,
 				252EF9D91D2F5D2400565D00 /* WorkStatusView.m in Sources */,
+				254E95971D765A430085E7AF /* RedPocketButton.m in Sources */,
 				2525CF271D3CDD5000F3079F /* Store.m in Sources */,
 				252EF9C61D2E6EED00565D00 /* QualityControlNav.m in Sources */,
 				2526B05E1D59994600271D16 /* FarmerRecordCell.m in Sources */,
@@ -1302,7 +1308,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1f98e991-5187-4079-bd43-d3bb5b8e4d9c";
+				PROVISIONING_PROFILE = "35c46b1b-bc5a-4e07-b144-a498eee394b4";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1318,7 +1324,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1f98e991-5187-4079-bd43-d3bb5b8e4d9c";
+				PROVISIONING_PROFILE = "35c46b1b-bc5a-4e07-b144-a498eee394b4";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
