@@ -7,8 +7,12 @@
 //
 
 #import "RedPocketButton.h"
+#define animationTime 0.25
 
 @implementation RedPocketButton
+{
+    UIView* background;
+}
 
 -(instancetype)init
 {
@@ -31,17 +35,38 @@
 
 -(void)didTapButton:(id)sender
 {
-    UIView* background = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height)];
+    [self attachRedPocketView];
+}
+
+-(void)attachRedPocketView
+{
+    background = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height)];
     [background setBackgroundColor:[UIColor colorWithWhite:0.3 alpha:0.7]];
     [[UIApplication sharedApplication].keyWindow addSubview:background];
     
     UIImageView* detail = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"redPocketDetail"]];
     [background addSubview:detail];
-    [detail makeConstraints:^(MASConstraintMaker *make) {
-        make.size.equalTo(CGSizeMake(kScreen_Width, kScreen_Width));
-        make.centerX.equalTo(background.centerX);
-        make.centerY.equalTo(background.centerY);
+    [detail setFrame:CGRectMake(0, -kScreen_Width, kScreen_Width, kScreen_Width)];
+    detail.userInteractionEnabled = YES;
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss:)];
+    [detail addGestureRecognizer:tap];
+    
+    [UIView animateWithDuration:animationTime animations:^{
+        [detail setFrame:CGRectMake(0, kScreen_Height/2, kScreen_Width, kScreen_Width)];
+    }completion:^(BOOL finished) {
+        [UIView animateWithDuration:animationTime+0.1 animations:^{
+            [detail setFrame:CGRectMake(0, kScreen_Height/2-kScreen_Width/2-40, kScreen_Width, kScreen_Width)];
+        }completion:^(BOOL finished) {
+            [UIView animateWithDuration:animationTime-0.1 animations:^{
+                [detail setFrame:CGRectMake(0, kScreen_Height/2-kScreen_Width/2, kScreen_Width, kScreen_Width)];
+            }];
+        }];
     }];
+}
+
+-(void)dismiss:(id)sender
+{
+    [background removeFromSuperview];
 }
 
 @end

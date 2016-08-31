@@ -53,6 +53,8 @@
 		253BF5991D0D49F40006086D /* mckfcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5981D0D49F40006086D /* mckfcTests.m */; };
 		253BF5A41D0D49F40006086D /* mckfcUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 253BF5A31D0D49F40006086D /* mckfcUITests.m */; };
 		254E95971D765A430085E7AF /* RedPocketButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 254E95961D765A430085E7AF /* RedPocketButton.m */; };
+		254E959A1D7686150085E7AF /* ForgotPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 254E95991D7686150085E7AF /* ForgotPasswordView.m */; };
+		254E959D1D76A5780085E7AF /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 254E959C1D76A5780085E7AF /* ForgotPasswordViewController.m */; };
 		256E873D1D65C9F800C82521 /* InspectDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256E873C1D65C9F800C82521 /* InspectDetailView.m */; };
 		256F397B1D123E3900175E5A /* LoginNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F397A1D123E3900175E5A /* LoginNav.m */; };
 		256F39811D12836900175E5A /* SignUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39801D12836900175E5A /* SignUpView.m */; };
@@ -210,6 +212,10 @@
 		253BF5A51D0D49F40006086D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		254E95951D765A430085E7AF /* RedPocketButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPocketButton.h; sourceTree = "<group>"; };
 		254E95961D765A430085E7AF /* RedPocketButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPocketButton.m; sourceTree = "<group>"; };
+		254E95981D7686150085E7AF /* ForgotPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordView.h; sourceTree = "<group>"; };
+		254E95991D7686150085E7AF /* ForgotPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordView.m; sourceTree = "<group>"; };
+		254E959B1D76A5780085E7AF /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForgotPasswordViewController.h; path = Assets.xcassets/ForgotPasswordViewController.h; sourceTree = "<group>"; };
+		254E959C1D76A5780085E7AF /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ForgotPasswordViewController.m; path = Assets.xcassets/ForgotPasswordViewController.m; sourceTree = "<group>"; };
 		25522BE71D376A450098E4B7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		256E873B1D65C9F800C82521 /* InspectDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectDetailView.h; sourceTree = "<group>"; };
 		256E873C1D65C9F800C82521 /* InspectDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectDetailView.m; sourceTree = "<group>"; };
@@ -389,6 +395,8 @@
 				256F397A1D123E3900175E5A /* LoginNav.m */,
 				256F39821D12847D00175E5A /* SignUpViewController.h */,
 				256F39831D12847D00175E5A /* SignUpViewController.m */,
+				254E959B1D76A5780085E7AF /* ForgotPasswordViewController.h */,
+				254E959C1D76A5780085E7AF /* ForgotPasswordViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -402,6 +410,8 @@
 				2512A1CC1D1130B100ED884B /* LoginView.m */,
 				256F39881D12887D00175E5A /* VerifyView.h */,
 				256F39891D12887D00175E5A /* VerifyView.m */,
+				254E95981D7686150085E7AF /* ForgotPasswordView.h */,
+				254E95991D7686150085E7AF /* ForgotPasswordView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1131,6 +1141,7 @@
 				252EF9DF1D30AC1B00565D00 /* orderGeneralReport.m in Sources */,
 				25CB819B1D5344C400EDD05C /* FarmerQRCodeView.m in Sources */,
 				256F399C1D13A32000175E5A /* StatsView.m in Sources */,
+				254E959A1D7686150085E7AF /* ForgotPasswordView.m in Sources */,
 				253BF5831D0D49F40006086D /* AppDelegate.m in Sources */,
 				25CB819E1D5423CB00EDD05C /* FarmerNav.m in Sources */,
 				256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */,
@@ -1139,6 +1150,7 @@
 				256F39961D12B2A000175E5A /* DriverDetailEditorController.m in Sources */,
 				251F378F1D26698C00B423D1 /* ReportCollectionView.m in Sources */,
 				25CB81A41D546CD800EDD05C /* AddRecordTable.m in Sources */,
+				254E959D1D76A5780085E7AF /* ForgotPasswordViewController.m in Sources */,
 				25B004991D1922970018EEB1 /* QRCodeView.m in Sources */,
 				256F39A21D13D83200175E5A /* EditorNav.m in Sources */,
 				252FADB31D5311F10072E26D /* FarmerPlanView.m in Sources */,

@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "ServerManager.h"
 #import "SignUpViewController.h"
+#import "ForgotPasswordViewController.h"
 
 #import "NSString+MD5.h"
 
@@ -148,7 +149,8 @@
 
 -(void)didSelectReclaimPassword
 {
-    
+    ForgotPasswordViewController* fpvc = [[ForgotPasswordViewController alloc] init];
+    [self.navigationController pushViewController:fpvc animated:YES];
 }
 
 #pragma mark gesture

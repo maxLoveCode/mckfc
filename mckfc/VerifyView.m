@@ -35,7 +35,7 @@
     return self;
 }
 
-#pragma mark setter
+#pragma mark- setter
 -(UITextField *)code
 {
     if (!_code) {
@@ -104,7 +104,7 @@
     return _confirm;
 }
 
-#pragma mark layouts
+#pragma mark- layouts
 -(void)layoutSubviews
 {
     CGRect frame = CGRectMake((kScreen_Width - buttonWidth)/2, topMargin, buttonWidth, buttonHeight);

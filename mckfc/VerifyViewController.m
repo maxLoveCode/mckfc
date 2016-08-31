@@ -182,7 +182,6 @@
                 
             }];
             [EditorVC setOnDismissed:^{
-                NSLog(@"dismisssss");
                 [self.navigationController dismissViewControllerAnimated:NO completion:^{
                     [self dismissViewControllerAnimated:NO completion:nil];
                 }];
