@@ -8,12 +8,14 @@
 
 #import "ForgotPasswordViewController.h"
 #import "ServerManager.h"
+#import "AlertHUDView.h"
 
 #define timeInterval 60
 
-@interface ForgotPasswordViewController ()
+@interface ForgotPasswordViewController ()<HUDViewDelegate>
 
 @property (nonatomic, strong) ServerManager* server;
+@property (nonatomic, strong) AlertHUDView* alert;
 
 @end
 
@@ -68,10 +70,30 @@
     return _forgotPassView;
 }
 
+-(AlertHUDView *)alert
+{
+    if (!_alert) {
+        _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
+        _alert.title.text = @"错误";
+        _alert.delegate = self;
+    }
+    return _alert;
+}
+
 -(void)confirm:(id)sender
 {
     if ([self checkValidation]) {
-        
+        NSDictionary* params = @{@"mobile":mobile,
+                                 @"password":password,
+                                 @"captcha":vericode};
+        [_server POST:@"forgetPassword" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+            self.alert.title.text = @"成功";
+            self.alert.detail.text = @"密码修改成功";
+            [self.alert show:self.alert];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+        }];
     }
 }
 
@@ -108,6 +130,8 @@
         if ([view isKindOfClass:[UITextField class]]) {
             UITextField* textField = (UITextField*)view;
             if ([textField.text isEqualToString:defaultArray[textField.tag -1]]) {
+                self.alert.detail.text = textField.text;
+                [self.alert show:self.alert];
                 return NO;
             }
             else
@@ -121,17 +145,21 @@
                 else if(textField.tag ==3){
                     password = textField.text;
                 }
-                else
+                else if(textField.tag ==4)
                 {
                     repass = textField.text;
                 }
                 
-                if (![password isEqualToString:repass]) {
-                    return NO;
-                }
             }
         }
     }
+    
+    if (![password isEqualToString:repass]) {
+        self.alert.detail.text = @"两次密码不一致";
+        [self.alert show:self.alert];
+        return NO;
+    }
+    
     return YES;
 }
 
@@ -140,6 +168,10 @@
 {
     if ([textField.text isEqualToString:@""]) {
         textField.text = defaultArray[textField.tag -1];
+        
+        if (textField.tag == 3 || textField.tag ==4) {
+            textField.secureTextEntry = NO;
+        }
     }
 }
 
@@ -147,6 +179,10 @@
 {
     if ([textField.text isEqualToString:defaultArray[textField.tag -1]]) {
         textField.text = @"";
+        
+        if (textField.tag == 3 || textField.tag ==4) {
+            textField.secureTextEntry = YES;
+        }
     }
 }
 
@@ -159,12 +195,10 @@
 
 -(void)fire:(id)sender
 {
-    NSLog(@"fire");
     NSTimer* timer = (NSTimer*)sender;
     
     NSDate* schedualDate = [timer.userInfo objectForKey:@"schedualDate"];
     CGFloat interval = timeInterval-[timer.fireDate timeIntervalSinceDate:schedualDate];
-    NSLog(@"%lf", interval);
     UIButton* button = _forgotPassView.vericode;
     if (interval>0) {
         button.enabled = NO;
@@ -181,6 +215,10 @@
     }
 }
 
-
+#pragma mark -alertview delegate
+-(void)didSelectConfirm
+{
+    [self.alert removeFromSuperview];
+}
 
 @end

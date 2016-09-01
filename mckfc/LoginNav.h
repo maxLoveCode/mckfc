@@ -10,4 +10,6 @@
 
 @interface LoginNav : UINavigationController
 
+-(void)navigateToFogotPass;
+
 @end

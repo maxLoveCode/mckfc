@@ -164,7 +164,7 @@
     
     [self.confirm makeConstraints:^(MASConstraintMaker *make) {
         make.size.equalTo(buttonSize);
-        make.top.equalTo(self.password.bottom).with.offset(buttonHeight);
+        make.top.equalTo(self.repass.bottom).with.offset(buttonHeight);
         make.centerX.equalTo(self.centerX);
     }];
 }

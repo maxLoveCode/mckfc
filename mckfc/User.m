@@ -28,6 +28,8 @@
              @"transportstatus":@"page",
              @"transportid":@"transportid",
              @"factorynotes":@"factorynotes",
+             @"reward":@"reward",
+             @"redrule":@"redrule",
              };
 }
 

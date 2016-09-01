@@ -15,6 +15,7 @@
 @property (nonatomic, strong) LoadingStats* stats;
 
 @property (nonatomic, strong) AlertHUDView* alert;
+@property (nonatomic, strong) RedPocketButton* redPocket;
 
 @end
 
@@ -33,8 +34,8 @@
     
     self.view = _userview;
     
-    RedPocketButton* redPocket = [[RedPocketButton alloc] init];
-    [redPocket attachToView:self.view];
+    [self.redPocket attachToView:self.view];
+    [self.redPocket setHidden:YES];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -43,6 +44,14 @@
     if (!_user) {
         [self requestUserInfo];
     }
+    
+    [self remoteNotification];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:notificationRefresh object:nil];
 }
 
 #pragma mark - setter properties
@@ -63,6 +72,14 @@
         _popUpMenu.delegate =self;
     }
     return _popUpMenu;
+}
+
+-(RedPocketButton *)redPocket
+{
+    if (!_redPocket) {
+        _redPocket = [[RedPocketButton alloc] init];
+    }
+    return _redPocket;
 }
 
 
@@ -92,6 +109,7 @@
             else
             {
                 [self checkIfNeedsToUpdateUser];
+                [self checkRedPocketByUser:_user];
                 [self checkIfNeedsToContinue];
                 [self setAliasForNotification:data[@"userid"]];
             }
@@ -384,6 +402,7 @@
     [self.alert removeFromSuperview];
 }
 
+#pragma mark- Read Booklet
 -(void)readBookletPrompt
 {
     self.alert.title.text = @"入场须知";
@@ -391,5 +410,46 @@
     self.alert.detail.numberOfLines = 0;
     self.alert.tag = 0;
     [self.alert show:_alert];
+}
+
+#pragma mark- redPocket
+//firstly check the red pocket is need to be hidden or not
+-(void)checkRedPocketByUser:(User*)user
+{
+    if([user.redrule isEqualToString:@""]||user.redrule == nil)
+    {
+        [self.redPocket setHidden:YES];
+    }
+    else
+    {
+        [self.redPocket setHidden:NO];
+        [self.redPocket setString:user.reward];
+        [self.redPocket.claim addTarget:self action:@selector(claim:) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
+#pragma mark- claim +modal view
+//its the modal uiview to present so I put the ui rendering inside the method
+-(void)claim:(id)sender
+{
+    RewardDetailView* rewardView = [[RewardDetailView alloc] init];
+    [rewardView show];
+
+    [rewardView setContentString:_user.redrule];
+}
+
+#pragma mark- remote notification
+-(void)remoteNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getNotification:) name:notificationRefresh object:nil];
+    
+}
+
+-(void)getNotification:(NSNotification *)notification
+{
+    if([notification.userInfo[@"content"] isEqualToString:@"userrefresh"])
+    {
+        [self requestUserInfo];
+    }
 }
 @end

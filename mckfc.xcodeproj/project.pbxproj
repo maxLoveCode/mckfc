@@ -69,6 +69,7 @@
 		256F39A81D17891A00175E5A /* MCStarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A71D17891A00175E5A /* MCStarView.m */; };
 		2574C03E1D640E5F00940C95 /* QRDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2574C03D1D640E5F00940C95 /* QRDetailController.m */; };
 		2574C0411D646AF100940C95 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 2574C0401D646AF100940C95 /* Package.m */; };
+		257C19011D77C72A00A602BE /* RewardDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 257C19001D77C72A00A602BE /* RewardDetailView.m */; };
 		257DB7971D38B4C400C2227E /* workRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7961D38B4C400C2227E /* workRecord.m */; };
 		257DB79A1D38C9BF00C2227E /* WorkDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7991D38C9BF00C2227E /* WorkDetail.m */; };
 		257DB79D1D38D24000C2227E /* WorkFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB79C1D38D24000C2227E /* WorkFlow.m */; };
@@ -245,6 +246,8 @@
 		2574C03D1D640E5F00940C95 /* QRDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRDetailController.m; sourceTree = "<group>"; };
 		2574C03F1D646AF100940C95 /* Package.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Package.h; sourceTree = "<group>"; };
 		2574C0401D646AF100940C95 /* Package.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Package.m; sourceTree = "<group>"; };
+		257C18FF1D77C72A00A602BE /* RewardDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardDetailView.h; sourceTree = "<group>"; };
+		257C19001D77C72A00A602BE /* RewardDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardDetailView.m; sourceTree = "<group>"; };
 		257DB7951D38B4C400C2227E /* workRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = workRecord.h; sourceTree = "<group>"; };
 		257DB7961D38B4C400C2227E /* workRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = workRecord.m; sourceTree = "<group>"; };
 		257DB7981D38C9BF00C2227E /* WorkDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkDetail.h; sourceTree = "<group>"; };
@@ -362,6 +365,8 @@
 				2527ECCD1D35D8AC00350DC6 /* CarPlateRegionSelector.m */,
 				254E95951D765A430085E7AF /* RedPocketButton.h */,
 				254E95961D765A430085E7AF /* RedPocketButton.m */,
+				257C18FF1D77C72A00A602BE /* RewardDetailView.h */,
+				257C19001D77C72A00A602BE /* RewardDetailView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1128,6 +1133,7 @@
 				257DB7AC1D39E0D700C2227E /* WorkFlowInterface.m in Sources */,
 				258F01561D3F4C4C002A58B0 /* queueViewModel.m in Sources */,
 				257DB79D1D38D24000C2227E /* WorkFlow.m in Sources */,
+				257C19011D77C72A00A602BE /* RewardDetailView.m in Sources */,
 				252905891D66DAAF00ECC9EC /* Factory.m in Sources */,
 				257DB7A61D38E91900C2227E /* TruckUnloadProcessViewController.m in Sources */,
 				252FADB01D530DA30072E26D /* FarmerPlanViewController.m in Sources */,

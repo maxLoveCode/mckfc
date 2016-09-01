@@ -138,8 +138,13 @@
 
 - (void)networkDidReceiveMessage:(NSNotification *)notification {
     NSDictionary * userInfo = [notification userInfo];
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationIdScan object:self userInfo:userInfo];
-    
+    if([notification.userInfo[@"content"] isEqualToString:@"userrefresh"]){
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationRefresh object:self userInfo:userInfo];
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationIdScan object:self userInfo:userInfo];
+    }
     NSLog(@"%@", userInfo);
 }
 

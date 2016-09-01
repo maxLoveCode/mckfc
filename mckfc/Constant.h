@@ -51,6 +51,7 @@
 
 //notification identity
 #define notificationIdScan @"scanQR"
+#define notificationRefresh @"refreshData"
 
 //bookelet viewer identity
 #define isReadFactoryNotification @"isReadFactoryNotification"

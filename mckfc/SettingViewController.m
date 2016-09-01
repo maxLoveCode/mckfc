@@ -39,13 +39,20 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return 2;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"setting" forIndexPath:indexPath];
-    cell.textLabel.text = @"退出登录";
+    if (indexPath.section == 0) {
+        if (indexPath.row ==0) {
+            cell.textLabel.text = @"修改密码";
+        }
+        if (indexPath.row ==1) {
+            cell.textLabel.text = @"退出登录";
+        }
+    }
     return cell;
 }
 
@@ -70,6 +77,11 @@
         
         [self.navigationController popToRootViewControllerAnimated:NO];
     }];
+    
+    if(indexPath.row == 0)
+    {
+        [loginVC navigateToFogotPass];
+    }
 }
 
 @end

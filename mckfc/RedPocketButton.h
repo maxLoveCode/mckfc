@@ -10,6 +10,10 @@
 
 @interface RedPocketButton : UIButton
 
+@property (nonatomic, strong) UIButton* claim;
+@property (nonatomic, strong) UITextView* content;
+
 -(void)attachToView:(UIView*)view;
+-(void)setString:(NSString*)string;
 
 @end

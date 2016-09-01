@@ -30,6 +30,7 @@
 #import "AlertHUDView.h"
 
 #import "RedPocketButton.h"
+#import "RewardDetailView.h"
 
 @interface HomepageViewController : UIViewController
 

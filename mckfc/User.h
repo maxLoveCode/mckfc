@@ -37,7 +37,11 @@
 @property (nonatomic, assign) NSUInteger transportstatus;
 @property (nonatomic, assign) NSUInteger transportid;
 
+//if needs to read the factory
 @property (nonatomic, copy) NSString* factorynotes;
+
+@property (nonatomic, copy) NSString* redrule;
+@property (nonatomic, copy) NSString* reward;
 
 -(instancetype)init;
 

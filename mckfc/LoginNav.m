@@ -42,4 +42,9 @@
     return self;
 }
 
+-(void)navigateToFogotPass
+{
+    [self.loginVC didSelectReclaimPassword];
+}
+
 @end
