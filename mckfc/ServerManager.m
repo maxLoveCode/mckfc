@@ -19,7 +19,7 @@
 #endif
 
 NSString *const b_URL = _BASE_URL;
-NSString *const version = @"v1_3";
+NSString *const version = @"v1_3_1";
 
 @interface ServerManager ()<HUDViewDelegate>
 

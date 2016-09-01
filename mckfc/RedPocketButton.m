@@ -52,6 +52,7 @@
         _content.font = [UIFont systemFontOfSize:18];
         _content.textAlignment = NSTextAlignmentCenter;
         _content.textColor = COLOR_WithHex(0xec4d35);
+        _content.editable = NO;
     }
     return _content;
 }
@@ -131,6 +132,7 @@
 -(void)dismiss:(id)sender
 {
     [background removeFromSuperview];
+    [_detail setFrame:CGRectMake(0, -kScreen_Width, kScreen_Width, kScreen_Width)];
 }
 
 -(void)setString:(NSString*)string
