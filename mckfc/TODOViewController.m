@@ -39,13 +39,16 @@ extern NSString *const reuseIdentifier;
     self.title = @"今日待办";
     
     _server = [ServerManager sharedInstance];
-    if(!_recordArray)
-    {
-        [self requestList];
-    }
     
     keyWord = nil;
     [self addSearchController];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self requestList];
 }
 
 #pragma mark setter

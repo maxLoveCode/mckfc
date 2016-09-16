@@ -23,6 +23,7 @@
 
 #import "JPushService.h"
 #import "InspectDetailView.h"
+#import "TruckArrivePicker.h"
 
 @interface SecurityHomePage ()<CommonUserViewDelegate, QRCodeReaderDelegate, HUDViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -219,9 +220,6 @@
         _ScanedTransportID = [params objectForKey:@"transportid"];
         if([request isEqualToString:@"scanArrive"])
         {
-//            self.alert.title.text = @"确认车辆到厂";
-//            self.alert.detail.text = [responseObject[@"data"] objectForKey:@"message"];
-//            [self.alert show:_alert];
             [self requestTruckDetail:_ScanedTransportID success:^{
                 
             }];
@@ -236,22 +234,34 @@
     }];
 }
 
+#pragma mark- 车辆到厂
 - (void)inspectArrivedTruck
 {
-    
-    NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token": _server.accessToken,
-                       @"transportid":_ScanedTransportID}];
-    NSLog(@"%@", params);
-    [_server POST:@"truckArrive" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        if(_inspectView)
-        {
-            [_inspectView removeFromSuperview];
+    TruckArrivePicker* picker = [[TruckArrivePicker alloc] init];
+    [picker show];
+    [picker setSelectBlock:^(NSDate *result) {
+        NSDateFormatter *formater = [[NSDateFormatter alloc] init];
+        [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString* dateString = [formater stringFromDate:result];
+        NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token": _server.accessToken,
+                               @"transportid":_ScanedTransportID}];
+        if (dateString != nil && ![dateString isEqualToString:@""]) {
+            [params addEntriesFromDictionary:@{@"arrivetime":dateString}];
         }
-        //navigate to detail
-        [self navigateToWorkDetail:_ScanedTransportID];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
+        NSLog(@"%@", params);
+        [_server POST:@"truckArrive" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+            if(_inspectView)
+            {
+                [_inspectView removeFromSuperview];
+            }
+            //navigate to detail
+                [self navigateToWorkDetail:_ScanedTransportID];
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                
+        }];
     }];
+
 }
 
 -(void)navigateToWorkDetail:(NSString*)transportid

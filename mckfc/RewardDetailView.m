@@ -9,6 +9,9 @@
 #import "RewardDetailView.h"
 
 @interface RewardDetailView ()
+{
+    CGFloat topOffset;
+}
 
 @property (strong, nonatomic) UIImageView* bg_view;
 @property (strong, nonatomic) UIWebView* content;
@@ -26,6 +29,7 @@
         [self.bg_view addSubview:self.content];
         [self.bg_view addSubview:self.titleView];
         [self.bg_view addSubview:self.reward];
+        topOffset = -kScreen_Height;
     }
 
     return self;
@@ -73,26 +77,34 @@
     [self.content loadHTMLString:string baseURL:nil];
 }
 
++ (BOOL)requiresConstraintBasedLayout
+{
+    return YES;
+}
+
 -(void)updateConstraints
 {
+    UIWindow* superView = [UIApplication sharedApplication].keyWindow;
     [self makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+        make.edges.equalTo(superView);
     }];
     
-    [self.bg_view makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self);
+    [self.bg_view updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self).with.offset(topOffset);
+        make.centerX.equalTo(self);
+        make.size.equalTo(self);
     }];
     
     [self.titleView makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.bg_view.centerX);
-        make.top.equalTo(self.bg_view.top).with.offset(150);
+        make.top.equalTo(self.bg_view.top).with.offset(@150);
     }];
     
     [self.content makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self.bg_view).with.offset(-k_Margin*2);
         make.bottom.equalTo(self.reward.top).with.offset(-20);
         make.centerX.equalTo(self.bg_view);
-        make.top.equalTo(self.titleView.bottom).with.offset(20);
+        make.top.equalTo(self.titleView.bottom).with.offset(@20);
     }];
     
     [self.reward makeConstraints:^(MASConstraintMaker *make) {
@@ -112,19 +124,17 @@
 -(void)show
 {
     [[UIApplication sharedApplication].keyWindow addSubview:self];
-//    [self remakeConstraints:^(MASConstraintMaker *make) {
-//        //make.edges.equalTo([UIApplication sharedApplication].keyWindow);
-//        make.bottom.equalTo([UIApplication sharedApplication].keyWindow.top);
-//    }];
-//    [UIView animateWithDuration:5 animations:^{
-//        [self makeConstraints:^(MASConstraintMaker *make) {
-//            make.edges.equalTo([UIApplication sharedApplication].keyWindow);
-//        }];
-//        [self layoutIfNeeded];
-//    }completion:^(BOOL finished) {
-//        [self setNeedsUpdateConstraints];
-//    }];
     
+    [self layoutIfNeeded];
+    topOffset = 0;
+    // tell constraints they need updating
+    [self setNeedsUpdateConstraints];
+    
+    // update constraints now so we can animate the change
+    [self updateConstraintsIfNeeded];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self layoutIfNeeded];
+    }];
 }
 
 @end

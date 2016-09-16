@@ -11,6 +11,8 @@
 #import "QualityControlHomePage.h"
 #import "SecurityHomePage.h"
 
+#import "ChangePasswordViewController.h"
+
 @implementation SettingViewController
 
 -(void)viewDidLoad
@@ -39,7 +41,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 3;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -47,9 +49,12 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"setting" forIndexPath:indexPath];
     if (indexPath.section == 0) {
         if (indexPath.row ==0) {
-            cell.textLabel.text = @"修改密码";
+            cell.textLabel.text = @"忘记密码";
         }
         if (indexPath.row ==1) {
+            cell.textLabel.text = @"修改密码";
+        }
+        if (indexPath.row ==2) {
             cell.textLabel.text = @"退出登录";
         }
     }
@@ -58,29 +63,37 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LoginNav* loginVC = [[LoginNav alloc] init];
-    UIViewController* vc = self.navigationController.viewControllers[0];
+    if(indexPath.row != 1)
+    {
+        LoginNav* loginVC = [[LoginNav alloc] init];
+        UIViewController* vc = self.navigationController.viewControllers[0];
 
-    if ([vc isKindOfClass:[QualityControlHomePage class]]) {
-        QualityControlHomePage* qcvc = (QualityControlHomePage*)vc;
-        qcvc.user = nil;
-    }
-    else if ([vc isKindOfClass:[SecurityHomePage class]])
-    {
-        SecurityHomePage* sc = (SecurityHomePage*)vc;
-        sc.user = nil;
-    }
-    [self presentViewController:loginVC animated:NO completion:^{
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults removeObjectForKey:@"user_type"];
-        [defaults removeObjectForKey:@"access_token"];
+        if ([vc isKindOfClass:[QualityControlHomePage class]]) {
+            QualityControlHomePage* qcvc = (QualityControlHomePage*)vc;
+            qcvc.user = nil;
+        }
+        else if ([vc isKindOfClass:[SecurityHomePage class]])
+        {
+            SecurityHomePage* sc = (SecurityHomePage*)vc;
+            sc.user = nil;
+        }
+        [self presentViewController:loginVC animated:NO completion:^{
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults removeObjectForKey:@"user_type"];
+            [defaults removeObjectForKey:@"access_token"];
+            
+            [self.navigationController popToRootViewControllerAnimated:NO];
+        }];
         
-        [self.navigationController popToRootViewControllerAnimated:NO];
-    }];
-    
-    if(indexPath.row == 0)
+        if(indexPath.row == 0)
+        {
+            [loginVC navigateToFogotPass];
+        }
+    }
+    else
     {
-        [loginVC navigateToFogotPass];
+        ChangePasswordViewController* changePassVC = [[ChangePasswordViewController alloc] init];
+        [self.navigationController pushViewController:changePassVC animated:YES];
     }
 }
 

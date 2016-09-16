@@ -37,7 +37,15 @@
 -(UITableView *)popMenu
 {
     if (!_popMenu) {
-        _popMenu = [[UITableView alloc] initWithFrame:CGRectMake(kScreen_Width-menuWidth, 64, menuWidth, itemHeight*2) style:UITableViewStylePlain];
+        CGFloat height;
+        if (self.ItemStyle == navItemStyleTransport) {
+            height = itemHeight*2;
+        }
+        else
+        {
+            height = itemHeight*3;
+        }
+        _popMenu = [[UITableView alloc] initWithFrame:CGRectMake(kScreen_Width-menuWidth, 64, menuWidth, height) style:UITableViewStylePlain];
         [_popMenu registerClass:[UITableViewCell class] forCellReuseIdentifier:@"menu"];
         _popMenu.dataSource = self;
         _popMenu.delegate = self;
@@ -60,7 +68,14 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    if(self.ItemStyle == navItemStyleHomepage )
+    {
+        return 3;
+    }
+    else
+    {
+        return 2;
+    }
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -86,6 +101,11 @@
     {
         if (indexPath.row == 0) {
             label.text = @"扫二维码";
+            imageView.image = [UIImage imageNamed:@"scanSmall"];
+        }
+        else if(indexPath.row == 1)
+        {
+            label.text = @"消息列表";
             imageView.image = [UIImage imageNamed:@"scanSmall"];
         }
         else

@@ -253,7 +253,7 @@
             break;
         case 3:
             _stats.weight =
-                [NSNumber numberWithInteger:[textField.text integerValue]];
+                [NSNumber numberWithFloat:[textField.text floatValue]];
             break;
         case 4:
             _stats.serialno = textField.text;

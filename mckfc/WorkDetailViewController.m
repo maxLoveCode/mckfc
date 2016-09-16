@@ -7,6 +7,8 @@
 //
 
 #import "WorkDetailViewController.h"
+#import "InspectDetailView.h"
+#import "TruckArrivePicker.h"
 
 #define itemHeight 44
 
@@ -19,6 +21,7 @@
 @property (nonatomic,strong) UITableView* tableView;
 @property (nonatomic,strong) ServerManager* server;
 @property (nonatomic,strong) WorkDetail* detail;
+
 
 @end
 
@@ -195,6 +198,9 @@
             }
         }
         else if([workFlow.type isEqualToString:@"arrive"]){
+            if (workFlow.auth) {
+                [self inspectArrivedTruck];
+            }
         }
         else if([workFlow.type isEqualToString:@"checkone"]){
             InspectionViewController* inspectVC = [[InspectionViewController alloc] init];
@@ -256,5 +262,29 @@
     }];
 }
 
+#pragma mark- 车辆到厂
+- (void)inspectArrivedTruck
+{
+    TruckArrivePicker* picker = [[TruckArrivePicker alloc] init];
+    [picker show];
+    [picker setSelectBlock:^(NSDate *result) {
+        NSDateFormatter *formater = [[NSDateFormatter alloc] init];
+        [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString* dateString = [formater stringFromDate:result];
+        NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"token": _server.accessToken,
+                            @"transportid":_transportid}];
+        if (dateString != nil && ![dateString isEqualToString:@""]) {
+            [params addEntriesFromDictionary:@{@"arrivetime":dateString}];
+        }
+        
+        NSLog(@"%@", params);
+        [_server POST:@"truckArrive" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+            [self requestDetail];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+        }];
+    }];
+    
+}
 
 @end

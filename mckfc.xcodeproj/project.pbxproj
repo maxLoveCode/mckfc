@@ -25,6 +25,7 @@
 		2527ECCE1D35D8AC00350DC6 /* CarPlateRegionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2527ECCD1D35D8AC00350DC6 /* CarPlateRegionSelector.m */; };
 		252905891D66DAAF00ECC9EC /* Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 252905881D66DAAF00ECC9EC /* Factory.m */; };
 		252B63261D1CDC7700C108C0 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 252B63251D1CDC7700C108C0 /* NSString+MD5.m */; };
+		252C46CD1D7BA20600EC0349 /* TruckArrivePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C46CC1D7BA20600EC0349 /* TruckArrivePicker.m */; };
 		252EF9B81D2E3C4C00565D00 /* SecurityNav.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9B71D2E3C4C00565D00 /* SecurityNav.m */; };
 		252EF9BB1D2E46A500565D00 /* SecurityHomePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9BA1D2E46A500565D00 /* SecurityHomePage.m */; };
 		252EF9C01D2E482400565D00 /* CommonUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 252EF9BF1D2E482400565D00 /* CommonUserView.m */; };
@@ -69,6 +70,10 @@
 		256F39A81D17891A00175E5A /* MCStarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256F39A71D17891A00175E5A /* MCStarView.m */; };
 		2574C03E1D640E5F00940C95 /* QRDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2574C03D1D640E5F00940C95 /* QRDetailController.m */; };
 		2574C0411D646AF100940C95 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 2574C0401D646AF100940C95 /* Package.m */; };
+		257631231D8B95C600696A1E /* MsgTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 257631221D8B95C600696A1E /* MsgTableViewCell.m */; };
+		257631261D8B95D400696A1E /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 257631251D8B95D400696A1E /* Message.m */; };
+		257631291D8BE6A200696A1E /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 257631281D8BE6A200696A1E /* ChangePasswordViewController.m */; };
+		2576312C1D8BE9A400696A1E /* ChangePassView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2576312B1D8BE9A400696A1E /* ChangePassView.m */; };
 		257C19011D77C72A00A602BE /* RewardDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 257C19001D77C72A00A602BE /* RewardDetailView.m */; };
 		257DB7971D38B4C400C2227E /* workRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7961D38B4C400C2227E /* workRecord.m */; };
 		257DB79A1D38C9BF00C2227E /* WorkDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 257DB7991D38C9BF00C2227E /* WorkDetail.m */; };
@@ -156,6 +161,8 @@
 		252905881D66DAAF00ECC9EC /* Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Factory.m; sourceTree = "<group>"; };
 		252B63241D1CDC7700C108C0 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		252B63251D1CDC7700C108C0 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		252C46CB1D7BA20600EC0349 /* TruckArrivePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TruckArrivePicker.h; sourceTree = "<group>"; };
+		252C46CC1D7BA20600EC0349 /* TruckArrivePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TruckArrivePicker.m; sourceTree = "<group>"; };
 		252EF9B61D2E3C4C00565D00 /* SecurityNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityNav.h; sourceTree = "<group>"; };
 		252EF9B71D2E3C4C00565D00 /* SecurityNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityNav.m; sourceTree = "<group>"; };
 		252EF9B91D2E46A500565D00 /* SecurityHomePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityHomePage.h; sourceTree = "<group>"; };
@@ -246,6 +253,14 @@
 		2574C03D1D640E5F00940C95 /* QRDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRDetailController.m; sourceTree = "<group>"; };
 		2574C03F1D646AF100940C95 /* Package.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Package.h; sourceTree = "<group>"; };
 		2574C0401D646AF100940C95 /* Package.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Package.m; sourceTree = "<group>"; };
+		257631211D8B95C600696A1E /* MsgTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgTableViewCell.h; sourceTree = "<group>"; };
+		257631221D8B95C600696A1E /* MsgTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MsgTableViewCell.m; sourceTree = "<group>"; };
+		257631241D8B95D400696A1E /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		257631251D8B95D400696A1E /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		257631271D8BE6A200696A1E /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
+		257631281D8BE6A200696A1E /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordViewController.m; sourceTree = "<group>"; };
+		2576312A1D8BE9A400696A1E /* ChangePassView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePassView.h; sourceTree = "<group>"; };
+		2576312B1D8BE9A400696A1E /* ChangePassView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePassView.m; sourceTree = "<group>"; };
 		257C18FF1D77C72A00A602BE /* RewardDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardDetailView.h; sourceTree = "<group>"; };
 		257C19001D77C72A00A602BE /* RewardDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardDetailView.m; sourceTree = "<group>"; };
 		257DB7951D38B4C400C2227E /* workRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = workRecord.h; sourceTree = "<group>"; };
@@ -367,6 +382,8 @@
 				254E95961D765A430085E7AF /* RedPocketButton.m */,
 				257C18FF1D77C72A00A602BE /* RewardDetailView.h */,
 				257C19001D77C72A00A602BE /* RewardDetailView.m */,
+				2576312A1D8BE9A400696A1E /* ChangePassView.h */,
+				2576312B1D8BE9A400696A1E /* ChangePassView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -482,6 +499,8 @@
 				252EF9C21D2E4F2300565D00 /* CommonMenuView.m */,
 				256E873B1D65C9F800C82521 /* InspectDetailView.h */,
 				256E873C1D65C9F800C82521 /* InspectDetailView.m */,
+				252C46CB1D7BA20600EC0349 /* TruckArrivePicker.h */,
+				252C46CC1D7BA20600EC0349 /* TruckArrivePicker.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -537,6 +556,8 @@
 				2525CF2D1D3CE59100F3079F /* TODOViewController.m */,
 				2525CF2F1D3DCF3800F3079F /* SettingViewController.h */,
 				2525CF301D3DCF3800F3079F /* SettingViewController.m */,
+				257631271D8BE6A200696A1E /* ChangePasswordViewController.h */,
+				257631281D8BE6A200696A1E /* ChangePasswordViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -660,6 +681,7 @@
 				253BF58F1D0D49F40006086D /* Info.plist */,
 				2512A1C21D111B3E00ED884B /* ServerManager.h */,
 				2512A1C31D111B3E00ED884B /* ServerManager.m */,
+				257631201D8B95A700696A1E /* Messages */,
 				2512A1C51D112F9900ED884B /* Login */,
 				25CECAF81D17A43700C9CCBE /* Loading */,
 				25B004901D191ECC0018EEB1 /* Queue */,
@@ -731,6 +753,19 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		257631201D8B95A700696A1E /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				251E08861D48714400753FC2 /* MsgListViewController.h */,
+				251E08871D48714400753FC2 /* MsgListViewController.m */,
+				257631211D8B95C600696A1E /* MsgTableViewCell.h */,
+				257631221D8B95C600696A1E /* MsgTableViewCell.m */,
+				257631241D8B95D400696A1E /* Message.h */,
+				257631251D8B95D400696A1E /* Message.m */,
+			);
+			name = Messages;
+			sourceTree = "<group>";
+		};
 		25B004901D191ECC0018EEB1 /* Queue */ = {
 			isa = PBXGroup;
 			children = (
@@ -779,8 +814,6 @@
 				25CECB051D17BFC600C9CCBE /* MapViewController.m */,
 				25CECB071D18DE7C00C9CCBE /* TranspotationPlanViewController.h */,
 				25CECB081D18DE7C00C9CCBE /* TranspotationPlanViewController.m */,
-				251E08861D48714400753FC2 /* MsgListViewController.h */,
-				251E08871D48714400753FC2 /* MsgListViewController.m */,
 				25CE35B71D5AF03D005ADBA7 /* nofityViewController.h */,
 				25CE35B81D5AF03D005ADBA7 /* nofityViewController.m */,
 			);
@@ -895,12 +928,13 @@
 		253BF5731D0D49F40006086D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Shanghai Impression Culture Communication Co.,Ltd";
 				TargetAttributes = {
 					253BF57A1D0D49F40006086D = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 8WV7FK6JAM;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1104,8 +1138,10 @@
 				25CB81981D53449600EDD05C /* FarmerQRCodeVC.m in Sources */,
 				257DB79A1D38C9BF00C2227E /* WorkDetail.m in Sources */,
 				252EF9E51D33407900565D00 /* MCDatePickerView.m in Sources */,
+				257631261D8B95D400696A1E /* Message.m in Sources */,
 				251E08881D48714400753FC2 /* MsgListViewController.m in Sources */,
 				252EF9BB1D2E46A500565D00 /* SecurityHomePage.m in Sources */,
+				257631291D8BE6A200696A1E /* ChangePasswordViewController.m in Sources */,
 				2574C03E1D640E5F00940C95 /* QRDetailController.m in Sources */,
 				257DB7A91D38EC0D00C2227E /* QualityCheckViewController.m in Sources */,
 				257DB7B81D3CC7FF00C2227E /* rejectionSelectableCell.m in Sources */,
@@ -1125,6 +1161,8 @@
 				25EDD78B1D0E847800AFB6F3 /* User.m in Sources */,
 				252EF9D91D2F5D2400565D00 /* WorkStatusView.m in Sources */,
 				254E95971D765A430085E7AF /* RedPocketButton.m in Sources */,
+				257631231D8B95C600696A1E /* MsgTableViewCell.m in Sources */,
+				252C46CD1D7BA20600EC0349 /* TruckArrivePicker.m in Sources */,
 				2525CF271D3CDD5000F3079F /* Store.m in Sources */,
 				252EF9C61D2E6EED00565D00 /* QualityControlNav.m in Sources */,
 				2526B05E1D59994600271D16 /* FarmerRecordCell.m in Sources */,
@@ -1162,6 +1200,7 @@
 				252FADB31D5311F10072E26D /* FarmerPlanView.m in Sources */,
 				25CECB001D17A9D700C9CCBE /* LoadingStatsViewController.m in Sources */,
 				256F39991D12B34D00175E5A /* DriverDetailEditorCell.m in Sources */,
+				2576312C1D8BE9A400696A1E /* ChangePassView.m in Sources */,
 				25CECB0F1D18E28B00C9CCBE /* TransportationViewCell.m in Sources */,
 				2525CF2B1D3CDF3A00F3079F /* StoreReport.m in Sources */,
 				252B63261D1CDC7700C108C0 /* NSString+MD5.m in Sources */,
@@ -1231,6 +1270,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1241,8 +1281,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Ma (N58JN4X86Y)";
@@ -1278,6 +1320,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1288,8 +1331,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Ma (N58JN4X86Y)";
@@ -1320,13 +1365,15 @@
 			baseConfigurationReference = BC2D64BC3C296980EB6B04FB /* Pods-mckfc.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai China Impression Culture Communication Co., Ltd (8WV7FK6JAM)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai China Impression Culture Communication Co., Ltd (8WV7FK6JAM)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 8WV7FK6JAM;
 				INFOPLIST_FILE = mckfc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5a35d328-7e3e-4fbf-bfab-90e6ce588a1b";
+				PROVISIONING_PROFILE = "f6fc2524-db2c-4f3b-b3af-7d2db74aa7fa";
+				PROVISIONING_PROFILE_SPECIFIER = mckfc_1.3.3_dev;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1336,13 +1383,15 @@
 			baseConfigurationReference = 2C0EE5CD14F1FFCF59A0F5C5 /* Pods-mckfc.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai China Impression Culture Communication Co., Ltd (8WV7FK6JAM)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai China Impression Culture Communication Co., Ltd (8WV7FK6JAM)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = 8WV7FK6JAM;
 				INFOPLIST_FILE = mckfc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5a35d328-7e3e-4fbf-bfab-90e6ce588a1b";
+				PROVISIONING_PROFILE = "1d364711-db88-45c8-b090-a2b2b7ad21be";
+				PROVISIONING_PROFILE_SPECIFIER = 1_3_2_dis;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -262,6 +262,10 @@
     if (indexPath.row == 0) {
         [self navigateToQRScanner];
     }
+    else if(indexPath.row == 1){
+        MsgListViewController* msgVC = [[MsgListViewController alloc] init];
+        [self.navigationController pushViewController:msgVC animated:YES];
+    }
     else
     {
         [self logout];
