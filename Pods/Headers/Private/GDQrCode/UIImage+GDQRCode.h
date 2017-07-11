@@ -1,0 +1,1 @@
+../../../GDQrCode/GDQrCode/UIImage+GDQRCode.h

@@ -161,7 +161,7 @@
 #pragma mark - menu selection
 -(void)menu:(FarmerPlanView *)Menu DidSelectIndex:(NSInteger)index
 {
-    
+#warning 需要修改的地方
     if (index == 0) {
         
 //        _farmerPlanview.type = FarmerPlanViewTypeQRCode;

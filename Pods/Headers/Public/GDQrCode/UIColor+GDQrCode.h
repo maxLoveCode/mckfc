@@ -1,0 +1,1 @@
+../../../GDQrCode/GDQrCode/UIColor+GDQrCode.h

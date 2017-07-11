@@ -1,0 +1,1 @@
+../../../GDQrCode/GDQrCode/GDQrCode.h

@@ -1,0 +1,1 @@
+../../../GDQrCode/GDQrCode/GDQrCodeScanner.h
