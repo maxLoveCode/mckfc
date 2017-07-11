@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -29,8 +29,12 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>需要允许使用照相机用来获取图片或者扫码</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>我们将在后台持续关注你的位置信息用来监管司机的在途信息。 </string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>上传图片需要您允许麦肯访问你的相册</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

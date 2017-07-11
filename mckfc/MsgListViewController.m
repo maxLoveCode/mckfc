@@ -122,6 +122,7 @@ static NSString * const kCellid = @"MsgCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     MsgTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell fullTextHeight] > 130.0f) {
         NSIndexPath* lastCell = [NSIndexPath indexPathForRow:0 inSection:currentSelect];

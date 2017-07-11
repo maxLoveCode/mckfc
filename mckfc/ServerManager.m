@@ -13,9 +13,9 @@
 
 //满足邵总独特的在正式服务器上测试的需求，所以这里用注释来改
 //#define _BASE_URL @"http://120.26.41.98/"
-#define _BASE_URL @"http://139.196.32.98:8080/"
+#define _BASE_URL @"http://139.196.32.98:8080/mk"
 #else
-#define _BASE_URL @"http://120.26.41.98/"
+#define _BASE_URL @"http://139.196.32.98:8080/"
 #endif
 
 NSString *const b_URL = _BASE_URL;
