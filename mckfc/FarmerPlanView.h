@@ -10,7 +10,7 @@
 #import "FarmerQRCodeView.h"
 #import "FarmerRecordCell.h"
 #import "LoadingStats.h"
-
+#import "CreatQRCodeView.h"
 @class FarmerPlanView;
 
 typedef NS_ENUM(NSUInteger, PlanViewType) {
@@ -22,6 +22,8 @@ typedef NS_ENUM(NSUInteger, PlanViewType) {
     FarmerPlanViewTypeDetail, //详情页面
     
     FarmerPlanViewTypeHistory,
+    FarmerPlanViewTypeCodeQR,
+    
 };
 
 @protocol FarmerPlanViewDelegate <NSObject>
@@ -46,5 +48,6 @@ typedef NS_ENUM(NSUInteger, PlanViewType) {
 
 @property (nonatomic, strong) LoadingStats* stats;
 @property (nonatomic, strong) NSArray* datasource; //order list;
+@property (nonatomic, strong) CreatQRCodeView* creatQRCodeView;
 
 @end

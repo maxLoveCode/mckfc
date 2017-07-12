@@ -33,7 +33,7 @@
 {
     self->_data = data;
     
-    CGFloat labelWidth = 34;
+    CGFloat labelWidth = 36;
     if (width == 0) {
         width = kScreen_Width - 2*k_Margin;
     }
@@ -63,7 +63,7 @@
         [self addSubview:imageView];
         
         if(i!=[data count]-1)
-        {
+        { 
             UIView* cons = [[UIView alloc] init];
             [cons setFrame:CGRectMake(CGRectGetMaxX(label.frame)+5, CGRectGetMidY(imageView.frame), spacing-10, 1)];
             [cons setBackgroundColor:COLOR_THEME];

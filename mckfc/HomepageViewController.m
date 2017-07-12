@@ -6,7 +6,7 @@
 //  Copyright © 2016年 Shanghai Impression Culture Communication Co.,Ltd. All rights reserved.
 //
 #import "HomepageViewController.h"
-
+#import "FarmerViewModel.h"
 @interface HomepageViewController ()<UserViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,menuDelegate,QRCodeReaderDelegate,HUDViewDelegate>
 
 @property (nonatomic, strong) UserView* userview;
@@ -16,7 +16,7 @@
 
 @property (nonatomic, strong) AlertHUDView* alert;
 @property (nonatomic, strong) RedPocketButton* redPocket;
-
+@property (nonatomic, strong) FarmerViewModel *farmerVM;
 @end
 
 @implementation HomepageViewController
@@ -55,6 +55,13 @@
 }
 
 #pragma mark - setter properties
+
+- (FarmerViewModel *)farmerVM{
+    if (!_farmerVM) {
+        self.farmerVM = [[FarmerViewModel alloc] init];
+    }
+    return _farmerVM;
+}
 -(AlertHUDView *)alert
 {
     if (!_alert) {
@@ -290,7 +297,21 @@
         [vc dismissViewControllerAnimated:YES completion:^{
             NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[resultAsString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
             _stats = [[LoadingStats alloc] init];
-            
+        
+            if([json objectForKey:@"fieldid"]){
+                [self.farmerVM getarrivedFieldData:[json objectForKey:@"fieldid"] :^(NSString *msg){
+                    NSLog(@"+++++");
+                    self.alert.title.text = @"扫码正确";
+                    self.alert.detail.text = msg;
+                     self.alert.detail.numberOfLines = 0;
+                     self.alert.tag = 1;
+                    [self.alert show:_alert];
+                      return;
+                } error:^(NSString *msg) {
+                    
+                }];
+            }else{
+
             if([json objectForKey:@"mobile"])
             {
                 if(![[json objectForKey:@"mobile"] isEqualToString:_user.mobile])
@@ -372,7 +393,9 @@
             {
                 [loadingStats confirmBtn];
             }
+            }
         }];
+        
     }];
 }
 

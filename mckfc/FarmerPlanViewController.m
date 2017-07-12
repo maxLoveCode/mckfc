@@ -20,11 +20,13 @@
 #import "AlertHUDView.h"
 #import "ServerManager.h"
 #import "QRDetailController.h"
-
+#import "CreatQRCodeView.h"
+#import "CreatQRViewController.h"
+#import "FarmerViewModel.h"
 #define buttonHeight 40
 #define itemHeight 44
 
-@interface FarmerPlanViewController ()<FarmerPlanViewDelegate, MCPickerViewDelegate,HUDViewDelegate,DatePickerDelegate, AddRecordTableDelegate, FarmerQRCodeVCDelegate>
+@interface FarmerPlanViewController ()<FarmerPlanViewDelegate, MCPickerViewDelegate,HUDViewDelegate,DatePickerDelegate, AddRecordTableDelegate, FarmerQRCodeVCDelegate,didClickPushControllerDelegate>
 {
     NSArray* vendorList;
     NSArray* cityList;
@@ -52,6 +54,7 @@
 
 @property (nonatomic, strong) NSMutableArray* transportationList; //发运订单
 @property (nonatomic, strong) NSMutableArray* historyList; //历史订单
+@property (nonatomic, strong) FarmerViewModel *farmerVM;
 
 @end
 
@@ -79,11 +82,19 @@
     self.botButton.hidden = NO;
 }
 #pragma mark- property setters
+
+- (FarmerViewModel *)farmerVM{
+    if (!_farmerVM) {
+        self.farmerVM = [[FarmerViewModel alloc]init];
+    }
+    return _farmerVM;
+}
 -(FarmerPlanView *)farmerPlanview
 {
     if (!_farmerPlanview) {
         _farmerPlanview = [[FarmerPlanView alloc] init];
         _farmerPlanview.planViewDelegate = self;
+        _farmerPlanview.creatQRCodeView.clickDelegate = self;
     }
     return _farmerPlanview;
 }
@@ -170,8 +181,24 @@
 //        [self addChildViewController:_QRVC];
 //        [_QRVC setQRData:@""];
 //        _farmerPlanview.qrCodeView = (FarmerQRCodeView*)_QRVC.view;
-//        [self reload];
-        [self menu:Menu DidSelectIndex:1];
+        
+        //[self menu:Menu DidSelectIndex:1];
+        
+        if (!_farmerPlanview.stats.field.fieldID) {
+            self.alert.title.text = @"错误";
+            self.alert.detail.text = @"请先选择地块";
+            [self.alert show:self.alert];
+        }else{
+            NSInteger fieldID =  _farmerPlanview.stats.field.fieldID;
+            [self.farmerVM getTruckListData:[NSString stringWithFormat:@"%lu",(long)fieldID] :^(NSString *msg){
+                self.farmerPlanview.creatQRCodeView.dataArray = self.farmerVM.dataSource;
+                _farmerPlanview.type = FarmerPlanViewTypeCodeQR;
+                _farmerPlanview.creatQRCodeView.numberCode = [NSString stringWithFormat:@"%lu",(long)fieldID];
+                [self addReturnButton];
+                [self reload];
+            }];
+        }
+       
     }
     else if (index == 1)
     {
@@ -822,5 +849,11 @@
         [QRDetail setData:cell.json];
         [self.navigationController pushViewController:QRDetail animated:YES];
     }
+}
+
+- (void)didClickPushController{
+    CreatQRViewController *qr = [[CreatQRViewController alloc] init];
+    qr.numberCode = [NSString stringWithFormat:@"%lu",(unsigned long)_farmerPlanview.stats.field.fieldID];
+    [self.navigationController pushViewController:qr animated:NO];
 }
 @end

@@ -12,7 +12,6 @@
 
 #import "FarmerPlanView.h"
 #import "LoadingCell.h"
-
 #import "Masonry.h"
 
 @interface FarmerPlanView ()<UITableViewDelegate,UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
@@ -22,6 +21,7 @@
 }
 
 @property (nonatomic, strong) UICollectionView* menuView;
+
 
 @end
 
@@ -50,6 +50,14 @@
         titleText = @[@"供货城市",@"供应商名称",@"地块编号",@"目的地",@"运输时间"];
     }
     return _mainTableView;
+}
+
+- (CreatQRCodeView *)creatQRCodeView{
+    if (!_creatQRCodeView) {
+        self.creatQRCodeView = [[CreatQRCodeView alloc] init];
+        _creatQRCodeView.frame = CGRectMake(0, 10, kScreen_Width, 2*kScreen_Width/3);
+    }
+    return _creatQRCodeView;
 }
 
 -(UICollectionView *)menuView
@@ -208,6 +216,9 @@
              [cell.accessoryImage addTarget:self action:@selector(tapQrcode:) forControlEvents:UIControlEventTouchUpInside];
              cell.accessoryImage.tag = indexPath.row;
              return cell;
+         } else if (self.type == FarmerPlanViewTypeCodeQR){
+             self.creatQRCodeView.numberCode = [NSString stringWithFormat:@"%ld",(unsigned long)self.stats.field.fieldID];
+             [cell.contentView addSubview:self.creatQRCodeView];
          }
         return cell;
     }
@@ -263,8 +274,7 @@
         return itemHeight;
     }
     else{
-        
-        if (self.type == FarmerPlanViewTypeMenu) {
+        if (self.type == FarmerPlanViewTypeMenu || self.type == FarmerPlanViewTypeCodeQR) {
             return 2*kScreen_Width/3+19;
         }
         else if(self.type == FarmerPlanViewTypeQRCode)
@@ -323,7 +333,7 @@
 //index = 10 when add record
         [self.planViewDelegate tableStats:tableView DidSelectIndex:10];
     }
-    else if(self.type == FarmerPlanViewTypeRecordList && indexPath.section == 2)
+    else if((self.type == FarmerPlanViewTypeRecordList && indexPath.section == 2) || self.type == FarmerPlanViewTypeCodeQR)
     {
         [self.planViewDelegate tableStats:tableView DidSelectIndex:201+indexPath.row];
     }
@@ -335,6 +345,7 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     [self.planViewDelegate menu:self DidSelectIndex:indexPath.item];
 }
 

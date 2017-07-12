@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CreatQRCodeView : UITableView
+@protocol didClickPushControllerDelegate <NSObject>
+@optional
+- (void)didClickPushController;
 
+@end
+@interface CreatQRCodeView : UITableView
+@property (nonatomic,copy) NSString *numberCode;
+@property(nonatomic,weak) id<didClickPushControllerDelegate> clickDelegate;
+@property (nonatomic, strong) NSArray *dataArray;
 @end

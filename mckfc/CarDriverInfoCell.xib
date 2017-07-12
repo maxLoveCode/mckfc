@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="71" id="KGk-i7-Jjw" customClass="CarDriverInfoCell">
+            <rect key="frame" x="0.0" y="0.0" width="308" height="71"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="308" height="71"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="姓名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j9O-LU-Bfp">
+                        <rect key="frame" x="15" y="27" width="29" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="电话" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wVP-vO-9LI">
+                        <rect key="frame" x="264" y="27.5" width="29" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车牌号" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tbq-xe-MYD">
+                        <rect key="frame" x="74" y="27.5" width="43" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="j9O-LU-Bfp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="BNL-uo-3B4"/>
+                    <constraint firstItem="j9O-LU-Bfp" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="PpC-Aj-XcH"/>
+                    <constraint firstItem="wVP-vO-9LI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="QdF-lX-mGA"/>
+                    <constraint firstAttribute="trailing" secondItem="wVP-vO-9LI" secondAttribute="trailing" constant="15" id="U7o-oY-foM"/>
+                    <constraint firstItem="Tbq-xe-MYD" firstAttribute="leading" secondItem="j9O-LU-Bfp" secondAttribute="trailing" constant="30" id="brf-Hp-rJP"/>
+                    <constraint firstItem="Tbq-xe-MYD" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="d5B-bn-3DG"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="carNumLab" destination="Tbq-xe-MYD" id="cij-xz-z2p"/>
+                <outlet property="nameLab" destination="j9O-LU-Bfp" id="HwU-o9-4b1"/>
+                <outlet property="phoneLab" destination="wVP-vO-9LI" id="HY9-rf-jgv"/>
+            </connections>
+            <point key="canvasLocation" x="215" y="35"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -13,13 +13,13 @@
 
 //满足邵总独特的在正式服务器上测试的需求，所以这里用注释来改
 //#define _BASE_URL @"http://120.26.41.98/"
-#define _BASE_URL @"http://139.196.32.98:8080/mk/"
+#define _BASE_URL @"http://139.196.32.98:8333/mk"
 #else
-#define _BASE_URL @"http://120.26.41.98/"
+#define _BASE_URL @"http://139.196.32.98:8080/"
 #endif
 
 NSString *const b_URL = _BASE_URL;
-NSString *const version = @"v1_3_3";
+NSString *const version = @"v1_3_4";
 
 @interface ServerManager ()<HUDViewDelegate>
 
@@ -77,7 +77,7 @@ NSString *const version = @"v1_3_3";
                  [_alert failureWithMsg:_alert msg:responseObject[@"msg"]];
             }
         }
-        if ([responseObject[@"code"] integerValue] == self.successCode) {
+        if ([responseObject[@"code"] integerValue] == self.successCode ) {
             success(task, responseObject);
         }
 //special cases
@@ -127,9 +127,10 @@ NSString *const version = @"v1_3_3";
                 [_alert failureWithMsg:_alert msg:responseObject[@"msg"]];
             }
         }
-        if ([responseObject[@"code"] integerValue] == self.successCode) {
-            success(task, responseObject);
-        }
+         success(task, responseObject);
+//        if ([responseObject[@"code"] integerValue] == self.successCode) {
+//            success(task, responseObject);
+//        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         failure(task, error);
         if (ServerDebugLog) {

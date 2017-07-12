@@ -103,6 +103,13 @@
 		25EDD78B1D0E847800AFB6F3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EDD78A1D0E847800AFB6F3 /* User.m */; };
 		25F0DF141D1D2C5E007CEF17 /* MCPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F0DF131D1D2C5E007CEF17 /* MCPickerView.m */; };
 		551791CC1F14A24B00649FF6 /* CreatQRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 551791CB1F14A24B00649FF6 /* CreatQRCodeView.m */; };
+		5547D32E1F15B0AF005D3EC4 /* QRCreatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547D32C1F15B0AF005D3EC4 /* QRCreatCell.m */; };
+		5547D32F1F15B0AF005D3EC4 /* QRCreatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5547D32D1F15B0AF005D3EC4 /* QRCreatCell.xib */; };
+		5547D3321F15B305005D3EC4 /* CreatQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547D3311F15B305005D3EC4 /* CreatQRViewController.m */; };
+		5547D3361F15B972005D3EC4 /* CarDriverInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547D3341F15B972005D3EC4 /* CarDriverInfoCell.m */; };
+		5547D3371F15B972005D3EC4 /* CarDriverInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5547D3351F15B972005D3EC4 /* CarDriverInfoCell.xib */; };
+		5547D33B1F15C939005D3EC4 /* FarmerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547D33A1F15C939005D3EC4 /* FarmerViewModel.m */; };
+		5547D33E1F15C974005D3EC4 /* TruckListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547D33D1F15C974005D3EC4 /* TruckListModel.m */; };
 		9F8C339E06B29C79F80B7768 /* libPods-mckfc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC755A46007004FF4505318C /* libPods-mckfc.a */; };
 		AF71F86226F29C90F312152B /* libPods-mckfcUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87CDDFF5EFE63C83E9F1566A /* libPods-mckfcUITests.a */; };
 /* End PBXBuildFile section */
@@ -286,6 +293,7 @@
 		257DB7B71D3CC7FF00C2227E /* rejectionSelectableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rejectionSelectableCell.m; sourceTree = "<group>"; };
 		258F01541D3F4C4C002A58B0 /* queueViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = queueViewModel.h; sourceTree = "<group>"; };
 		258F01551D3F4C4C002A58B0 /* queueViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = queueViewModel.m; sourceTree = "<group>"; };
+		25A9418D1D8E11B40078AF29 /* mckfc.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mckfc.entitlements; sourceTree = "<group>"; };
 		25B004911D1920E00018EEB1 /* QueueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueViewController.h; sourceTree = "<group>"; };
 		25B004921D1920E00018EEB1 /* QueueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueViewController.m; sourceTree = "<group>"; };
 		25B004971D1922970018EEB1 /* QRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeView.h; sourceTree = "<group>"; };
@@ -322,6 +330,18 @@
 		359CE7EAC76939D5DD0F26C2 /* libPods-mckfcTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfcTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		551791CA1F14A24B00649FF6 /* CreatQRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatQRCodeView.h; sourceTree = "<group>"; };
 		551791CB1F14A24B00649FF6 /* CreatQRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatQRCodeView.m; sourceTree = "<group>"; };
+		5547D32B1F15B0AF005D3EC4 /* QRCreatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCreatCell.h; sourceTree = "<group>"; };
+		5547D32C1F15B0AF005D3EC4 /* QRCreatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCreatCell.m; sourceTree = "<group>"; };
+		5547D32D1F15B0AF005D3EC4 /* QRCreatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRCreatCell.xib; sourceTree = "<group>"; };
+		5547D3301F15B305005D3EC4 /* CreatQRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatQRViewController.h; sourceTree = "<group>"; };
+		5547D3311F15B305005D3EC4 /* CreatQRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatQRViewController.m; sourceTree = "<group>"; };
+		5547D3331F15B972005D3EC4 /* CarDriverInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarDriverInfoCell.h; sourceTree = "<group>"; };
+		5547D3341F15B972005D3EC4 /* CarDriverInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarDriverInfoCell.m; sourceTree = "<group>"; };
+		5547D3351F15B972005D3EC4 /* CarDriverInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarDriverInfoCell.xib; sourceTree = "<group>"; };
+		5547D3391F15C939005D3EC4 /* FarmerViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FarmerViewModel.h; sourceTree = "<group>"; };
+		5547D33A1F15C939005D3EC4 /* FarmerViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FarmerViewModel.m; sourceTree = "<group>"; };
+		5547D33C1F15C974005D3EC4 /* TruckListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TruckListModel.h; sourceTree = "<group>"; };
+		5547D33D1F15C974005D3EC4 /* TruckListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TruckListModel.m; sourceTree = "<group>"; };
 		7A791D322DF96A2C5C57FD9B /* Pods-mckfcUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfcUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mckfcUITests/Pods-mckfcUITests.release.xcconfig"; sourceTree = "<group>"; };
 		87CDDFF5EFE63C83E9F1566A /* libPods-mckfcUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfcUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A232FEA72351969C26071DAE /* Pods-mckfcTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfcTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mckfcTests/Pods-mckfcTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -581,6 +601,7 @@
 		252FADAB1D530D580072E26D /* Farmer */ = {
 			isa = PBXGroup;
 			children = (
+				5547D3381F15C916005D3EC4 /* ViewModel */,
 				252FADAD1D530D7A0072E26D /* View */,
 				252FADAC1D530D6C0072E26D /* Controller */,
 			);
@@ -592,8 +613,8 @@
 			children = (
 				252FADAE1D530DA30072E26D /* FarmerPlanViewController.h */,
 				252FADAF1D530DA30072E26D /* FarmerPlanViewController.m */,
-				25CB81961D53449600EDD05C /* FarmerQRCodeVC.h */,
 				25CB81971D53449600EDD05C /* FarmerQRCodeVC.m */,
+				25CB81961D53449600EDD05C /* FarmerQRCodeVC.h */,
 				25CB819C1D5423CB00EDD05C /* FarmerNav.h */,
 				25CB819D1D5423CB00EDD05C /* FarmerNav.m */,
 				25CB819F1D54513F00EDD05C /* AddRecordViewController.h */,
@@ -617,6 +638,14 @@
 				2526B05D1D59994600271D16 /* FarmerRecordCell.m */,
 				551791CA1F14A24B00649FF6 /* CreatQRCodeView.h */,
 				551791CB1F14A24B00649FF6 /* CreatQRCodeView.m */,
+				5547D32B1F15B0AF005D3EC4 /* QRCreatCell.h */,
+				5547D32C1F15B0AF005D3EC4 /* QRCreatCell.m */,
+				5547D32D1F15B0AF005D3EC4 /* QRCreatCell.xib */,
+				5547D3331F15B972005D3EC4 /* CarDriverInfoCell.h */,
+				5547D3341F15B972005D3EC4 /* CarDriverInfoCell.m */,
+				5547D3351F15B972005D3EC4 /* CarDriverInfoCell.xib */,
+				5547D3301F15B305005D3EC4 /* CreatQRViewController.h */,
+				5547D3311F15B305005D3EC4 /* CreatQRViewController.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -692,6 +721,7 @@
 		253BF57D1D0D49F40006086D /* mckfc */ = {
 			isa = PBXGroup;
 			children = (
+				25A9418D1D8E11B40078AF29 /* mckfc.entitlements */,
 				253BF5811D0D49F40006086D /* AppDelegate.h */,
 				253BF5821D0D49F40006086D /* AppDelegate.m */,
 				253BF58A1D0D49F40006086D /* Assets.xcassets */,
@@ -849,8 +879,19 @@
 				257DB7991D38C9BF00C2227E /* WorkDetail.m */,
 				257DB79B1D38D24000C2227E /* WorkFlow.h */,
 				257DB79C1D38D24000C2227E /* WorkFlow.m */,
+				5547D33C1F15C974005D3EC4 /* TruckListModel.h */,
+				5547D33D1F15C974005D3EC4 /* TruckListModel.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		5547D3381F15C916005D3EC4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5547D3391F15C939005D3EC4 /* FarmerViewModel.h */,
+				5547D33A1F15C939005D3EC4 /* FarmerViewModel.m */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		685021980353375A90C54F86 /* Frameworks */ = {
@@ -986,6 +1027,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5547D3371F15B972005D3EC4 /* CarDriverInfoCell.xib in Resources */,
+				5547D32F1F15B0AF005D3EC4 /* QRCreatCell.xib in Resources */,
 				253BF58E1D0D49F40006086D /* LaunchScreen.storyboard in Resources */,
 				253BF58B1D0D49F40006086D /* Assets.xcassets in Resources */,
 			);
@@ -1159,6 +1202,7 @@
 				25CB81981D53449600EDD05C /* FarmerQRCodeVC.m in Sources */,
 				257DB79A1D38C9BF00C2227E /* WorkDetail.m in Sources */,
 				252EF9E51D33407900565D00 /* MCDatePickerView.m in Sources */,
+				5547D33B1F15C939005D3EC4 /* FarmerViewModel.m in Sources */,
 				257631261D8B95D400696A1E /* Message.m in Sources */,
 				251E08881D48714400753FC2 /* MsgListViewController.m in Sources */,
 				252EF9BB1D2E46A500565D00 /* SecurityHomePage.m in Sources */,
@@ -1188,6 +1232,7 @@
 				2525CF271D3CDD5000F3079F /* Store.m in Sources */,
 				252EF9C61D2E6EED00565D00 /* QualityControlNav.m in Sources */,
 				2526B05E1D59994600271D16 /* FarmerRecordCell.m in Sources */,
+				5547D32E1F15B0AF005D3EC4 /* QRCreatCell.m in Sources */,
 				252EF9EE1D336F4400565D00 /* Field.m in Sources */,
 				256F39811D12836900175E5A /* SignUpView.m in Sources */,
 				257DB7AC1D39E0D700C2227E /* WorkFlowInterface.m in Sources */,
@@ -1203,6 +1248,7 @@
 				25CE35B91D5AF03D005ADBA7 /* nofityViewController.m in Sources */,
 				252EF9D31D2F4D2800565D00 /* WorkRecordViewController.m in Sources */,
 				252EF9E21D30AF9F00565D00 /* WorkFlowCell.m in Sources */,
+				5547D3361F15B972005D3EC4 /* CarDriverInfoCell.m in Sources */,
 				252EF9C91D2E6F1000565D00 /* QualityControlHomePage.m in Sources */,
 				252EF9DF1D30AC1B00565D00 /* orderGeneralReport.m in Sources */,
 				25CB819B1D5344C400EDD05C /* FarmerQRCodeView.m in Sources */,
@@ -1212,6 +1258,7 @@
 				25CB819E1D5423CB00EDD05C /* FarmerNav.m in Sources */,
 				256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */,
 				252EF9EB1D3369E900565D00 /* City.m in Sources */,
+				5547D33E1F15C974005D3EC4 /* TruckListModel.m in Sources */,
 				25CB81A11D54513F00EDD05C /* AddRecordViewController.m in Sources */,
 				256F39961D12B2A000175E5A /* DriverDetailEditorController.m in Sources */,
 				251F378F1D26698C00B423D1 /* ReportCollectionView.m in Sources */,
@@ -1238,6 +1285,7 @@
 				252EF9B81D2E3C4C00565D00 /* SecurityNav.m in Sources */,
 				252EF9D61D2F5C4100565D00 /* WorkRecordCell.m in Sources */,
 				251F378B1D26447D00B423D1 /* Report.m in Sources */,
+				5547D3321F15B305005D3EC4 /* CreatQRViewController.m in Sources */,
 				253BF5801D0D49F40006086D /* main.m in Sources */,
 				256F39871D12885B00175E5A /* VerifyViewController.m in Sources */,
 				2574C0411D646AF100940C95 /* Package.m in Sources */,
@@ -1387,6 +1435,7 @@
 			baseConfigurationReference = DCACAB3CF11228506D0BA4A1 /* Pods-mckfc.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = mckfc/mckfc.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
@@ -1405,9 +1454,10 @@
 			baseConfigurationReference = 26FF69F8ECE8B2F2E813F360 /* Pods-mckfc.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = mckfc/mckfc.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8WV7FK6JAM;
 				INFOPLIST_FILE = mckfc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;
