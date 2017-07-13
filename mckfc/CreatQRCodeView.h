@@ -16,5 +16,4 @@
 @interface CreatQRCodeView : UITableView
 @property (nonatomic,copy) NSString *numberCode;
 @property(nonatomic,weak) id<didClickPushControllerDelegate> clickDelegate;
-@property (nonatomic, strong) NSArray *dataArray;
 @end

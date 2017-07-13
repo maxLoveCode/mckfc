@@ -22,7 +22,7 @@
 #import "QRDetailController.h"
 #import "CreatQRCodeView.h"
 #import "CreatQRViewController.h"
-#import "FarmerViewModel.h"
+
 #define buttonHeight 40
 #define itemHeight 44
 
@@ -54,7 +54,7 @@
 
 @property (nonatomic, strong) NSMutableArray* transportationList; //发运订单
 @property (nonatomic, strong) NSMutableArray* historyList; //历史订单
-@property (nonatomic, strong) FarmerViewModel *farmerVM;
+
 
 @end
 
@@ -83,12 +83,7 @@
 }
 #pragma mark- property setters
 
-- (FarmerViewModel *)farmerVM{
-    if (!_farmerVM) {
-        self.farmerVM = [[FarmerViewModel alloc]init];
-    }
-    return _farmerVM;
-}
+
 -(FarmerPlanView *)farmerPlanview
 {
     if (!_farmerPlanview) {
@@ -190,13 +185,11 @@
             [self.alert show:self.alert];
         }else{
             NSInteger fieldID =  _farmerPlanview.stats.field.fieldID;
-            [self.farmerVM getTruckListData:[NSString stringWithFormat:@"%lu",(long)fieldID] :^(NSString *msg){
-                self.farmerPlanview.creatQRCodeView.dataArray = self.farmerVM.dataSource;
-                _farmerPlanview.type = FarmerPlanViewTypeCodeQR;
-                _farmerPlanview.creatQRCodeView.numberCode = [NSString stringWithFormat:@"%lu",(long)fieldID];
-                [self addReturnButton];
-                [self reload];
-            }];
+            _farmerPlanview.type = FarmerPlanViewTypeCodeQR;
+            _farmerPlanview.creatQRCodeView.numberCode = [NSString stringWithFormat:@"%lu",(long)fieldID];
+            [self addReturnButton];
+            [self reload];
+            
         }
        
     }

@@ -32,12 +32,16 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshTruckList" object:nil userInfo:nil];
+}
 
 
 - (void)creatQImg{
     CIFilter *fileter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
     [fileter setDefaults];
-    NSDictionary *dic = @{@"fieldid":self.numberCode};
+    NSDictionary *dic = @{@"landId":self.numberCode,@"providerId":@"0"};
     NSData *data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
     [fileter setValue:data forKey:@"inputMessage"];
     CIImage *ciImg = [fileter outputImage];

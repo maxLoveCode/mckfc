@@ -9,11 +9,11 @@
 #import "CreatQRCodeView.h"
 #import "QRCreatCell.h"
 #import "CarDriverInfoCell.h"
-
+#import "FarmerViewModel.h"
 NSString *cellID = @"cellID";
 NSString *qrCreatCellID = @"qrCreatCellID";
 @interface CreatQRCodeView()<UITableViewDataSource,UITableViewDelegate>
-
+@property (nonatomic, strong) FarmerViewModel *farmerVM;
 @end
 
 @implementation CreatQRCodeView
@@ -24,22 +24,51 @@ NSString *qrCreatCellID = @"qrCreatCellID";
     }
     return self;
 }
+- (FarmerViewModel *)farmerVM{
+    if (!_farmerVM) {
+        self.farmerVM = [[FarmerViewModel alloc]init];
+    }
+    return _farmerVM;
+}
+
+- (void)setNumberCode:(NSString *)numberCode{
+    _numberCode = numberCode;
+    [self.farmerVM getTruckListData:numberCode :^(NSString *msg){
+        [self reloadData];
+    }];
+    
+}
 
 - (void)setDataArray:(NSArray *)dataArray{
-    _dataArray = dataArray;
+    ;
     [self reloadData];
+    
 }
 
 - (void)setupUI{
     self.dataSource = self;
       [self registerNib:[UINib nibWithNibName:@"CarDriverInfoCell" bundle:nil] forCellReuseIdentifier:cellID];
     [self registerNib:[UINib nibWithNibName:@"QRCreatCell" bundle:nil] forCellReuseIdentifier:qrCreatCellID];
+    self.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.delegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:@"refreshTruckList" object:nil];
 }
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+- (void)refreshData{
+    [self.farmerVM getTruckListData:self.numberCode :^(NSString *msg){
+        [self reloadData];
+    }];
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return 80;
+        return 50;
+        ;
     }else{
         return 50;
     }
@@ -49,7 +78,7 @@ NSString *qrCreatCellID = @"qrCreatCellID";
     if (section == 0) {
         return 1;
     }else{
-        return self.dataArray.count;
+        return self.farmerVM.dataSource.count;
     }
 }
 
@@ -75,7 +104,7 @@ NSString *qrCreatCellID = @"qrCreatCellID";
         return cell;
     }else{
       CarDriverInfoCell  *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
-        cell.model = self.dataArray[indexPath.row];
+        cell.model = self.farmerVM.dataSource[indexPath.row];
          cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -85,13 +114,6 @@ NSString *qrCreatCellID = @"qrCreatCellID";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         [self.clickDelegate didClickPushController];
-    }else{
-        TruckListModel *model = self.dataArray[indexPath.row];
-        if (model.mobile && ![model.mobile isEqualToString:@""]) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",model.mobile]]];
-        }else{
-          
-        }
     }
 }
 

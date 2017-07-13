@@ -55,7 +55,7 @@
 - (CreatQRCodeView *)creatQRCodeView{
     if (!_creatQRCodeView) {
         self.creatQRCodeView = [[CreatQRCodeView alloc] init];
-        _creatQRCodeView.frame = CGRectMake(0, 10, kScreen_Width, 2*kScreen_Width/3);
+        _creatQRCodeView.frame = CGRectMake(0, 10, kScreen_Width, kScreen_Height - itemHeight * 7);
     }
     return _creatQRCodeView;
 }
@@ -274,8 +274,10 @@
         return itemHeight;
     }
     else{
-        if (self.type == FarmerPlanViewTypeMenu || self.type == FarmerPlanViewTypeCodeQR) {
+        if (self.type == FarmerPlanViewTypeMenu) {
             return 2*kScreen_Width/3+19;
+        } else if (self.type == FarmerPlanViewTypeCodeQR){
+            return kScreen_Height - itemHeight * 7;
         }
         else if(self.type == FarmerPlanViewTypeQRCode)
         {

@@ -11,8 +11,7 @@
 @interface CarDriverInfoCell()
 @property (weak, nonatomic) IBOutlet UILabel *nameLab;
 @property (weak, nonatomic) IBOutlet UILabel *carNumLab;
-@property (weak, nonatomic) IBOutlet UILabel *phoneLab;
-
+@property (weak, nonatomic) IBOutlet UIButton *phoneBtn;
 
 @end
 
@@ -25,9 +24,19 @@
 
 
 - (void)setModel:(TruckListModel *)model{
+    _model = model;
     _nameLab.text = model.driver;
     _carNumLab.text = model.truckno;
-    _phoneLab.text = model.mobile;
+    [_phoneBtn setTitle:model.mobile forState:UIControlStateNormal];
+    [_phoneBtn addTarget:self action:@selector(callPhone) forControlEvents:UIControlEventTouchUpInside];
+    
+}
+
+- (void)callPhone{
+    if (self.model.mobile && ![self.model.mobile isEqualToString:@""]) {
+         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",self.model.mobile]]];
+    }
+   
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

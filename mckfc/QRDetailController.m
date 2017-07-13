@@ -23,6 +23,7 @@
     }];
 }
 
+
 -(QRCodeView *)qrcode
 {
     if (!_qrcode) {

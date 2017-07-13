@@ -19,37 +19,35 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="姓名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j9O-LU-Bfp">
-                        <rect key="frame" x="15" y="27" width="29" height="17"/>
+                        <rect key="frame" x="20" y="27" width="29" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="电话" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wVP-vO-9LI">
-                        <rect key="frame" x="264" y="27.5" width="29" height="17"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车牌号" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tbq-xe-MYD">
-                        <rect key="frame" x="74" y="27.5" width="43" height="17"/>
+                        <rect key="frame" x="79" y="27.5" width="43" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y7b-wi-aT0">
+                        <rect key="frame" x="257" y="21" width="31" height="30"/>
+                        <state key="normal" title="电话"/>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="j9O-LU-Bfp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="BNL-uo-3B4"/>
+                    <constraint firstItem="j9O-LU-Bfp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="BNL-uo-3B4"/>
                     <constraint firstItem="j9O-LU-Bfp" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="PpC-Aj-XcH"/>
-                    <constraint firstItem="wVP-vO-9LI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="QdF-lX-mGA"/>
-                    <constraint firstAttribute="trailing" secondItem="wVP-vO-9LI" secondAttribute="trailing" constant="15" id="U7o-oY-foM"/>
+                    <constraint firstItem="Y7b-wi-aT0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Yh7-TO-6aN"/>
                     <constraint firstItem="Tbq-xe-MYD" firstAttribute="leading" secondItem="j9O-LU-Bfp" secondAttribute="trailing" constant="30" id="brf-Hp-rJP"/>
                     <constraint firstItem="Tbq-xe-MYD" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="d5B-bn-3DG"/>
+                    <constraint firstAttribute="trailing" secondItem="Y7b-wi-aT0" secondAttribute="trailing" constant="20" id="tgu-mn-jaW"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="carNumLab" destination="Tbq-xe-MYD" id="cij-xz-z2p"/>
                 <outlet property="nameLab" destination="j9O-LU-Bfp" id="HwU-o9-4b1"/>
-                <outlet property="phoneLab" destination="wVP-vO-9LI" id="HY9-rf-jgv"/>
+                <outlet property="phoneBtn" destination="Y7b-wi-aT0" id="V9R-WS-TQR"/>
             </connections>
             <point key="canvasLocation" x="215" y="35"/>
         </tableViewCell>

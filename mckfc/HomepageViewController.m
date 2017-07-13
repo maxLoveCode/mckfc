@@ -298,8 +298,8 @@
             NSDictionary* json = [NSJSONSerialization JSONObjectWithData:[resultAsString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
             _stats = [[LoadingStats alloc] init];
         
-            if([json objectForKey:@"fieldid"]){
-                [self.farmerVM getarrivedFieldData:[json objectForKey:@"fieldid"] :^(NSString *msg){
+            if([[json objectForKey:@"providerId"] isEqualToString:@"0"]  && [json objectForKey:@"landId"] ){
+                [self.farmerVM getarrivedFieldData:[json objectForKey:@"landId"] :^(NSString *msg){
                     NSLog(@"+++++");
                     self.alert.title.text = @"扫码正确";
                     self.alert.detail.text = msg;
