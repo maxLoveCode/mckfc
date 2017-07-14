@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@protocol didClickPushControllerDelegate <NSObject>
+@protocol didClickUploadImgDelegate <NSObject>
 @optional
-- (void)didClickPushController;
+- (void)didClickUpdateImg:(NSString*)fielduserid;
 
 @end
+
 @interface CreatQRCodeView : UITableView
 @property (nonatomic,copy) NSString *numberCode;
-@property(nonatomic,weak) id<didClickPushControllerDelegate> clickDelegate;
+@property (nonatomic,weak) id<didClickUploadImgDelegate> uploadImgDelegate;
 @end

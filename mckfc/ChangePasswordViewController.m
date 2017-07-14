@@ -32,11 +32,19 @@
     _serverManager = [ServerManager sharedInstance];
     defaultArray = @[@"请输入原密码",@"请输入新密码",@"请再输入一次密码"];
     UIImageView* bgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(returnKeyboard)];
+    tap.numberOfTapsRequired = 1;
+    bgView.userInteractionEnabled = YES;
+    [bgView addGestureRecognizer:tap];
     bgView.image = [UIImage imageNamed:@"login_bg"];
     [self.view addSubview:bgView];
     [self.view addSubview:self.changePassView];
     [self.view updateConstraintsIfNeeded];
     self.title = @"修改密码";
+}
+
+- (void)returnKeyboard{
+    [self.view endEditing:YES];
 }
 
 -(AlertHUDView *)alert

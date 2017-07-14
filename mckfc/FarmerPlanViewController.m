@@ -22,11 +22,12 @@
 #import "QRDetailController.h"
 #import "CreatQRCodeView.h"
 #import "CreatQRViewController.h"
+#import "DriverUploadImgViewController.h"
 
 #define buttonHeight 40
 #define itemHeight 44
 
-@interface FarmerPlanViewController ()<FarmerPlanViewDelegate, MCPickerViewDelegate,HUDViewDelegate,DatePickerDelegate, AddRecordTableDelegate, FarmerQRCodeVCDelegate,didClickPushControllerDelegate>
+@interface FarmerPlanViewController ()<FarmerPlanViewDelegate, MCPickerViewDelegate,HUDViewDelegate,DatePickerDelegate, AddRecordTableDelegate, FarmerQRCodeVCDelegate,didClickUploadImgDelegate>
 {
     NSArray* vendorList;
     NSArray* cityList;
@@ -89,7 +90,7 @@
     if (!_farmerPlanview) {
         _farmerPlanview = [[FarmerPlanView alloc] init];
         _farmerPlanview.planViewDelegate = self;
-        _farmerPlanview.creatQRCodeView.clickDelegate = self;
+        _farmerPlanview.creatQRCodeView.uploadImgDelegate = self;
     }
     return _farmerPlanview;
 }
@@ -185,18 +186,21 @@
             [self.alert show:self.alert];
         }else{
             NSInteger fieldID =  _farmerPlanview.stats.field.fieldID;
-            _farmerPlanview.type = FarmerPlanViewTypeCodeQR;
-            _farmerPlanview.creatQRCodeView.numberCode = [NSString stringWithFormat:@"%lu",(long)fieldID];
-            [self addReturnButton];
-            [self reload];
-            
+            CreatQRViewController *qr = [[CreatQRViewController alloc] init];
+            qr.numberCode = [NSString stringWithFormat:@"%lu",(long)fieldID];
+            [self.navigationController pushViewController:qr animated:NO];
         }
        
     }
     else if (index == 1)
     {
+        if (!_farmerPlanview.stats.departuretime) {
+            self.alert.title.text = @"错误";
+            self.alert.detail.text = @"请先选择运输时间";
+            [self.alert show:self.alert];
+        }else{
         [[UIApplication sharedApplication].keyWindow addSubview:self.botButton];
-        [_botButton setTitle:@"上传全部" forState:UIControlStateNormal];
+        [_botButton setTitle:@"一键清空" forState:UIControlStateNormal];
         if (!_addRecordVC) {
             _addRecordVC = [[AddRecordViewController alloc] init];
             [self addChildViewController:_addRecordVC];
@@ -206,20 +210,33 @@
         _farmerPlanview.datasource = self.transportationList;
         _farmerPlanview.addRecordView = _addRecordVC.tableView;
         [self reload];
+        }
     }
     else if (index == 2)
     {
-        [self requestUploadListsuccess:^(NSMutableArray *result) {
-            _farmerPlanview.type = FarmerPlanViewTypeHistory;
-            self.historyList = result;
-            _farmerPlanview.datasource = result;
-            _addRecordVC = [[AddRecordViewController alloc] init];
-            [self addChildViewController:_addRecordVC];
-            _addRecordVC.delegate = self;
-            _farmerPlanview.addRecordView = _addRecordVC.tableView;
+        if (!_farmerPlanview.stats.field.fieldID) {
+            self.alert.title.text = @"错误";
+            self.alert.detail.text = @"请先选择地块";
+            [self.alert show:self.alert];
+        }else{
+            NSInteger fieldID =  _farmerPlanview.stats.field.fieldID;
+            _farmerPlanview.type = FarmerPlanViewTypeCodeQR;
+            _farmerPlanview.creatQRCodeView.numberCode = [NSString stringWithFormat:@"%lu",(long)fieldID];
             [self addReturnButton];
             [self reload];
-        }];
+            
+        }
+//        [self requestUploadListsuccess:^(NSMutableArray *result) {
+//            _farmerPlanview.type = FarmerPlanViewTypeHistory;
+//            self.historyList = result;
+//            _farmerPlanview.datasource = result;
+//            _addRecordVC = [[AddRecordViewController alloc] init];
+//            [self addChildViewController:_addRecordVC];
+//            _addRecordVC.delegate = self;
+//            _farmerPlanview.addRecordView = _addRecordVC.tableView;
+//            [self addReturnButton];
+//            [self reload];
+//        }];
     }
     else
     {
@@ -362,7 +379,7 @@
         NSDate* date = [formatter2 dateFromString:@"00:00"];
         self.addRecordVC.stats.departuretime = date;
         [self.addRecordVC.tableView reloadData];
-        [_botButton setTitle:@"确认并保存" forState:UIControlStateNormal];
+        [_botButton setTitle:@"确认并上传" forState:UIControlStateNormal];
         [self reload];
     }
     else if (index >= 201 && self.farmerPlanview.type == FarmerPlanViewTypeRecordList) //看不懂了吗，没错，实在太混乱了，参照 farmerplanview
@@ -409,15 +426,17 @@
             //[self.transportationList addObject:data];
             [self.transportationList insertObject:data atIndex:0];
             self.farmerPlanview.datasource = self.transportationList;
-            
-            [_botButton setTitle:@"上传全部" forState:UIControlStateNormal];
+            [_botButton setTitle:@"一键清空" forState:UIControlStateNormal];
             _farmerPlanview.type = FarmerPlanViewTypeRecordList;
             [self reload];
+            [self uploadDatas];
         }
     }
     else if (_farmerPlanview.type == FarmerPlanViewTypeRecordList)
     {
-        [self uploadDatas];
+        [self.transportationList removeAllObjects];
+        self.farmerPlanview.datasource = self.transportationList;
+        [self reload];
     }
     else if (_farmerPlanview.type == FarmerPlanViewTypeDetail)
     {
@@ -599,10 +618,10 @@
     NSLog(@"%@",params);
     [_server POST:@"uploadTransport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject);
-        self.alert.title.text = @"成功";
-        self.alert.detail.text = @"上传完成";
-        [self.alert show:self.alert];
-        self.transportationList = [[NSMutableArray alloc] init];
+//        self.alert.title.text = @"成功";
+//        self.alert.detail.text = @"上传完成";
+//        [self.alert show:self.alert];
+       // self.transportationList = [[NSMutableArray alloc] init];
         self.farmerPlanview.datasource = self.transportationList;
         [self reload];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -844,9 +863,11 @@
     }
 }
 
-- (void)didClickPushController{
-    CreatQRViewController *qr = [[CreatQRViewController alloc] init];
-    qr.numberCode = [NSString stringWithFormat:@"%lu",(unsigned long)_farmerPlanview.stats.field.fieldID];
-    [self.navigationController pushViewController:qr animated:NO];
+#pragma -mark 上传图片
+- (void)didClickUpdateImg:(NSString *)fielduserid{
+    DriverUploadImgViewController *uploadCon = [[DriverUploadImgViewController alloc]initWithNibName:@"DriverUploadImgViewController" bundle:nil];
+    uploadCon.fielduserid = fielduserid;
+    [self.navigationController pushViewController:uploadCon animated:NO];
 }
+
 @end

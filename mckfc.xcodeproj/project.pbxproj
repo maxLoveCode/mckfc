@@ -103,13 +103,26 @@
 		25EDD78B1D0E847800AFB6F3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EDD78A1D0E847800AFB6F3 /* User.m */; };
 		25F0DF141D1D2C5E007CEF17 /* MCPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F0DF131D1D2C5E007CEF17 /* MCPickerView.m */; };
 		551791CC1F14A24B00649FF6 /* CreatQRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 551791CB1F14A24B00649FF6 /* CreatQRCodeView.m */; };
-		5547D32E1F15B0AF005D3EC4 /* QRCreatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547D32C1F15B0AF005D3EC4 /* QRCreatCell.m */; };
-		5547D32F1F15B0AF005D3EC4 /* QRCreatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5547D32D1F15B0AF005D3EC4 /* QRCreatCell.xib */; };
 		5547D3321F15B305005D3EC4 /* CreatQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547D3311F15B305005D3EC4 /* CreatQRViewController.m */; };
 		5547D3361F15B972005D3EC4 /* CarDriverInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547D3341F15B972005D3EC4 /* CarDriverInfoCell.m */; };
 		5547D3371F15B972005D3EC4 /* CarDriverInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5547D3351F15B972005D3EC4 /* CarDriverInfoCell.xib */; };
 		5547D33B1F15C939005D3EC4 /* FarmerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547D33A1F15C939005D3EC4 /* FarmerViewModel.m */; };
 		5547D33E1F15C974005D3EC4 /* TruckListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547D33D1F15C974005D3EC4 /* TruckListModel.m */; };
+		5562C0D21F18AD3B00ACB12E /* WSImageBroserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562C0BA1F18AD3B00ACB12E /* WSImageBroserCell.m */; };
+		5562C0D31F18AD3B00ACB12E /* WSImageBroswerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562C0BC1F18AD3B00ACB12E /* WSImageBroswerVC.m */; };
+		5562C0D41F18AD3B00ACB12E /* WSImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562C0BE1F18AD3B00ACB12E /* WSImageModel.m */; };
+		5562C0D51F18AD3B00ACB12E /* WSPhotosBroseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562C0C01F18AD3B00ACB12E /* WSPhotosBroseVC.m */; };
+		5562C0D61F18AD3B00ACB12E /* JFAssetHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562C0C31F18AD3B00ACB12E /* JFAssetHelper.m */; };
+		5562C0D71F18AD3B00ACB12E /* JFImageCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562C0C51F18AD3B00ACB12E /* JFImageCollectionViewController.m */; };
+		5562C0D81F18AD3B00ACB12E /* JFImageGroupTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562C0C71F18AD3B00ACB12E /* JFImageGroupTableViewController.m */; };
+		5562C0D91F18AD3B00ACB12E /* JFImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562C0C91F18AD3B00ACB12E /* JFImageManager.m */; };
+		5562C0DA1F18AD3B00ACB12E /* JFImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562C0CB1F18AD3B00ACB12E /* JFImagePickerController.m */; };
+		5562C0DB1F18AD3B00ACB12E /* JFImagePickerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562C0CD1F18AD3B00ACB12E /* JFImagePickerViewCell.m */; };
+		5562C0DC1F18AD3B00ACB12E /* JFPhotoBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562C0CF1F18AD3B00ACB12E /* JFPhotoBrowserViewController.m */; };
+		5562C0DD1F18AD3B00ACB12E /* JFPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562C0D11F18AD3B00ACB12E /* JFPhotoView.m */; };
+		5562C0E11F18AD6200ACB12E /* WSImagePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562C0E01F18AD6200ACB12E /* WSImagePickerView.m */; };
+		5562C0E51F18ADF700ACB12E /* DriverUploadImgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562C0E31F18ADF700ACB12E /* DriverUploadImgViewController.m */; };
+		5562C0E61F18ADF700ACB12E /* DriverUploadImgViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5562C0E41F18ADF700ACB12E /* DriverUploadImgViewController.xib */; };
 		9F8C339E06B29C79F80B7768 /* libPods-mckfc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC755A46007004FF4505318C /* libPods-mckfc.a */; };
 		AF71F86226F29C90F312152B /* libPods-mckfcUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87CDDFF5EFE63C83E9F1566A /* libPods-mckfcUITests.a */; };
 /* End PBXBuildFile section */
@@ -330,9 +343,6 @@
 		359CE7EAC76939D5DD0F26C2 /* libPods-mckfcTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfcTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		551791CA1F14A24B00649FF6 /* CreatQRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatQRCodeView.h; sourceTree = "<group>"; };
 		551791CB1F14A24B00649FF6 /* CreatQRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatQRCodeView.m; sourceTree = "<group>"; };
-		5547D32B1F15B0AF005D3EC4 /* QRCreatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCreatCell.h; sourceTree = "<group>"; };
-		5547D32C1F15B0AF005D3EC4 /* QRCreatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCreatCell.m; sourceTree = "<group>"; };
-		5547D32D1F15B0AF005D3EC4 /* QRCreatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRCreatCell.xib; sourceTree = "<group>"; };
 		5547D3301F15B305005D3EC4 /* CreatQRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatQRViewController.h; sourceTree = "<group>"; };
 		5547D3311F15B305005D3EC4 /* CreatQRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatQRViewController.m; sourceTree = "<group>"; };
 		5547D3331F15B972005D3EC4 /* CarDriverInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarDriverInfoCell.h; sourceTree = "<group>"; };
@@ -342,6 +352,35 @@
 		5547D33A1F15C939005D3EC4 /* FarmerViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FarmerViewModel.m; sourceTree = "<group>"; };
 		5547D33C1F15C974005D3EC4 /* TruckListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TruckListModel.h; sourceTree = "<group>"; };
 		5547D33D1F15C974005D3EC4 /* TruckListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TruckListModel.m; sourceTree = "<group>"; };
+		5562C0B91F18AD3B00ACB12E /* WSImageBroserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSImageBroserCell.h; sourceTree = "<group>"; };
+		5562C0BA1F18AD3B00ACB12E /* WSImageBroserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSImageBroserCell.m; sourceTree = "<group>"; };
+		5562C0BB1F18AD3B00ACB12E /* WSImageBroswerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSImageBroswerVC.h; sourceTree = "<group>"; };
+		5562C0BC1F18AD3B00ACB12E /* WSImageBroswerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSImageBroswerVC.m; sourceTree = "<group>"; };
+		5562C0BD1F18AD3B00ACB12E /* WSImageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSImageModel.h; sourceTree = "<group>"; };
+		5562C0BE1F18AD3B00ACB12E /* WSImageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSImageModel.m; sourceTree = "<group>"; };
+		5562C0BF1F18AD3B00ACB12E /* WSPhotosBroseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPhotosBroseVC.h; sourceTree = "<group>"; };
+		5562C0C01F18AD3B00ACB12E /* WSPhotosBroseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPhotosBroseVC.m; sourceTree = "<group>"; };
+		5562C0C21F18AD3B00ACB12E /* JFAssetHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFAssetHelper.h; sourceTree = "<group>"; };
+		5562C0C31F18AD3B00ACB12E /* JFAssetHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFAssetHelper.m; sourceTree = "<group>"; };
+		5562C0C41F18AD3B00ACB12E /* JFImageCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFImageCollectionViewController.h; sourceTree = "<group>"; };
+		5562C0C51F18AD3B00ACB12E /* JFImageCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFImageCollectionViewController.m; sourceTree = "<group>"; };
+		5562C0C61F18AD3B00ACB12E /* JFImageGroupTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFImageGroupTableViewController.h; sourceTree = "<group>"; };
+		5562C0C71F18AD3B00ACB12E /* JFImageGroupTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFImageGroupTableViewController.m; sourceTree = "<group>"; };
+		5562C0C81F18AD3B00ACB12E /* JFImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFImageManager.h; sourceTree = "<group>"; };
+		5562C0C91F18AD3B00ACB12E /* JFImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFImageManager.m; sourceTree = "<group>"; };
+		5562C0CA1F18AD3B00ACB12E /* JFImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFImagePickerController.h; sourceTree = "<group>"; };
+		5562C0CB1F18AD3B00ACB12E /* JFImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFImagePickerController.m; sourceTree = "<group>"; };
+		5562C0CC1F18AD3B00ACB12E /* JFImagePickerViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFImagePickerViewCell.h; sourceTree = "<group>"; };
+		5562C0CD1F18AD3B00ACB12E /* JFImagePickerViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFImagePickerViewCell.m; sourceTree = "<group>"; };
+		5562C0CE1F18AD3B00ACB12E /* JFPhotoBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFPhotoBrowserViewController.h; sourceTree = "<group>"; };
+		5562C0CF1F18AD3B00ACB12E /* JFPhotoBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFPhotoBrowserViewController.m; sourceTree = "<group>"; };
+		5562C0D01F18AD3B00ACB12E /* JFPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFPhotoView.h; sourceTree = "<group>"; };
+		5562C0D11F18AD3B00ACB12E /* JFPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFPhotoView.m; sourceTree = "<group>"; };
+		5562C0DF1F18AD6200ACB12E /* WSImagePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSImagePickerView.h; sourceTree = "<group>"; };
+		5562C0E01F18AD6200ACB12E /* WSImagePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSImagePickerView.m; sourceTree = "<group>"; };
+		5562C0E21F18ADF700ACB12E /* DriverUploadImgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriverUploadImgViewController.h; sourceTree = "<group>"; };
+		5562C0E31F18ADF700ACB12E /* DriverUploadImgViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DriverUploadImgViewController.m; sourceTree = "<group>"; };
+		5562C0E41F18ADF700ACB12E /* DriverUploadImgViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DriverUploadImgViewController.xib; sourceTree = "<group>"; };
 		7A791D322DF96A2C5C57FD9B /* Pods-mckfcUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfcUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mckfcUITests/Pods-mckfcUITests.release.xcconfig"; sourceTree = "<group>"; };
 		87CDDFF5EFE63C83E9F1566A /* libPods-mckfcUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfcUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A232FEA72351969C26071DAE /* Pods-mckfcTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfcTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mckfcTests/Pods-mckfcTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -601,6 +640,7 @@
 		252FADAB1D530D580072E26D /* Farmer */ = {
 			isa = PBXGroup;
 			children = (
+				5562C0B71F18ACD400ACB12E /* UploadImagePicker */,
 				5547D3381F15C916005D3EC4 /* ViewModel */,
 				252FADAD1D530D7A0072E26D /* View */,
 				252FADAC1D530D6C0072E26D /* Controller */,
@@ -638,14 +678,14 @@
 				2526B05D1D59994600271D16 /* FarmerRecordCell.m */,
 				551791CA1F14A24B00649FF6 /* CreatQRCodeView.h */,
 				551791CB1F14A24B00649FF6 /* CreatQRCodeView.m */,
-				5547D32B1F15B0AF005D3EC4 /* QRCreatCell.h */,
-				5547D32C1F15B0AF005D3EC4 /* QRCreatCell.m */,
-				5547D32D1F15B0AF005D3EC4 /* QRCreatCell.xib */,
 				5547D3331F15B972005D3EC4 /* CarDriverInfoCell.h */,
 				5547D3341F15B972005D3EC4 /* CarDriverInfoCell.m */,
 				5547D3351F15B972005D3EC4 /* CarDriverInfoCell.xib */,
 				5547D3301F15B305005D3EC4 /* CreatQRViewController.h */,
 				5547D3311F15B305005D3EC4 /* CreatQRViewController.m */,
+				5562C0E21F18ADF700ACB12E /* DriverUploadImgViewController.h */,
+				5562C0E31F18ADF700ACB12E /* DriverUploadImgViewController.m */,
+				5562C0E41F18ADF700ACB12E /* DriverUploadImgViewController.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -894,6 +934,63 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		5562C0B71F18ACD400ACB12E /* UploadImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				5562C0DE1F18AD6200ACB12E /* WSImagePicker */,
+				5562C0B81F18AD3B00ACB12E /* WSImagebroswerVC */,
+				5562C0C11F18AD3B00ACB12E /* JFImagePickerController */,
+			);
+			path = UploadImagePicker;
+			sourceTree = "<group>";
+		};
+		5562C0B81F18AD3B00ACB12E /* WSImagebroswerVC */ = {
+			isa = PBXGroup;
+			children = (
+				5562C0B91F18AD3B00ACB12E /* WSImageBroserCell.h */,
+				5562C0BA1F18AD3B00ACB12E /* WSImageBroserCell.m */,
+				5562C0BB1F18AD3B00ACB12E /* WSImageBroswerVC.h */,
+				5562C0BC1F18AD3B00ACB12E /* WSImageBroswerVC.m */,
+				5562C0BD1F18AD3B00ACB12E /* WSImageModel.h */,
+				5562C0BE1F18AD3B00ACB12E /* WSImageModel.m */,
+				5562C0BF1F18AD3B00ACB12E /* WSPhotosBroseVC.h */,
+				5562C0C01F18AD3B00ACB12E /* WSPhotosBroseVC.m */,
+			);
+			path = WSImagebroswerVC;
+			sourceTree = "<group>";
+		};
+		5562C0C11F18AD3B00ACB12E /* JFImagePickerController */ = {
+			isa = PBXGroup;
+			children = (
+				5562C0C21F18AD3B00ACB12E /* JFAssetHelper.h */,
+				5562C0C31F18AD3B00ACB12E /* JFAssetHelper.m */,
+				5562C0C41F18AD3B00ACB12E /* JFImageCollectionViewController.h */,
+				5562C0C51F18AD3B00ACB12E /* JFImageCollectionViewController.m */,
+				5562C0C61F18AD3B00ACB12E /* JFImageGroupTableViewController.h */,
+				5562C0C71F18AD3B00ACB12E /* JFImageGroupTableViewController.m */,
+				5562C0C81F18AD3B00ACB12E /* JFImageManager.h */,
+				5562C0C91F18AD3B00ACB12E /* JFImageManager.m */,
+				5562C0CA1F18AD3B00ACB12E /* JFImagePickerController.h */,
+				5562C0CB1F18AD3B00ACB12E /* JFImagePickerController.m */,
+				5562C0CC1F18AD3B00ACB12E /* JFImagePickerViewCell.h */,
+				5562C0CD1F18AD3B00ACB12E /* JFImagePickerViewCell.m */,
+				5562C0CE1F18AD3B00ACB12E /* JFPhotoBrowserViewController.h */,
+				5562C0CF1F18AD3B00ACB12E /* JFPhotoBrowserViewController.m */,
+				5562C0D01F18AD3B00ACB12E /* JFPhotoView.h */,
+				5562C0D11F18AD3B00ACB12E /* JFPhotoView.m */,
+			);
+			path = JFImagePickerController;
+			sourceTree = "<group>";
+		};
+		5562C0DE1F18AD6200ACB12E /* WSImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				5562C0DF1F18AD6200ACB12E /* WSImagePickerView.h */,
+				5562C0E01F18AD6200ACB12E /* WSImagePickerView.m */,
+			);
+			path = WSImagePicker;
+			sourceTree = "<group>";
+		};
 		685021980353375A90C54F86 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1028,7 +1125,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5547D3371F15B972005D3EC4 /* CarDriverInfoCell.xib in Resources */,
-				5547D32F1F15B0AF005D3EC4 /* QRCreatCell.xib in Resources */,
+				5562C0E61F18ADF700ACB12E /* DriverUploadImgViewController.xib in Resources */,
 				253BF58E1D0D49F40006086D /* LaunchScreen.storyboard in Resources */,
 				253BF58B1D0D49F40006086D /* Assets.xcassets in Resources */,
 			);
@@ -1194,11 +1291,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				252EF9C01D2E482400565D00 /* CommonUserView.m in Sources */,
+				5562C0D91F18AD3B00ACB12E /* JFImageManager.m in Sources */,
 				2527ECCB1D350C8C00350DC6 /* rightNavigationItem.m in Sources */,
 				256F397B1D123E3900175E5A /* LoginNav.m in Sources */,
+				5562C0D31F18AD3B00ACB12E /* WSImageBroswerVC.m in Sources */,
 				2525CF2E1D3CE59100F3079F /* TODOViewController.m in Sources */,
+				5562C0DB1F18AD3B00ACB12E /* JFImagePickerViewCell.m in Sources */,
 				256F398A1D12887D00175E5A /* VerifyView.m in Sources */,
 				25F0DF141D1D2C5E007CEF17 /* MCPickerView.m in Sources */,
+				5562C0DC1F18AD3B00ACB12E /* JFPhotoBrowserViewController.m in Sources */,
 				25CB81981D53449600EDD05C /* FarmerQRCodeVC.m in Sources */,
 				257DB79A1D38C9BF00C2227E /* WorkDetail.m in Sources */,
 				252EF9E51D33407900565D00 /* MCDatePickerView.m in Sources */,
@@ -1215,6 +1316,7 @@
 				25CECB061D17BFC600C9CCBE /* MapViewController.m in Sources */,
 				25CECB031D17ACF900C9CCBE /* LoadingCell.m in Sources */,
 				25CECB091D18DE7C00C9CCBE /* TranspotationPlanViewController.m in Sources */,
+				5562C0D21F18AD3B00ACB12E /* WSImageBroserCell.m in Sources */,
 				256E873D1D65C9F800C82521 /* InspectDetailView.m in Sources */,
 				257DB7AF1D3C696F00C2227E /* InspectionViewController.m in Sources */,
 				25B004931D1920E00018EEB1 /* QueueViewController.m in Sources */,
@@ -1225,6 +1327,7 @@
 				252EF9E81D3349FE00565D00 /* Vendor.m in Sources */,
 				2534B9981D24ACF400A82E0A /* ReportViewController.m in Sources */,
 				25EDD78B1D0E847800AFB6F3 /* User.m in Sources */,
+				5562C0D81F18AD3B00ACB12E /* JFImageGroupTableViewController.m in Sources */,
 				252EF9D91D2F5D2400565D00 /* WorkStatusView.m in Sources */,
 				254E95971D765A430085E7AF /* RedPocketButton.m in Sources */,
 				257631231D8B95C600696A1E /* MsgTableViewCell.m in Sources */,
@@ -1232,13 +1335,14 @@
 				2525CF271D3CDD5000F3079F /* Store.m in Sources */,
 				252EF9C61D2E6EED00565D00 /* QualityControlNav.m in Sources */,
 				2526B05E1D59994600271D16 /* FarmerRecordCell.m in Sources */,
-				5547D32E1F15B0AF005D3EC4 /* QRCreatCell.m in Sources */,
+				5562C0D71F18AD3B00ACB12E /* JFImageCollectionViewController.m in Sources */,
 				252EF9EE1D336F4400565D00 /* Field.m in Sources */,
 				256F39811D12836900175E5A /* SignUpView.m in Sources */,
 				257DB7AC1D39E0D700C2227E /* WorkFlowInterface.m in Sources */,
 				258F01561D3F4C4C002A58B0 /* queueViewModel.m in Sources */,
 				257DB79D1D38D24000C2227E /* WorkFlow.m in Sources */,
 				257C19011D77C72A00A602BE /* RewardDetailView.m in Sources */,
+				5562C0E11F18AD6200ACB12E /* WSImagePickerView.m in Sources */,
 				252905891D66DAAF00ECC9EC /* Factory.m in Sources */,
 				257DB7A61D38E91900C2227E /* TruckUnloadProcessViewController.m in Sources */,
 				252FADB01D530DA30072E26D /* FarmerPlanViewController.m in Sources */,
@@ -1248,12 +1352,15 @@
 				25CE35B91D5AF03D005ADBA7 /* nofityViewController.m in Sources */,
 				252EF9D31D2F4D2800565D00 /* WorkRecordViewController.m in Sources */,
 				252EF9E21D30AF9F00565D00 /* WorkFlowCell.m in Sources */,
+				5562C0D41F18AD3B00ACB12E /* WSImageModel.m in Sources */,
 				5547D3361F15B972005D3EC4 /* CarDriverInfoCell.m in Sources */,
 				252EF9C91D2E6F1000565D00 /* QualityControlHomePage.m in Sources */,
 				252EF9DF1D30AC1B00565D00 /* orderGeneralReport.m in Sources */,
 				25CB819B1D5344C400EDD05C /* FarmerQRCodeView.m in Sources */,
 				256F399C1D13A32000175E5A /* StatsView.m in Sources */,
 				254E959A1D7686150085E7AF /* ForgotPasswordView.m in Sources */,
+				5562C0E51F18ADF700ACB12E /* DriverUploadImgViewController.m in Sources */,
+				5562C0DD1F18AD3B00ACB12E /* JFPhotoView.m in Sources */,
 				253BF5831D0D49F40006086D /* AppDelegate.m in Sources */,
 				25CB819E1D5423CB00EDD05C /* FarmerNav.m in Sources */,
 				256F39A51D13E8A900175E5A /* AlertHUDView.m in Sources */,
@@ -1265,6 +1372,7 @@
 				25CB81A41D546CD800EDD05C /* AddRecordTable.m in Sources */,
 				254E959D1D76A5780085E7AF /* ForgotPasswordViewController.m in Sources */,
 				25B004991D1922970018EEB1 /* QRCodeView.m in Sources */,
+				5562C0D51F18AD3B00ACB12E /* WSPhotosBroseVC.m in Sources */,
 				256F39A21D13D83200175E5A /* EditorNav.m in Sources */,
 				252FADB31D5311F10072E26D /* FarmerPlanView.m in Sources */,
 				25CECB001D17A9D700C9CCBE /* LoadingStatsViewController.m in Sources */,
@@ -1276,6 +1384,7 @@
 				2512A1C91D112FDE00ED884B /* LoginViewController.m in Sources */,
 				2525CF311D3DCF3800F3079F /* SettingViewController.m in Sources */,
 				25CECAFD1D17A53500C9CCBE /* LoadingNav.m in Sources */,
+				5562C0DA1F18AD3B00ACB12E /* JFImagePickerController.m in Sources */,
 				257DB7B21D3C71AF00C2227E /* InspectionReport.m in Sources */,
 				2512A1D01D113C6200ED884B /* HomepageViewController.m in Sources */,
 				252EF9C31D2E4F2300565D00 /* CommonMenuView.m in Sources */,
@@ -1284,6 +1393,7 @@
 				252EF9DC1D2FA51C00565D00 /* WorkDetailViewController.m in Sources */,
 				252EF9B81D2E3C4C00565D00 /* SecurityNav.m in Sources */,
 				252EF9D61D2F5C4100565D00 /* WorkRecordCell.m in Sources */,
+				5562C0D61F18AD3B00ACB12E /* JFAssetHelper.m in Sources */,
 				251F378B1D26447D00B423D1 /* Report.m in Sources */,
 				5547D3321F15B305005D3EC4 /* CreatQRViewController.m in Sources */,
 				253BF5801D0D49F40006086D /* main.m in Sources */,
@@ -1438,7 +1548,7 @@
 				CODE_SIGN_ENTITLEMENTS = mckfc/mckfc.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8WV7FK6JAM;
 				INFOPLIST_FILE = mckfc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huayin.mckfc;

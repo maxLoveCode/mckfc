@@ -145,7 +145,7 @@ NSString *const version = @"v1_3_4";
 {
     NSString *urlStr = [self appendedURL:@"uploadImage"];
     
-    NSData* data = UIImageJPEGRepresentation(image, 1.0);
+    NSData* data = UIImageJPEGRepresentation(image, 0.5);
     
     NSDictionary *parameters = @{@"token":self.accessToken,
                                  @"width":[NSNumber numberWithFloat:size.width],
@@ -159,9 +159,11 @@ NSString *const version = @"v1_3_4";
     NSLog(@"%@",parameters);
     NSURLSessionUploadTask *uploadTask;
     
-    _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStyleNetworking];
-    _alert.delegate = self;
-    [_alert show:_alert];
+//    _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStyleNetworking];
+//    _alert.delegate = self;
+//    [_alert show:_alert];
+//    [_alert dismiss:_alert];
+    
     
     uploadTask = [self uploadTaskWithStreamedRequest:request progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -169,17 +171,18 @@ NSString *const version = @"v1_3_4";
 //get results
         NSLog(@"%@",responseObject);
         if ([responseObject[@"code"] integerValue] == self.successCode) {
-            [_alert dismiss:_alert];
             success(uploadTask,responseObject);
+            NSLog(@"++++++++++");
+           // [_alert dismiss:_alert];
         }
         else if(error)
         {
             failure(uploadTask, error);
-            [_alert failureWithMsg:_alert msg:@"头像上传失败"];
+           // [_alert failureWithMsg:_alert msg:@"头像上传失败"];
         }
         else
         {
-            [_alert failureWithMsg:_alert msg:responseObject[@"msg"]];
+            //[_alert failureWithMsg:_alert msg:responseObject[@"msg"]];
         }
     }];
     [uploadTask resume];

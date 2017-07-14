@@ -24,7 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"---%@",self.numberCode);
+    self.navigationItem.title = @"生成产地二维码";
     [self.view addSubview:self.imgPic];
     if (self.numberCode) {
         [self creatQImg];
@@ -34,7 +34,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshTruckList" object:nil userInfo:nil];
 }
 
 

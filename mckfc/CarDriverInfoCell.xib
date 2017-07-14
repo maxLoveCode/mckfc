@@ -34,11 +34,21 @@
                         <rect key="frame" x="257" y="21" width="31" height="30"/>
                         <state key="normal" title="电话"/>
                     </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HF2-Ub-17V">
+                        <rect key="frame" x="0.0" y="69.5" width="308" height="1"/>
+                        <color key="backgroundColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="O9V-yH-FZJ"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottom" secondItem="HF2-Ub-17V" secondAttribute="bottom" id="9xj-6X-PZf"/>
                     <constraint firstItem="j9O-LU-Bfp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="BNL-uo-3B4"/>
                     <constraint firstItem="j9O-LU-Bfp" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="PpC-Aj-XcH"/>
                     <constraint firstItem="Y7b-wi-aT0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Yh7-TO-6aN"/>
+                    <constraint firstItem="HF2-Ub-17V" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="YtS-kV-OLV"/>
+                    <constraint firstAttribute="trailing" secondItem="HF2-Ub-17V" secondAttribute="trailing" id="Zp0-Lg-RSI"/>
                     <constraint firstItem="Tbq-xe-MYD" firstAttribute="leading" secondItem="j9O-LU-Bfp" secondAttribute="trailing" constant="30" id="brf-Hp-rJP"/>
                     <constraint firstItem="Tbq-xe-MYD" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="d5B-bn-3DG"/>
                     <constraint firstAttribute="trailing" secondItem="Y7b-wi-aT0" secondAttribute="trailing" constant="20" id="tgu-mn-jaW"/>
@@ -49,7 +59,7 @@
                 <outlet property="nameLab" destination="j9O-LU-Bfp" id="HwU-o9-4b1"/>
                 <outlet property="phoneBtn" destination="Y7b-wi-aT0" id="V9R-WS-TQR"/>
             </connections>
-            <point key="canvasLocation" x="215" y="35"/>
+            <point key="canvasLocation" x="215" y="34.5"/>
         </tableViewCell>
     </objects>
 </document>

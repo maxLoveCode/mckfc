@@ -55,7 +55,7 @@
 - (CreatQRCodeView *)creatQRCodeView{
     if (!_creatQRCodeView) {
         self.creatQRCodeView = [[CreatQRCodeView alloc] init];
-        _creatQRCodeView.frame = CGRectMake(0, 10, kScreen_Width, kScreen_Height - itemHeight * 7);
+        _creatQRCodeView.frame = CGRectMake(0, 10, kScreen_Width, kScreen_Height - itemHeight * 7- 20);
     }
     return _creatQRCodeView;
 }
@@ -255,7 +255,14 @@
     [imageView setImage:[UIImage imageNamed:menuText[indexPath.item]]];
     imageView.center = CGPointMake(cell.contentView.center.x, cell.contentView.center.y-20);
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame)+20, CGRectGetWidth(cell.contentView.frame), 15)];
-    label.text = menuText[indexPath.item];
+    if (indexPath.item == 0) {
+        label.text = @"生成产地二维码";
+    }else if(indexPath.item == 2){
+        label.text = @"车辆登记记录";
+    }else{
+        label.text = menuText[indexPath.item];
+    }
+    
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = COLOR_WithHex(0x565656);
     label.font = [UIFont systemFontOfSize:14];
@@ -277,7 +284,7 @@
         if (self.type == FarmerPlanViewTypeMenu) {
             return 2*kScreen_Width/3+19;
         } else if (self.type == FarmerPlanViewTypeCodeQR){
-            return kScreen_Height - itemHeight * 7;
+            return kScreen_Height - itemHeight * 7 - 30;
         }
         else if(self.type == FarmerPlanViewTypeQRCode)
         {
