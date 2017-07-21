@@ -46,7 +46,7 @@
 -(UITableView *)mainTableView
 {
     if (!_mainTableView) {
-        CGRect frame = CGRectMake(0, 0, kScreen_Width, kScreen_Height);
+        CGRect frame = CGRectMake(0, 0, kScreen_Width, kScreen_Height - 64);
         _mainTableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStyleGrouped];
         _mainTableView.delegate = self;
         _mainTableView.dataSource = self;

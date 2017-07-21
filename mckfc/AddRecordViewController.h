@@ -33,7 +33,7 @@
 @property (nonatomic, strong) MCDatePickerView* datePicker;
 
 @property (nonatomic, weak) id<AddRecordTableDelegate> delegate;
-
+@property (nonatomic,copy) NSString *timeFlag;
 -(void)setDate:(NSDate*)date;
 -(void)showDatePicker;
 

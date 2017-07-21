@@ -345,7 +345,7 @@
             //如果有城市
             if ([json objectForKey:@"city"]) {
                 _stats.city = [[City alloc] init];
-                _stats.city.cityid = [json objectForKey:@"city"];
+                _stats.city.areaid = [json objectForKey:@"city"];
             }
             //如果有地块
             if([json objectForKey:@"land"] && [json objectForKey:@"landId"])
@@ -373,6 +373,13 @@
                 NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
                 [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
                 _stats.departuretime = [dateFormatter dateFromString:[json objectForKey:@"departuretime"]];
+                
+            }
+            if ([json objectForKey:@"planarrivetime"])
+                {
+                    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+                    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+                    _stats.planarrivetime = [dateFormatter dateFromString:[json objectForKey:@"planarrivetime"]];
             }
             if ([json objectForKey:@"packageid"] && [json objectForKey:@"packagename"] )
             {
@@ -385,6 +392,18 @@
                 _stats.factory = [[Factory alloc] init];
                 _stats.factory.name = [json objectForKey:@"factoryname"];
                 _stats.factory.factoryid = [json objectForKey:@"factoryid"];
+            }
+            if ([json objectForKey:@"varietyid"] && [json objectForKey:@"varietyname"] )
+                {
+                    _stats.variety = [[Variety alloc] init];
+                    _stats.variety.name = [json objectForKey:@"varietyname"];
+                    _stats.variety.varietyid = [json objectForKey:@"varietyid"];
+            }
+            if ([json objectForKey:@"storageid"] && [json objectForKey:@"storagename"] )
+            {
+                    _stats.storage = [[Storage alloc] init];
+                    _stats.storage.name = [json objectForKey:@"storagename"];
+                    _stats.storage.storageid = [json objectForKey:@"storageid"];
             }
             LoadingStatsViewController *loadingStats = [[LoadingStatsViewController alloc] initWithStyle:UITableViewStyleGrouped];
             loadingStats.stats = _stats;

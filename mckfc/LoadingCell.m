@@ -98,6 +98,8 @@
         _textInput = [[UITextField alloc] init];
         _textInput.textColor = COLOR_TEXT_GRAY;
         _textInput.font = [UIFont systemFontOfSize:14];
+        
+        
     }
     return _textInput;
 }
@@ -192,6 +194,7 @@
         [self.popUpBtn setFrame:CGRectMake(detailX, 0, 90, itemHeight)];
     }
 }
+
 
 
 @end

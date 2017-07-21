@@ -13,7 +13,7 @@
 
 +(NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"cityid":@"id",
+    return @{@"areaid":@"id",
              @"name":@"name"};
 }
 
@@ -24,7 +24,7 @@
     return self;
 }
 
-+(NSValueTransformer *)cityidJSONTransformer
++(NSValueTransformer *)areaidJSONTransformer
 {
     return [MTLValueTransformer transformerUsingReversibleBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
         if([value isKindOfClass:[NSNumber class]])

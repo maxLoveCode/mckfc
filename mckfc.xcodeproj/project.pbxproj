@@ -102,6 +102,8 @@
 		25CECB0F1D18E28B00C9CCBE /* TransportationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CECB0E1D18E28B00C9CCBE /* TransportationViewCell.m */; };
 		25EDD78B1D0E847800AFB6F3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EDD78A1D0E847800AFB6F3 /* User.m */; };
 		25F0DF141D1D2C5E007CEF17 /* MCPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F0DF131D1D2C5E007CEF17 /* MCPickerView.m */; };
+		550441FE1F2058E300FFFB77 /* Storage.m in Sources */ = {isa = PBXBuildFile; fileRef = 550441FD1F2058E300FFFB77 /* Storage.m */; };
+		550442011F2058FA00FFFB77 /* Variety.m in Sources */ = {isa = PBXBuildFile; fileRef = 550442001F2058FA00FFFB77 /* Variety.m */; };
 		551791CC1F14A24B00649FF6 /* CreatQRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 551791CB1F14A24B00649FF6 /* CreatQRCodeView.m */; };
 		5547D3321F15B305005D3EC4 /* CreatQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547D3311F15B305005D3EC4 /* CreatQRViewController.m */; };
 		5547D3361F15B972005D3EC4 /* CarDriverInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547D3341F15B972005D3EC4 /* CarDriverInfoCell.m */; };
@@ -341,6 +343,10 @@
 		25F0DF131D1D2C5E007CEF17 /* MCPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPickerView.m; sourceTree = "<group>"; };
 		26FF69F8ECE8B2F2E813F360 /* Pods-mckfc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfc.release.xcconfig"; path = "Pods/Target Support Files/Pods-mckfc/Pods-mckfc.release.xcconfig"; sourceTree = "<group>"; };
 		359CE7EAC76939D5DD0F26C2 /* libPods-mckfcTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfcTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		550441FC1F2058E300FFFB77 /* Storage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
+		550441FD1F2058E300FFFB77 /* Storage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Storage.m; sourceTree = "<group>"; };
+		550441FF1F2058FA00FFFB77 /* Variety.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Variety.h; sourceTree = "<group>"; };
+		550442001F2058FA00FFFB77 /* Variety.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Variety.m; sourceTree = "<group>"; };
 		551791CA1F14A24B00649FF6 /* CreatQRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatQRCodeView.h; sourceTree = "<group>"; };
 		551791CB1F14A24B00649FF6 /* CreatQRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatQRCodeView.m; sourceTree = "<group>"; };
 		5547D3301F15B305005D3EC4 /* CreatQRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatQRViewController.h; sourceTree = "<group>"; };
@@ -709,6 +715,10 @@
 				258F01551D3F4C4C002A58B0 /* queueViewModel.m */,
 				2574C03F1D646AF100940C95 /* Package.h */,
 				2574C0401D646AF100940C95 /* Package.m */,
+				550441FC1F2058E300FFFB77 /* Storage.h */,
+				550441FD1F2058E300FFFB77 /* Storage.m */,
+				550441FF1F2058FA00FFFB77 /* Variety.h */,
+				550442001F2058FA00FFFB77 /* Variety.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1331,6 +1341,7 @@
 				252EF9D91D2F5D2400565D00 /* WorkStatusView.m in Sources */,
 				254E95971D765A430085E7AF /* RedPocketButton.m in Sources */,
 				257631231D8B95C600696A1E /* MsgTableViewCell.m in Sources */,
+				550442011F2058FA00FFFB77 /* Variety.m in Sources */,
 				252C46CD1D7BA20600EC0349 /* TruckArrivePicker.m in Sources */,
 				2525CF271D3CDD5000F3079F /* Store.m in Sources */,
 				252EF9C61D2E6EED00565D00 /* QualityControlNav.m in Sources */,
@@ -1367,6 +1378,7 @@
 				252EF9EB1D3369E900565D00 /* City.m in Sources */,
 				5547D33E1F15C974005D3EC4 /* TruckListModel.m in Sources */,
 				25CB81A11D54513F00EDD05C /* AddRecordViewController.m in Sources */,
+				550441FE1F2058E300FFFB77 /* Storage.m in Sources */,
 				256F39961D12B2A000175E5A /* DriverDetailEditorController.m in Sources */,
 				251F378F1D26698C00B423D1 /* ReportCollectionView.m in Sources */,
 				25CB81A41D546CD800EDD05C /* AddRecordTable.m in Sources */,

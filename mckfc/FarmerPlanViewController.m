@@ -285,7 +285,7 @@
         }
         else
         {
-            [self requestVendors:city.cityid success:^{
+            [self requestVendors:city.areaid success:^{
                 [self.pickerView setData:vendorList];
                 [self.pickerView show];
             
@@ -306,7 +306,7 @@
         else
         {
             [self requestFields:[NSString stringWithFormat:@"%lu", (long)vendor.vendorID]
-             City:_farmerPlanview.stats.city.cityid
+             City:_farmerPlanview.stats.city.areaid
                 success:^{
                 [self.pickerView setData:fieldList];
                 [self.pickerView show];
@@ -441,7 +441,7 @@
     else if (_farmerPlanview.type == FarmerPlanViewTypeDetail)
     {
         _farmerPlanview.type = FarmerPlanViewTypeRecordList;
-        [_botButton setTitle:@"上传全部" forState:UIControlStateNormal];
+        [_botButton setTitle:@"一键清空" forState:UIControlStateNormal];
         [self reload];
     }
 }
@@ -450,7 +450,7 @@
 -(void)requestCityListSuccess:(void (^)(void))success
 {
     NSDictionary* params = @{@"token": _server.accessToken};
-    [_server GET:@"getCityList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+    [_server GET:@"getAreaList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* jsonArray = responseObject[@"data"];
         NSError* error;
         cityList = [MTLJSONAdapter modelsOfClass:[City class] fromJSONArray:jsonArray error:&error];
@@ -465,7 +465,7 @@
 -(void)requestVendors:(NSString*)city success:(void (^)(void))success
 {
     NSDictionary* params = @{@"token":_server.accessToken,
-                             @"city":city};
+                             @"areaid":city};
     [_server GET:@"getVendorList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* data = responseObject[@"data"];
         vendorList = [MTLJSONAdapter modelsOfClass:[Vendor class] fromJSONArray:data error:nil];
@@ -481,7 +481,7 @@
 {
     NSDictionary* params = @{@"token":_server.accessToken,
                              @"vendorid":vendor,
-                             @"city":cityid};
+                             @"areaid":cityid};
     [_server GET:@"getFieldList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* data = responseObject[@"data"];
         fieldList = [MTLJSONAdapter modelsOfClass:[Field class] fromJSONArray:data error:nil];
@@ -592,14 +592,21 @@
         LoadingStats* stat = [trucks objectForKey:@"stat"];
         NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"HH:mm"];
-        NSString* dateString = [dateFormatter stringFromDate:stat.departuretime];
+        NSString* dateString = [dateFormatter stringFromDate:[NSDate date]];
+        NSDateFormatter* dateFormatter2 = [[NSDateFormatter alloc] init];
+        [dateFormatter2 setDateFormat:@"yyyy-MM-dd HH:mm"];
+        NSString *planStr = [dateFormatter2 stringFromDate:stat.planarrivetime];
         NSDictionary* unionDic = @{@"driver":user.driver,
                                    @"mobile":user.mobile,
                                    @"truckno":user.truckno,
-                                   @"serialno":stat.serialno,
+                                   @"serialno":[NSString stringWithFormat:@"17%@",stat.serialno],
                                    @"departuretime":dateString,
+                                   @"storageid": [NSNumber numberWithInteger: [stat.storage.storageid integerValue]],
+                                   @"varietyid": [NSNumber numberWithInteger: [stat.variety.varietyid integerValue]],
+                                   @"planarrivetime":planStr,
                                    @"weight":stat.weight,
-                                   @"packageid": [NSNumber numberWithInteger: [stat.package.packageid integerValue]]};
+                                   @"packageid": @1};
+        NSLog(@"----%@",unionDic);
         [unions addObject:unionDic];
     }
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:unions options:NSJSONWritingPrettyPrinted error:nil];
@@ -718,7 +725,7 @@
         [params addEntriesFromDictionary:@{@"land":_farmerPlanview.stats.field.name}];
     }
     if (_farmerPlanview.stats.city) {
-        [params addEntriesFromDictionary:@{@"city":[NSString stringWithFormat:@"%@",_farmerPlanview.stats.city.cityid]}];
+        [params addEntriesFromDictionary:@{@"city":[NSString stringWithFormat:@"%@",_farmerPlanview.stats.city.areaid]}];
     }
     if (_farmerPlanview.stats.departuretime) {
         [params addEntriesFromDictionary:@{@"time":[NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:_farmerPlanview.stats.departuretime]]}];
@@ -767,10 +774,9 @@
         NSLog(@"%@", _farmerPlanview.stats.departuretime);
         [vc setDate:_farmerPlanview.stats.departuretime];
         [vc showDatePicker];
-    }
-    else
-    {
-        
+    }else if(_farmerPlanview.stats.planarrivetime){
+         [vc setDate:_farmerPlanview.stats.planarrivetime];
+        [vc showDatePicker];
     }
 }
 
@@ -832,8 +838,25 @@
         [self.alert show:self.alert];
         return NO;
     }
+    /*
     if (!stat.package) {
         self.alert.detail.text = @"请先选择包装类型";
+        [self.alert show:self.alert];
+        return NO;
+    }
+     */
+    if (!stat.planarrivetime) {
+        self.alert.detail.text = @"请先选择到达时间";
+        [self.alert show:self.alert];
+        return NO;
+    }
+    if (!stat.variety) {
+        self.alert.detail.text = @"请先选择薯品种";
+        [self.alert show:self.alert];
+        return NO;
+    }
+    if (!stat.storage) {
+        self.alert.detail.text = @"请先选择存储期";
         [self.alert show:self.alert];
         return NO;
     }

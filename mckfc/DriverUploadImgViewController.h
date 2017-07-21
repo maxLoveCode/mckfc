@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface DriverUploadImgViewController : UIViewController
-@property (nonatomic, strong) NSString *fielduserid;
+@property (nonatomic, copy) NSString *fielduserid;
 @end

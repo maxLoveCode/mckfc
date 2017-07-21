@@ -15,11 +15,11 @@
 //#define _BASE_URL @"http://120.26.41.98/"
 #define _BASE_URL @"http://139.196.32.98:8333/mk"
 #else
-#define _BASE_URL @"http://139.196.32.98:8080/"
+#define _BASE_URL @"http://mk.mydreamovie.com/"
 #endif
 
 NSString *const b_URL = _BASE_URL;
-NSString *const version = @"v1_3_4";
+NSString *const version = @"v1_3_5";
 
 @interface ServerManager ()<HUDViewDelegate>
 
@@ -145,7 +145,8 @@ NSString *const version = @"v1_3_4";
 {
     NSString *urlStr = [self appendedURL:@"uploadImage"];
     
-    NSData* data = UIImageJPEGRepresentation(image, 0.5);
+    NSData *data = [self imageData:image];
+   // NSData* data = UIImageJPEGRepresentation(image, 0.5);
     
     NSDictionary *parameters = @{@"token":self.accessToken,
                                  @"width":[NSNumber numberWithFloat:size.width],
@@ -203,6 +204,20 @@ NSString *const version = @"v1_3_4";
     if (self.alert) {
         [self.alert removeFromSuperview];
     }
+}
+
+-(NSData *)imageData:(UIImage *)myimage{
+    NSData *data=UIImageJPEGRepresentation(myimage, 1.0);
+    if (data.length>100*1024) {
+        if (data.length>1024*1024) {//1M以及以上
+            data=UIImageJPEGRepresentation(myimage, 0.1);
+        }else if (data.length>512*1024) {//0.5M-1M
+            data=UIImageJPEGRepresentation(myimage, 0.5);
+        }else if (data.length>200*1024) {//0.25M-0.5M
+            data=UIImageJPEGRepresentation(myimage, 0.9);
+        }
+    }
+    return data;
 }
 @end
 

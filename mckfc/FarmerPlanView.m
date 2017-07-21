@@ -17,6 +17,7 @@
 @interface FarmerPlanView ()<UITableViewDelegate,UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
 {
     NSArray* titleText;
+    NSArray *_imgArr;
     NSArray* menuText;
 }
 
@@ -47,7 +48,8 @@
         _mainTableView.dataSource = self;
         [_mainTableView registerClass:[LoadingCell class] forCellReuseIdentifier:@"loadingStats"];
         
-        titleText = @[@"供货城市",@"供应商名称",@"地块编号",@"目的地",@"运输时间"];
+        titleText = @[@"种植区域",@"供应商名称",@"地块编号",@"目的地",@"运输时间"];
+        _imgArr = @[@"供货城市",@"供应商名称",@"地块编号",@"目的地",@"运输时间"];
     }
     return _mainTableView;
 }
@@ -109,7 +111,7 @@
             cell.style = LoadingCellStyleSelection;
         
         cell.titleLabel.text = titleText[indexPath.row];
-        cell.leftImageView.image = [UIImage imageNamed:titleText[indexPath.row]];
+        cell.leftImageView.image = [UIImage imageNamed:_imgArr[indexPath.row]];
         
         if (indexPath.row == 0) {
             if (!_stats.city) {
@@ -292,7 +294,7 @@
         }
         else if(self.type == FarmerPlanViewTypeOrder || self.type == FarmerPlanViewTypeDetail)
         {
-            return itemHeight*7;
+            return itemHeight*8;
         }
         else if(self.type == FarmerPlanViewTypeRecordList)
         {

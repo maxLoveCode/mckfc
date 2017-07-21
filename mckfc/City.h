@@ -11,7 +11,7 @@
 @interface City : MTLModel<MTLJSONSerializing>
 
 @property (nonatomic, copy) NSString *name; //city name
-@property (nonatomic, copy) NSString* cityid;
+@property (nonatomic, copy) NSString* areaid;
 
 -(instancetype)initWithName:(NSString*)name;
 

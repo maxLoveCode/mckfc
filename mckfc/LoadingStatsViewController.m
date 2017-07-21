@@ -33,11 +33,14 @@
 {
     NSDateFormatter *dateFormatter;
     NSArray* titleText;
+    NSArray *_imgArray;
     
     NSArray* vendorList;
     NSArray* cityList;
     NSArray* fieldList;
     NSArray* packageList;
+    NSArray *_storageList;
+    NSArray *_varietylist;
     NSArray* factoryList;
     
     NSString* citycode;
@@ -49,6 +52,7 @@
 @property (nonatomic, strong) ServerManager* server;
 
 @property (nonatomic, strong) AMapLocationManager* locationManager;
+@property (nonatomic,copy) NSString *timeFlag;
 
 @end
 
@@ -57,7 +61,7 @@
 -(void)viewDidLoad
 {
     self.title = @"装载数据";
-    
+    self.timeFlag = @"0";
     [self.tableView registerClass:[LoadingCell class] forCellReuseIdentifier:@"loadingStats"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -86,7 +90,8 @@
 #pragma mark titles and images
 -(void)initTitlesAndImages
 {
-    titleText = @[@"供应商名称",@"地块编号",@"目的地",@"土豆重量", @"发车时间", @"运单号", @"包装类型"];
+    titleText = @[@"运单号",@"供应商名称",@"地块编号",@"目的地",@"土豆重量",@"发货时间",@"预计到达时间",@"薯品种",@"存储期"];
+    _imgArray = @[@"运单号",@"供应商名称",@"地块编号",@"目的地",@"土豆重量",@"发车时间",@"发车时间",@"包装类型",@"包装类型"];
 }
 
 #pragma mark tableViewDelegate
@@ -126,40 +131,60 @@
     if (indexPath.section == 0) {
         LoadingCell* cell = [[LoadingCell alloc] init];
         
-        if (indexPath.row != 3 && indexPath.row != 4 && indexPath.row != 5) {
+        if (indexPath.row != 4  && indexPath.row != 0) {
             [cell setStyle:LoadingCellStyleSelection];
+        }
             if (indexPath.row == 0) {
+                [cell setStyle:LoadingCellStyleTextInput];
+                cell.textInput.textAlignment = NSTextAlignmentRight;
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.textInput.tag = 1;
+                cell.textInput.delegate = self;
+                cell.textInput.keyboardType = UIKeyboardTypeNumberPad;
+                cell.textInput.textColor = COLOR_WithHex(0x565656);
+                UILabel *lab = [cell viewWithTag:11];
+                if (lab.tag != 11) {
+                    
+                    lab = [[UILabel alloc] initWithFrame:CGRectMake(kScreen_Width - 200, 0, 50, 40)];
+                    lab.text = @"17  +";
+                    lab.font = [UIFont systemFontOfSize:16];
+                    lab.tag = 11;
+                    [cell.contentView addSubview:lab];
+                }
+                [cell.textInput addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+                if (!_stats.serialno || [_stats.serialno isEqualToString:@""]) {
+                    cell.textInput.text = @"请输入4位运单号";
+                }
+                else{
+                    if ([_stats.serialno length] >5) {
+                        cell.textInput.text = [_stats.serialno substringToIndex:2];
+                    }else{
+                        cell.textInput.text = _stats.serialno;
+                    }
+                }
+                   
+            }else if (indexPath.row == 1){
                 if (!_stats.supplier) {
                     cell.detailLabel.text = @"请选择供应商";
                 }
                 else
                     cell.detailLabel.text = _stats.supplier.name;
-            }
-            else if (indexPath.row ==1){
+            }else if (indexPath.row ==2){
                 if (!_stats.field) {
                     cell.detailLabel.text = @"请选择地块";
                 }
                 else
                     cell.detailLabel.text = _stats.field.name;
             }
-            else if(indexPath.row == 2)
+            else if(indexPath.row == 3)
             {
                 if (!_stats.factory) {
                     cell.detailLabel.text = @"请选择工厂";
                 }
-                else
+                else{
                     cell.detailLabel.text = _stats.factory.name;
-            }
-            else if(indexPath.row == 6)
-            {
-                if (!_stats.package) {
-                    cell.detailLabel.text = @"请选择包装类型";
                 }
-                else
-                    cell.detailLabel.text = _stats.package.name;
-            }
-        }
-        else if(indexPath.row == 3)
+        }else if(indexPath.row == 4)
         {
             [cell setStyle:LoadingCellStyleDigitInput];
             cell.digitInput.delegate = self;
@@ -171,35 +196,43 @@
                 cell.digitInput.text = [NSString stringWithFormat:@"%@",_stats.weight];
             }
         }
-        else if(indexPath.row == 4)
-        {
+       else if(indexPath.row == 5)
+       {
+           [cell setStyle:LoadingCellStyleDatePicker];
+           if(!_stats.departuretime)
+           {
+               cell.detailLabel.text = @"请选择发货时间";
+           }
+           else
+           {
+               cell.detailLabel.text = [dateFormatter stringFromDate:_stats.departuretime];
+           }
+       }
+        else if(indexPath.row == 6){
             [cell setStyle:LoadingCellStyleDatePicker];
-            if(!_stats.departuretime)
+            if(!_stats.planarrivetime)
             {
-                cell.detailLabel.text = @"请选择时间";
+                cell.detailLabel.text = @"请选择到达时间";
             }
             else
             {
-                cell.detailLabel.text = [dateFormatter stringFromDate:_stats.departuretime];
+                cell.detailLabel.text = [dateFormatter stringFromDate:_stats.planarrivetime];
             }
-        }
-        else if(indexPath.row == 5)
-        {
-            [cell setStyle:LoadingCellStyleTextInput];
-            cell.textInput.textAlignment = NSTextAlignmentRight;
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            cell.textInput.tag = 1;
-            cell.textInput.delegate = self;
-            cell.textInput.keyboardType = UIKeyboardTypeNumberPad;
-            cell.textInput.textColor = COLOR_WithHex(0x565656);
-            if (!_stats.serialno || [_stats.serialno isEqualToString:@""]) {
-                cell.textInput.text = @"请输入运单号";
+        }else if (indexPath.row == 7){
+            if (!_stats.variety) {
+                cell.detailLabel.text = @"请选择薯品种";
             }
             else
-                cell.textInput.text = _stats.serialno;
+                cell.detailLabel.text = _stats.variety.name;
+        }else if(indexPath.row == 8){
+            if (!_stats.storage) {
+                cell.detailLabel.text = @"请选择存储期";
+            }
+            else
+                cell.detailLabel.text = _stats.storage.name;
         }
         cell.titleLabel.text = titleText[indexPath.row];
-        cell.leftImageView.image = [UIImage imageNamed:titleText[indexPath.row]];
+        cell.leftImageView.image = [UIImage imageNamed:_imgArray[indexPath.row]];
         return cell;
     }
     else if(indexPath.section ==1){
@@ -234,11 +267,11 @@
 {
     LoadingCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     if (cell.style == LoadingCellStyleSelection){
-        if (indexPath.row == 0) {
+        if (indexPath.row == 1) {
             if (!cityList) {
                 [self requestCityListSuccess:^{
                     City* city = [cityList objectAtIndex:0];
-                    [self requestVendors:city.cityid success:^{
+                    [self requestVendors:city.areaid success:^{
                         MCPickerView *pickerView = [[MCPickerView alloc] init];
                         pickerView.delegate =self;
                         pickerView.index = indexPath;
@@ -256,7 +289,7 @@
             else
             {
                 City* city = [cityList objectAtIndex:0];
-                [self requestVendors:city.cityid success:^{
+                [self requestVendors:city.areaid success:^{
                     MCPickerView *pickerView = [[MCPickerView alloc] init];
                     pickerView.delegate =self;
                     pickerView.index = indexPath;
@@ -275,7 +308,7 @@
 
             }
         }
-        else if(indexPath.row == 1)
+        else if(indexPath.row == 2)
         {
             Vendor* vendor = _stats.supplier;
             if (!vendor) {
@@ -290,7 +323,7 @@
             else
             {
                 [self requestFields:[NSString stringWithFormat:@"%lu", (long)vendor.vendorID]
-                               City:_stats.city.cityid
+                               City:_stats.city.areaid
                             success:^{
                                 if(!self.pickerView)
                                 {
@@ -306,7 +339,7 @@
             }
         }
         
-        else if(indexPath.row == 2)
+        else if(indexPath.row == 3)
         {
             Field* field = _stats.field;
             //如果没有地块先选地块
@@ -334,8 +367,9 @@
                 }];
             }
         }
-        else if(indexPath.row == 6)
+        else if(indexPath.row == 5)
         {
+                        /*
             if (!packageList || [packageList count] == 0) {
                 [self requestPackageListSuccess:^{
                     MCPickerView *pickerView = [[MCPickerView alloc] init];
@@ -359,6 +393,58 @@
                 _stats.package = packageList[0];
                 [self.tableView reloadData];
             }
+            */
+        }
+        else if (indexPath.row == 7){
+            if (!_varietylist || [_varietylist count] == 0) {
+                [self requestVarietyListSuccess:^{
+                    MCPickerView *pickerView = [[MCPickerView alloc] init];
+                    pickerView.delegate = self;
+                    [pickerView setData:_varietylist];
+                    pickerView.index = indexPath;
+                    [pickerView show];
+                    
+                    _stats.variety = _varietylist[0];
+                    [self.tableView reloadData];
+                }];
+            }
+            else
+            {
+                MCPickerView *pickerView = [[MCPickerView alloc] init];
+                pickerView.delegate = self;
+                [pickerView setData:_varietylist];
+                pickerView.index = indexPath;
+                [pickerView show];
+                
+                _stats.package = _varietylist[0];
+                [self.tableView reloadData];
+            }
+            
+        }else if (indexPath.row == 8){
+            if (!_storageList || [_storageList count] == 0) {
+                [self requestStorageListSuccess:^{
+                    MCPickerView *pickerView = [[MCPickerView alloc] init];
+                    pickerView.delegate = self;
+                    [pickerView setData:_storageList];
+                    pickerView.index = indexPath;
+                    [pickerView show];
+                    
+                    _stats.storage = _storageList[0];
+                    [self.tableView reloadData];
+                }];
+            }
+            else
+            {
+                MCPickerView *pickerView = [[MCPickerView alloc] init];
+                pickerView.delegate = self;
+                [pickerView setData:_storageList];
+                pickerView.index = indexPath;
+                [pickerView show];
+                
+                _stats.package = _storageList[0];
+                [self.tableView reloadData];
+            }
+            
         }
     }
     else if(cell.style == LoadingCellStyleDatePicker)
@@ -366,11 +452,18 @@
         MCDatePickerView* datePicker = [[MCDatePickerView alloc] init];
         datePicker.delegate = self;
         [datePicker show];
-        
+        if(indexPath.row == 5){
+            self.timeFlag = @"0";
+        }else{
+            self.timeFlag = @"1";
+        }
+
+        /*
         if(!_stats.departuretime)
         {
             _stats.departuretime = datePicker.picker.date;
         }
+         */
             
     }
     
@@ -439,29 +532,42 @@
     if (_stats.weight) {
         [params addEntriesFromDictionary:@{@"weight":[NSString stringWithFormat:@"%@",_stats.weight]}];
     }
-    if (_stats.departuretime) {
+    if(_stats.departuretime){
         [params addEntriesFromDictionary:@{@"departuretime":[NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:_stats.departuretime]]}];
     }
+
+    if (_stats.planarrivetime) {
+        [params addEntriesFromDictionary:@{@"planarrivetime":[NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:_stats.planarrivetime]]}];
+    }
+    
     if (_stats.extraInfo) {
         [params addEntriesFromDictionary:@{@"remark":_stats.extraInfo}];
     }
     if (_stats.serialno) {
-        [params addEntriesFromDictionary:@{@"serialno":_stats.serialno}];
+        [params addEntriesFromDictionary:@{@"serialno":[NSString stringWithFormat:@"17%@",_stats.serialno]}];
     }
-    if (_stats.package) {
-        [params addEntriesFromDictionary:@{@"packageid":_stats.package.packageid}];
+    //if (_stats.package) {
+        [params addEntriesFromDictionary:@{@"packageid":@1}];
+   // }
+    if (_stats.storage) {
+        [params addEntriesFromDictionary:@{@"storageid":_stats.storage.storageid}];
+    }
+    if (_stats.variety) {
+        [params addEntriesFromDictionary:@{@"varietyid":_stats.variety.varietyid}];
     }
     if (_stats.factory) {
         [params addEntriesFromDictionary:@{@"factoryid":_stats.factory.factoryid}];
     }
-    NSLog(@"%@", params);
+    NSLog(@"++++++%@", params);
     [_server POST:@"transport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSDictionary* data = responseObject[@"data"];
         TransportDetail* detail = [[TransportDetail alloc] initWithID:[data[@"transportid"] integerValue]];
         NSLog(@"%@", detail);
-        TranspotationPlanViewController *plan = [[TranspotationPlanViewController alloc] initWithStyle:UITableViewStylePlain];
-        plan.detail = detail;
-        [self.navigationController pushViewController:plan animated:YES];
+        if([responseObject[@"code"] integerValue] == 10000){
+            TranspotationPlanViewController *plan = [[TranspotationPlanViewController alloc] initWithStyle:UITableViewStylePlain];
+            plan.detail = detail;
+            [self.navigationController pushViewController:plan animated:YES];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
@@ -472,11 +578,11 @@
 {
     NSIndexPath *indexPath = pickerView.index;
     if (indexPath.section == 0) {
-        if (indexPath.row ==0) {
+        if (indexPath.row == 1) {
             NSInteger components = [pickerView.picker numberOfComponents];
             if (component != components-1) { // not the last component
                 City* selectedCity = [cityList objectAtIndex:row];
-                [self requestVendors:selectedCity.cityid success:^{
+                [self requestVendors:selectedCity.areaid success:^{
                     [pickerView setData:vendorList];
                     [pickerView.picker reloadComponent:component+1];
                     Vendor* vendor = vendorList[0];
@@ -492,19 +598,30 @@
                 [self.tableView reloadData];
             }
         }
-        else if (indexPath.row ==1){
+        else if (indexPath.row ==2){
             Field* field = fieldList[row];
             _stats.field = field;
             [self.tableView reloadData];
         }
-        else if (indexPath.row ==2){
+        else if (indexPath.row ==3){
             Factory* factory = factoryList[row];
             _stats.factory = factory;
             [self.tableView reloadData];
         }
         else if (indexPath.row ==6){
+            /*
             Package* pkg = packageList[row];
             _stats.package = pkg;
+            [self.tableView reloadData];
+             */
+        }
+        else if (indexPath.row == 7) {
+            Variety *var = _varietylist[row];
+            _stats.variety = var;
+            [self.tableView reloadData];
+        }else if (indexPath.row == 8) {
+            Storage *stor = _storageList[row];
+            _stats.storage = stor;
             [self.tableView reloadData];
         }
     }
@@ -537,7 +654,7 @@
 {
     UIBarButtonItem* item = [[UIBarButtonItem alloc] initWithTitle:@"完成" style: UIBarButtonItemStyleDone target:self action:@selector(dismiss)];
     self.navigationItem.rightBarButtonItem = item;
-    if ([textField.text isEqualToString:@"0"] ||[textField.text isEqualToString:@"请输入运单号"] ) {
+    if ([textField.text isEqualToString:@"0"] ||[textField.text isEqualToString:@"请输入4位运单号"] ) {
         textField.text = @"";
     }
 }
@@ -556,14 +673,19 @@
     }
     else
     {
-        [_stats setSerialno:textField.text];
+        [_stats setSerialno:[NSString stringWithFormat:@"%@",textField.text]];
     }
 }
 
 #pragma mark datePicker delegate
 -(void)datePickerViewDidSelectDate:(NSDate *)date
 {
-    _stats.departuretime = date;
+    if ([self.timeFlag isEqualToString:@"0"]) {
+        _stats.departuretime = date;
+    }else{
+        _stats.planarrivetime = date;
+    }
+        _stats.planarrivetime = date;
     [self.tableView reloadData];
 }
 
@@ -571,7 +693,7 @@
 -(void)requestCityListSuccess:(void (^)(void))success
 {
     NSDictionary* params = @{@"token": _server.accessToken};
-    [_server GET:@"getCityList" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+    [_server GET:@"getAreaList" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* jsonArray = responseObject[@"data"];
         NSError* error;
         cityList = [MTLJSONAdapter modelsOfClass:[City class] fromJSONArray:jsonArray error:&error];
@@ -590,7 +712,7 @@
 -(void)requestVendors:(NSString*)city success:(void (^)(void))success
 {
     NSDictionary* params = @{@"token":_server.accessToken,
-                             @"city":city};
+                             @"areaid":city};
     [_server GET:@"getVendorList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* data = responseObject[@"data"];
         NSLog(@"%@",data);
@@ -611,7 +733,7 @@
 {
     NSDictionary* params = @{@"token":_server.accessToken,
                              @"vendorid":vendor,
-                             @"city":cityid};
+                             @"areaid":cityid};
     [_server GET:@"getFieldList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* data = responseObject[@"data"];
         fieldList = [MTLJSONAdapter modelsOfClass:[Field class] fromJSONArray:data error:nil];
@@ -642,6 +764,45 @@
         
     }];
 }
+
+-(void)requestStorageListSuccess:(void (^)(void))success
+{
+    NSDictionary* params = @{@"token": _server.accessToken};
+    [_server GET:@"getStorageList" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSArray* jsonArray = responseObject[@"data"];
+        NSError* error;
+        _storageList = [MTLJSONAdapter modelsOfClass:[Storage class] fromJSONArray:jsonArray error:&error];
+        if (error) {
+            NSLog(@"error %@", error);
+        }
+        _stats.storage = _storageList[0];
+        if (_storageList) {
+            success();
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
+-(void)requestVarietyListSuccess:(void (^)(void))success
+{
+    NSDictionary* params = @{@"token": _server.accessToken};
+    [_server GET:@"getVarietyList" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        NSArray* jsonArray = responseObject[@"data"];
+        NSError* error;
+        _varietylist = [MTLJSONAdapter modelsOfClass:[Variety class] fromJSONArray:jsonArray error:&error];
+        if (error) {
+            NSLog(@"error %@", error);
+        }
+        _stats.variety = _varietylist[0];
+        if (_varietylist) {
+            success();
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
 
 -(void)requestFactoryList:(NSString*)field success:(void (^)(void))success
 {
@@ -697,7 +858,7 @@
             if (!cityList) {
                 [self requestCityListSuccess:^{
                     for (City* city in cityList) {
-                        if ([city.cityid isEqualToString:citycode]) {
+                        if ([city.areaid isEqualToString:citycode]) {
                             _stats.city = city;
                             NSMutableArray* sort = [[NSMutableArray alloc] initWithArray:cityList];
                             [sort removeObject:city];
@@ -710,5 +871,13 @@
             }
         }
     }];
+}
+
+- (void) textFieldDidChange:(UITextField *)textField{
+    if (textField.tag == 1) {
+        if (textField.text.length > 4) {
+            textField.text = [textField.text substringToIndex:4];
+        }
+    }
 }
 @end

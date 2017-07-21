@@ -32,7 +32,7 @@
 {
     self.view = self.tableView;
     self.title = @"记录详情";  
-    titleArray = @[@"供应商名称",@"地块编号",@"土豆重量",@"发车时间",@"预计到达时间",@"运单号",@"包装类型",@"土豆种类",@"储存期"];
+    titleArray = @[@"供应商名称",@"地块编号",@"土豆重量",@"发车时间",@"计划到达时间",@"运单号",@"包装类型",@"土豆种类",@"储存期"];
     
     _server = [ServerManager sharedInstance];
 }

@@ -76,12 +76,22 @@
 {
     NSDictionary* qrcode = [[NSDictionary alloc] init];
     if ([stats validForStartingTransport]) {
+        NSDateFormatter* dateFormatter2 = [[NSDateFormatter alloc] init];
+        [dateFormatter2 setDateFormat:@"yyyy-MM-dd"];
+        NSString *str1 = [dateFormatter2 stringFromDate:stats.departuretime];
+        
+        NSDateFormatter* dateFormatter3 = [[NSDateFormatter alloc] init];
+        [dateFormatter3 setDateFormat:@"HH:mm"];
+        NSString *str2 = [dateFormatter3 stringFromDate:[NSDate date]];
+        NSString *departure = [NSString stringWithFormat:@"%@ %@",str1,str2]; 
+        
         NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+        NSString *planarrive = [dateFormatter stringFromDate:stats.planarrivetime];
         qrcode = @{@"weight":stats.weight,
                    @"serialno":stats.serialno,
-                   @"departuretime":[dateFormatter stringFromDate:stats.departuretime],
-                   @"city":[NSString stringWithFormat:@"%@",stats.city.name],
+                   @"departuretime":departure,
+                   @"city":[NSString stringWithFormat:@"%@",stats.city.areaid],
                    @"landId":[NSString stringWithFormat:@"%lu",(unsigned long)stats.field.fieldID],
                    @"land":stats.field.name,
                    @"providerId":[NSString stringWithFormat:@"%lu",(unsigned long)stats.supplier.vendorID],
@@ -89,8 +99,13 @@
                    @"driver":user.driver,
                    @"mobile":user.mobile,
                    @"truckno":user.truckno,
-                   @"packageid":stats.package.packageid,
-                   @"packagename":stats.package.name,
+                   @"packageid":@"1",
+                   @"packagename":@"散装",
+                   @"varietyid":stats.variety.varietyid,
+                   @"storageid":stats.storage.storageid,
+                   @"planarrivetime":planarrive,
+                   @"varietyname":stats.variety.name,
+                   @"storagename":stats.storage.name,
                    @"factoryname":stats.factory.name,
                    @"factoryid":stats.factory.factoryid,
                    };

@@ -48,7 +48,7 @@
     config.itemSize = CGSizeMake(80, 80);
     config.photosMaxCount = 9;
     
-    WSImagePickerView *pickerView = [[WSImagePickerView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, 0) config:config];
+    WSImagePickerView *pickerView = [[WSImagePickerView alloc] initWithFrame:CGRectMake(0, 0,kScreen_Width , 0) config:config fielduserid:self.fielduserid];
     //Height changed with photo selection
     __weak typeof(self) weakSelf = self;
     pickerView.viewHeightChanged = ^(CGFloat height) {
@@ -88,12 +88,13 @@
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
         NSLog(@"执行完毕");
         NSLog(@"11111%@111111",dataImg);
+        [[NSUserDefaults standardUserDefaults]setValue:dataImg forKey:self.fielduserid];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         NSMutableString *mutStr = [NSMutableString string];
         for (NSString *str in dataImg) {
             [mutStr appendFormat:@"%@,",str];
         }
         [mutStr deleteCharactersInRange:NSMakeRange([mutStr length] - 1, 1)];
-        NSLog(@"------%@----%@",self.fielduserid,mutStr);
         [self.farmVM uploadFieldImage:self.fielduserid urls:mutStr success:^(NSString *msg) {
              [self.navigationController popViewControllerAnimated:NO];
         }];

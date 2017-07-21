@@ -15,6 +15,7 @@
              @"supplier":@"vendorid",
              @"field":@"placeNo",
              @"departuretime":@"departuretime",
+             @"planarrivetime":@"planarrivetime",
              @"extraInfo":@"extraInfo",
              @"weight":@"weight",
              @"serialno":@"serialno"};
@@ -27,6 +28,9 @@
     if (!self.departuretime) {
         self.departuretime = [NSDate date];
         self.weight = [NSNumber numberWithInteger:0];
+    }
+    if (!self.planarrivetime) {
+        self.planarrivetime = [NSDate date];
     }
     
     return self;
@@ -58,10 +62,15 @@
     if (!self.serialno || [self.serialno isEqualToString:@""]) {
         return NO;
     }
-    if (!self.departuretime) {
+
+    if (!self.planarrivetime) {
         return NO;
     }
-    if (!self.package)
+    if (!self.variety)
+    {
+        return NO;
+    }
+    if (!self.storage)
     {
         return NO;
     }

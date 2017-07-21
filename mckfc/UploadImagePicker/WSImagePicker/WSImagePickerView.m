@@ -9,7 +9,7 @@
 #import "WSImagePickerView.h"
 #import "WSPhotosBroseVC.h"
 #import "JFImagePickerController.h"
-
+#import "SDWebImageManager.h"
 static NSString *imagePickerCellIdentifier = @"imagePickerCellIdentifier";
 
 @interface WSImagePickerView()<UICollectionViewDelegate,UICollectionViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
@@ -18,12 +18,14 @@ static NSString *imagePickerCellIdentifier = @"imagePickerCellIdentifier";
 }
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) WSImagePickerConfig *config;
+@property (nonatomic, copy) NSString *fielduserid;
 @end
 
 @implementation WSImagePickerView
 
-- (instancetype)initWithFrame:(CGRect)frame config:(WSImagePickerConfig *)config{
+-(instancetype)initWithFrame:(CGRect)frame config:(WSImagePickerConfig *)config fielduserid:(NSString *)fielduserid{
     if(self = [super initWithFrame:frame]) {
+        self.fielduserid = fielduserid;
         _config = (config != nil)?config:([WSImagePickerConfig new]);
         [self setupView];
         [self initializeData];
@@ -32,7 +34,7 @@ static NSString *imagePickerCellIdentifier = @"imagePickerCellIdentifier";
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    return [self initWithFrame:frame config:nil];
+    return  [self initWithFrame:frame config:nil fielduserid:nil];
 }
 
 - (void)setupView {
@@ -61,6 +63,20 @@ static NSString *imagePickerCellIdentifier = @"imagePickerCellIdentifier";
 
 - (void)initializeData {
     _photosArray = [NSMutableArray new];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:self.fielduserid]) {
+        NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:self.fielduserid];
+        if (arr.count > 0) {
+            for (NSString *url in arr) {
+                [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:url] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                    
+                } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                    NSLog(@"img = %@",image);
+                    [_photosArray addObject:image];
+                    [self refreshCollectionView];
+                }];
+            }
+        }
+    }
 }
 
 - (void)refreshCollectionView {
