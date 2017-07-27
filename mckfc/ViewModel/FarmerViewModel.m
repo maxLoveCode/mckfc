@@ -39,9 +39,9 @@
 
 }
 
-- (void)uploadFieldImage:(NSString *)fielduserid urls:(NSString *)urls success:(Success)success{
+- (void)uploadFieldImage:(NSString *)fielduserid drivernum:(NSString*)drivernum urls:(NSString *)urls success:(Success)success{
     self.server = [ServerManager sharedInstance];
-    [_server POST:@"uploadFieldImage" parameters:@{@"token":_server.accessToken,@"fielduserid":fielduserid,@"urls":urls} animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+    [_server POST:@"uploadFieldImage" parameters:@{@"token":_server.accessToken,@"fielduserid":fielduserid,@"urls":urls,@"drivernum":drivernum} animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         success(responseObject[@"msg"]);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         

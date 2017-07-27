@@ -595,11 +595,14 @@
         NSString* dateString = [dateFormatter stringFromDate:[NSDate date]];
         NSDateFormatter* dateFormatter2 = [[NSDateFormatter alloc] init];
         [dateFormatter2 setDateFormat:@"yyyy-MM-dd HH:mm"];
+        if ([stat.serialno length] < 6) {
+           stat.serialno = [NSString stringWithFormat:@"17%@",stat.serialno];
+        }
         NSString *planStr = [dateFormatter2 stringFromDate:stat.planarrivetime];
         NSDictionary* unionDic = @{@"driver":user.driver,
                                    @"mobile":user.mobile,
                                    @"truckno":user.truckno,
-                                   @"serialno":[NSString stringWithFormat:@"17%@",stat.serialno],
+                                   @"serialno":stat.serialno,
                                    @"departuretime":dateString,
                                    @"storageid": [NSNumber numberWithInteger: [stat.storage.storageid integerValue]],
                                    @"varietyid": [NSNumber numberWithInteger: [stat.variety.varietyid integerValue]],

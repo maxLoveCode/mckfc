@@ -48,7 +48,7 @@
         [_confirm setTitleColor:COLOR_THEME_CONTRAST forState:UIControlStateNormal];
         _confirm.layer.cornerRadius = 3;
         _confirm.layer.masksToBounds = YES;
-        [_confirm setTitle:@"信息无误，确认入厂" forState: UIControlStateNormal];
+        [_confirm setTitle:@"信息无误，确认到厂" forState: UIControlStateNormal];
     }
     return _confirm;
 }

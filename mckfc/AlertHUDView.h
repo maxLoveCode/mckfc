@@ -42,6 +42,7 @@ typedef NS_ENUM(NSInteger, HUDAlertStyle) {
 
 -(instancetype)initWithStyle:(HUDAlertStyle)style;
 
+
 -(void)show:(AlertHUDView*)alert;
 -(void)dismiss:(AlertHUDView*)alert;
 -(void)failureWithMsg:(AlertHUDView *)alert msg:(NSString*)msg;

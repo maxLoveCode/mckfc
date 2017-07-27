@@ -9,7 +9,7 @@
 #import "WorkDetailViewController.h"
 #import "InspectDetailView.h"
 #import "TruckArrivePicker.h"
-
+#import "NewInspectionController.h"
 #define itemHeight 44
 
 @interface WorkDetailViewController()<UITableViewDelegate, UITableViewDataSource>
@@ -203,17 +203,36 @@
             }
         }
         else if([workFlow.type isEqualToString:@"checkone"]){
-            InspectionViewController* inspectVC = [[InspectionViewController alloc] init];
-            [inspectVC setTransportid:self.transportid];
-            [inspectVC setWorkFlow:workFlow];
+            NewInspectionController* inspectVC = [[NewInspectionController alloc] init];
+            inspectVC.transportid = self.transportid;
+            inspectVC.workFlow = workFlow;
+            if ([[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"]) {
+               NSString* user_type = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"];
+                if ([user_type isEqualToString:@"4"]) {
+                    inspectVC.mainType = @"1";
+                }else{
+                    inspectVC.mainType = @"2";
+                }
+            }
+            inspectVC.type = @"1";
             if (workFlow.ischecked || workFlow.auth) {
                 [self.navigationController pushViewController:inspectVC animated:YES];
             }
+            
         }
         else if([workFlow.type isEqualToString:@"checktwo"]){
-            InspectionViewController* inspectVC = [[InspectionViewController alloc] init];
-            [inspectVC setTransportid:self.transportid];
-            [inspectVC setWorkFlow:workFlow];
+            NewInspectionController* inspectVC = [[NewInspectionController alloc] init];
+            inspectVC.transportid = self.transportid;
+            inspectVC.type = @"2";
+            if ([[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"]) {
+                NSString* user_type = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"];
+                if ([user_type isEqualToString:@"4"]) {
+                    inspectVC.mainType = @"1";
+                }else{
+                    inspectVC.mainType = @"2";
+                }
+            }
+            inspectVC.workFlow = workFlow;
             if (workFlow.ischecked || workFlow.auth) {
                 [self.navigationController pushViewController:inspectVC animated:YES];
             }

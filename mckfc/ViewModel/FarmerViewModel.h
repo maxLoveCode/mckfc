@@ -13,5 +13,5 @@ typedef void(^Error)(NSString *msg);
 @property (nonatomic, strong) NSArray *dataSource;
 - (void)getTruckListData:(NSString *)field :(Success)success;
 - (void)getarrivedFieldData:(NSString *)field :(Success)success error:(Error) error;
-- (void)uploadFieldImage:(NSString *)fielduserid urls:(NSString *)urls success:(Success)success;
+- (void)uploadFieldImage:(NSString *)fielduserid drivernum:(NSString*)drivernum urls:(NSString *)urls success:(Success)success;
 @end

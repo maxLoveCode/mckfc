@@ -113,7 +113,8 @@
             cell.textInput.text = @"请填写4位运单号";
         }else{
             if ([_stats.serialno length] >5) {
-                cell.textInput.text = [_stats.serialno substringToIndex:2];
+                _stats.serialno = [_stats.serialno substringFromIndex:2];
+                cell.textInput.text = _stats.serialno;
             }else{
                 cell.textInput.text = _stats.serialno;
             }

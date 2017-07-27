@@ -15,8 +15,28 @@
     return @{@"comments":@"comments",
              @"refusecause":@"refusecause",
              @"result":@"result",
-             @"status":@"refusestatus"};
+             @"status":@"refusestatus",
+             @"checkbig":@"checkbig",
+             @"checkbug":@"checkbug",
+             @"checkcolor":@"checkcolor",
+             @"checkdry":@"checkdry",
+             @"checkearth":@"checkearth",
+             @"checkgreen":@"checkgreen",
+             @"checkhollow":@"checkhollow",
+             @"checkhurt":@"checkhurt",
+             @"checkinner":@"checkinner",
+             @"checkmal":@"checkmal",
+             @"checkmix":@"checkmix",
+             @"checkother":@"checkother",
+             @"checkrot":@"checkrot",
+             @"checkscab":@"checkscab",
+             @"checksmall":@"checksmall",
+             @"checkwet":@"checkwet",
+             };
 }
 
+- (void)setNilValueForKey:(NSString *)key{
+    
+}
 
 @end

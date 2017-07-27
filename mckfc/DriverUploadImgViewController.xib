@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DriverUploadImgViewController">
             <connections>
+                <outlet property="driverNumberTextfield" destination="g8W-Du-o3B" id="qvd-GJ-y4p"/>
                 <outlet property="photoView" destination="10d-2m-VWa" id="obi-eR-FQR"/>
                 <outlet property="photoViewHieghtConstraint" destination="xlL-XS-43g" id="LUa-hu-0oo"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -25,14 +26,14 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10d-2m-VWa" userLabel="phoneView">
-                            <rect key="frame" x="0.0" y="20" width="375" height="100"/>
+                            <rect key="frame" x="0.0" y="90" width="375" height="100"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="100" id="xlL-XS-43g"/>
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PfD-6h-BN8">
-                            <rect key="frame" x="10" y="140" width="355" height="40"/>
+                            <rect key="frame" x="10" y="210" width="355" height="40"/>
                             <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="3u5-DE-tQd"/>
@@ -44,15 +45,27 @@
                                 <action selector="onClickConfirm:" destination="-1" eventType="touchUpInside" id="Tea-39-hDa"/>
                             </connections>
                         </button>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请填写司机人数" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g8W-Du-o3B">
+                            <rect key="frame" x="15" y="30" width="345" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="5AT-XW-KbC"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                        </textField>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="10d-2m-VWa" firstAttribute="top" secondItem="g8W-Du-o3B" secondAttribute="bottom" constant="20" id="7Se-VA-Kj7"/>
+                        <constraint firstAttribute="trailing" secondItem="g8W-Du-o3B" secondAttribute="trailing" constant="15" id="AbQ-s9-kvH"/>
                         <constraint firstAttribute="trailing" secondItem="PfD-6h-BN8" secondAttribute="trailing" constant="10" id="HMM-yW-Led"/>
                         <constraint firstItem="10d-2m-VWa" firstAttribute="leading" secondItem="2PY-mB-wdW" secondAttribute="leading" id="N68-bx-ElN"/>
+                        <constraint firstItem="g8W-Du-o3B" firstAttribute="leading" secondItem="2PY-mB-wdW" secondAttribute="leading" constant="15" id="YTt-yf-pdR"/>
                         <constraint firstItem="PfD-6h-BN8" firstAttribute="leading" secondItem="2PY-mB-wdW" secondAttribute="leading" constant="10" id="aFT-DX-lcT"/>
                         <constraint firstAttribute="trailing" secondItem="10d-2m-VWa" secondAttribute="trailing" id="ePu-2k-0Oy"/>
                         <constraint firstItem="PfD-6h-BN8" firstAttribute="top" secondItem="10d-2m-VWa" secondAttribute="bottom" constant="20" id="mAw-lH-xsi"/>
-                        <constraint firstItem="10d-2m-VWa" firstAttribute="top" secondItem="2PY-mB-wdW" secondAttribute="top" constant="20" id="suF-2T-awo"/>
+                        <constraint firstItem="g8W-Du-o3B" firstAttribute="top" secondItem="2PY-mB-wdW" secondAttribute="top" constant="30" id="qc1-Ra-rFk"/>
                     </constraints>
                 </view>
             </subviews>
@@ -63,7 +76,7 @@
                 <constraint firstItem="2PY-mB-wdW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Y3g-7T-lL9"/>
                 <constraint firstAttribute="trailing" secondItem="2PY-mB-wdW" secondAttribute="trailing" id="ma8-z3-n1u"/>
             </constraints>
-            <point key="canvasLocation" x="-231" y="-286"/>
+            <point key="canvasLocation" x="-267" y="-289"/>
         </view>
     </objects>
 </document>

@@ -158,6 +158,7 @@
                 else{
                     if ([_stats.serialno length] >5) {
                         cell.textInput.text = [_stats.serialno substringToIndex:2];
+                        _stats.serialno = [_stats.serialno substringFromIndex:2];
                     }else{
                         cell.textInput.text = _stats.serialno;
                     }
@@ -544,7 +545,12 @@
         [params addEntriesFromDictionary:@{@"remark":_stats.extraInfo}];
     }
     if (_stats.serialno) {
-        [params addEntriesFromDictionary:@{@"serialno":[NSString stringWithFormat:@"17%@",_stats.serialno]}];
+        if ([_stats.serialno length] < 6) {
+            [params addEntriesFromDictionary:@{@"serialno":[NSString stringWithFormat:@"17%@",_stats.serialno]}];
+        }else{
+            [params addEntriesFromDictionary:@{@"serialno":_stats.serialno}];
+        }
+        
     }
     //if (_stats.package) {
         [params addEntriesFromDictionary:@{@"packageid":@1}];

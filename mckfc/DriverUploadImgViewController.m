@@ -10,21 +10,58 @@
 #import "WSImagePickerView.h"
 #import "ServerManager.h"
 #import "FarmerViewModel.h"
-@interface DriverUploadImgViewController ()
+#import "AlertHUDView.h"
+@interface DriverUploadImgViewController ()<HUDViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *photoView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *photoViewHieghtConstraint;
 @property (nonatomic, strong) WSImagePickerView *pickerView;
 @property (nonatomic, strong) ServerManager *serverManager;
+@property (weak, nonatomic) IBOutlet UITextField *driverNumberTextfield;
 @property (nonatomic, strong) FarmerViewModel *farmVM;
 @end
 
-@implementation DriverUploadImgViewController
+@implementation DriverUploadImgViewController{
+    AlertHUDView *_alert;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"上传图片";
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Number",self.fielduserid]]) {
+        _driverNumberTextfield.text = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Number",self.fielduserid]];
+    }
     [self setupPickerView];
+    [self addNotificationCenter];
+    
+}
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.view endEditing:YES];
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)addNotificationCenter{
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    
+    // 键盘将出现事件监听
+    
+    [center addObserver:self selector:@selector(handleKeyboardWillShow:)
+     
+                   name:UIKeyboardWillShowNotification
+     
+                 object:nil];
+    
+    // 键盘将隐藏事件监听
+    
+    [center addObserver:self selector:@selector(handleKeyboardWillHide:)
+     
+                   name:UIKeyboardWillHideNotification
+     
+                 object:nil];
 }
 
 - (FarmerViewModel *)farmVM{
@@ -65,6 +102,10 @@
 }
 
 - (IBAction)onClickConfirm:(id)sender {
+    if ([_driverNumberTextfield.text isEqualToString:@"请填写司机人数"] || [_driverNumberTextfield.text isEqualToString:@""]) {
+        [self showAlert];
+        return;
+    }
     NSArray *array = [_pickerView getPhotos];
     if (!array.count || array.count == 0 ) {
         return;
@@ -89,13 +130,14 @@
         NSLog(@"执行完毕");
         NSLog(@"11111%@111111",dataImg);
         [[NSUserDefaults standardUserDefaults]setValue:dataImg forKey:self.fielduserid];
+        [[NSUserDefaults standardUserDefaults]setValue:_driverNumberTextfield.text forKey:[NSString stringWithFormat:@"%@Number",self.fielduserid]];
         [[NSUserDefaults standardUserDefaults] synchronize];
         NSMutableString *mutStr = [NSMutableString string];
         for (NSString *str in dataImg) {
             [mutStr appendFormat:@"%@,",str];
         }
         [mutStr deleteCharactersInRange:NSMakeRange([mutStr length] - 1, 1)];
-        [self.farmVM uploadFieldImage:self.fielduserid urls:mutStr success:^(NSString *msg) {
+        [self.farmVM uploadFieldImage:self.fielduserid drivernum:_driverNumberTextfield.text urls:mutStr success:^(NSString *msg) {
              [self.navigationController popViewControllerAnimated:NO];
         }];
        
@@ -104,6 +146,35 @@
 
 }
 
+-(void)tapClick{
+    [self.view endEditing: YES];
+}
+
+// 键盘弹出时
+-(void)handleKeyboardWillShow:(NSNotification *)notification
+{
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(tapClick)];
+}
+
+//键盘消失时
+-(void)handleKeyboardWillHide:(NSNotification *)notification
+{
+    self.navigationItem.rightBarButtonItem = nil;
+}
+
+- (void)showAlert{
+    [self.view endEditing:YES];
+    _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain
+              ];
+    _alert.delegate = self;
+    _alert.title.text = @"上传图片";
+    _alert.detail.text = @"请填写司机人数";
+    [_alert show:_alert];
+}
+
+- (void)didSelectConfirm{
+    [_alert dismiss:_alert];
+}
 /*
 #pragma mark - Navigation
 

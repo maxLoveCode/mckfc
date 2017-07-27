@@ -105,6 +105,10 @@
 		550441FE1F2058E300FFFB77 /* Storage.m in Sources */ = {isa = PBXBuildFile; fileRef = 550441FD1F2058E300FFFB77 /* Storage.m */; };
 		550442011F2058FA00FFFB77 /* Variety.m in Sources */ = {isa = PBXBuildFile; fileRef = 550442001F2058FA00FFFB77 /* Variety.m */; };
 		551791CC1F14A24B00649FF6 /* CreatQRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 551791CB1F14A24B00649FF6 /* CreatQRCodeView.m */; };
+		5546FD361F25D10F0024D4DD /* NewInspectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5546FD351F25D10F0024D4DD /* NewInspectionController.m */; };
+		5546FD391F25DAF00024D4DD /* CauseRejectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5546FD381F25DAF00024D4DD /* CauseRejectionViewController.m */; };
+		5546FD3D1F25DB4A0024D4DD /* CauseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5546FD3B1F25DB4A0024D4DD /* CauseCollectionViewCell.m */; };
+		5546FD3E1F25DB4A0024D4DD /* CauseCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5546FD3C1F25DB4A0024D4DD /* CauseCollectionViewCell.xib */; };
 		5547D3321F15B305005D3EC4 /* CreatQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547D3311F15B305005D3EC4 /* CreatQRViewController.m */; };
 		5547D3361F15B972005D3EC4 /* CarDriverInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5547D3341F15B972005D3EC4 /* CarDriverInfoCell.m */; };
 		5547D3371F15B972005D3EC4 /* CarDriverInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5547D3351F15B972005D3EC4 /* CarDriverInfoCell.xib */; };
@@ -349,6 +353,13 @@
 		550442001F2058FA00FFFB77 /* Variety.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Variety.m; sourceTree = "<group>"; };
 		551791CA1F14A24B00649FF6 /* CreatQRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatQRCodeView.h; sourceTree = "<group>"; };
 		551791CB1F14A24B00649FF6 /* CreatQRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatQRCodeView.m; sourceTree = "<group>"; };
+		5546FD341F25D10F0024D4DD /* NewInspectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewInspectionController.h; sourceTree = "<group>"; };
+		5546FD351F25D10F0024D4DD /* NewInspectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewInspectionController.m; sourceTree = "<group>"; };
+		5546FD371F25DAEF0024D4DD /* CauseRejectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CauseRejectionViewController.h; sourceTree = "<group>"; };
+		5546FD381F25DAF00024D4DD /* CauseRejectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CauseRejectionViewController.m; sourceTree = "<group>"; };
+		5546FD3A1F25DB4A0024D4DD /* CauseCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CauseCollectionViewCell.h; sourceTree = "<group>"; };
+		5546FD3B1F25DB4A0024D4DD /* CauseCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CauseCollectionViewCell.m; sourceTree = "<group>"; };
+		5546FD3C1F25DB4A0024D4DD /* CauseCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CauseCollectionViewCell.xib; sourceTree = "<group>"; };
 		5547D3301F15B305005D3EC4 /* CreatQRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatQRViewController.h; sourceTree = "<group>"; };
 		5547D3311F15B305005D3EC4 /* CreatQRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatQRViewController.m; sourceTree = "<group>"; };
 		5547D3331F15B972005D3EC4 /* CarDriverInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarDriverInfoCell.h; sourceTree = "<group>"; };
@@ -611,6 +622,13 @@
 				257DB7AB1D39E0D700C2227E /* WorkFlowInterface.m */,
 				257DB7AD1D3C696F00C2227E /* InspectionViewController.h */,
 				257DB7AE1D3C696F00C2227E /* InspectionViewController.m */,
+				5546FD341F25D10F0024D4DD /* NewInspectionController.h */,
+				5546FD351F25D10F0024D4DD /* NewInspectionController.m */,
+				5546FD371F25DAEF0024D4DD /* CauseRejectionViewController.h */,
+				5546FD381F25DAF00024D4DD /* CauseRejectionViewController.m */,
+				5546FD3A1F25DB4A0024D4DD /* CauseCollectionViewCell.h */,
+				5546FD3B1F25DB4A0024D4DD /* CauseCollectionViewCell.m */,
+				5546FD3C1F25DB4A0024D4DD /* CauseCollectionViewCell.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1135,6 +1153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5547D3371F15B972005D3EC4 /* CarDriverInfoCell.xib in Resources */,
+				5546FD3E1F25DB4A0024D4DD /* CauseCollectionViewCell.xib in Resources */,
 				5562C0E61F18ADF700ACB12E /* DriverUploadImgViewController.xib in Resources */,
 				253BF58E1D0D49F40006086D /* LaunchScreen.storyboard in Resources */,
 				253BF58B1D0D49F40006086D /* Assets.xcassets in Resources */,
@@ -1378,6 +1397,8 @@
 				252EF9EB1D3369E900565D00 /* City.m in Sources */,
 				5547D33E1F15C974005D3EC4 /* TruckListModel.m in Sources */,
 				25CB81A11D54513F00EDD05C /* AddRecordViewController.m in Sources */,
+				5546FD3D1F25DB4A0024D4DD /* CauseCollectionViewCell.m in Sources */,
+				5546FD361F25D10F0024D4DD /* NewInspectionController.m in Sources */,
 				550441FE1F2058E300FFFB77 /* Storage.m in Sources */,
 				256F39961D12B2A000175E5A /* DriverDetailEditorController.m in Sources */,
 				251F378F1D26698C00B423D1 /* ReportCollectionView.m in Sources */,
@@ -1402,6 +1423,7 @@
 				252EF9C31D2E4F2300565D00 /* CommonMenuView.m in Sources */,
 				251175461D10EB6B00C3CE91 /* UserView.m in Sources */,
 				257DB7971D38B4C400C2227E /* workRecord.m in Sources */,
+				5546FD391F25DAF00024D4DD /* CauseRejectionViewController.m in Sources */,
 				252EF9DC1D2FA51C00565D00 /* WorkDetailViewController.m in Sources */,
 				252EF9B81D2E3C4C00565D00 /* SecurityNav.m in Sources */,
 				252EF9D61D2F5C4100565D00 /* WorkRecordCell.m in Sources */,
