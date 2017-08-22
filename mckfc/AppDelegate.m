@@ -35,7 +35,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
 
     NSUserDefaults* defaults =[NSUserDefaults standardUserDefaults];
-    
+    NSLog(@"测试git");
 //the usertype flag, needs to be cleared if logout
     NSString* user_type = [defaults objectForKey:@"user_type"];
     NSLog(@"user_type %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"]);
