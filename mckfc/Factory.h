@@ -12,6 +12,7 @@
 
 @property (nonatomic, copy) NSString *name; 
 @property (nonatomic, copy) NSString* factoryid;
-
+@property (nonatomic, strong) NSNumber *pointx;
+@property (nonatomic, strong) NSNumber *pointy;
 
 @end

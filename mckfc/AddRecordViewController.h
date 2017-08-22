@@ -37,4 +37,8 @@
 -(void)setDate:(NSDate*)date;
 -(void)showDatePicker;
 
+//@property (nonatomic, strong) NSNumber *terminateLongtitude;
+//@property (nonatomic, strong) NSNumber *terminateLatitude;
+
+
 @end

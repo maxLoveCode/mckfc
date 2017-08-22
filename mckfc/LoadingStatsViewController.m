@@ -24,12 +24,15 @@
 #import <AMapLocationKit/AMapLocationKit.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 
+#import <MAMapKit/MAMapKit.h>
+#import <AMapSearchKit/AMapSearchKit.h>
+
 #define itemHeight 44
 #define topMargin 60
 #define buttonHeight 40
 #define buttonWidth kScreen_Width-4*k_Margin
 
-@interface LoadingStatsViewController ()<MCPickerViewDelegate, UITextViewDelegate, UITextFieldDelegate, DatePickerDelegate,HUDViewDelegate>
+@interface LoadingStatsViewController ()<MCPickerViewDelegate, UITextViewDelegate, UITextFieldDelegate, DatePickerDelegate,HUDViewDelegate,AMapSearchDelegate,MAMapViewDelegate>
 {
     NSDateFormatter *dateFormatter;
     NSArray* titleText;
@@ -44,15 +47,25 @@
     NSArray* factoryList;
     
     NSString* citycode;
+    
+    NSString *_estimatedTime;
+    AMapSearchAPI *_search;
 }
 
 @property (nonatomic, strong) MCPickerView* pickerView;
 @property (nonatomic, strong) AlertHUDView* alert;
 
+@property (nonatomic, strong) AlertHUDView* alertPlan;
 @property (nonatomic, strong) ServerManager* server;
 
 @property (nonatomic, strong) AMapLocationManager* locationManager;
 @property (nonatomic,copy) NSString *timeFlag;
+
+//@property (nonatomic, strong) NSNumber *terminateLongtitude;
+//@property (nonatomic, strong) NSNumber *terminateLatitude;
+//@property (nonatomic, assign) BOOL planTimeAndOther;
+
+@property (nonatomic,strong) AMapPath* path;
 
 @end
 
@@ -62,6 +75,7 @@
 {
     self.title = @"装载数据";
     self.timeFlag = @"0";
+   // self.planTimeAndOther = NO;
     [self.tableView registerClass:[LoadingCell class] forCellReuseIdentifier:@"loadingStats"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -78,6 +92,15 @@
     self.locationManager = [[AMapLocationManager alloc] init];
     
     [self initTitlesAndImages];
+}
+-(AlertHUDView *)alertPlan
+{
+    if (!_alertPlan) {
+        _alertPlan = [[AlertHUDView alloc] initWithStyle:HUDAlertStyleBool];
+        _alertPlan.title.text = @"预计到达时间";
+        _alertPlan.delegate = self;
+    }
+    return _alertPlan;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -452,11 +475,21 @@
     {
         MCDatePickerView* datePicker = [[MCDatePickerView alloc] init];
         datePicker.delegate = self;
-        [datePicker show];
+        
         if(indexPath.row == 5){
             self.timeFlag = @"0";
+            [datePicker show];
         }else{
             self.timeFlag = @"1";
+            [datePicker show];
+//            self.planTimeAndOther = YES;
+//            if (self.terminateLongtitude && self.terminateLatitude) {
+//                [self initComputeTime];
+//            }else{
+//                self.timeFlag = @"1";
+//                [datePicker show];
+//            }
+            
         }
 
         /*
@@ -612,6 +645,8 @@
         else if (indexPath.row ==3){
             Factory* factory = factoryList[row];
             _stats.factory = factory;
+//            self.terminateLatitude = factory.pointy;
+//            self.terminateLongtitude = factory.pointx;
             [self.tableView reloadData];
         }
         else if (indexPath.row ==6){
@@ -691,7 +726,7 @@
     }else{
         _stats.planarrivetime = date;
     }
-        _stats.planarrivetime = date;
+       // _stats.planarrivetime = date;
     [self.tableView reloadData];
 }
 
@@ -822,6 +857,10 @@
             NSLog(@"error %@", error);
         }
         _stats.factory = factoryList[0];
+//        Factory *factory = factoryList[0];
+//        self.terminateLatitude = factory.pointy;
+//        self.terminateLongtitude = factory.pointx;
+        
         if (factoryList || [factoryList count] != 0) {
             success();
         }
@@ -886,4 +925,132 @@
         }
     }
 }
+
+
+#pragma mark ----- 地图定位计算时间
+
+//- (void)initComputeTime{
+//    NSLog(@"开始------");
+//    [AMapServices sharedServices].apiKey = MapKey;
+//    self.locationManager = [[AMapLocationManager alloc] init];
+//    
+//    // 带逆地理信息的一次定位（返回坐标和地址信息）
+//    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+//    //   定位超时时间，最低2s，此处设置为2s
+//    self.locationManager.locationTimeout =2;
+//    //   逆地理请求超时时间，最低2s，此处设置为2s
+//    self.locationManager.reGeocodeTimeout = 2;
+//    // 带逆地理信息的一次定位（返回坐标和地址信息）
+//    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyKilometer];
+//    //   定位超时时间，最低2s，此处设置为10s
+//    self.locationManager.locationTimeout =5;
+//    //   逆地理请求超时时间，最低2s，此处设置为10s
+//    self.locationManager.reGeocodeTimeout = 5;
+//    
+//    _search = [[AMapSearchAPI alloc] init];
+//    _search.delegate = self;
+//    AMapDrivingRouteSearchRequest *navi = [[AMapDrivingRouteSearchRequest alloc] init];
+//    
+//    navi.requireExtension = YES;
+//    navi.strategy = 5;
+//    /* 目的地. */
+//    navi.destination = [AMapGeoPoint locationWithLatitude:[self.terminateLatitude doubleValue]
+//                                                longitude:[self.terminateLongtitude doubleValue]];
+//    
+//    [self.locationManager requestLocationWithReGeocode:NO completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
+//        
+//        if (error)
+//        {
+//            NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
+//            
+//            if (error.code == AMapLocationErrorLocateFailed)
+//            {
+//                MCDatePickerView* datePicker = [[MCDatePickerView alloc] init];
+//                datePicker.delegate = self;
+//                self.timeFlag = @"1";
+//                [datePicker show];
+//                return;
+//            }
+//        }
+//        
+//        NSLog(@"location:%@", location);
+//        NSLog(@"本地定位");
+//        /* 出发点. */
+//        navi.origin = [AMapGeoPoint locationWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
+//        
+//        [_search AMapDrivingRouteSearch:navi];
+//        
+//        if (regeocode)
+//        {
+//            // NSLog(@"reGeocode:%@", regeocode);
+//            
+//        }
+//    }];
+//    
+//}
+//
+///* 路径规划搜索回调. */
+//- (void)onRouteSearchDone:(AMapRouteSearchBaseRequest *)request response:(AMapRouteSearchResponse *)response
+//{
+//    if (response.route == nil)
+//    {
+//        MCDatePickerView* datePicker = [[MCDatePickerView alloc] init];
+//        datePicker.delegate = self;
+//        self.timeFlag = @"1";
+//        [datePicker show];
+//        return;
+//    }
+//    
+//    //解析response获取路径信息，具体解析见 Demo
+//    _path = [response.route.paths objectAtIndex:0];
+//    //delegate to parent view controller
+////    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+////    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+//    NSTimeInterval interval = (double)_path.duration;
+//    double spendTime = interval * 1.4;
+//    NSString *hour = [NSString stringWithFormat:@"%.2f",spendTime / 3600];
+//    NSDate* estimate = [NSDate dateWithTimeIntervalSinceNow: spendTime];
+//    
+//    NSString *string = [dateFormatter stringFromDate:estimate];
+//    
+//    
+//    self.alertPlan.title.text = @"预计到达时间";
+//    self.alertPlan.detail.text = [NSString stringWithFormat:@"以每小时40千米行驶，在途时间为%@小时，预计到达时间为%@，是否确定采用建议时间%@",hour,string,string] ;
+//    _estimatedTime = string;
+//    [self.alertPlan show:self.alertPlan];
+//    NSLog(@"结束-----time = %@",string);
+//}
+//
+//- (void)AMapSearchRequest:(id)request didFailWithError:(NSError *)error
+//{
+//    NSLog(@"Error: %@", error);
+//    
+//}
+//
+//#pragma mark -alertview delegate
+//-(void)didSelectConfirm
+//{
+//    if (self.planTimeAndOther == YES) {
+//        if (_estimatedTime) {
+//            _stats.planarrivetime = [dateFormatter dateFromString:_estimatedTime];
+//            [self.tableView reloadData];
+//        }
+//        [self.alertPlan removeFromSuperview];
+//    }else{
+//        [self.alert removeFromSuperview];
+//    }
+//    
+//    self.planTimeAndOther = NO;
+//    
+//    
+//}
+//
+//- (void)didCancleClick{
+//    MCDatePickerView* datePicker = [[MCDatePickerView alloc] init];
+//    datePicker.delegate = self;
+//    self.timeFlag = @"1";
+//    [datePicker show];
+//    self.planTimeAndOther = NO;
+//}
+
 @end

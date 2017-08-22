@@ -19,7 +19,8 @@ typedef NS_ENUM(NSInteger, HUDAlertStyle) {
 @protocol HUDViewDelegate <NSObject>
 
 -(void)didSelectConfirm;
-
+@optional
+-(void)didCancleClick;
 @end
 
 @interface AlertHUDView : UIView

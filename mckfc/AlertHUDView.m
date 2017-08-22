@@ -78,6 +78,7 @@
     if (!_detail) {
         _detail = [[UILabel alloc] init];
         [_detail setBackgroundColor:[UIColor whiteColor]];
+        _detail.numberOfLines = 0;
         _detail.textAlignment = NSTextAlignmentCenter;
     }
     return _detail;
@@ -223,6 +224,10 @@
 
 -(void)HUDDidCancel
 {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didCancleClick)]) {
+        [self.delegate didCancleClick];
+    }
     [self removeFromSuperview];
 }
+
 @end

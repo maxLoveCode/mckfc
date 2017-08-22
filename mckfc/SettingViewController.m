@@ -10,7 +10,7 @@
 #import "LoginNav.h"
 #import "QualityControlHomePage.h"
 #import "SecurityHomePage.h"
-
+#import "LoginNav.h"
 #import "ChangePasswordViewController.h"
 
 @implementation SettingViewController
@@ -81,8 +81,9 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults removeObjectForKey:@"user_type"];
             [defaults removeObjectForKey:@"access_token"];
-            
-            [self.navigationController popToRootViewControllerAnimated:NO];
+            UIApplication* app = [UIApplication sharedApplication];
+            app.keyWindow.rootViewController = vc;
+            //[self.navigationController popToRootViewControllerAnimated:NO];
         }];
         
         if(indexPath.row == 0)

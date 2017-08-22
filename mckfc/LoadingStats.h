@@ -28,6 +28,8 @@
 @property (nonatomic,copy) NSDate *planarrivetime;
 @property (nonatomic, copy) NSString *extraInfo; //额外信息
 @property (nonatomic, copy) NSString *serialno;
+@property (nonatomic,strong) NSNumber *pointx;
+@property (nonatomic,strong) NSNumber *pointy;
 -(instancetype)init;
 -(BOOL)validForStartingTransport;
 @end

@@ -26,10 +26,11 @@
     if (self = [super init]) {
         textFieldColor = [UIColor colorWithWhite:1 alpha:0.33];
         
-        [self addSubview:self.code];
-        [self addSubview:self.resend];
+       // [self addSubview:self.code];
+        //[self addSubview:self.resend];
         [self addSubview:self.password];
-        [self addSubview:self.label];
+        [self addSubview:self.repeatpassword];
+        //[self addSubview:self.label];
         [self addSubview:self.confirm];
     }
     return self;
@@ -64,6 +65,21 @@
         _password.tag = 2;
     }
     return _password;
+}
+
+-(UITextField *)repeatpassword
+{
+    if (!_repeatpassword) {
+        _repeatpassword = [[UITextField alloc] init];
+        [_repeatpassword setBackgroundColor:textFieldColor];
+        _repeatpassword.layer.cornerRadius = 3;
+        _repeatpassword.layer.masksToBounds = YES;
+        _repeatpassword.textColor = [UIColor whiteColor];
+        _repeatpassword.textAlignment = NSTextAlignmentCenter;
+        _repeatpassword.keyboardType = UIKeyboardTypeASCIICapable;
+        _repeatpassword.tag = 2;
+    }
+    return _repeatpassword;
 }
 
 -(UIButton *)resend
@@ -109,12 +125,15 @@
 {
     CGRect frame = CGRectMake((kScreen_Width - buttonWidth)/2, topMargin, buttonWidth, buttonHeight);
     [self.code setFrame:frame];
-    [self.password setFrame:CGRectOffset(self.code.frame, 0, buttonHeight*2)];
     [self.code setFrame:CGRectMake((kScreen_Width - buttonWidth)/2, topMargin, buttonWidth-130, buttonHeight)];
     [self.resend setFrame:CGRectMake(CGRectGetMaxX(self.code.frame)+20, CGRectGetMinY(self.code.frame), 110, buttonHeight)];
     
-    [self.confirm setFrame:CGRectOffset(self.password.frame, 0, buttonHeight*2)];
+   
     [self.label setFrame:CGRectMake(0, 0, kScreen_Width, topMargin)];
+    // [self.password setFrame:CGRectOffset(self.code.frame, 0, buttonHeight*2)];
+    [self.password setFrame:CGRectMake(10, topMargin, kScreen_Width - 20, buttonHeight)];
+     [self.repeatpassword setFrame:CGRectOffset(self.password.frame, 0, buttonHeight*2)];
+     [self.confirm setFrame:CGRectOffset(self.repeatpassword.frame, 0, buttonHeight*2)];
 }
 
 @end

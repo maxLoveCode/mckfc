@@ -36,6 +36,7 @@
     
     [self.redPocket attachToView:self.view];
     [self.redPocket setHidden:YES];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"账户修改" style:UIBarButtonItemStylePlain target:self action:@selector(navigateToEditor)];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -200,14 +201,14 @@
     EditorNav* editVC = [[EditorNav alloc] init];
     DriverDetailEditorController* driverVC =(DriverDetailEditorController*)editVC.topViewController;
     [driverVC setUser:_user];
-    [driverVC setRegisterComplete:NO];
+    [driverVC setRegisterComplete:YES];
     [self.navigationController presentViewController:editVC animated:YES completion:^{
         
     }];
     [editVC setOnDismissed:^{
         [self.navigationController dismissViewControllerAnimated:NO completion:^
          {
-             //[self requestUserInfo];
+             [self requestUserInfo];
          }];
     }];
 }

@@ -9,6 +9,7 @@
 #import "CauseRejectionViewController.h"
 #import "CauseCollectionViewCell.h"
 #import "ServerManager.h"
+
 @interface CauseRejectionViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextViewDelegate>
 @property (nonatomic, assign) CGFloat textFieldY;
 
@@ -183,7 +184,7 @@ static NSString *kfooterCollectionReusableView = @"kfooterCollectionReusableView
         textView.delegate = self;
         [textView.layer setCornerRadius:5];
         textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        if (_insepection.refusecause) {
+        if (_insepection.refusecause && [_insepection.status isEqualToNumber:@1]) {
             textView.text = _insepection.refusecause;
         }
         [footerView addSubview:textView];

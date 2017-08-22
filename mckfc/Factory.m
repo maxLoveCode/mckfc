@@ -13,7 +13,9 @@
 +(NSDictionary *)JSONKeyPathsByPropertyKey
 {
     return @{@"factoryid":@"id",
-             @"name":@"name"};
+             @"name":@"name",
+             @"pointx":@"pointx",
+             @"pointy":@"pointy"};
 }
 
 -(NSString *)description

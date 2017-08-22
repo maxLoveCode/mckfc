@@ -54,11 +54,13 @@
     
     titleText = @[@"车牌号",
                   @"司机姓名",
-                  @"身份证号"];
+                  @"身份证号",
+                  @"手机号"];
     detailText = @[
                    @"请输入6位车牌号",
                    @"请输入司机姓名",
-                   @"请输入18位身份证号",];
+                   @"请输入18位身份证号",
+                   @"请输入手机号"];
     
     _server = [ServerManager sharedInstance];
     
@@ -82,6 +84,20 @@
     }
 }
 
+- (void)setRegisterComplete:(BOOL)registerComplete{
+    _registerComplete = registerComplete;
+    CGFloat tableHeight = [DriverDetailEditorCell heightForCell]*3;
+    if (self.registerComplete ) {
+        tableHeight = [DriverDetailEditorCell heightForCell]*4;
+    }
+    else //verifyview navs
+    {
+        tableHeight = [DriverDetailEditorCell heightForCell]*3;
+    }
+    [self.tableView setFrame:CGRectMake(0, 0, kScreen_Width, tableHeight)];
+    
+}
+
 -(UITableView *)tableView
 {
     if (!_tableView) {
@@ -101,11 +117,21 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+
+    if (self.registerComplete) {
+        NSLog(@"------");
+        return 4;
+    }
+    else //verifyview navs
+    {
+        NSLog(@"+++++");
+        return 3;
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+   // NSLog(@"%u----",[DriverDetailEditorCell heightForCell]);
     return [DriverDetailEditorCell heightForCell];
 }
 
@@ -154,6 +180,10 @@
     else if(indexPath.row == 2){
         cell.detailLabel.text = _driver.idcard;
         cell.detailLabel.keyboardType = UIKeyboardTypeAlphabet;
+    }else if(indexPath.row == 3)
+    {
+        cell.detailLabel.text = _driver.mobile;
+        cell.detailLabel.keyboardType = UIKeyboardTypePhonePad;
     }
     else if(indexPath.row == 4){
         cell.detailLabel.text = _driver.driverno;
@@ -237,6 +267,8 @@
         else if(index ==2)
         {
             _driver.idcard = result;
+        }else if(index == 3){
+            _driver.mobile = result;
         }
 //        else if(index ==2)
 //        {
@@ -256,6 +288,7 @@
         DriverDetailEditorCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
         [cell.detailLabel resignFirstResponder];
     }
+    [self.view endEditing:YES];
    
 }
 
@@ -277,6 +310,9 @@
     }
     if (!_driver.driverno) {
         _driver.driverno = @"";
+    }
+    if (!_driver.mobile) {
+        _driver.mobile = @"";
     }
     
     if (!_driver.region || !_driver.cardigits) {
@@ -303,7 +339,8 @@
                               @"driver":_driver.driver,
                               @"idcard":_driver.idcard,
                               @"driverno":_driver.driverno,
-                              @"licenseno":_driver.licenseno};
+                              @"licenseno":_driver.licenseno,
+                          @"mobile":_driver.mobile};
         [params addEntriesFromDictionary:dic];
     NSLog(@"params:%@", params);
         [_server POST:url parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
@@ -396,7 +433,7 @@
     self.driver = user;
     if (user.truckno && ![user.truckno isEqualToString:@""]) {
         self.driver.region = [user.truckno substringWithRange:NSMakeRange(0, 1)];
-        self.driver.cardigits = [user.truckno substringWithRange:NSMakeRange(1, [user.truckno length])];
+        self.driver.cardigits = [user.truckno substringWithRange:NSMakeRange(1, [user.truckno length] - 1)];
     }
     [self.tableView reloadData];
 }

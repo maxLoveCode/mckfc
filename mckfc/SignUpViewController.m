@@ -10,13 +10,16 @@
 #import "ServerManager.h"
 #import "SignUpView.h"
 #import "VerifyViewController.h"
-@interface SignUpViewController()<UITextFieldDelegate>
+#import "AlertHUDView.h"
+@interface SignUpViewController()<UITextFieldDelegate,HUDViewDelegate>
 {
     NSString* defaultText;
+    NSString* _repeatdefaultText;
 }
 
 @property (nonatomic, strong) SignUpView* signUpView;
 @property (strong, nonatomic) ServerManager* server;
+@property AlertHUDView *alert;
 @end
 
 @implementation SignUpViewController
@@ -26,6 +29,7 @@
     self.title = @"注册";
     
     defaultText  = @"请输入手机号";
+    _repeatdefaultText = @"请再次输入手机号";
     _server = [ServerManager sharedInstance];
     
     self.view = self.signUpView;
@@ -33,6 +37,7 @@
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
 }
+
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -51,7 +56,9 @@
         _signUpView = [[SignUpView alloc] init];
         [_signUpView.confirm addTarget:self action:@selector(confirmBtn) forControlEvents:UIControlEventTouchUpInside];
         _signUpView.mobile.text = defaultText;
+        _signUpView.repeatmobile.text = _repeatdefaultText;
         _signUpView.mobile.delegate = self;
+        _signUpView.repeatmobile.delegate = self;
     }
     return _signUpView;
 }
@@ -59,19 +66,32 @@
 
 -(void)confirmBtn
 {
-    [_signUpView.mobile resignFirstResponder];
-    NSDictionary* params = @{@"mobile":_signUpView.mobile.text};
-    [_server POST:@"sendRegisterCaptcha" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        if([responseObject[@"code"] integerValue] == 10000)
-        {
-            VerifyViewController* verifyVC = [[VerifyViewController alloc] init];
-            verifyVC.mobile = _signUpView.mobile.text;
-            [verifyVC setText:_signUpView.mobile.text];
-            [self.navigationController pushViewController:verifyVC animated:YES];
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
+    if (![_signUpView.mobile.text isEqualToString:@""] && [_signUpView.mobile.text isEqualToString:_signUpView.repeatmobile.text]) {
+        VerifyViewController* verifyVC = [[VerifyViewController alloc] init];
+                    verifyVC.mobile = _signUpView.mobile.text;
+                    [verifyVC setText:_signUpView.mobile.text];
+                    [self.navigationController pushViewController:verifyVC animated:YES];
+    }else{
+        _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
+        _alert.title.text = @"确认输入手机号";
+        _alert.detail.text = @"请确保两次输入手机号完全一样";
+        _alert.delegate = self;
+        [_alert show:_alert];
+
+    }
+//    [_signUpView.mobile resignFirstResponder];
+//    NSDictionary* params = @{@"mobile":_signUpView.mobile.text};
+//    [_server POST:@"sendRegisterCaptcha" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+//        if([responseObject[@"code"] integerValue] == 10000)
+//        {
+//            VerifyViewController* verifyVC = [[VerifyViewController alloc] init];
+//            verifyVC.mobile = _signUpView.mobile.text;
+//            [verifyVC setText:_signUpView.mobile.text];
+//            [self.navigationController pushViewController:verifyVC animated:YES];
+//        }
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        
+//    }];
 }
 
 #pragma mark textField delegate
@@ -82,7 +102,7 @@
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if ([textField.text isEqualToString:defaultText]) {
+    if ([textField.text isEqualToString:defaultText] || [textField.text isEqualToString:_repeatdefaultText]) {
         textField.text = @"";
     }
 }
@@ -92,6 +112,10 @@
     if ([textField.text isEqualToString:@""]) {
         textField.text = defaultText;
     }
+}
+
+- (void)didSelectConfirm{
+     [self.alert removeFromSuperview];
 }
 
 #pragma mark gesture

@@ -11,6 +11,7 @@
 @interface SignUpView : UIView
 
 @property (strong, nonatomic) UITextField* mobile;
+@property (strong, nonatomic) UITextField* repeatmobile;
 @property (strong, nonatomic) UIButton* confirm;
 
 @end

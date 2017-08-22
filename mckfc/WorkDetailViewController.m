@@ -89,7 +89,7 @@
             report.detailLabel.text = _detail.fieldno;
         }
         else if(indexPath.row ==2){
-            report.detailLabel.text = [NSString stringWithFormat:@"%@吨", _detail.weight];
+            report.detailLabel.text = [NSString stringWithFormat:@"%.2f吨",[_detail.weight floatValue] ];
         }
         else if(indexPath.row ==3){
             report.detailLabel.text = _detail.departuretime;
@@ -262,6 +262,7 @@
     NSDictionary* params = @{@"token":_server.accessToken,
                              @"transportid":_transportid};
     
+    NSLog(@"------%@",params);
     [_server GET:@"getOrderDetail" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSDictionary* data = responseObject[@"data"];
         

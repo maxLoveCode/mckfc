@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) UITextField* code;
 @property (nonatomic, strong) UITextField* password;
-
+@property (nonatomic, strong) UITextField* repeatpassword;
 @property (nonatomic, strong) UIButton* resend;
 @property (nonatomic, strong) UILabel* label;
 

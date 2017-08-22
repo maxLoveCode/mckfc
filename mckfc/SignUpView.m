@@ -27,6 +27,7 @@
         textFieldColor = [UIColor colorWithWhite:1 alpha:0.33];
         
         [self addSubview:self.mobile];
+        [self addSubview:self.repeatmobile];
         [self addSubview:self.confirm];
     }
     return self;
@@ -47,11 +48,25 @@
     return _mobile;
 }
 
+-(UITextField *)repeatmobile
+{
+    if (!_repeatmobile) {
+        _repeatmobile = [[UITextField alloc] init];
+        [_repeatmobile setBackgroundColor:textFieldColor];
+        _repeatmobile.layer.cornerRadius = 3;
+        _repeatmobile.layer.masksToBounds = YES;
+        _repeatmobile.textColor = [UIColor whiteColor];
+        _repeatmobile.textAlignment = NSTextAlignmentCenter;
+        _repeatmobile.keyboardType = UIKeyboardTypePhonePad;
+    }
+    return _repeatmobile;
+}
+
 -(UIButton *)confirm
 {
     if (!_confirm) {
         _confirm = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_confirm setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [_confirm setTitle:@"确定" forState:UIControlStateNormal];
         [_confirm setBackgroundColor:COLOR_THEME];
         [_confirm setTitleColor:COLOR_THEME_CONTRAST forState:UIControlStateNormal];
         _confirm.layer.cornerRadius = 3;
@@ -64,8 +79,10 @@
 -(void)layoutSubviews
 {
     CGRect frame = CGRectMake(2*k_Margin, topMargin, buttonWidth, buttonHeight);
+    CGRect repeatframe = CGRectMake(2*k_Margin, topMargin + 70, buttonWidth, buttonHeight);
     [self.mobile setFrame:frame];
-    [self.confirm setFrame:CGRectOffset(self.mobile.frame, 0, buttonHeight*2)];
+    [self.repeatmobile setFrame:repeatframe];
+    [self.confirm setFrame:CGRectOffset(self.repeatmobile.frame, 0, buttonHeight*2)];
 }
 
 @end

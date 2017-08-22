@@ -12,18 +12,28 @@
 #import "ServerManager.h"
 #import "CarPlateRegionSelector.h"
 #import "MCPickerView.h"
+#import "AlertHUDView.h"
+//地图
+#import <AMapFoundationKit/AMapFoundationKit.h>
+#import <MAMapKit/MAMapKit.h>
+#import <AMapSearchKit/AMapSearchKit.h>
+#import <AMapLocationKit/AMapLocationKit.h>
 
-@interface AddRecordViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,DatePickerDelegate,MCPickerViewDelegate>
+@interface AddRecordViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,DatePickerDelegate,MCPickerViewDelegate,AMapSearchDelegate,MAMapViewDelegate>
 {
     NSArray* titleArray;
     NSArray *_imgArray;
     NSArray* packageList;
     NSArray *_storageList;
     NSArray *_varietylist;
+    NSString *_estimatedTime;
+    AMapSearchAPI *_search;
 }
 
 @property (nonatomic, strong) ServerManager* server;
-
+@property (nonatomic, strong) AMapLocationManager *locationManager;
+@property (nonatomic,strong) AMapPath* path;
+@property (nonatomic, strong) AlertHUDView* alert;
 @end
 
 @implementation AddRecordViewController
@@ -32,6 +42,16 @@
 {
     self.view = self.tableView;
     self.timeFlag = @"0";
+}
+
+-(AlertHUDView *)alert
+{
+    if (!_alert) {
+        _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStyleBool];
+        _alert.title.text = @"预计到达时间";
+       // _alert.delegate = self;
+    }
+    return _alert;
 }
 
 -(AddRecordTable *)tableView
@@ -213,6 +233,7 @@
     if(indexPath.row == 5)
     {
         self.timeFlag = @"1";
+        //[self initComputeTime];
         [self.delegate requestDate:self];
         /*
         if (!packageList || [packageList count] == 0) {
@@ -483,4 +504,128 @@
         }
     }
 }
+
+
+
+#pragma mark ----- 地图定位计算时间
+
+//- (void)initComputeTime{
+//    NSLog(@"开始------");
+//    [AMapServices sharedServices].apiKey = MapKey;
+//    self.locationManager = [[AMapLocationManager alloc] init];
+//    
+//    // 带逆地理信息的一次定位（返回坐标和地址信息）
+//    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+//    //   定位超时时间，最低2s，此处设置为2s
+//    self.locationManager.locationTimeout =2;
+//    //   逆地理请求超时时间，最低2s，此处设置为2s
+//    self.locationManager.reGeocodeTimeout = 2;
+//    // 带逆地理信息的一次定位（返回坐标和地址信息）
+//    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyKilometer];
+//    //   定位超时时间，最低2s，此处设置为10s
+//    self.locationManager.locationTimeout =5;
+//    //   逆地理请求超时时间，最低2s，此处设置为10s
+//    self.locationManager.reGeocodeTimeout = 5;
+//    
+//    _search = [[AMapSearchAPI alloc] init];
+//    _search.delegate = self;
+//    AMapDrivingRouteSearchRequest *navi = [[AMapDrivingRouteSearchRequest alloc] init];
+//    
+//    navi.requireExtension = YES;
+//    navi.strategy = 5;
+//    /* 目的地. */
+//    if (!self.terminateLongtitude || !self.terminateLatitude) {
+//        self.timeFlag = @"1";
+//        [self.delegate requestDate:self];
+//        return;
+//    }
+//    navi.destination = [AMapGeoPoint locationWithLatitude:[self.terminateLatitude doubleValue]
+//                                                longitude:[self.terminateLongtitude doubleValue]];
+//    
+//    [self.locationManager requestLocationWithReGeocode:NO completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
+//        
+//        if (error)
+//        {
+//            NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
+//            
+//            if (error.code == AMapLocationErrorLocateFailed)
+//            {
+//                self.timeFlag = @"1";
+//                [self.delegate requestDate:self];
+//                return;
+//            }
+//        }
+//        
+//        NSLog(@"location:%@", location);
+//        NSLog(@"本地定位");
+//        /* 出发点. */
+//        navi.origin = [AMapGeoPoint locationWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
+//
+//        [_search AMapDrivingRouteSearch:navi];
+//        
+//        if (regeocode)
+//        {
+//           // NSLog(@"reGeocode:%@", regeocode);
+//           
+//        }
+//    }];
+//    
+//}
+//
+///* 路径规划搜索回调. */
+//- (void)onRouteSearchDone:(AMapRouteSearchBaseRequest *)request response:(AMapRouteSearchResponse *)response
+//{
+//    if (response.route == nil)
+//    {
+//        self.timeFlag = @"1";
+//        [self.delegate requestDate:self];
+//        return;
+//    }
+//    
+//    //解析response获取路径信息，具体解析见 Demo
+//    _path = [response.route.paths objectAtIndex:0];
+//    //delegate to parent view controller
+//    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+//    NSTimeInterval interval = (double)_path.duration;
+//    double spendTime = interval * 1.4;
+//    NSString *hour = [NSString stringWithFormat:@"%.2f",spendTime / 3600];
+//    NSDate* estimate = [NSDate dateWithTimeIntervalSinceNow: spendTime];
+//    
+//    NSString *string = [dateFormatter stringFromDate:estimate];
+//    
+//    
+//    self.alert.title.text = @"预计到达时间";
+//    self.alert.detail.text = [NSString stringWithFormat:@"以每小时40千米行驶，在途时间为%@小时，预计到达时间为%@，是否确定采用建议时间%@",hour,string,string] ;
+//    _estimatedTime = string;
+//    [self.alert show:self.alert];
+//    NSLog(@"结束-----time = %@",string);
+//}
+//
+//- (void)AMapSearchRequest:(id)request didFailWithError:(NSError *)error
+//{
+//    NSLog(@"Error: %@", error);
+//    
+//}
+//
+//#pragma mark -alertview delegate
+//-(void)didSelectConfirm
+//{
+//    if (_estimatedTime) {
+//        NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+//        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+//        _stats.planarrivetime = [dateFormatter dateFromString:_estimatedTime];
+//        [_tableView reloadData];
+//    }
+//  
+//    [self.alert removeFromSuperview];
+//    
+//}
+//
+//- (void)didCancleClick{
+//    self.timeFlag = @"1";
+//    [self.delegate requestDate:self];
+//
+//}
+
 @end

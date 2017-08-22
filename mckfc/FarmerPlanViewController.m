@@ -206,6 +206,8 @@
             [self addChildViewController:_addRecordVC];
             _addRecordVC.delegate = self;
         }
+//            _addRecordVC.terminateLatitude = _farmerPlanview.stats.pointy;
+//            _addRecordVC.terminateLongtitude = _farmerPlanview.stats.pointx;
         _farmerPlanview.type = FarmerPlanViewTypeRecordList;
         _farmerPlanview.datasource = self.transportationList;
         _farmerPlanview.addRecordView = _addRecordVC.tableView;
@@ -335,6 +337,9 @@
                 
                 if (!_farmerPlanview.stats.factory) {
                     _farmerPlanview.stats.factory = factoryList[0];
+                    Factory *factory = factoryList[0];
+                    _farmerPlanview.stats.pointx = factory.pointx;
+                    _farmerPlanview.stats.pointy = factory.pointy;
                 }
                 [self reload];
             }];
@@ -654,6 +659,9 @@
     }
     else if(pickerView.index.row == 3){
         _farmerPlanview.stats.factory = factoryList[row];
+        Factory *factory = factoryList[row];
+        _farmerPlanview.stats.pointx = factory.pointx;
+        _farmerPlanview.stats.pointy = factory.pointy;
     }
     else if(pickerView.index.row ==4){
         NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];

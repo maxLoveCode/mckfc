@@ -11,6 +11,7 @@
 #import "CauseRejectionViewController.h"
 #import "ServerManager.h"
 #import "InspectionReport.h"
+#import "MakeConcessionsViewController.h"
 @interface NewInspectionController ()<HUDViewDelegate>
 @property (nonatomic, strong) ServerManager* server;
 @property (nonatomic, strong) InspectionReport* insepection;
@@ -28,8 +29,8 @@ static NSString *NormalecellID = @"NormalecellID";
     self.navigationItem.title = @"质检报告";
     self.tableView.rowHeight = 60;
     _server = [ServerManager sharedInstance];
-    _titleArr = @[@"合格",@"拒收"];
-    _imgArr = @[@"checktrue",@"checkfalse"];
+    _titleArr = @[@"合格",@"拒收",@"让步接受"];
+    _imgArr = @[@"checktrue",@"checkfalse",@"让步接受"];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NormalecellID];
     
     
@@ -61,7 +62,7 @@ static NSString *NormalecellID = @"NormalecellID";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return 2;
+    return _titleArr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -93,9 +94,15 @@ static NSString *NormalecellID = @"NormalecellID";
             }else{
                 cell.detailTextLabel.text = @"";
             }
-        }else{
+        }else if([_insepection.status isEqualToNumber:@1]){
             if (indexPath.section == 1) {
                 cell.detailTextLabel.text = @"验收不合格";
+            }else{
+                cell.detailTextLabel.text = @"";
+            }
+        }else{
+            if (indexPath.section == 2) {
+                cell.detailTextLabel.text = @"让步接受";
             }else{
                 cell.detailTextLabel.text = @"";
             }
@@ -119,6 +126,14 @@ static NSString *NormalecellID = @"NormalecellID";
         con.insepection = _insepection;
         con.transportid = self.transportid;
         [self.navigationController pushViewController:con animated:NO];
+    }
+    if (indexPath.section == 2) {
+        MakeConcessionsViewController *makeCon = [[MakeConcessionsViewController alloc] init];
+        makeCon.mainType = self.mainType;
+        makeCon.type = self.type;
+        makeCon.insepection = _insepection;
+        makeCon.transportid = self.transportid;
+        [self.navigationController pushViewController:makeCon animated:NO];
     }
 }
 

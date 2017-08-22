@@ -10,10 +10,10 @@
 #import "ServerManager.h"
 #import "VerifyView.h"
 #import "EditorNav.h"
-
+#import "AlertHUDView.h"
 #import "DriverDetailEditorController.h"
 
-@interface VerifyViewController()<UITextFieldDelegate>
+@interface VerifyViewController()<UITextFieldDelegate,HUDViewDelegate>
 {
     NSArray* defaultText;
 }
@@ -22,7 +22,7 @@
 @property (strong, nonatomic) ServerManager* server;
 @property (strong, nonatomic) NSTimer* timer;
 @property (strong, nonatomic) NSDate* startDate;
-
+@property AlertHUDView *alert;
 @end
 
 @implementation VerifyViewController
@@ -37,7 +37,7 @@
 
 -(void)viewDidLoad
 {
-    self.title = @"输入验证码";
+    self.title = @"输入密码";
     
     _server = [ServerManager sharedInstance];
     
@@ -71,7 +71,8 @@
                 textField.delegate = self;
             }
         }
-        
+        _verifyView.repeatpassword.text = @"请再次输入密码";
+        _verifyView.repeatpassword.delegate = self;
         [_verifyView.resend addTarget:self action:@selector(resend) forControlEvents:UIControlEventTouchUpInside];
         [_verifyView.confirm addTarget:self action:@selector(confirm) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -91,20 +92,20 @@
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if ([textField.text isEqualToString:defaultText[textField.tag-1]]) {
+    if ([textField.text isEqualToString:defaultText[textField.tag-1]] || [textField.text isEqualToString:@"请再次输入密码"]) {
         textField.text = @"";
     }
-    if (textField.tag == 2) {
+   // if (textField.tag == 2) {
         textField.secureTextEntry = YES;
-    }
+   // }
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     if ([textField.text isEqualToString:@""]) {
-        if (textField.tag == 2) {
+        //if (textField.tag == 2) {
             textField.secureTextEntry = NO;
-        }
+       // }
         textField.text = defaultText[textField.tag-1];
     }
 }
@@ -114,6 +115,8 @@
 {
     [self.verifyView.code resignFirstResponder];
     [self.verifyView.password resignFirstResponder];
+    [self.verifyView.repeatpassword resignFirstResponder];
+    [self.view endEditing:YES];
 }
 
 #pragma mark buttons
@@ -136,26 +139,26 @@
 
 -(void)fireTimer
 {
-    if (!_startDate) {
-        _startDate = [NSDate date];
-    }
-    
-    NSTimeInterval timeInterval = -[_startDate timeIntervalSinceNow];
-    if (timeInterval>60) {
-        [_timer invalidate];
-        _startDate = nil;
-        _verifyView.resend.enabled = YES;
-        [_verifyView.resend setBackgroundColor:COLOR_THEME];
-        _verifyView.resend.titleLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-    }
-    else
-    {
-        _verifyView.resend.enabled = NO;
-        [_verifyView.resend setTitle:[NSString stringWithFormat:@"%i秒后可重新发送", (int)((60-timeInterval)*100000)/100000] forState: UIControlStateDisabled];
-        _verifyView.resend.titleLabel.font = [UIFont systemFontOfSize:12];
-        [_verifyView.resend setBackgroundColor:[UIColor grayColor]];
-        [_verifyView.resend setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
-    }
+//    if (!_startDate) {
+//        _startDate = [NSDate date];
+//    }
+//    
+//    NSTimeInterval timeInterval = -[_startDate timeIntervalSinceNow];
+//    if (timeInterval>60) {
+//        [_timer invalidate];
+//        _startDate = nil;
+//        _verifyView.resend.enabled = YES;
+//        [_verifyView.resend setBackgroundColor:COLOR_THEME];
+//        _verifyView.resend.titleLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+//    }
+//    else
+//    {
+//        _verifyView.resend.enabled = NO;
+//        [_verifyView.resend setTitle:[NSString stringWithFormat:@"%i秒后可重新发送", (int)((60-timeInterval)*100000)/100000] forState: UIControlStateDisabled];
+//        _verifyView.resend.titleLabel.font = [UIFont systemFontOfSize:12];
+//        [_verifyView.resend setBackgroundColor:[UIColor grayColor]];
+//        [_verifyView.resend setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
+//    }
 
 }
 
@@ -163,10 +166,10 @@
 #pragma mark submit
 -(void)confirm
 {
+    if (![_verifyView.password.text isEqualToString:@""] && [_verifyView.password.text isEqualToString:_verifyView.repeatpassword.text]) {
     [self dismissKeyboard];
     NSDictionary* params = @{@"mobile":_mobile,
-                          @"password":_verifyView.password.text,
-                          @"captcha":_verifyView.code.text};
+                          @"password":_verifyView.password.text};
     [_server POST:@"register" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSLog(@"%@", responseObject);
         if ([[responseObject objectForKey:@"code"] integerValue] == 10000) {
@@ -190,6 +193,17 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
+    }else{
+        _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStylePlain];
+        _alert.title.text = @"确认输入密码";
+        _alert.detail.text = @"请确保两次输入密码完全一样";
+        _alert.delegate = self;
+        [_alert show:_alert];
+    }
+}
+
+- (void)didSelectConfirm{
+    [self.alert removeFromSuperview];
 }
 
 @end
