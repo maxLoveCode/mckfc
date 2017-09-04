@@ -207,7 +207,7 @@
                              @"token":_server.accessToken};
     [_server POST:@"location" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         if ([[responseObject[@"data"] objectForKey:@"isbefore"] integerValue] == 1) {
-            [self.mapVC.timer invalidate];
+           [self.mapVC.timer invalidate];
             [self.popUpMenu dismiss];
             QueueViewController* queueVC = [[QueueViewController alloc] initWithID:_detail.transportID];
             [self.navigationController pushViewController:queueVC animated:YES];

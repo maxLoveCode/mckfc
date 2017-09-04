@@ -19,7 +19,7 @@
 #import <AMapSearchKit/AMapSearchKit.h>
 #import <AMapLocationKit/AMapLocationKit.h>
 
-@interface AddRecordViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,DatePickerDelegate,MCPickerViewDelegate,AMapSearchDelegate,MAMapViewDelegate>
+@interface AddRecordViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,DatePickerDelegate,MCPickerViewDelegate,AMapSearchDelegate,MAMapViewDelegate,HUDViewDelegate>
 {
     NSArray* titleArray;
     NSArray *_imgArray;
@@ -27,12 +27,12 @@
     NSArray *_storageList;
     NSArray *_varietylist;
     NSString *_estimatedTime;
-    AMapSearchAPI *_search;
+//    AMapSearchAPI *_search;
 }
 
 @property (nonatomic, strong) ServerManager* server;
-@property (nonatomic, strong) AMapLocationManager *locationManager;
-@property (nonatomic,strong) AMapPath* path;
+//@property (nonatomic, strong) AMapLocationManager *locationManager;
+//@property (nonatomic,strong) AMapPath* path;
 @property (nonatomic, strong) AlertHUDView* alert;
 @end
 
@@ -49,7 +49,7 @@
     if (!_alert) {
         _alert = [[AlertHUDView alloc] initWithStyle:HUDAlertStyleBool];
         _alert.title.text = @"预计到达时间";
-       // _alert.delegate = self;
+        _alert.delegate = self;
     }
     return _alert;
 }
@@ -74,7 +74,8 @@
             [formatter2 setDateFormat:@"HH:mm"];
             NSDate* date = [formatter2 dateFromString:@"00:00"];
             _stats.departuretime = date;
-            _stats.planarrivetime = date;
+           
+            _stats.planarrivetime = [NSDate date];
         }
         _server = [ServerManager sharedInstance];
     }
@@ -133,12 +134,17 @@
             cell.textInput.text = @"请填写4位运单号";
         }else{
             if ([_stats.serialno length] >5) {
-                _stats.serialno = [_stats.serialno substringFromIndex:2];
-                cell.textInput.text = _stats.serialno;
+                NSString *serialno = [_stats.serialno substringFromIndex:2];
+                cell.textInput.text = serialno;
             }else{
                 cell.textInput.text = _stats.serialno;
             }
             
+        }
+        if ( self.serialnoEnable == YES) {
+            cell.textInput.enabled = NO;
+        }else{
+            cell.textInput.enabled = YES;
         }
         [cell.textInput addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     }else if (indexPath.row == 1) {
@@ -232,9 +238,14 @@
 {
     if(indexPath.row == 5)
     {
-        self.timeFlag = @"1";
-        //[self initComputeTime];
-        [self.delegate requestDate:self];
+         self.timeFlag = @"1";
+        if (_planeDuration && _planeDuration > 0) {
+             [self initComputeTime];
+        }else{
+             [self.delegate requestDate:self];
+       }
+      
+       
         /*
         if (!packageList || [packageList count] == 0) {
             [self requestPackageListSuccess:^{
@@ -366,7 +377,11 @@
                 [NSNumber numberWithFloat:[textField.text floatValue]];
             break;
         case 4:
-            _stats.serialno = [NSString stringWithFormat:@"%@",textField.text];
+            if ([textField.text length] > 5) {
+                [_stats setSerialno:[NSString stringWithFormat:@"%@",textField.text]];
+            }else if([textField.text length] == 4){
+                [_stats setSerialno:[NSString stringWithFormat:@"17%@",textField.text]];
+            }
             break;
         default:
             break;
@@ -393,8 +408,8 @@
         [self.datePicker.picker setMinimumDate:date];
         [self.datePicker.picker setMaximumDate:[NSDate dateWithTimeInterval:24*60*60-1 sinceDate:date]];
     }else{
-        [self.datePicker.picker setDate:date];
-        [self.datePicker.picker setMinimumDate:nil];
+        [self.datePicker.picker setDate:[NSDate date]];
+      [self.datePicker.picker setMinimumDate:nil];
         [self.datePicker.picker setMaximumDate:nil];
     }
    
@@ -505,7 +520,23 @@
     }
 }
 
-
+#pragma mark -- 计算预计到达时间
+- (void)initComputeTime{
+        NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+        double spendTime = _planeDuration * 3600;
+        NSString *hour = [NSString stringWithFormat:@"%.2f",spendTime / 3600];
+        NSDate* estimate = [NSDate dateWithTimeIntervalSinceNow: spendTime];
+    
+        NSString *string = [dateFormatter stringFromDate:estimate];
+    
+    
+        self.alert.title.text = @"预计到达时间";
+        self.alert.detail.text = [NSString stringWithFormat:@"在途时间为%@小时，预计到达时间为%@，是否确定采用建议时间",hour,string] ;
+        _estimatedTime = string;
+        [self.alert show:self.alert];
+        NSLog(@"结束-----time = %@",string);
+}
 
 #pragma mark ----- 地图定位计算时间
 
@@ -608,24 +639,27 @@
 //    
 //}
 //
-//#pragma mark -alertview delegate
-//-(void)didSelectConfirm
-//{
-//    if (_estimatedTime) {
-//        NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-//        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-//        _stats.planarrivetime = [dateFormatter dateFromString:_estimatedTime];
-//        [_tableView reloadData];
-//    }
-//  
+//- (void)didSelectConfirm{
 //    [self.alert removeFromSuperview];
-//    
 //}
-//
-//- (void)didCancleClick{
-//    self.timeFlag = @"1";
-//    [self.delegate requestDate:self];
-//
-//}
+#pragma mark -alertview delegate
+-(void)didSelectConfirm
+{
+    if (_estimatedTime) {
+        NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+        _stats.planarrivetime = [dateFormatter dateFromString:_estimatedTime];
+        [_tableView reloadData];
+    }
+  
+    [self.alert removeFromSuperview];
+    
+}
+
+- (void)didCancleClick{
+    self.timeFlag = @"1";
+    [self.delegate requestDate:self];
+
+}
 
 @end

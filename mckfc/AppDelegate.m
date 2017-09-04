@@ -36,7 +36,7 @@
 
     NSUserDefaults* defaults =[NSUserDefaults standardUserDefaults];
     NSLog(@"测试git");
-//the usertype flag, needs to be cleared if logout
+// the usertype flag, needs to be cleared if logout
     NSString* user_type = [defaults objectForKey:@"user_type"];
     NSLog(@"user_type %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"]);
     if (user_type == nil || [user_type isEqualToString:MKUSER_TYPE_DRIVER] || [user_type isEqualToString:@""]) {

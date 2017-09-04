@@ -295,11 +295,12 @@ static NSString *kfooterCollectionReusableView = @"kfooterCollectionReusableView
         _textView.text = @"无";
     }
     _insepection.refusecause = _textView.text;
+    _insepection.status = @1;
     NSMutableDictionary* params =[[NSMutableDictionary alloc] initWithDictionary: [MTLJSONAdapter JSONDictionaryFromModel:_insepection error:nil]];
     [params addEntriesFromDictionary:@{@"type":self.mainType,
                                        @"token":_server.accessToken,
-                                       @"transportid":self.transportid,
-                                       @"refusestatus":@1}];
+                                       @"transportid":self.transportid}
+                                       ];
     NSLog(@"-----params%@", params);
     [_server POST:@"truckCheck" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSLog(@"++++++%@",responseObject);

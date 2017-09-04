@@ -9,7 +9,7 @@
 #import "TruckUnloadProcessViewController.h"
 #import "LoadingCell.h"
 #import "ServerManager.h"
-
+#import "TruckArrivePicker.h"
 #define itemHeight 44
 #define buttonHeight 40
 #define topMargin 60
@@ -18,6 +18,8 @@
 @interface TruckUnloadProcessViewController ()<UITextFieldDelegate>
 
 @property (nonatomic, strong) ServerManager* server;
+@property (nonatomic, strong) UIButton *enterBtn;
+@property (nonatomic, strong) UIButton *comeBtn;
 
 @end
 
@@ -36,13 +38,14 @@
     }];
     if ([self.workFlow.type isEqualToString:@"enter"]) {
         self.title = @"进厂称重";
+        [self.tableView setFrame:CGRectMake(0, 0, kScreen_Width, itemHeight*2+30)];
     }
     else
     {
         self.title = @"出厂称重";
         self.netWeight = [NSNumber numberWithFloat:0];
         self.finalWeight = [NSNumber numberWithFloat:0];
-        [self.tableView setFrame:CGRectMake(0, 0, kScreen_Width, itemHeight*3+40)];
+        [self.tableView setFrame:CGRectMake(0, 0, kScreen_Width, itemHeight*4+30)];
     }
     self.weight = [NSNumber numberWithFloat:0];
     [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -59,13 +62,45 @@
     }
 }
 
+- (UIButton *)enterBtn{
+    if (!_enterBtn) {
+        self.enterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _enterBtn.frame = CGRectMake(20, 0, 150, itemHeight);
+        _enterBtn.enabled = NO;
+        NSDateFormatter *formater = [[NSDateFormatter alloc] init];
+        [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString* dateString = [formater stringFromDate:[NSDate date]];
+        [ _enterBtn setTitle:dateString forState:UIControlStateNormal];
+        [_enterBtn setTitleColor:COLOR_TEXT_GRAY forState:UIControlStateNormal];
+        _enterBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    }
+    return _enterBtn;
+}
+
+- (UIButton *)comeBtn{
+    if (!_comeBtn) {
+        self.comeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _comeBtn.frame = CGRectMake(20, 0, 150, itemHeight);
+        _comeBtn.enabled = NO;
+        NSDateFormatter *formater = [[NSDateFormatter alloc] init];
+        [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+         NSString* dateString = [formater stringFromDate:[NSDate date]];
+        [ _comeBtn setTitle:dateString forState:UIControlStateNormal];
+        [_comeBtn setTitleColor:COLOR_TEXT_GRAY forState:UIControlStateNormal];
+        _comeBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    }
+    return _comeBtn;
+}
+
+
 -(UITableView *)tableView
 {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, itemHeight*2+20) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, itemHeight*3+20) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"weight"];
+        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"normalcell"];
         _tableView.bounces = NO;
     }
     return _tableView;
@@ -101,7 +136,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([self.workFlow.type isEqualToString:@"enter"]) {
-        return 1;
+        return 2;
     }
     else
     {
@@ -110,7 +145,7 @@
         }
         else
         {
-            return 2;
+            return 3;
         }
     }
 }
@@ -120,9 +155,18 @@
     LoadingCell* cell = [[LoadingCell alloc] init];
     cell.style = LoadingCellStyleDigitInput;
     if ([self.workFlow.type isEqualToString:@"enter"]) {
-        cell.titleLabel.text = @"土豆重量";
-        cell.digitInput.tag = 1;
-        cell.digitInput.text = [NSString stringWithFormat:@"%@",_weight];
+        if(indexPath.row == 0){
+            cell.titleLabel.text = @"土豆重量";
+            cell.digitInput.tag = 1;
+            cell.digitInput.text = [NSString stringWithFormat:@"%@",_weight];
+        }else{
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"normalcell"];
+            [cell.contentView addSubview:self.enterBtn];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }
+        
     }
     else
     {
@@ -140,11 +184,17 @@
                 
                 cell.digitInput.text = [NSString stringWithFormat:@"%@",_finalWeight];
             }
-            else
+            else if(indexPath.row == 1)
             {
                 cell.titleLabel.text = @"净重";
                 cell.digitInput.tag = 3;
                 cell.digitInput.text = [NSString stringWithFormat:@"%@",_netWeight];
+            }else{
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"normalcell"];
+                [cell.contentView addSubview:self.comeBtn];
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                return cell;
             }
         }
     }
@@ -152,6 +202,18 @@
     cell.digitInput.delegate = self;
     [cell.digitInput addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([self.workFlow.type isEqualToString:@"enter"]){
+        if (indexPath.row == 1) {
+            [self arrivedTruck:NO];
+        }
+    }else{
+        if (indexPath.section == 1 && indexPath.row == 2) {
+            [self arrivedTruck:YES];
+        }
+    }
 }
 
 #pragma mark header and footers
@@ -175,7 +237,8 @@
         type = @"truckEnter";
         params = @{@"token":_server.accessToken,
                    @"enterweight":_weight,
-                   @"transportid":self.transportid};
+                   @"transportid":self.transportid,
+                   @"entertime": [_enterBtn currentTitle]};
     }
     else
     {
@@ -184,7 +247,8 @@
                    @"enterweight":_weight,
                    @"leaveweight":_finalWeight,
                    @"netweight":_netWeight,
-                   @"transportid":self.transportid};
+                   @"transportid":self.transportid,
+                   @"leavetime": [_comeBtn currentTitle]};
     }
     NSLog(@"params%@", params);
     [_server POST:type parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
@@ -250,6 +314,27 @@
                                                    }
                                                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                                                    }];
+}
+
+#pragma mark- 车辆到厂
+- (void)arrivedTruck:(BOOL)isArrived
+{
+   
+    TruckArrivePicker* picker = [[TruckArrivePicker alloc] init];
+    [picker show];
+    __weak typeof(self) weakSelf = self;
+    [picker setSelectBlock:^(NSDate *result) {
+        NSDateFormatter *formater = [[NSDateFormatter alloc] init];
+        [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString* dateString = [formater stringFromDate:result];
+        if (isArrived == NO) {
+            [ weakSelf.enterBtn setTitle:dateString forState:UIControlStateNormal];
+        }else{
+            [weakSelf.comeBtn setTitle:dateString forState:UIControlStateNormal];
+        }
+      
+    }];
+    
 }
 
 @end

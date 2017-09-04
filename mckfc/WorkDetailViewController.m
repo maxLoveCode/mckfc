@@ -206,6 +206,7 @@
             NewInspectionController* inspectVC = [[NewInspectionController alloc] init];
             inspectVC.transportid = self.transportid;
             inspectVC.workFlow = workFlow;
+            inspectVC.ischecked = workFlow.ischecked;
             if ([[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"]) {
                NSString* user_type = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"];
                 if ([user_type isEqualToString:@"4"]) {
@@ -224,6 +225,7 @@
             NewInspectionController* inspectVC = [[NewInspectionController alloc] init];
             inspectVC.transportid = self.transportid;
             inspectVC.type = @"2";
+            inspectVC.ischecked = workFlow.ischecked;
             if ([[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"]) {
                 NSString* user_type = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_type"];
                 if ([user_type isEqualToString:@"4"]) {
@@ -306,5 +308,7 @@
     }];
     
 }
+
+
 
 @end

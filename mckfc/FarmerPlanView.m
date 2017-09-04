@@ -177,7 +177,7 @@
             }
             if(self.type == FarmerPlanViewTypeDetail)
             {
-                self.addRecordView.userInteractionEnabled = NO;
+                self.addRecordView.userInteractionEnabled = YES;
             }
             else
             {

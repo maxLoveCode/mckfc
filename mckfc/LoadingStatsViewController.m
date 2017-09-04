@@ -49,7 +49,8 @@
     NSString* citycode;
     
     NSString *_estimatedTime;
-    AMapSearchAPI *_search;
+    double _planeDuration;
+    //AMapSearchAPI *_search;
 }
 
 @property (nonatomic, strong) MCPickerView* pickerView;
@@ -63,7 +64,7 @@
 
 //@property (nonatomic, strong) NSNumber *terminateLongtitude;
 //@property (nonatomic, strong) NSNumber *terminateLatitude;
-//@property (nonatomic, assign) BOOL planTimeAndOther;
+@property (nonatomic, assign) BOOL planTimeAndOther;
 
 @property (nonatomic,strong) AMapPath* path;
 
@@ -75,7 +76,7 @@
 {
     self.title = @"装载数据";
     self.timeFlag = @"0";
-   // self.planTimeAndOther = NO;
+    self.planTimeAndOther = NO;
     [self.tableView registerClass:[LoadingCell class] forCellReuseIdentifier:@"loadingStats"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -180,8 +181,9 @@
                 }
                 else{
                     if ([_stats.serialno length] >5) {
-                        cell.textInput.text = [_stats.serialno substringToIndex:2];
-                        _stats.serialno = [_stats.serialno substringFromIndex:2];
+                        NSString *serialno = [_stats.serialno substringFromIndex:2];
+                        NSLog(@"0000000%@",serialno);
+                        cell.textInput.text = serialno;
                     }else{
                         cell.textInput.text = _stats.serialno;
                     }
@@ -481,8 +483,15 @@
             [datePicker show];
         }else{
             self.timeFlag = @"1";
-            [datePicker show];
-//            self.planTimeAndOther = YES;
+            if (_planeDuration && _planeDuration > 0) {
+                self.planTimeAndOther = YES;
+                [self initComputeTime];
+            }else{
+                self.planTimeAndOther = NO;
+                 [datePicker show];
+            }
+        
+            self.planTimeAndOther = YES;
 //            if (self.terminateLongtitude && self.terminateLatitude) {
 //                [self initComputeTime];
 //            }else{
@@ -576,12 +585,15 @@
     
     if (_stats.extraInfo) {
         [params addEntriesFromDictionary:@{@"remark":_stats.extraInfo}];
+    }else{
+       [params addEntriesFromDictionary:@{@"remark":@""}];
     }
     if (_stats.serialno) {
-        if ([_stats.serialno length] < 6) {
-            [params addEntriesFromDictionary:@{@"serialno":[NSString stringWithFormat:@"17%@",_stats.serialno]}];
+        if ([_stats.serialno length] > 5) {
+             [params addEntriesFromDictionary:@{@"serialno":_stats.serialno}];
         }else{
-            [params addEntriesFromDictionary:@{@"serialno":_stats.serialno}];
+            [params addEntriesFromDictionary:@{@"serialno":[NSString stringWithFormat:@"17%@",_stats.serialno]}];
+           
         }
         
     }
@@ -621,6 +633,7 @@
             NSInteger components = [pickerView.picker numberOfComponents];
             if (component != components-1) { // not the last component
                 City* selectedCity = [cityList objectAtIndex:row];
+                _planeDuration = [selectedCity.time doubleValue];
                 [self requestVendors:selectedCity.areaid success:^{
                     [pickerView setData:vendorList];
                     [pickerView.picker reloadComponent:component+1];
@@ -714,7 +727,12 @@
     }
     else
     {
-        [_stats setSerialno:[NSString stringWithFormat:@"%@",textField.text]];
+        if ([textField.text length] > 5) {
+            [_stats setSerialno:[NSString stringWithFormat:@"%@",textField.text]];
+        }else if([textField.text length] == 4){
+            [_stats setSerialno:[NSString stringWithFormat:@"17%@",textField.text]];
+        }
+        
     }
 }
 
@@ -736,13 +754,16 @@
     NSDictionary* params = @{@"token": _server.accessToken};
     [_server GET:@"getAreaList" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* jsonArray = responseObject[@"data"];
+        NSLog(@"---%@",jsonArray);
         NSError* error;
         cityList = [MTLJSONAdapter modelsOfClass:[City class] fromJSONArray:jsonArray error:&error];
         if (error) {
             
         }
+        City *city = cityList[0];
+        _planeDuration = [city.time doubleValue];
         _stats.city = cityList[0];
-        if (cityList) {
+        if(cityList) {
             success();
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -870,10 +891,10 @@
 }
 
 #pragma mark - alerts
--(void)didSelectConfirm
-{
-    [_alert removeFromSuperview];
-}
+//-(void)didSelectConfirm
+//{
+//    [_alert removeFromSuperview];
+//}
 
 -(void)setStats:(LoadingStats *)stats
 {
@@ -926,6 +947,21 @@
     }
 }
 
+#pragma mark -- 计算预计到达时间
+- (void)initComputeTime{
+        double spendTime = _planeDuration *3600;
+        NSString *hour = [NSString stringWithFormat:@"%.2f",spendTime / 3600];
+        NSDate* estimate = [NSDate dateWithTimeIntervalSinceNow: spendTime];
+    
+        NSString *string = [dateFormatter stringFromDate:estimate];
+    
+    
+        self.alertPlan.title.text= @"预计到达时间";
+        self.alertPlan.detail.text = [NSString stringWithFormat:@"在途时间为%@小时，预计到达时间为%@，是否确定采用建议时间",hour,string] ;
+        _estimatedTime = string;
+        [self.alertPlan show:self.alertPlan];
+        NSLog(@"结束-----time = %@",string);
+}
 
 #pragma mark ----- 地图定位计算时间
 
@@ -1027,30 +1063,30 @@
 //    
 //}
 //
-//#pragma mark -alertview delegate
-//-(void)didSelectConfirm
-//{
-//    if (self.planTimeAndOther == YES) {
-//        if (_estimatedTime) {
-//            _stats.planarrivetime = [dateFormatter dateFromString:_estimatedTime];
-//            [self.tableView reloadData];
-//        }
-//        [self.alertPlan removeFromSuperview];
-//    }else{
-//        [self.alert removeFromSuperview];
-//    }
-//    
-//    self.planTimeAndOther = NO;
-//    
-//    
-//}
-//
-//- (void)didCancleClick{
-//    MCDatePickerView* datePicker = [[MCDatePickerView alloc] init];
-//    datePicker.delegate = self;
-//    self.timeFlag = @"1";
-//    [datePicker show];
-//    self.planTimeAndOther = NO;
-//}
+#pragma mark -alertview delegate
+-(void)didSelectConfirm
+{
+    if (self.planTimeAndOther == YES) {
+        if (_estimatedTime) {
+            _stats.planarrivetime = [dateFormatter dateFromString:_estimatedTime];
+            [self.tableView reloadData];
+        }
+        [self.alertPlan removeFromSuperview];
+    }else{
+        [self.alert removeFromSuperview];
+    }
+    
+    self.planTimeAndOther = NO;
+    
+    
+}
+
+- (void)didCancleClick{
+    MCDatePickerView* datePicker = [[MCDatePickerView alloc] init];
+    datePicker.delegate = self;
+    self.timeFlag = @"1";
+    [datePicker show];
+    self.planTimeAndOther = NO;
+}
 
 @end

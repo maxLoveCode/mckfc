@@ -35,6 +35,7 @@
     NSArray* DateList;
     NSArray* uploadList;
     NSArray* factoryList;
+    double _planeDuration;
 }
 
 //main tableview of the homepage
@@ -206,6 +207,10 @@
             [self addChildViewController:_addRecordVC];
             _addRecordVC.delegate = self;
         }
+            self.addRecordVC.serialnoEnable = NO;
+            if (_planeDuration && _planeDuration > 0) {
+                _addRecordVC.planeDuration = _planeDuration;
+            }
 //            _addRecordVC.terminateLatitude = _farmerPlanview.stats.pointy;
 //            _addRecordVC.terminateLongtitude = _farmerPlanview.stats.pointx;
         _farmerPlanview.type = FarmerPlanViewTypeRecordList;
@@ -267,6 +272,8 @@
                 
                 if (!_farmerPlanview.stats.city) {
                     _farmerPlanview.stats.city = cityList[0];
+                    City *city = cityList[0];
+                    _planeDuration = [city.time doubleValue];
                 }
                 [self reload];
             }];
@@ -391,10 +398,11 @@
     {
         NSInteger i = index-201; //data index
         NSDictionary* data = _transportationList[i];
+        self.addRecordVC.serialnoEnable = YES;
         self.addRecordVC.user = data[@"user"];
         self.addRecordVC.stats = data[@"stat"];
         self.farmerPlanview.type = FarmerPlanViewTypeDetail;
-        [_botButton setTitle:@"返回" forState:UIControlStateNormal];
+        [_botButton setTitle:@"确认" forState:UIControlStateNormal];
         [self reload];
     }
     else if(self.farmerPlanview.type == FarmerPlanViewTypeHistory && index >3000)
@@ -445,6 +453,7 @@
     }
     else if (_farmerPlanview.type == FarmerPlanViewTypeDetail)
     {
+        _addRecordVC.serialnoEnable = NO;
         _farmerPlanview.type = FarmerPlanViewTypeRecordList;
         [_botButton setTitle:@"一键清空" forState:UIControlStateNormal];
         [self reload];
@@ -457,6 +466,7 @@
     NSDictionary* params = @{@"token": _server.accessToken};
     [_server GET:@"getAreaList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSArray* jsonArray = responseObject[@"data"];
+        NSLog(@"-----%@",jsonArray);
         NSError* error;
         cityList = [MTLJSONAdapter modelsOfClass:[City class] fromJSONArray:jsonArray error:&error];
         if (cityList && [cityList count] != 0) {
@@ -592,7 +602,8 @@
 -(void)uploadDatas
 {
     NSMutableArray* unions = [[NSMutableArray alloc] init];
-    for (NSDictionary* trucks in _transportationList) {
+   // for (NSDictionary* trucks in _transportationList) {
+    NSDictionary* trucks =  _transportationList.firstObject;
         User* user = [trucks objectForKey:@"user"];
         LoadingStats* stat = [trucks objectForKey:@"stat"];
         NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
@@ -616,18 +627,19 @@
                                    @"packageid": @1};
         NSLog(@"----%@",unionDic);
         [unions addObject:unionDic];
-    }
+   // }
+    
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:unions options:NSJSONWritingPrettyPrinted error:nil];
     NSString* data = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
-    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    NSString* dateString = [dateFormatter stringFromDate:_farmerPlanview.stats.departuretime];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+   // NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [formatter stringFromDate:_farmerPlanview.stats.departuretime];
     NSDictionary* params = @{@"token":_server.accessToken,
                              @"vendorid":[NSString stringWithFormat:@"%lu",(long)_farmerPlanview.stats.supplier.vendorID],
                              @"fieldid":[NSString stringWithFormat:@"%lu",(long)_farmerPlanview.stats.field.fieldID],
                              @"trucks":data,
-                             @"departureday":dateString,
+                             @"departureday":dateStr,
                              @"factoryid":[NSNumber numberWithInteger: [_farmerPlanview.stats.factory.factoryid integerValue]]
                              };
     NSLog(@"%@",params);
@@ -637,8 +649,10 @@
 //        self.alert.detail.text = @"上传完成";
 //        [self.alert show:self.alert];
        // self.transportationList = [[NSMutableArray alloc] init];
-        self.farmerPlanview.datasource = self.transportationList;
-        [self reload];
+        if ([responseObject[@"code"] integerValue] == 10000) {
+            self.farmerPlanview.datasource = self.transportationList;
+            [self reload];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
@@ -650,6 +664,8 @@
     //select city
     if (pickerView.index.row == 0) {
         _farmerPlanview.stats.city = cityList[row];
+        City *city = cityList[row];
+        _planeDuration = [city.time doubleValue];
     }
     else if(pickerView.index.row == 1){
         _farmerPlanview.stats.supplier = vendorList[row];

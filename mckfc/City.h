@@ -12,6 +12,8 @@
 
 @property (nonatomic, copy) NSString *name; //city name
 @property (nonatomic, copy) NSString* areaid;
+@property (nonatomic, strong) NSNumber *time;
+
 
 -(instancetype)initWithName:(NSString*)name;
 

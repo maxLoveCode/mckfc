@@ -19,7 +19,7 @@
 #endif
 
 NSString *const b_URL = _BASE_URL;
-NSString *const version = @"v1_4";
+NSString *const version = @"v1_4_1";
 
 @interface ServerManager ()<HUDViewDelegate>
 
@@ -65,6 +65,7 @@ NSString *const version = @"v1_4";
     }
     [self GET:[self appendedURL:URLString] parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
         if (ServerDebugLog) {
             NSLog(@"code:%@  info:%@",responseObject[@"code"],responseObject[@"msg"]);
         }
@@ -77,13 +78,16 @@ NSString *const version = @"v1_4";
                  [_alert failureWithMsg:_alert msg:responseObject[@"msg"]];
             }
         }
+        
         if ([responseObject[@"code"] integerValue] == self.successCode ) {
+             [_alert dismiss:_alert];
             success(task, responseObject);
         }
 //special cases
 //for the only case when the succeess code is 10003 and login interface the program still
 //regard it as success. but deal it with the #navigate to editor# method
         if ([URLString isEqualToString:@"getUserInfo"] && [responseObject[@"code"] integerValue] == 10003) {
+             [_alert dismiss:_alert];
             success(task, responseObject);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -94,6 +98,7 @@ NSString *const version = @"v1_4";
         [_alert failureWithMsg:_alert msg:@"网络连接失败"];
     }];
 }
+
 
 #pragma mark http POST
 - (void)POST:(NSString * _Nonnull)URLString
@@ -112,6 +117,7 @@ NSString *const version = @"v1_4";
         _alert.delegate = self;
         [_alert show:_alert];
     }
+    
     [self POST:[self appendedURL:URLString] parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
     //show animates
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

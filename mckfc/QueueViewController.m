@@ -19,12 +19,18 @@
 #import "nofityViewController.h"
 #import "AlertHUDView.h"
 
+#import "RedPocketButton.h"
+#import "User.h"
+#import "RewardDetailView.h"
+#import "OnRouteRightItemsView.h"
+#import "LoginNav.h"
 #define itemHeight 44
 #define topMargin 60
 
-@interface QueueViewController ()<UITableViewDelegate, UITableViewDataSource,HUDViewDelegate>
+@interface QueueViewController ()<UITableViewDelegate, UITableViewDataSource,HUDViewDelegate,didClickMenuDelegate>
 {
     NSArray* titleText;
+    OnRouteRightItemsView *_menuView;
 }
 
 @property (nonatomic, strong) UITableView* tableView;
@@ -38,6 +44,9 @@
 @property (nonatomic, strong) AlertHUDView* alert;
 @property (nonatomic, strong) UIButton* botBtn;
 
+@property (nonatomic, strong) RedPocketButton* redPocket;
+@property (nonatomic, strong) User* user;
+
 @end
 
 @implementation QueueViewController
@@ -49,7 +58,7 @@
     
     self.navigationItem.hidesBackButton = YES;
     
-    UIBarButtonItem* phone = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"service"] style:UIBarButtonItemStylePlain target:self action:@selector(phoneCall:)];
+    UIBarButtonItem* phone = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"系统设置"] style:UIBarButtonItemStylePlain target:self action:@selector(phoneCall:)];
     self.navigationItem.rightBarButtonItem = phone;
     return self;
 }
@@ -61,9 +70,15 @@
     
     [self.view addSubview: self.tableView];
     self.view.backgroundColor = [UIColor whiteColor];
-    _server = [ServerManager sharedInstance];
+    self.server = [ServerManager sharedInstance];
     [self requestQueueInfo];
     [self requestQRCode];
+    
+    [self.redPocket attachToView:self.view];
+    [self.redPocket setHidden:NO];
+    [self remoteNotification];
+    [self requestUserInfo];
+
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -71,8 +86,7 @@
     [[UIScreen mainScreen] setBrightness:0.8];
     [super viewDidAppear:animated];
     
-    
-    [self remoteNotification];
+  
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -82,6 +96,15 @@
 }
 
 #pragma mark - setter properties
+
+-(RedPocketButton *)redPocket
+{
+    if (!_redPocket) {
+        _redPocket = [[RedPocketButton alloc] init];
+    }
+    return _redPocket;
+}
+
 -(AlertHUDView *)alert
 {
     if (!_alert) {
@@ -140,6 +163,8 @@
     }
     return _botBtn;
 }
+
+
 
 #pragma mark tableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -291,6 +316,48 @@
     [self.navigationController pushViewController:reportVC animated:YES];
 }
 
+-(void)requestUserInfo
+{
+    //根据 access token 判断第一次
+    if (_server.accessToken) {
+        NSDictionary* params = @{@"token": _server.accessToken};
+        [_server GET:@"getUserInfo" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+            NSLog(@"%@",responseObject);
+            NSDictionary* data = responseObject[@"data"];
+            _user = [MTLJSONAdapter modelOfClass:[User class] fromJSONDictionary:data error:nil];
+            [self checkRedPocketByUser:_user];
+        }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+        }];
+    }
+}
+
+#pragma mark- redPocket
+//firstly check the red pocket is need to be hidden or not
+-(void)checkRedPocketByUser:(User*)user
+{
+    if([user.redrule isEqualToString:@""]||user.redrule == nil)
+    {
+        [self.redPocket setHidden:YES];
+    }
+    else
+    {
+        [self.redPocket setHidden:NO];
+        [self.redPocket setString:user.reward];
+        [self.redPocket.claim addTarget:self action:@selector(claim:) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
+#pragma mark- claim +modal view
+//its the modal uiview to present so I put the ui rendering inside the method
+-(void)claim:(id)sender
+{
+    RewardDetailView* rewardView = [[RewardDetailView alloc] init];
+    [rewardView show];
+    
+    [rewardView setContentString:_user.redrule];
+}
+
 -(void)requestQRCode
 {
     NSDate* now = [NSDate date];
@@ -339,6 +406,7 @@
 
 -(void)getNotification:(NSNotification *)notification
 {
+    [self requestUserInfo];
     if([notification.userInfo[@"content"] isEqualToString:@"outfactory"])
     {
         [self generateReport];
@@ -352,13 +420,31 @@
 #pragma mark navigation item
 -(void)phoneCall:(id)sender
 {
-    if (_viewModel.factoryphone) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",_viewModel.factoryphone]]];
-    }
-    else
-    {
-        
-    }
+    _menuView = [[OnRouteRightItemsView alloc]init];
+    _menuView.menuDelegate = self;
+    [_menuView addSubViews];
+
+}
+
+- (void)exitView{
+    [_menuView removeSubViews];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"user_type"];
+    [defaults removeObjectForKey:@"access_token"];
+    LoginNav* loginVC = [[LoginNav alloc] init];
+    [self presentViewController:loginVC animated:NO completion:^{
+    }];
+}
+
+- (void)callPhone{
+        if (_viewModel.factoryphone) {
+            [_menuView removeSubViews];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",_viewModel.factoryphone]]];
+        }
+        else
+        {
+    
+        }
 }
 
 #pragma mark - notifypage

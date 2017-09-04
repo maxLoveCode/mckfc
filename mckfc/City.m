@@ -14,7 +14,8 @@
 +(NSDictionary *)JSONKeyPathsByPropertyKey
 {
     return @{@"areaid":@"id",
-             @"name":@"name"};
+             @"name":@"name",
+             @"time":@"time"};
 }
 
 -(instancetype)initWithName:(NSString *)name

@@ -15,6 +15,8 @@
 @interface NewInspectionController ()<HUDViewDelegate>
 @property (nonatomic, strong) ServerManager* server;
 @property (nonatomic, strong) InspectionReport* insepection;
+@property (nonatomic, assign) BOOL checkTrueAndUplineBool;
+
 @end
 static NSString *NormalecellID = @"NormalecellID";
 @implementation NewInspectionController{
@@ -26,13 +28,14 @@ static NSString *NormalecellID = @"NormalecellID";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.checkTrueAndUplineBool = YES;
     self.navigationItem.title = @"质检报告";
     self.tableView.rowHeight = 60;
     _server = [ServerManager sharedInstance];
-    _titleArr = @[@"合格",@"拒收",@"让步接受"];
-    _imgArr = @[@"checktrue",@"checkfalse",@"让步接受"];
+    _titleArr = @[@"合格",@"拒收",@"让步接受",@"上线"];
+    _imgArr = @[@"checktrue",@"checkfalse",@"让步接受",@"上线"];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NormalecellID];
-    
+    [self showAlert];
     
 }
 
@@ -48,9 +51,7 @@ static NSString *NormalecellID = @"NormalecellID";
     _alert.delegate = self;
     _alert.title.text = @"质检合格";
     _alert.detail.text = @"土豆质检合格";
-    [_alert show:_alert];
 }
-
 
 
 - (void)didReceiveMemoryWarning {
@@ -87,35 +88,44 @@ static NSString *NormalecellID = @"NormalecellID";
     cell.imageView.image = [UIImage imageNamed:_imgArr[indexPath.section]];
     cell.textLabel.text = _titleArr[indexPath.section];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (_insepection.refusecause) {
-        if ([_insepection.status isEqualToNumber:@0]) {
-            if (indexPath.section == 0) {
-                cell.detailTextLabel.text = @"验收合格";
-            }else{
-                cell.detailTextLabel.text = @"";
-            }
-        }else if([_insepection.status isEqualToNumber:@1]){
-            if (indexPath.section == 1) {
-                cell.detailTextLabel.text = @"验收不合格";
-            }else{
-                cell.detailTextLabel.text = @"";
-            }
+    cell.detailTextLabel.text = @"";
+    if (self.ischecked == YES) {
+    if (indexPath.section == 0) {
+        if ([_insepection.status isEqualToNumber:@0]){
+            cell.detailTextLabel.text = @"验收合格";
         }else{
-            if (indexPath.section == 2) {
-                cell.detailTextLabel.text = @"让步接受";
-            }else{
-                cell.detailTextLabel.text = @"";
-            }
+            cell.detailTextLabel.text = @"";
+        }
+    }else if (indexPath.section == 1){
+        if ([_insepection.status isEqualToNumber:@1]){
+            cell.detailTextLabel.text = @"验收不合格";
+        }else{
+            cell.detailTextLabel.text = @"";
+        }
+    }else if (indexPath.section ==2){
+        if ([_insepection.status isEqualToNumber:@2]){
+            cell.detailTextLabel.text = @"让步接受";
+        }else{
+            cell.detailTextLabel.text = @"";
+        }
+    }else if (indexPath.section == 3){
+        if ([_insepection.status isEqualToNumber:@3]){
+            cell.detailTextLabel.text = @"已上线";
+        }else{
+            cell.detailTextLabel.text = @"";
         }
     }
-    
+    }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0 ) {
         if ([self.type isEqualToString:self.mainType]) {
-            [self showAlert];
+            _alert.title.text = @"质检合格";
+            _alert.detail.text = @"土豆质检合格";
+            self.checkTrueAndUplineBool = YES;
+             [_alert show:_alert];
         }
         
     }
@@ -134,6 +144,14 @@ static NSString *NormalecellID = @"NormalecellID";
         makeCon.insepection = _insepection;
         makeCon.transportid = self.transportid;
         [self.navigationController pushViewController:makeCon animated:NO];
+    }
+    if (indexPath.section == 3) {
+         if ([self.type isEqualToString:self.mainType]) {
+        self.checkTrueAndUplineBool = NO;
+        _alert.title.text = @"土豆质检";
+        _alert.detail.text = @"是否上线";
+        [_alert show:_alert];
+        }
     }
 }
 
@@ -194,13 +212,19 @@ static NSString *NormalecellID = @"NormalecellID";
         }
     }
     _insepection.refusecause = @"";
+    if (self.checkTrueAndUplineBool == YES) {
+        _insepection.status = @0;
+    }else{
+        _insepection.status = @3;
+    }
+    
     NSMutableDictionary* params =[[NSMutableDictionary alloc] initWithDictionary: [MTLJSONAdapter JSONDictionaryFromModel:_insepection error:nil]];
      [params addEntriesFromDictionary:@{@"type":self.mainType,
-                                       @"refusestatus":@0,
                                        @"token":_server.accessToken,
                                        @"transportid":self.transportid}];
     NSLog(@"-----params%@", params);
     [_server POST:@"truckCheck" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        self.ischecked = YES;
         NSLog(@"++++++%@",responseObject);
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -218,8 +242,10 @@ static NSString *NormalecellID = @"NormalecellID";
     [_server GET:@"getCheckReport" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSLog(@"responsObject%@", responseObject);
         _insepection = [MTLJSONAdapter modelOfClass:[InspectionReport class] fromJSONDictionary:responseObject[@"data"] error:nil];
+        if ([_insepection.status isEqualToNumber:@1] || [_insepection.status isEqualToNumber:@2]) {
+            self.ischecked = YES;
+        }
         NSLog(@"%@",_insepection);
-        
         [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         

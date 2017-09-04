@@ -34,9 +34,11 @@
 
 @property (nonatomic, weak) id<AddRecordTableDelegate> delegate;
 @property (nonatomic,copy) NSString *timeFlag;
+@property (nonatomic, assign) BOOL serialnoEnable;
+
 -(void)setDate:(NSDate*)date;
 -(void)showDatePicker;
-
+@property (nonatomic, assign) double planeDuration;
 //@property (nonatomic, strong) NSNumber *terminateLongtitude;
 //@property (nonatomic, strong) NSNumber *terminateLatitude;
 

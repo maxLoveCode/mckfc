@@ -86,10 +86,10 @@
     }else{
         _insepection.refusecause = @"";
     }
+    _insepection.status = @2;
     
     NSMutableDictionary* params =[[NSMutableDictionary alloc] initWithDictionary: [MTLJSONAdapter JSONDictionaryFromModel:_insepection error:nil]];
     [params addEntriesFromDictionary:@{@"type":self.mainType,
-                                       @"refusestatus":@2,
                                        @"token":_server.accessToken,
                                        @"transportid":self.transportid}];
     NSLog(@"-----params%@", params);

@@ -13,4 +13,7 @@
 @property (nonatomic, assign) NSString* transportid;
 @property (nonatomic, copy) NSString *type;
 @property (nonatomic, copy) NSString *mainType;
+@property (nonatomic, assign) BOOL ischecked;
+
+
 @end
