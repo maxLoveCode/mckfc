@@ -19,7 +19,7 @@
 #endif
 
 NSString *const b_URL = _BASE_URL;
-NSString *const version = @"v1_4_1";
+NSString *const version = @"v1_4_2";
 
 @interface ServerManager ()<HUDViewDelegate>
 
@@ -65,7 +65,7 @@ NSString *const version = @"v1_4_1";
     }
     [self GET:[self appendedURL:URLString] parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+        NSLog(@"=========%@",responseObject);
         if (ServerDebugLog) {
             NSLog(@"code:%@  info:%@",responseObject[@"code"],responseObject[@"msg"]);
         }
@@ -131,6 +131,7 @@ NSString *const version = @"v1_4_1";
             else
             {
                 [_alert failureWithMsg:_alert msg:responseObject[@"msg"]];
+                
             }
         }
          success(task, responseObject);

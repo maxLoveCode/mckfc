@@ -36,7 +36,7 @@ extern NSString *const reuseIdentifier;
 -(void)viewDidLoad
 {
     self.view = self.tableView;
-    self.title = @"今日待办";
+    self.title = @"在途订单";
     
     _server = [ServerManager sharedInstance];
     
@@ -84,6 +84,11 @@ extern NSString *const reuseIdentifier;
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     WorkRecordCell *cell = [[WorkRecordCell alloc] init];
+    if (self.isVendor == YES) {
+        cell.warehouse.hidden = YES;
+    }else{
+        cell.warehouse.hidden = NO;
+    }
     if(keyWord!= nil && ![keyWord isEqualToString:@""])
     {
         cell.record = _searchResult[indexPath.section];
@@ -114,6 +119,11 @@ extern NSString *const reuseIdentifier;
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell isKindOfClass:[WorkRecordCell class]]) {
         WorkDetailViewController* detail = [[WorkDetailViewController alloc] init];
+        if (self.isVendor && self.isVendor == YES) {
+            detail.isVendor = YES;
+        }else{
+             detail.isVendor = NO;
+        }
         workRecord* record;
         if(keyWord!= nil && ![keyWord isEqualToString:@""])
         {
@@ -131,8 +141,15 @@ extern NSString *const reuseIdentifier;
 #pragma mark web request
 -(void)requestList
 {
+    NSString *url;
+    if (self.isVendor && self.isVendor == YES) {
+        url = @"getWayList";
+    }else{
+       url = @"getOrderList";
+    }
+    
     NSDictionary* params = @{@"token":_server.accessToken};
-    [_server GET:@"getOrderList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+    [_server GET:url parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSError* error;
         NSArray* data = responseObject[@"data"];
         NSLog(@"data:%@",data);

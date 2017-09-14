@@ -131,7 +131,10 @@ updatingLocation:(BOOL)updatingLocation
     
     _path = [response.route.paths objectAtIndex:0];
     //delegate to parent view controller
-    [self.delegate mapViewhasLocated:self];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(mapViewhasLocated:)]) {
+         [self.delegate mapViewhasLocated:self];
+    }
+   
     //通过AMapNavigationSearchResponse对象处理搜索结果
     [self didStartRegeoSearch];
     
@@ -187,7 +190,10 @@ updatingLocation:(BOOL)updatingLocation
 {
     if(response.regeocode != nil)
     {
-        [self.delegate mapView:self LocationOnLatitude:_userLocation.coordinate.latitude Longtitude:_userLocation.coordinate.longitude address:response.regeocode.formattedAddress distance:_path.distance expecttime:_path.duration*1000];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(mapView:LocationOnLatitude:Longtitude:address:distance:expecttime:)]) {
+             [self.delegate mapView:self LocationOnLatitude:_userLocation.coordinate.latitude Longtitude:_userLocation.coordinate.longitude address:response.regeocode.formattedAddress distance:_path.distance expecttime:_path.duration*1000];
+        }
+       
     }
 }
 

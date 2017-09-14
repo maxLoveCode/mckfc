@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface TODOViewController : UIViewController
+@property (nonatomic, assign) BOOL isVendor;
+
 
 @end

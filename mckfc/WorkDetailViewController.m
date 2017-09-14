@@ -10,6 +10,7 @@
 #import "InspectDetailView.h"
 #import "TruckArrivePicker.h"
 #import "NewInspectionController.h"
+#import "DriverLocationViewController.h"
 #define itemHeight 44
 
 @interface WorkDetailViewController()<UITableViewDelegate, UITableViewDataSource>
@@ -33,8 +34,19 @@
     self.view = self.tableView;
     self.title = @"记录详情";  
     titleArray = @[@"供应商名称",@"地块编号",@"土豆重量",@"发车时间",@"计划到达时间",@"运单号",@"包装类型",@"土豆种类",@"储存期"];
-    
     _server = [ServerManager sharedInstance];
+    if (self.isVendor == YES) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"查看司机位置" style:UIBarButtonItemStylePlain target:self action:@selector(rightItemAction)];
+    }
+    
+    if (self.isHistory == YES){
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -44,6 +56,23 @@
     [self requestDetail];
 }
 
+- (void)rightItemAction{
+    DriverLocationViewController *dlCon = [[DriverLocationViewController alloc] init];
+    if (_detail.locationpointy && _detail.locationpointx) {
+        dlCon.pointx = _detail.locationpointx;
+        dlCon.pointy = _detail.locationpointy;
+        dlCon.transportID = _detail.transportid;
+         [self.navigationController pushViewController:dlCon animated:NO];
+    }else{
+        UIAlertController *alertCon = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"该司机没有定位信息" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *act = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+        [alertCon addAction:act];
+        [self presentViewController:alertCon animated:NO completion:nil];
+    }
+   
+}
+
+
 #pragma mark setter
 -(UITableView *)tableView
 {
@@ -51,7 +80,6 @@
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height) style:UITableViewStyleGrouped];
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        
         NSString *const reuseIdentifier = @"workRecord";
         [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:reuseIdentifier];
     }
@@ -139,6 +167,9 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == 0 || section == 2){
+        if (self.isVendor == YES && section == 2) {
+            return 10;
+        }
         return 30;
     }
     else return 0.01;
@@ -169,7 +200,11 @@
         }
         else
         {
-            label.text = @"接收报告：请工作人员按职责填写相应报告";
+            if (self.isVendor == YES) {
+                 return nil;
+            }else{
+                label.text = @"接收报告：请工作人员按职责填写相应报告";
+            }
         }
         return bgView;
     }
@@ -243,9 +278,9 @@
             TruckUnloadProcessViewController* unloadVC = [[TruckUnloadProcessViewController alloc] init];
             [unloadVC setWorkFlow:workFlow];
             [unloadVC setTransportid:self.transportid];
-            if (workFlow.auth) {
+           if (workFlow.auth) {
                 [self.navigationController pushViewController:unloadVC animated:YES];
-            }
+           }
         }
     }
     else if(indexPath.section ==1)

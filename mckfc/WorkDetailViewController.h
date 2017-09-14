@@ -24,5 +24,7 @@
 @interface WorkDetailViewController : UIViewController
 
 @property (nonatomic, strong, nonnull) NSString* transportid;
+@property (nonatomic, assign) BOOL isVendor;
+@property (nonatomic, assign) BOOL isHistory;
 
 @end

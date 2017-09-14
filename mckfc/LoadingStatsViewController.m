@@ -60,6 +60,7 @@
 @property (nonatomic, strong) ServerManager* server;
 
 @property (nonatomic, strong) AMapLocationManager* locationManager;
+@property (nonatomic, strong) MCDatePickerView *datePicker;
 @property (nonatomic,copy) NSString *timeFlag;
 
 //@property (nonatomic, strong) NSNumber *terminateLongtitude;
@@ -83,6 +84,7 @@
     
     if (!_stats) {
         _stats = [[LoadingStats alloc] init];
+        _stats.planarrivetime = [NSDate dateWithTimeInterval:60 * 60 sinceDate:[NSDate date]];
     }
     
     dateFormatter = [[NSDateFormatter alloc] init];
@@ -93,6 +95,14 @@
     self.locationManager = [[AMapLocationManager alloc] init];
     
     [self initTitlesAndImages];
+}
+
+-  (MCDatePickerView *)datePicker{
+    if (!_datePicker) {
+        _datePicker = [[MCDatePickerView alloc] init];
+        _datePicker.delegate = self;
+    }
+    return _datePicker;
 }
 -(AlertHUDView *)alertPlan
 {
@@ -475,20 +485,19 @@
     }
     else if(cell.style == LoadingCellStyleDatePicker)
     {
-        MCDatePickerView* datePicker = [[MCDatePickerView alloc] init];
-        datePicker.delegate = self;
-        
         if(indexPath.row == 5){
             self.timeFlag = @"0";
-            [datePicker show];
+            [self setDate:[NSDate date]];
+            [_datePicker show];
         }else{
             self.timeFlag = @"1";
+             [self setDate:[NSDate date]];
             if (_planeDuration && _planeDuration > 0) {
                 self.planTimeAndOther = YES;
                 [self initComputeTime];
             }else{
                 self.planTimeAndOther = NO;
-                 [datePicker show];
+                 [_datePicker show];
             }
         
             self.planTimeAndOther = YES;
@@ -951,7 +960,7 @@
 - (void)initComputeTime{
         double spendTime = _planeDuration *3600;
         NSString *hour = [NSString stringWithFormat:@"%.2f",spendTime / 3600];
-        NSDate* estimate = [NSDate dateWithTimeIntervalSinceNow: spendTime];
+    NSDate* estimate = [NSDate dateWithTimeInterval:spendTime sinceDate:_stats.departuretime];
     
         NSString *string = [dateFormatter stringFromDate:estimate];
     
@@ -1082,11 +1091,24 @@
 }
 
 - (void)didCancleClick{
-    MCDatePickerView* datePicker = [[MCDatePickerView alloc] init];
-    datePicker.delegate = self;
     self.timeFlag = @"1";
-    [datePicker show];
+    [_datePicker show];
     self.planTimeAndOther = NO;
+}
+
+#pragma mark  -- 设置时间限制
+-(void)setDate:(NSDate*)date
+{
+    if ([self.timeFlag isEqualToString:@"0"]) {
+        [self.datePicker.picker setDate:date];
+        [self.datePicker.picker setMinimumDate:date];
+    }else{
+        [self.datePicker.picker setDate:[NSDate dateWithTimeInterval:60*60 sinceDate:date]];
+        [self.datePicker.picker setMinimumDate:[NSDate dateWithTimeInterval:60*60 sinceDate:date]];
+        [self.datePicker.picker setMaximumDate:nil];
+    }
+    
+    
 }
 
 @end

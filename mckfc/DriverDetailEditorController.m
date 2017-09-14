@@ -333,6 +333,7 @@
     {
         url =@"registerComplete";
     }
+    NSLog(@"%@",url);
     
     
     NSDictionary* dic = @{@"truckno":[NSString stringWithFormat:@"%@%@",_driver.region, _driver.cardigits],

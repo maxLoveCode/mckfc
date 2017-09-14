@@ -23,7 +23,8 @@
 #import "CreatQRCodeView.h"
 #import "CreatQRViewController.h"
 #import "DriverUploadImgViewController.h"
-
+#import "TODOViewController.h"
+#import "WorkRecordViewController.h"
 #define buttonHeight 40
 #define itemHeight 44
 
@@ -171,7 +172,6 @@
 {
 #warning 需要修改的地方
     if (index == 0) {
-        
 //        _farmerPlanview.type = FarmerPlanViewTypeQRCode;
 //        _QRVC = [[FarmerQRCodeVC alloc] init];
 //        _QRVC.delegate = self;
@@ -245,10 +245,18 @@
 //            [self reload];
 //        }];
     }
-    else
+    else if(index == 5)
     {
         SettingViewController* setting = [[SettingViewController alloc] init];
         [self.navigationController pushViewController:setting animated:YES];
+    }else if (index ==3){
+        TODOViewController* todoVC = [[TODOViewController alloc] init];
+        todoVC.isVendor = YES;
+        [self.navigationController pushViewController:todoVC animated:YES];
+    }else if (index == 4){
+        WorkRecordViewController *WRVC = [[WorkRecordViewController alloc] init];
+        WRVC.isVendor = YES;
+        [self.navigationController pushViewController:WRVC animated:YES];
     }
     
     if (Menu.type == FarmerPlanViewTypeMenu) {
@@ -386,10 +394,19 @@
         self.farmerPlanview.type = FarmerPlanViewTypeOrder;
         self.addRecordVC.user = [[User alloc] init];
         self.addRecordVC.stats = [[LoadingStats alloc] init];
+        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
         NSDateFormatter* formatter2 = [[NSDateFormatter alloc] init];
         [formatter2 setDateFormat:@"HH:mm"];
-        NSDate* date = [formatter2 dateFromString:@"00:00"];
-        self.addRecordVC.stats.departuretime = date;
+        NSDateFormatter* formatter3 = [[NSDateFormatter alloc] init];
+        [formatter3 setDateFormat:@"yyyy-MM-dd HH:mm"];
+        NSDate *newDate =  [NSDate date];
+        NSString *time = [formatter2 stringFromDate: newDate];
+        NSString *date = [formatter stringFromDate:self.addRecordVC.stats.departuretime];
+        NSString *dateAndTimeStr = [NSString stringWithFormat:@"%@ %@",date,time];
+        NSDate *dateAndTime = [formatter3 dateFromString:dateAndTimeStr];
+        self.addRecordVC.stats.departuretime = dateAndTime;
+        self.addRecordVC.stats.planarrivetime = [NSDate dateWithTimeInterval:60 * 60 sinceDate:[NSDate date]];
         [self.addRecordVC.tableView reloadData];
         [_botButton setTitle:@"确认并上传" forState:UIControlStateNormal];
         [self reload];
@@ -682,11 +699,22 @@
     else if(pickerView.index.row ==4){
         NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        
+        NSDate *newDate = [NSDate date];
         NSDate* date = [dateFormatter dateFromString:DateList[row]];
-        _farmerPlanview.stats.departuretime =date;
-        NSLog(@"selection %@", _farmerPlanview.stats.departuretime);
-        [self.addRecordVC setDate:date];
+        if ([self compareOneDay:newDate withAnotherDay:date] >0) {
+            UIAlertController *alertCon = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"该时间过期无效" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *act = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+            [alertCon addAction:act];
+            [self presentViewController:alertCon animated:NO completion:nil];
+            [NSTimer scheduledTimerWithTimeInterval:1 repeats:NO block:^(NSTimer * _Nonnull timer) {
+                [alertCon dismissViewControllerAnimated:NO completion:nil];
+            }];
+        }else{
+            _farmerPlanview.stats.departuretime =date;
+            NSLog(@"selection %@", _farmerPlanview.stats.departuretime);
+            [self.addRecordVC setDate:date];
+        }
+        
     }
     [self reload];
 }
@@ -918,6 +946,30 @@
     DriverUploadImgViewController *uploadCon = [[DriverUploadImgViewController alloc]initWithNibName:@"DriverUploadImgViewController" bundle:nil];
     uploadCon.fielduserid = fielduserid;
     [self.navigationController pushViewController:uploadCon animated:NO];
+}
+
+#pragma mark --比较两个时间
+- (int)compareOneDay:(NSDate *)oneDay withAnotherDay:(NSDate *)anotherDay
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *oneDayStr = [dateFormatter stringFromDate:oneDay];
+    NSString *anotherDayStr = [dateFormatter stringFromDate:anotherDay];
+    NSDate *dateA = [dateFormatter dateFromString:oneDayStr];
+    NSDate *dateB = [dateFormatter dateFromString:anotherDayStr];
+    NSComparisonResult result = [dateA compare:dateB];
+    NSLog(@"date1 : %@, date2 : %@", oneDay, anotherDay);
+    if (result == NSOrderedDescending) {
+        //NSLog(@"Date1  is in the future");
+        return 1;
+    }
+    else if (result == NSOrderedAscending){
+        //NSLog(@"Date1 is in the past");
+        return -1;
+    }
+    //NSLog(@"Both dates are the same");
+    return 0;
+    
 }
 
 @end

@@ -11,14 +11,13 @@
 @class MapViewController;
 
 @protocol mapViewDelegate <NSObject>
-
+@optional
 -(void)mapView:(MapViewController*)mapView
                             LocationOnLatitude:(double)latitude
                                     Longtitude:(double)longtitude
                                        address:(NSString*)address
                                       distance:(double)distance
                                     expecttime:(long)expecttime;
-
 -(void)mapViewhasLocated:(MapViewController*)mapView;
 
 @end

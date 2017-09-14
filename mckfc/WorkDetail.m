@@ -28,6 +28,8 @@
              @"packagename":@"packagename",
              @"varietyname":@"varietyname",
              @"storagetime":@"storagetime",
+             @"locationpointy":@"locationpointy",
+             @"locationpointx":@"locationpointx"
              };
 }
 

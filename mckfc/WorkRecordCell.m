@@ -23,7 +23,7 @@ extern NSString *const reuseIdentifier;
 @property (nonatomic, strong) UILabel* orderLabel;
 @property (nonatomic, strong) UILabel* nameLabel;
 @property (nonatomic, strong) UILabel* carLabel;
-@property (nonatomic, strong) UILabel* warehouse;
+
 @property (nonatomic, strong) WorkStatusView* statusView;
 
 @end

@@ -220,6 +220,7 @@
 -(void)HUDDidConfirm
 {
     [self.delegate didSelectConfirm];
+    // [self removeFromSuperview];
 }
 
 -(void)HUDDidCancel

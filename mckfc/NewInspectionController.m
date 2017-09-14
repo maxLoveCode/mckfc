@@ -127,7 +127,6 @@ static NSString *NormalecellID = @"NormalecellID";
             self.checkTrueAndUplineBool = YES;
              [_alert show:_alert];
         }
-        
     }
     if (indexPath.section == 1 ){
         CauseRejectionViewController *con = [[CauseRejectionViewController alloc] init];

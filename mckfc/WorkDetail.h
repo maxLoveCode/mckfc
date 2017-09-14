@@ -21,6 +21,8 @@
 
 @property (nonatomic, copy) NSNumber* transportid;
 @property (nonatomic, copy) NSNumber* weight;
+@property (nonatomic, copy) NSNumber *locationpointy;
+@property (nonatomic, copy) NSNumber *locationpointx;
 
 @property (nonatomic, copy) NSString* transportno;
 @property (nonatomic, copy) NSString* truckno;

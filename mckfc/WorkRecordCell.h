@@ -10,7 +10,7 @@
 #import "workRecord.h"
 
 @interface WorkRecordCell : UITableViewCell
-
+@property (nonatomic, strong) UILabel* warehouse;
 @property (nonatomic, strong) workRecord* record;
 
 +(CGFloat)HeightForWorkRecordCell;

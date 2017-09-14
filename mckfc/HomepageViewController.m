@@ -36,7 +36,7 @@
     
     [self.redPocket attachToView:self.view];
     [self.redPocket setHidden:YES];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"账户修改" style:UIBarButtonItemStylePlain target:self action:@selector(navigateToEditor)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"账户修改" style:UIBarButtonItemStylePlain target:self action:@selector(editDriverMes)];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -96,7 +96,7 @@
     //根据 access token 判断第一次
     if (_server.accessToken) {
         NSDictionary* params = @{@"token": _server.accessToken};
-        [_server GET:@"getUserInfo" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+        [_server GET:@"getUserInfo" parameters:params animated:NO success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
             NSLog(@"%@",responseObject);
             if ([responseObject[@"code"] integerValue] == 10003) {
                 [self navigateToEditor];
@@ -196,12 +196,28 @@
     }
 }
 
+- (void)editDriverMes{
+    EditorNav* editVC = [[EditorNav alloc] init];
+    DriverDetailEditorController* driverVC =(DriverDetailEditorController*)editVC.topViewController;
+    [driverVC setUser:_user];
+    [driverVC setRegisterComplete:YES];
+    [self.navigationController presentViewController:editVC animated:YES completion:^{
+        
+    }];
+    [editVC setOnDismissed:^{
+        [self.navigationController dismissViewControllerAnimated:NO completion:^
+         {
+             [self requestUserInfo];
+         }];
+    }];
+}
+
 -(void)navigateToEditor
 {
     EditorNav* editVC = [[EditorNav alloc] init];
     DriverDetailEditorController* driverVC =(DriverDetailEditorController*)editVC.topViewController;
     [driverVC setUser:_user];
-    [driverVC setRegisterComplete:YES];
+    [driverVC setRegisterComplete:NO];
     [self.navigationController presentViewController:editVC animated:YES completion:^{
         
     }];

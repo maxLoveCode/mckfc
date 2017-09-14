@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface WorkRecordViewController : UIViewController
-
+@property (nonatomic, assign) BOOL isVendor;
 @end

@@ -69,14 +69,25 @@
         }
         if (!_stats) {
             _stats = [[LoadingStats alloc] init];
-            
+        }
+        if (_stats.departuretime) {
+            NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy-MM-dd"];
             NSDateFormatter* formatter2 = [[NSDateFormatter alloc] init];
             [formatter2 setDateFormat:@"HH:mm"];
-            NSDate* date = [formatter2 dateFromString:@"00:00"];
-            _stats.departuretime = date;
-           
-            _stats.planarrivetime = [NSDate date];
+            NSDateFormatter* formatter3 = [[NSDateFormatter alloc] init];
+            [formatter3 setDateFormat:@"yyyy-MM-dd HH:mm"];
+            NSDate *newDate =  [NSDate date];
+            NSString *time = [formatter2 stringFromDate: newDate];
+            NSString *date = [formatter stringFromDate: _stats.departuretime];
+            NSString *dateAndTimeStr = [NSString stringWithFormat:@"%@ %@",date,time];
+            NSDate *dateAndTime = [formatter3 dateFromString:dateAndTimeStr];
+            
+            _stats.departuretime = dateAndTime;
         }
+       
+        _stats.planarrivetime = [NSDate dateWithTimeInterval:60 * 60 sinceDate:[NSDate date]];
+
         _server = [ServerManager sharedInstance];
     }
     return _tableView;
@@ -205,6 +216,7 @@
         cell.style =LoadingCellStyleDatePicker;
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MM-dd HH:mm"];
+        NSLog(@"++++++%@", [dateFormatter stringFromDate:_stats.planarrivetime]);
         cell.detailLabel.text = [dateFormatter stringFromDate:_stats.planarrivetime];
     }else if (indexPath.row == 6){
         cell.style =LoadingCellStyleSelection;
@@ -408,11 +420,10 @@
         [self.datePicker.picker setMinimumDate:date];
         [self.datePicker.picker setMaximumDate:[NSDate dateWithTimeInterval:24*60*60-1 sinceDate:date]];
     }else{
-        [self.datePicker.picker setDate:[NSDate date]];
-      [self.datePicker.picker setMinimumDate:nil];
+        [self.datePicker.picker setDate:[NSDate dateWithTimeInterval:60*60 sinceDate:[NSDate date]]];
+        [self.datePicker.picker setMinimumDate:[NSDate dateWithTimeInterval:60*60 sinceDate:[NSDate date]]];
         [self.datePicker.picker setMaximumDate:nil];
     }
-   
     
 }
 
@@ -526,7 +537,7 @@
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
         double spendTime = _planeDuration * 3600;
         NSString *hour = [NSString stringWithFormat:@"%.2f",spendTime / 3600];
-        NSDate* estimate = [NSDate dateWithTimeIntervalSinceNow: spendTime];
+        NSDate* estimate = [NSDate dateWithTimeInterval:spendTime sinceDate:_stats.departuretime];
     
         NSString *string = [dateFormatter stringFromDate:estimate];
     

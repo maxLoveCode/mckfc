@@ -57,6 +57,7 @@
     [super viewDidAppear:animated];
     if ([self.workFlow.type isEqualToString:@"leave"]) {
         [self requestEnterWeightSuccess:^{
+            NSLog(@"++++%@",self.weight);
             [self.tableView reloadData];
         }];
     }
@@ -80,7 +81,7 @@
 - (UIButton *)comeBtn{
     if (!_comeBtn) {
         self.comeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _comeBtn.frame = CGRectMake(20, 0, 150, itemHeight);
+        _comeBtn.frame = CGRectMake(20, 0, 200, itemHeight);
         _comeBtn.enabled = NO;
         NSDateFormatter *formater = [[NSDateFormatter alloc] init];
         [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -174,6 +175,7 @@
         {
             cell.titleLabel.text = @"进厂重量";
             cell.digitInput.tag = 1;
+            NSLog(@"-------%@",_weight);
             cell.digitInput.text = [NSString stringWithFormat:@"%@",_weight];
         }
         else
@@ -252,7 +254,11 @@
     }
     NSLog(@"params%@", params);
     [_server POST:type parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-        [self.navigationController popViewControllerAnimated:YES];
+        NSLog(@"+++++++%@",responseObject);
+        if ([responseObject[@"code"] integerValue] == 10000) {
+             [self.navigationController popViewControllerAnimated:YES];
+        }
+       
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
@@ -309,9 +315,19 @@
 {
     [_server GET:@"getEnterWeight" parameters:@{@"transportid":self.transportid,
                                                @"token":_server.accessToken} animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
-                                                   if ((self.weight = [responseObject[@"data"] objectForKey:@"enterweight"])) {
-                                                       success();
-                                                   }
+//                                                   if ((self.weight = [responseObject[@"data"] objectForKey:@"enterweight"])) {
+//                                                       success();
+//                                                   }
+                                                   NSLog(@"%@",responseObject[@"data"]);
+                                                   self.weight = [responseObject[@"data"] objectForKey:@"enterweight"];
+                                                   NSString *weight =[NSString stringWithFormat:@"%.2f",[self.weight floatValue]];
+                                                   self.weight = @([weight floatValue]);
+                                                   
+                                                   NSLog(@"|||||%@",self.weight);
+                                                   success();
+                                                   
+                                                   
+                                                   
                                                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                                                    }];
 }

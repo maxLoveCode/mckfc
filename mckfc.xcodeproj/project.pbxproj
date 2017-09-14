@@ -131,6 +131,9 @@
 		5562C0E61F18ADF700ACB12E /* DriverUploadImgViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5562C0E41F18ADF700ACB12E /* DriverUploadImgViewController.xib */; };
 		5567E4FA1F30664C00EBBB49 /* MakeConcessionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5567E4F91F30664C00EBBB49 /* MakeConcessionsViewController.m */; };
 		59F102461F540405005D859F /* OnRouteRightItemsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F102451F540405005D859F /* OnRouteRightItemsView.m */; };
+		59FC71401F66403C001C6AF0 /* DriverLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FC713F1F66403C001C6AF0 /* DriverLocationViewController.m */; };
+		59FC71451F6789E6001C6AF0 /* CustomCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FC71441F6789E5001C6AF0 /* CustomCalloutView.m */; };
+		59FC71481F678CAA001C6AF0 /* CustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FC71471F678CAA001C6AF0 /* CustomAnnotationView.m */; };
 		9F8C339E06B29C79F80B7768 /* libPods-mckfc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC755A46007004FF4505318C /* libPods-mckfc.a */; };
 		AF71F86226F29C90F312152B /* libPods-mckfcUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87CDDFF5EFE63C83E9F1566A /* libPods-mckfcUITests.a */; };
 /* End PBXBuildFile section */
@@ -404,6 +407,12 @@
 		5567E4F91F30664C00EBBB49 /* MakeConcessionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakeConcessionsViewController.m; sourceTree = "<group>"; };
 		59F102441F540405005D859F /* OnRouteRightItemsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnRouteRightItemsView.h; sourceTree = "<group>"; };
 		59F102451F540405005D859F /* OnRouteRightItemsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnRouteRightItemsView.m; sourceTree = "<group>"; };
+		59FC713E1F66403C001C6AF0 /* DriverLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriverLocationViewController.h; sourceTree = "<group>"; };
+		59FC713F1F66403C001C6AF0 /* DriverLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DriverLocationViewController.m; sourceTree = "<group>"; };
+		59FC71431F6789E5001C6AF0 /* CustomCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCalloutView.h; sourceTree = "<group>"; };
+		59FC71441F6789E5001C6AF0 /* CustomCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCalloutView.m; sourceTree = "<group>"; };
+		59FC71461F678CAA001C6AF0 /* CustomAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotationView.h; sourceTree = "<group>"; };
+		59FC71471F678CAA001C6AF0 /* CustomAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotationView.m; sourceTree = "<group>"; };
 		7A791D322DF96A2C5C57FD9B /* Pods-mckfcUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfcUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mckfcUITests/Pods-mckfcUITests.release.xcconfig"; sourceTree = "<group>"; };
 		87CDDFF5EFE63C83E9F1566A /* libPods-mckfcUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mckfcUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A232FEA72351969C26071DAE /* Pods-mckfcTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mckfcTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mckfcTests/Pods-mckfcTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -693,6 +702,8 @@
 				25CB81A01D54513F00EDD05C /* AddRecordViewController.m */,
 				2574C03C1D640E5F00940C95 /* QRDetailController.h */,
 				2574C03D1D640E5F00940C95 /* QRDetailController.m */,
+				59FC713E1F66403C001C6AF0 /* DriverLocationViewController.h */,
+				59FC713F1F66403C001C6AF0 /* DriverLocationViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -718,6 +729,10 @@
 				5562C0E21F18ADF700ACB12E /* DriverUploadImgViewController.h */,
 				5562C0E31F18ADF700ACB12E /* DriverUploadImgViewController.m */,
 				5562C0E41F18ADF700ACB12E /* DriverUploadImgViewController.xib */,
+				59FC71431F6789E5001C6AF0 /* CustomCalloutView.h */,
+				59FC71441F6789E5001C6AF0 /* CustomCalloutView.m */,
+				59FC71461F678CAA001C6AF0 /* CustomAnnotationView.h */,
+				59FC71471F678CAA001C6AF0 /* CustomAnnotationView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1342,6 +1357,7 @@
 				25CB81981D53449600EDD05C /* FarmerQRCodeVC.m in Sources */,
 				257DB79A1D38C9BF00C2227E /* WorkDetail.m in Sources */,
 				252EF9E51D33407900565D00 /* MCDatePickerView.m in Sources */,
+				59FC71401F66403C001C6AF0 /* DriverLocationViewController.m in Sources */,
 				5547D33B1F15C939005D3EC4 /* FarmerViewModel.m in Sources */,
 				5567E4FA1F30664C00EBBB49 /* MakeConcessionsViewController.m in Sources */,
 				257631261D8B95D400696A1E /* Message.m in Sources */,
@@ -1390,6 +1406,7 @@
 				2512A1CD1D1130B100ED884B /* LoginView.m in Sources */,
 				2527ECCE1D35D8AC00350DC6 /* CarPlateRegionSelector.m in Sources */,
 				252EF9F11D337BA000565D00 /* TransportDetail.m in Sources */,
+				59FC71451F6789E6001C6AF0 /* CustomCalloutView.m in Sources */,
 				25CE35B91D5AF03D005ADBA7 /* nofityViewController.m in Sources */,
 				252EF9D31D2F4D2800565D00 /* WorkRecordViewController.m in Sources */,
 				252EF9E21D30AF9F00565D00 /* WorkFlowCell.m in Sources */,
@@ -1401,6 +1418,7 @@
 				256F399C1D13A32000175E5A /* StatsView.m in Sources */,
 				254E959A1D7686150085E7AF /* ForgotPasswordView.m in Sources */,
 				5562C0E51F18ADF700ACB12E /* DriverUploadImgViewController.m in Sources */,
+				59FC71481F678CAA001C6AF0 /* CustomAnnotationView.m in Sources */,
 				5562C0DD1F18AD3B00ACB12E /* JFPhotoView.m in Sources */,
 				253BF5831D0D49F40006086D /* AppDelegate.m in Sources */,
 				25CB819E1D5423CB00EDD05C /* FarmerNav.m in Sources */,

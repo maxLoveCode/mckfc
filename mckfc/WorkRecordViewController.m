@@ -119,6 +119,11 @@ extern NSString *const reuseIdentifier;
     else
     {
         WorkRecordCell *cell = [[WorkRecordCell alloc] init];
+        if (self.isVendor == YES) {
+            cell.warehouse.hidden = YES;
+        }else{
+            cell.warehouse.hidden = NO;
+        }
         if(keyWord!= nil && ![keyWord isEqualToString:@""])
         {
             cell.record = _searchResult[indexPath.section-1];
@@ -149,6 +154,12 @@ extern NSString *const reuseIdentifier;
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell isKindOfClass:[WorkRecordCell class]]) {
         WorkDetailViewController* detail = [[WorkDetailViewController alloc] init];
+        if (self.isVendor && self.isVendor == YES){
+            detail.isVendor = YES;
+        }else{
+              detail.isVendor = NO;
+        }
+        detail.isHistory = YES;
         workRecord* record;
         if(keyWord!= nil && ![keyWord isEqualToString:@""])
         {
@@ -254,7 +265,14 @@ extern NSString *const reuseIdentifier;
     NSString* dateString = [dateFormatter stringFromDate:date];
     NSDictionary* params = @{@"token":_server.accessToken,
                              @"date":dateString};
-    [_server GET:@"getHistoryList" parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+    NSString *url;
+    if (self.isVendor && self.isVendor == YES) {
+        url = @"getComplateList";
+    }else{
+        url = @"getHistoryList";
+    }
+    
+    [_server GET:url parameters:params animated:YES success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         NSError* error;
        // NSLog(@"%@",responseObject[@"data"]);
         NSDictionary* data = responseObject[@"data"];

@@ -67,13 +67,13 @@
     if (!_menuView) {
         UICollectionViewFlowLayout* layout = [[UICollectionViewFlowLayout alloc] init];
         layout.minimumLineSpacing = 2;
-        _menuView = [[UICollectionView alloc] initWithFrame:CGRectMake(k_Margin, 10, kScreen_Width-2*k_Margin, 2*kScreen_Width/3) collectionViewLayout:layout];
+        _menuView = [[UICollectionView alloc] initWithFrame:CGRectMake(k_Margin, 10, kScreen_Width- 2*k_Margin, 2*kScreen_Width/3) collectionViewLayout:layout];
         _menuView.delegate = self;
         _menuView.dataSource = self;
         [_menuView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
         [_menuView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"menu"];
         
-        menuText =  @[@"计划二维码",@"录入运输单",@"工作记录",@"系统设置"];
+        menuText =  @[@"计划二维码",@"录入运输单",@"工作记录",@"待收订单",@"工作记录",@"系统设置"];
     }
     return _menuView;
 }
@@ -243,7 +243,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 4;
+    return 6;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -261,13 +261,17 @@
         label.text = @"生成产地二维码";
     }else if(indexPath.item == 2){
         label.text = @"车辆登记记录";
+    }else if(indexPath.item == 3){
+         label.text = @"在途订单";
+    }else if (indexPath.item == 4){
+         label.text = @"已完成订单";
     }else{
         label.text = menuText[indexPath.item];
     }
     
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = COLOR_WithHex(0x565656);
-    label.font = [UIFont systemFontOfSize:14];
+    label.font = [UIFont systemFontOfSize:13];
     
     [cell.contentView addSubview:imageView];
     [cell.contentView addSubview:label];
@@ -325,7 +329,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake((kScreen_Width-2*k_Margin)/2-1, kScreen_Width/3-1);
+    return CGSizeMake((kScreen_Width-2*k_Margin)/3-1, kScreen_Width/3-1);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {

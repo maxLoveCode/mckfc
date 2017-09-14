@@ -26,6 +26,7 @@
         [_picker setBackgroundColor:[UIColor whiteColor]];
         [_picker addTarget:self action:@selector(datePickerChanged:) forControlEvents:UIControlEventValueChanged];
         [_picker setFrame:CGRectMake(0, kScreen_Height-250, kScreen_Width, 250)];
+        _picker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
         _picker.userInteractionEnabled = YES;
     }
     return _picker;
